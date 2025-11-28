@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Georgia Trips - myposts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e5383b;
+            --secondary-color: #0f0f0f;
+            --text-color: #ccc;
+            --light-bg: #1f1f1f;
+            --dark-bg: #141414;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+            --card-background: #1a1a1a;
+            --background-color: #0f0f0f;
+            --border-color: #333;
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.2);
+            --like-color: #e5383b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: var(--text-color);
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #d42e2b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .post-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-image-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .post-card:hover .post-image {
+            transform: scale(1.05);
+        }
+
+        .image-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-color);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .post-status {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            background-color: rgba(108, 117, 125, 0.2);
+            color: #6c757d;
+        }
+
+        .post-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .empty-description {
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            border: 5px solid #333;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        .loading-text {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1003;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+            transition: visibility 0s, opacity 0.5s linear;
+            opacity: 0;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .page-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .post-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="myPostsLoading">იტვირთება...</div>
+        </div>
+    </div>
+
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" data-i18n="myPostsEditModalTitle">პოსტის რედაქტირება</h3>
+                <button class="modal-close" id="edit-modal-close">&times;</button>
+            </div>
+            <form id="edit-form">
+                <input type="hidden" id="edit-post-id">
+                <div class="form-group">
+                    <label for="edit-content" data-i18n="myPostsContentLabel">პოსტის აღწერა</label>
+                    <textarea id="edit-content" data-i18n="myPostsContentPlaceholder" placeholder="პოსტის აღწერა..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-region" data-i18n="myPostsRegionLabel">რეგიონი</label>
+                    <select id="edit-region" required>
+                        <option value="" disabled selected data-i18n="myPostsRegionPlaceholder">აირჩიეთ რეგიონი</option>
+                        <option value="afkhazeti" data-i18n="regionAbkhazia">აფხაზეთი</option>
+                        <option value="achara" data-i18n="regionAdjara">აჭარა</option>
+                        <option value="guria" data-i18n="regionGuria">გურია</option>
+                        <option value="imereti" data-i18n="regionImereti">იმერეთი</option>
+                        <option value="kakheti" data-i18n="regionKakheti">კახეთი</option>
+                        <option value="kvemo-kartli" data-i18n="regionKvemoKartli">ქვემო ქართლი</option>
+                        <option value="mtsketa-mtianeti" data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</option>
+                        <option value="racha-lechkhumi" data-i18n="regionRachaLechkhumi">რაჭა-ლეჩხუმი და ქვემო სვანეთი</option>
+                        <option value="samtskhe-javakheti" data-i18n="regionSamtskheJavakheti">სამცხე-ჯავახეთი</option>
+                        <option value="shida-kartli" data-i18n="regionShidaKartli">შიდა ქართლი</option>
+                        <option value="samegrelo-svaneti" data-i18n="regionSamegrelo">სამეგრელო-ზემო სვანეთი</option>
+                        <option value="tbilisi" data-i18n="regionTbilisi">თბილისი</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-location" data-i18n="myPostsLocationLabel">მდებარეობა</label>
+                    <input type="text" id="edit-location" data-i18n="myPostsLocationPlaceholder" placeholder="მიუთითეთ ზუსტი მდებარეობა" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="edit-cancel-btn" data-i18n="myPostsCancel">გაუქმება</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="myPostsSave">შენახვა</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" data-i18n="myPostsDeleteModalTitle">პოსტის წაშლა</h3>
+                <button class="modal-close" id="delete-modal-close">&times;</button>
+            </div>
+            <p data-i18n="myPostsDeleteConfirmation">დარწმუნებული ხართ, რომ გსურთ ამ პოსტის წაშლა? ეს მოქმედება შეუქცევადია.</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="delete-cancel-btn" data-i18n="myPostsCancel">გაუქმება</button>
+                <button type="button" class="btn btn-danger" id="delete-confirm-btn" data-i18n="myPostsDelete">წაშლა</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title" data-i18n="myPostsTitle">ჩემი პოსტები</h1>
+            <div class="page-actions">
+                <a href="addPost.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> <span data-i18n="myPostsNewPost">ახალი პოსტი</span>
+                </a>
+                <button class="btn btn-secondary" id="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> <span data-i18n="myPostsRefresh">განახლება</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="stats-container" id="stats-container">
+            <!-- Stats will be loaded dynamically -->
+        </div>
+
+        <div class="posts-container" id="posts-container">
+            <!-- Posts will be loaded dynamically -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './firebase-config.js';
+        import { 
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { 
+            collection,
+            query,
+            where,
+            doc,
+            getDoc,
+            getDocs,
+            updateDoc,
+            deleteDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const postsContainer = document.getElementById('posts-container');
+        const statsContainer = document.getElementById('stats-container');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const editModal = document.getElementById('edit-modal');
+        const editForm = document.getElementById('edit-form');
+        const editPostId = document.getElementById('edit-post-id');
+        const editContent = document.getElementById('edit-content');
+        const editRegion = document.getElementById('edit-region');
+        const editLocation = document.getElementById('edit-location');
+        const editModalClose = document.getElementById('edit-modal-close');
+        const editCancelBtn = document.getElementById('edit-cancel-btn');
+        const deleteModal = document.getElementById('delete-modal');
+        const deleteModalClose = document.getElementById('delete-modal-close');
+        const deleteCancelBtn = document.getElementById('delete-cancel-btn');
+        const deleteConfirmBtn = document.getElementById('delete-confirm-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const toast = document.getElementById('toast');
+
+        let userData = null;
+        let posts = [];
+        let postToDelete = null;
+
+        function t(key) {
+            return window.languageSwitcher ? window.languageSwitcher.translate(key) : key;
+        }
+
+        const regionKeyMap = {
+            'afkhazeti': 'regionAbkhazia',
+            'achara': 'regionAdjara',
+            'guria': 'regionGuria',
+            'imereti': 'regionImereti',
+            'kakheti': 'regionKakheti',
+            'kvemo-kartli': 'regionKvemoKartli',
+            'mtsketa-mtianeti': 'regionMtskhetaMtianeti',
+            'racha-lechkhumi': 'regionRachaLechkhumi',
+            'samtskhe-javakheti': 'regionSamtskheJavakheti',
+            'shida-kartli': 'regionShidaKartli',
+            'samegrelo-svaneti': 'regionSamegrelo',
+            'tbilisi': 'regionTbilisi'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            checkAuthState();
+            
+            window.addEventListener('languageChanged', function() {
+                renderStats();
+                renderPosts();
+            });
+        });
+
+        function setupEventListeners() {
+            refreshBtn.addEventListener('click', loadUserPosts);
+            
+            editModalClose.addEventListener('click', closeEditModal);
+            editCancelBtn.addEventListener('click', closeEditModal);
+            
+            deleteModalClose.addEventListener('click', closeDeleteModal);
+            deleteCancelBtn.addEventListener('click', closeDeleteModal);
+            deleteConfirmBtn.addEventListener('click', confirmDelete);
+            
+            editForm.addEventListener('submit', handleEditSubmit);
+            
+            editModal.addEventListener('click', function(e) {
+                if (e.target === editModal) {
+                    closeEditModal();
+                }
+            });
+            
+            deleteModal.addEventListener('click', function(e) {
+                if (e.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+        }
+
+        function checkAuthState() {
+            showLoading();
+            
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    await loadUserData(user);
+                    await loadUserPosts();
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+        }
+
+        async function loadUserData(user) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                
+                if (userDoc.exists()) {
+                    const userDataFromDB = userDoc.data();
+                    userData = {
+                        uid: user.uid,
+                        name: userDataFromDB.name || user.displayName || "",
+                        email: userDataFromDB.email || user.email,
+                        avatar: userDataFromDB.avatar || user.photoURL || ""
+                    };
+                } else {
+                    userData = {
+                        uid: user.uid,
+                        name: user.displayName || "",
+                        email: user.email,
+                        avatar: user.photoURL || ""
+                    };
+                }
+            } catch (error) {
+                console.error(t('myPostsErrorDesc'), error);
+            }
+        }
+
+        async function loadUserPosts() {
+            showLoading();
+            try {
+                const postsQuery = query(
+                    collection(db, "posts"), 
+                    where("authorId", "==", userData.uid)
+                );
+                
+                const querySnapshot = await getDocs(postsQuery);
+                posts = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const postData = doc.data();
+                    posts.push({
+                        id: doc.id,
+                        ...postData
+                    });
+                });
+                
+                posts.sort((a, b) => {
+                    const dateA = a.createdAt ? a.createdAt.toDate() : new Date(0);
+                    const dateB = b.createdAt ? b.createdAt.toDate() : new Date(0);
+                    return dateB - dateA;
+                });
+                
+                renderStats();
+                renderPosts();
+                hideLoading();
+            } catch (error) {
+                console.error(t('myPostsErrorDesc'), error);
+                postsContainer.innerHTML = `<div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-exclamation-circle"></i></div>
+                    <h2 class="empty-title">${t('myPostsErrorTitle')}</h2>
+                    <p class="empty-description">${t('myPostsErrorDesc')}</p>
+                </div>`;
+                hideLoading();
+            }
+        }
+
+        function renderStats() {
+            const totalPosts = posts.length;
+            const totalLikes = posts.reduce((sum, post) => sum + (post.likesCount || 0), 0);
+            const totalComments = posts.reduce((sum, post) => sum + (post.commentsCount || 0), 0);
+            const totalViews = posts.reduce((sum, post) => sum + (post.views || 0), 0);
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalPosts}</div>
+                    <div class="stat-label">${t('myPostsStatPosts')}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalLikes}</div>
+                    <div class="stat-label">${t('myPostsStatLikes')}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalComments}</div>
+                    <div class="stat-label">${t('myPostsStatComments')}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalViews}</div>
+                    <div class="stat-label">${t('myPostsStatViews')}</div>
+                </div>
+            `;
+        }
+
+        function renderPosts() {
+            if (posts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-file-alt"></i></div>
+                        <h2 class="empty-title">${t('myPostsNoPostsTitle')}</h2>
+                        <p class="empty-description">${t('myPostsNoPostsDesc')}</p>
+                        <a href="addPost.html" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> ${t('myPostsNewPost')}
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            postsContainer.innerHTML = posts.map(post => {
+                const postTime = post.createdAt ? formatDate(post.createdAt.toDate()) : t('myPostsTimeUnknown');
+                const regionKey = regionKeyMap[post.region];
+                const regionName = regionKey ? t(regionKey) : post.region;
+                const imageCount = post.images ? post.images.length : 0;
+                const likesCount = post.likesCount || 0;
+                const commentsCount = post.commentsCount || 0;
+                const viewsCount = post.views || 0;
+                
+                const previewImage = post.images && post.images.length > 0 ? 
+                    post.images[0] : 'https://via.placeholder.com/350x200?text=No+Image';
+                
+                const contentPreview = post.content.length > 100 ? 
+                    post.content.substring(0, 100) + '...' : post.content;
+                
+                return `
+                    <div class="post-card" data-post-id="${post.id}">
+                        <div class="post-image-container">
+                            <img src="${previewImage}" alt="Post image" class="post-image">
+                            ${imageCount > 1 ? `<div class="image-count">+${imageCount - 1}</div>` : ''}
+                        </div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <h3 class="post-title">${contentPreview}</h3>
+                                <div class="post-meta">
+                                    <span class="post-time">${postTime}</span>
+                                    <span class="post-status status-active">${t('myPostsStatusActive')}</span>
+                                </div>
+                            </div>
+                            <div class="post-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                ${post.location} • ${regionName}
+                            </div>
+                            <div class="post-stats">
+                                <div class="stat">
+                                    <i class="fas fa-heart"></i>
+                                    <span>${likesCount}</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-comment"></i>
+                                    <span>${commentsCount}</span>
+                                </div>
+                            </div>
+                            <div class="post-actions">
+                                <button class="action-btn btn-secondary" onclick="editPost('${post.id}')">
+                                    <i class="fas fa-edit"></i> ${t('myPostsEdit')}
+                                </button>
+                                <button class="action-btn btn-danger" onclick="deletePost('${post.id}')">
+                                    <i class="fas fa-trash"></i> ${t('myPostsDelete')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function editPost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            editPostId.value = postId;
+            editContent.value = post.content;
+            editRegion.value = post.region;
+            editLocation.value = post.location;
+            
+            editModal.style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            editModal.style.display = 'none';
+            editForm.reset();
+        }
+
+        async function handleEditSubmit(e) {
+            e.preventDefault();
+            
+            const postId = editPostId.value;
+            const content = editContent.value.trim();
+            const region = editRegion.value;
+            const location = editLocation.value.trim();
+            
+            if (!content || !region || !location) {
+                showToast(t('myPostsToastFillFields'));
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const postRef = doc(db, "posts", postId);
+                await updateDoc(postRef, {
+                    content,
+                    region,
+                    location,
+                    updatedAt: serverTimestamp()
+                });
+                
+                closeEditModal();
+                await loadUserPosts();
+                showToast(t('myPostsToastUpdateSuccess'));
+            } catch (error) {
+                console.error(t('myPostsToastUpdateError'), error);
+                showToast(t('myPostsToastUpdateError'));
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function deletePost(postId) {
+            postToDelete = postId;
+            deleteModal.style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            deleteModal.style.display = 'none';
+            postToDelete = null;
+        }
+
+        async function confirmDelete() {
+            if (!postToDelete) return;
+            
+            showLoading();
+            
+            try {
+                await deleteDoc(doc(db, "posts", postToDelete));
+                
+                closeDeleteModal();
+                await loadUserPosts();
+                showToast(t('myPostsToastDeleteSuccess'));
+            } catch (error) {
+                console.error(t('myPostsToastDeleteError'), error);
+                showToast(t('myPostsToastDeleteError'));
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - date;
+            const seconds = Math.floor(diff / 1000);
+            
+            if (seconds < 60) return seconds + ' ' + t('myPostsSecondsAgo');
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return minutes + ' ' + t('myPostsMinutesAgo');
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return hours + ' ' + t('myPostsHoursAgo');
+            
+            const dayNames = window.languageSwitcher.getDayNames();
+            const monthNames = window.languageSwitcher.getMonthNames();
+            
+            // Adjusted to use Georgian locale for day and month names if available from languageSwitcher
+            // Fallback to default toLocaleDateString if dayNames/monthNames are not properly set up.
+            if (dayNames && monthNames) {
+                return `${dayNames[date.getDay()]}, ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+            } else {
+                return date.toLocaleDateString('ka-GE', {
+                    weekday: 'long', // Not directly supported by toLocaleDateString without locale options
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+        }
+
+        function showLoading() {
+            loadingOverlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Make functions available globally for onclick handlers
+        window.editPost = editPost;
+        window.deletePost = deletePost;
+    </script>
+    <script src="translations.js"></script>
+    <script type="module" src="navbar.js"></script>
+</body>
+</html>

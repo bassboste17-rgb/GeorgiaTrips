@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Georgia Trips - abkhazia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Region Page Specific Styles */
+.region-hero {
+  height: 70vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.region-hero .hero-text h1 {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  animation: fadeInDown 1s ease;
+}
+
+.region-hero .hero-text p {
+  font-size: 1.8rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+  animation: fadeIn 1.5s ease;
+}
+
+.btn-hero {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #e5383b;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1s ease;
+  box-shadow: 0 4px 15px rgba(229, 56, 59, 0.4);
+}
+
+.btn-hero:hover {
+  background-color: #c1121f;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(229, 56, 59, 0.6);
+}
+
+.region-info {
+  padding: 5rem 0;
+  background-color: #1a1a2e;
+}
+
+.region-info .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.region-info h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  font-size: 2.5rem;
+  position: relative;
+}
+
+.region-info h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #e5383b;
+  margin: 1rem auto;
+}
+
+.region-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #b8b8b8;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background-color: #16213e;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(229, 56, 59, 0.3);
+}
+
+.stat-item i {
+  font-size: 3rem;
+  color: #e5383b;
+  margin-bottom: 1.5rem;
+}
+
+.stat-item h3 {
+  margin: 1rem 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+
+.stat-item p {
+  color: #b8b8b8;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.popular-places {
+  padding: 5rem 0;
+  background-color: #0f1419;
+}
+
+.popular-places .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.popular-places h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-size: 2.5rem;
+  position: relative;
+}
+
+.popular-places h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #e5383b;
+  margin: 1rem auto;
+}
+
+.section-subtitle {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  color: #b8b8b8;
+  font-size: 1.1rem;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+  color: #e5383b;
+}
+
+.loading-spinner i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.loading-spinner p {
+  color: #b8b8b8;
+  font-size: 1.2rem;
+}
+
+.no-items-message {
+  text-align: center;
+  padding: 3rem;
+  color: #b8b8b8;
+}
+
+.no-items-message i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #e5383b;
+}
+
+.no-items-message p {
+  font-size: 1.2rem;
+}
+
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.place-card {
+  background-color: #16213e;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.place-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(229, 56, 59, 0.4);
+}
+
+.place-card-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: rgba(229, 56, 59, 0.95);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.place-card-likes {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.place-card-likes i {
+  color: #e5383b;
+}
+
+.place-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.place-card:hover img {
+  transform: scale(1.05);
+}
+
+.place-info {
+  padding: 1.5rem;
+}
+
+.place-info h3 {
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
+.place-info p {
+  color: #b8b8b8;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.place-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.2rem 0;
+  font-size: 0.85rem;
+}
+
+.place-features span {
+  background-color: #0f1419;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  color: #b8b8b8;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.place-features i {
+  color: #e5383b;
+}
+
+.place-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.place-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.price-label {
+  color: #b8b8b8;
+  font-size: 0.85rem;
+}
+
+.price-value {
+  color: #e5383b;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background-color: #e5383b;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid #e5383b;
+  font-size: 0.9rem;
+}
+
+.btn-secondary:hover {
+  background-color: transparent;
+  color: #e5383b;
+}
+
+.cta-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #e5383b 0%, #c1121f 100%);
+  color: white;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.btn-cta {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background-color: white;
+  color: #e5383b;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cta:hover {
+  background-color: #f1f3f5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .region-hero .hero-text h1 {
+    font-size: 3rem;
+  }
+
+  .region-hero .hero-text p {
+    font-size: 1.5rem;
+  }
+
+  .places-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .region-hero {
+    height: 60vh;
+  }
+
+  .region-hero .hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .region-hero .hero-text p {
+    font-size: 1.2rem;
+  }
+
+  .region-info,
+  .popular-places {
+    padding: 3rem 0;
+  }
+
+  .places-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .place-card img {
+    height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .region-hero {
+    height: 50vh;
+  }
+
+  .region-hero .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .btn-hero {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .place-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .place-footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+    /* ამინდის სექციის სტილები - home.html-დან გადმოტანილი */
+    .weather-section {
+      padding: 3rem 1rem;
+      background: linear-gradient(135deg, rgba(35, 45, 65, 0.9) 0%, rgba(25, 35, 55, 0.85) 100%);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      margin: 4rem auto;
+      max-width: 70%;
+      width: 70%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    
+    .weather-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .weather-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .weather-controls select {
+      background: linear-gradient(145deg, rgba(50, 60, 80, 0.95), rgba(40, 50, 70, 0.9));
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      font-family: "BPG Glaho", sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .weather-controls select option {
+      background: rgba(40, 50, 70, 0.95);
+      color: #fff;
+    }
+    
+    .weather-controls select:hover {
+      border-color: rgba(229, 56, 59, 0.5);
+    }
+    
+    .weather-controls select:focus {
+      border-color: #e5383b;
+      box-shadow: 0 0 0 2px rgba(229, 56, 59, 0.3);
+    }
+    
+    .weather-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+    
+    .weather-card {
+      background: linear-gradient(145deg, rgba(50, 60, 80, 0.95), rgba(40, 50, 70, 0.9));
+      border-radius: 16px;
+      padding: 1.2rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .weather-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(229, 56, 59, 0.2);
+      border-color: rgba(229, 56, 59, 0.3);
+    }
+    
+    .weather-date {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #fff;
+    }
+    
+    .weather-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .weather-temp {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+    
+    .weather-description {
+      font-size: 0.9rem;
+      color: #c0c0c0;
+      margin-bottom: 0.8rem;
+    }
+    
+    .weather-details {
+      display: flex;
+      justify-content: space-around;
+      font-size: 0.8rem;
+      color: #b0b0b0;
+    }
+    
+    .weather-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .weather-detail i {
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+    }
+    
+    .loading-weather, .no-weather {
+      text-align: center;
+      padding: 3rem;
+      color: #aaa;
+      font-size: 1.2rem;
+      background: linear-gradient(145deg, rgba(50, 60, 80, 0.9), rgba(40, 50, 70, 0.85));
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .weather-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .weather-section h2 {
+        font-size: 1.8rem;
+      }
+      
+      .weather-section {
+        padding: 2rem 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .weather-controls {
+        flex-direction: column;
+      }
+      
+      .weather-controls select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');">
+    <div class="hero-text">
+      <h1 data-i18n="abkhaziaTitle">აფხაზეთი</h1>
+      <p data-i18n="abkhaziaSubtitle">ზღვა და მთები</p>
+      <a href="booking.html" class="btn-hero" data-i18n="abkhaziaBookTransport">ტრანსპორტის დაჯავშვნა</a>
+    </div>
+  </section>
+
+  <section class="region-info">
+    <div class="container">
+      <h2 data-i18n="abkhaziaAboutTitle">აფხაზეთის შესახებ</h2>
+      <p class="region-description" data-i18n="abkhaziaAboutDescription">აფხაზეთი - საქართველოს ავტონომიური რესპუბლიკა, რომელიც მდებარეობს ქვეყნის ჩრდილო-დასავლეთ ნაწილში, შავი ზღვის სანაპიროზე. რეგიონი ცნობილია თავისი უნიკალური ბუნებით, ზღვისპირა კურორტებით და მდიდარი ისტორიით. აფხაზეთი არის ერთ-ერთი ყველაზე ლამაზი რეგიონი შავი ზღვის სანაპიროზე.</p>
+      
+      <div class="stats-grid">
+        <div class="stat-item">
+          <i class="fas fa-map-marked-alt"></i>
+          <h3 data-i18n="abkhaziaStatArea">ფართობი</h3>
+          <p>8,660 <span data-i18n="unitKmSquared">კმ²</span></p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-users"></i>
+          <h3 data-i18n="abkhaziaStatPopulation">მოსახლეობა</h3>
+          <p>~245,000</p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-city"></i>
+          <h3 data-i18n="abkhaziaStatCapital">ადმინისტრაციული ცენტრი</h3>
+          <p data-i18n="regionSukhumi">სოხუმი</p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-water"></i>
+          <h3 data-i18n="abkhaziaStatCoastline">ზღვისპირა ზოლი</h3>
+          <p>210 <span data-i18n="unitKm">კმ</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="weather-section">
+    <h2 data-i18n="abkhaziaWeatherTitle">ამინდის პროგნოზი - აფხაზეთი</h2>
+    <div class="weather-controls">
+      <select id="forecast-type">
+        <option value="current" data-i18n="homeCurrentWeather">მიმდინარე ამინდი</option>
+        <option value="24h" data-i18n="home24Hours">24 საათი</option>
+        <option value="7day" data-i18n="home7Days">7 დღე</option>
+        <option value="30day" data-i18n="home15Days">15 დღე</option>
+      </select>
+    </div>
+    <div id="weather-container" class="weather-container">
+      <div class="loading-weather" data-i18n="homeLoading">იტვირთება...</div>
+    </div>
+  </section>
+
+  <!-- ტურების სექცია - დამალული თუ ცარიელია -->
+  <section class="popular-places tours-section" id="toursSectionWrapper" style="display: none;">
+    <div class="container">
+      <h2><i class="fas fa-route"></i> <span data-i18n="abkhaziaToursTitle">ტურები</span></h2>
+      <p class="section-subtitle" data-i18n="abkhaziaToursSubtitle">აფხაზეთში ხელმისაწვდომი ტურისტული ტურები</p>
+      
+      <div id="toursLoadingSpinner" class="loading-spinner" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p data-i18n="homeLoading">იტვირთება...</p>
+      </div>
+      
+      <div class="places-grid" id="toursGrid"></div>
+    </div>
+  </section>
+
+  <!-- ტრანსპორტის სექცია - დამალული თუ ცარიელია -->
+  <section class="popular-places transport-section" id="transportSectionWrapper" style="display: none;">
+    <div class="container">
+      <h2><i class="fas fa-car"></i> <span data-i18n="abkhaziaTransportTitle">ტრანსპორტი</span></h2>
+      <p class="section-subtitle" data-i18n="abkhaziaTransportSubtitle">აფხაზეთში ხელმისაწვდომი ტრანსპორტის საშუალებები</p>
+      
+      <div id="transportLoadingSpinner" class="loading-spinner" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p data-i18n="homeLoading">იტვირთება...</p>
+      </div>
+      
+      <div class="places-grid" id="transportGrid"></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-i18n="abkhaziaCTATitle">მოემზადეთ თქვენი მოგზაურობისთვის აფხაზეთში</h2>
+      <p data-i18n="abkhaziaCTADescription">დააჯავშნეთ თქვენი ტრანსპორტი ახლავე და ისიამოვნეთ</p>
+      <a href="booking.html" class="btn-cta" data-i18n="abkhaziaCTAButton">დაჯავშნა ახლავე</a>
+    </div>
+  </section>
+   <div id="footer"></div>
+
+  <script src="translations.js"></script>
+  <script type="module">
+  import { db } from "./firebase-config.js"
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+
+  const REGION_NAME = "აფხაზეთი"
+
+  // სოხუმის კოორდინატები Open-Meteo API-სთვის
+  const REGION_COORDS = { lat: 43.0015, lon: 41.0234 }
+
+  function getTranslationKeyForValue(value, category) {
+    if (!value) return null;
+    
+    const mappings = {
+      fuelType: {
+        'ბენზინი': 'fuelTypePetrol',
+        'დიზელი': 'fuelTypeDiesel',
+        'ელექტრო': 'fuelTypeElectric',
+        'ჰიბრიდი': 'fuelTypeHybrid',
+        'გაზი': 'fuelTypeGas'
+      },
+      transmission: {
+        'მექანიკური': 'transmissionManual',
+        'ავტომატიკური': 'transmissionAutomatic'
+      },
+      color: {
+        'შავი': 'colorBlack',
+        'თეთრი': 'colorWhite',
+        'ნაცრისფერი': 'colorGray',
+        'ვერცხლისფერი': 'colorSilver',
+        'წითელი': 'colorRed',
+        'ლურჯი': 'colorBlue',
+        'ყავისფერი': 'colorBrown',
+        'ოქროსფერი': 'colorGold',
+        'ნარინჯისფერი': 'colorOrange',
+        'მწვანე': 'colorGreen',
+        'ყვითალი': 'colorYellow',
+        'ღია ლურჯი': 'colorLightBlue',
+        'მუქი ლურჯი': 'colorDarkBlue',
+        'ბორდო': 'colorBordeaux'
+      },
+      carType: {
+        'სედანი': 'bookingCarTypeSedan',
+        'ჯიპი': 'bookingCarTypeJeep',
+        'მინივენი': 'bookingCarTypeMinivan',
+        'ავტობუსი': 'bookingCarTypeBus'
+      },
+      type: {
+        'კულტურული': 'tourTypeCultural',
+        'სათავგადასავლო': 'tourTypeSightseeing',
+        'გასტრონომიული': 'tourTypeGastronomic',
+        'ისტორიული': 'tourTypeHistorical',
+        'ბუნება': 'tourTypeNature'
+      },
+      region: {
+        'თბილისი': 'regionTbilisi',
+        'ბათუმი': 'regionBatumi',
+        'ქუთაისი': 'regionKutaisi',
+        'რუსთავი': 'regionRustavi',
+        'გორი': 'regionGori',
+        'ზუგდიდი': 'regionZugdidi',
+        'თელავი': 'regionTelavi',
+        'ფოთი': 'regionPoti',
+        'ახალციხე': 'regionAkhaltsikhe',
+        'ხაშური': 'regionKhashuri',
+        'სენაკი': 'regionSenaki',
+        'ზესტაფონი': 'regionZestafoni',
+        'მარნეული': 'regionMarneuli',
+        'თერჯოლა': 'regionTerjola',
+        'ოზურგეთი': 'regionOzurgeti',
+        'ქობულეთი': 'regionKobuleti',
+        'კასპი': 'regionKaspi',
+        'ახალქალაქი': 'regionAkhalkalaki',
+        'ცაგერი': 'regionTsageri',
+        'საგარეჯო': 'regionSagarejo',
+        'ბორჯომი': 'regionBorjomi',
+        'თიანეთი': 'regionTianeti',
+        'ბოლნისი': 'regionBolnisi',
+        'ახმეტა': 'regionAkhmeta',
+        'ყვარელი': 'regionKvareli',
+        'დედოფლისწყარო': 'regionDedoplistskaro',
+        'ონი': 'regionOni',
+        'ამბროლაური': 'regionAmbrolauri',
+        'ნინოწმინდა': 'regionNinotsminda',
+        'მცხეთა': 'regionMtskheta',
+        'დუშეთი': 'regionDusheti',
+        'გურჯაანი': 'regionGurjaani',
+        'სიღნაღი': 'regionSignaghi',
+        'ლაგოდეხი': 'regionLagodekhi',
+        'წალენჯიხა': 'regionTsalenjikha',
+        'ჩხოროწყუ': 'regionChkhorotsku',
+        'წალკა': 'regionTsalka',
+        'ყაზბეგი': 'regionKazbegi',
+        'დმანისი': 'regionDmanisi',
+        'ქარელი': 'regionKareli',
+        'ვანი': 'regionVani',
+        'ხონი': 'regionKhoni',
+        'აბაშა': 'regionAbasha',
+        'სამტრედია': 'regionSamtredia',
+        'მარტვილი': 'regionMartvili',
+        'ბაღდათი': 'regionBaghdati',
+        'ტყიბული': 'regionTkibuli',
+        'ჩიათურა': 'regionChiatura',
+        'წყალტუბო': 'regionTskaltubo',
+        'ხარაგაული': 'regionKharagauli',
+        'საჩხერე': 'regionSachkhere',
+        'აფხაზეთი': 'regionAbkhazia',
+        'სამეგრელო': 'regionSamegrelo',
+        'იმერეთი': 'regionImereti',
+        'კახეთი': 'regionKakheti',
+        'გურია': 'regionGuria',
+        'აჭარა': 'regionAdjara',
+        'რაჭა': 'regionRacha',
+        'სვანეთი': 'regionSvaneti',
+        'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
+        'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
+        'შიდა ქართლი': 'regionShidaKartli',
+        'ქვემო ქართლი': 'regionKvemoKartli',
+        'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi'
+      }
+    };
+    
+    const categoryMap = mappings[category];
+    if (!categoryMap) return null;
+    
+    const key = categoryMap[value];
+    return key || null;
+  }
+
+  function translateValue(value, category) {
+    if (!value) return '';
+    
+    const key = getTranslationKeyForValue(value, category);
+    if (key && window.languageSwitcher) {
+      return window.languageSwitcher.translate(key);
+    }
+    
+    return value;
+  }
+
+  // ტურების ჩატვირთვა - თუ ცარიელია სექცია დამალული რჩება
+  async function loadTours() {
+    const sectionWrapper = document.getElementById("toursSectionWrapper")
+    const toursGrid = document.getElementById("toursGrid")
+
+    try {
+      toursGrid.innerHTML = ""
+
+      // Query all tours (no query limitations)
+      const toursSnapshot = await getDocs(collection(db, "tours"))
+      
+      // Filter results on client side to include items with 'all' or current region
+      const tours = toursSnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data(), category: "tour" }))
+        .filter(tour => {
+          const regions = tour.regions
+          if (!regions) return false
+          if (!Array.isArray(regions)) return false
+          // Include if regions contains 'all' OR includes current region
+          return regions.includes("all") || regions.includes(REGION_NAME)
+        })
+
+      // თუ ტურები არ არის, სექცია დამალული რჩება
+      if (tours.length === 0) {
+        sectionWrapper.style.display = "none"
+        return
+      }
+
+      // თუ ტურები არის, სექცია გამოჩნდება
+      sectionWrapper.style.display = "block"
+
+      tours.forEach((tour) => {
+        const card = createPlaceCard(tour)
+        toursGrid.innerHTML += card
+      })
+    } catch (error) {
+      console.error("Error loading tours:", error)
+      sectionWrapper.style.display = "none"
+    }
+  }
+
+  // ტრანსპორტის ჩატვირთვა - თუ ცარიელია სექცია დამალული რჩება
+  async function loadTransport() {
+    const sectionWrapper = document.getElementById("transportSectionWrapper")
+    const transportGrid = document.getElementById("transportGrid")
+
+    try {
+      transportGrid.innerHTML = ""
+
+      // Query all cars (no query limitations)
+      const carsSnapshot = await getDocs(collection(db, "cars"))
+      
+      // Filter results on client side to include items with 'all' or current region
+      const cars = carsSnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data(), category: "car" }))
+        .filter(car => {
+          const regions = car.regions
+          if (!regions) return false
+          if (!Array.isArray(regions)) return false
+          // Include if regions contains 'all' OR includes current region
+          return regions.includes("all") || regions.includes(REGION_NAME)
+        })
+
+      // თუ მანქანები არ არის, სექცია დამალული რჩება
+      if (cars.length === 0) {
+        sectionWrapper.style.display = "none"
+        return
+      }
+
+      // თუ მანქანები არის, სექცია გამოჩნდება
+      sectionWrapper.style.display = "block"
+
+      cars.forEach((car) => {
+        const card = createPlaceCard(car)
+        transportGrid.innerHTML += card
+      })
+    } catch (error) {
+      console.error("Error loading transport:", error)
+      sectionWrapper.style.display = "none"
+    }
+  }
+
+  function createPlaceCard(item) {
+    const imageUrl =
+      item.images?.[0] ||
+      `https://via.placeholder.com/400x250/1a1a2e/ffffff?text=${encodeURIComponent(item.name || "No Image")}`
+
+    const isCar = item.category === "car"
+    const icon = isCar ? "fa-car" : "fa-route"
+    
+    const currentLang = window.languageSwitcher ? window.languageSwitcher.getCurrentLanguage() : 'ka'
+    
+    const categoryLabel = window.languageSwitcher ? (isCar ? window.languageSwitcher.translate('abkhaziaTransportLabel') : window.languageSwitcher.translate('abkhaziaTourLabel')) : (isCar ? "ტრანსპორტი" : "ტური")
+    
+    const displayName = (currentLang !== 'ka' && item.nameTranslations?.[currentLang]) ? item.nameTranslations[currentLang] : item.name
+    const displayDescription = (currentLang !== 'ka' && item.descriptionTranslations?.[currentLang]) ? item.descriptionTranslations[currentLang] : (item.description || (window.languageSwitcher?.translate('abkhaziaNoDescription') || "აღწერა არ არის მითითებული"))
+    
+    const displayType = translateValue(item.type, isCar ? 'carType' : 'type')
+
+    const seatsLabel = window.languageSwitcher?.translate('abkhaziaSeatsLabel') || "ადგილი"
+    const doorsLabel = window.languageSwitcher?.translate('abkhaziaDoorsLabel') || "კარი"
+    const peopleLabel = window.languageSwitcher?.translate('abkhaziaPeopleLabel') || "ადამიანი"
+    const routeLabel = window.languageSwitcher?.translate('abkhaziaRouteLabel') || "მარშრუტი"
+
+    const displayDuration = (currentLang !== 'ka' && item.durationTranslations?.[currentLang]) ? item.durationTranslations[currentLang] : item.duration
+    const displayRoute = (currentLang !== 'ka' && item.routeTranslations?.[currentLang]) ? item.routeTranslations[currentLang] : item.route
+
+    const features = isCar
+      ? `
+        <span><i class="fas fa-car"></i> ${displayType}</span>
+        <span><i class="fas fa-users"></i> ${item.seats || "N/A"} ${seatsLabel}</span>
+        <span><i class="fas fa-door-open"></i> ${item.doors || "N/A"} ${doorsLabel}</span>
+      `
+      : `
+        <span><i class="fas fa-route"></i> ${displayDuration || "N/A"}</span>
+        <span><i class="fas fa-users"></i> ${item.capacity || "N/A"} ${peopleLabel}</span>
+        <span><i class="fas fa-map-marked-alt"></i> ${displayRoute || routeLabel}</span>
+      `
+
+    const likes = item.likes || 0
+    
+    const priceLabel = window.languageSwitcher?.translate('abkhaziaPriceLabel') || "ფასი"
+    const bookingLabel = window.languageSwitcher?.translate('abkhaziaBookingButton') || "დაჯავშნა"
+    const perDayLabel = window.languageSwitcher?.translate('bookingPerDay') || "/დღე"
+
+    return `
+      <div class="place-card">
+        <div class="place-card-badge">
+          <i class="fas ${icon}"></i> ${categoryLabel}
+        </div>
+        <div class="place-card-likes">
+          <i class="fas fa-heart"></i> ${likes}
+        </div>
+        <img src="${imageUrl}" alt="${displayName}" loading="lazy">
+        <div class="place-info">
+          <h3>${displayName}</h3>
+          <p>${displayDescription}</p>
+          <div class="place-features">
+            ${features}
+          </div>
+          <div class="place-footer">
+            <div class="place-price">
+              <span class="price-label">${priceLabel}:</span>
+              <span class="price-value">${item.pricePerDay || "N/A"}₾${perDayLabel}</span>
+            </div>
+            <a href="booking.html?id=${item.id}&type=${isCar ? "car" : "tour"}" class="btn-secondary">${bookingLabel}</a>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  // ამინდის ფუნქციები - home.html-დან გადმოტანილი (Open-Meteo API)
+  function getGeorgianWeatherDescriptionFromCode(code) {
+    const descriptions = {
+      0: 'weatherCode0',
+      1: 'weatherCode1',
+      2: 'weatherCode2',
+      3: 'weatherCode3',
+      45: 'weatherCode45',
+      48: 'weatherCode48',
+      51: 'weatherCode51',
+      53: 'weatherCode53',
+      55: 'weatherCode55',
+      56: 'weatherCode56',
+      57: 'weatherCode57',
+      61: 'weatherCode61',
+      63: 'weatherCode63',
+      65: 'weatherCode65',
+      66: 'weatherCode66',
+      67: 'weatherCode67',
+      71: 'weatherCode71',
+      73: 'weatherCode73',
+      75: 'weatherCode75',
+      77: 'weatherCode77',
+      80: 'weatherCode80',
+      81: 'weatherCode81',
+      82: 'weatherCode82',
+      85: 'weatherCode85',
+      86: 'weatherCode86',
+      95: 'weatherCode95',
+      96: 'weatherCode96',
+      99: 'weatherCode99'
+    };
+    return descriptions[code] || 'weatherCodeUnknown';
+  }
+
+  function getWeatherIconFromCode(code) {
+    if (code === 0) return 'fas fa-sun';
+    if (code >= 1 && code <= 3) return 'fas fa-cloud-sun';
+    if (code >= 45 && code <= 48) return 'fas fa-smog';
+    if ((code >= 51 && code <= 57) || (code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return 'fas fa-cloud-rain';
+    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return 'fas fa-snowflake';
+    if (code >= 95 && code <= 99) return 'fas fa-bolt';
+    return 'fas fa-cloud';
+  }
+
+  function formatGeorgianDate(date) {
+    const dayNames = window.languageSwitcher ? window.languageSwitcher.getDayNames() : ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
+    const monthNames = window.languageSwitcher ? window.languageSwitcher.getMonthNames() : ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
+    
+    const day = dayNames[date.getDay()];
+    const dayNumber = date.getDate();
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    
+    return `${day}, ${dayNumber} ${month}, ${year}`;
+  }
+
+  function formatGeorgianTime(date) {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  function displayWeatherData(data, forecastType) {
+    const weatherContainer = document.getElementById('weather-container');
+    weatherContainer.innerHTML = '';
+    
+    if (forecastType === 'current') {
+      const card = createCurrentWeatherCard(data);
+      weatherContainer.appendChild(card);
+    } else if (forecastType === '24h') {
+      const hourly = data.hourly;
+      const currentHour = new Date().getHours();
+      
+      for (let i = currentHour; i < Math.min(currentHour + 24, hourly.time.length); i++) {
+        const forecast = {
+          time: hourly.time[i],
+          temp_c: hourly.temperature_2m[i],
+          humidity: hourly.relative_humidity_2m[i],
+          wind_kph: hourly.wind_speed_10m[i],
+          weather_code: hourly.weather_code[i]
+        };
+        const card = createHourlyForecastCard(forecast);
+        weatherContainer.appendChild(card);
+      }
+    } else {
+      const daily = data.daily;
+      const limit = forecastType === '30day' ? 16 : 7;
+      
+      for (let i = 0; i < Math.min(limit, daily.time.length); i++) {
+        const forecast = {
+          date: daily.time[i],
+          temp_max: daily.temperature_2m_max[i],
+          temp_min: daily.temperature_2m_min[i],
+          wind_kph: daily.wind_speed_10m_max[i],
+          weather_code: daily.weather_code[i]
+        };
+        const card = createDailyForecastCard(forecast);
+        weatherContainer.appendChild(card);
+      }
+    }
+  }
+
+  function createCurrentWeatherCard(data) {
+    const card = document.createElement('div');
+    card.className = 'weather-card';
+    
+    const date = new Date();
+    const dateString = formatGeorgianDate(date);
+    const timeString = formatGeorgianTime(date);
+    const icon = getWeatherIconFromCode(data.current.weather_code);
+    const descriptionKey = getGeorgianWeatherDescriptionFromCode(data.current.weather_code);
+    const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
+    
+    card.innerHTML = `
+      <div class="weather-date">${dateString}<br>${timeString}</div>
+      <div class="weather-icon"><i class="${icon}"></i></div>
+      <div class="weather-temp">${Math.round(data.current.temperature_2m)}°C</div>
+      <div class="weather-description">${description}</div>
+      <div class="weather-details">
+        <div class="weather-detail">
+          <i class="fas fa-tint"></i>
+          <span>${data.current.relative_humidity_2m}%</span>
+        </div>
+        <div class="weather-detail">
+          <i class="fas fa-wind"></i>
+          <span>${Math.round(data.current.wind_speed_10m)} კმ/სთ</span>
+        </div>
+        <div class="weather-detail">
+          <i class="fas fa-compress-alt"></i>
+          <span>${Math.round(data.current.pressure_msl)} hPa</span>
+        </div>
+      </div>
+    `;
+    
+    return card;
+  }
+
+  function createHourlyForecastCard(forecast) {
+    const card = document.createElement('div');
+    card.className = 'weather-card';
+    
+    const date = new Date(forecast.time);
+    const timeString = formatGeorgianTime(date);
+    const icon = getWeatherIconFromCode(forecast.weather_code);
+    const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
+    const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
+    
+    card.innerHTML = `
+      <div class="weather-date">${timeString}</div>
+      <div class="weather-icon"><i class="${icon}"></i></div>
+      <div class="weather-temp">${Math.round(forecast.temp_c)}°C</div>
+      <div class="weather-description">${description}</div>
+      <div class="weather-details">
+        <div class="weather-detail">
+          <i class="fas fa-tint"></i>
+          <span>${forecast.humidity}%</span>
+        </div>
+        <div class="weather-detail">
+          <i class="fas fa-wind"></i>
+          <span>${Math.round(forecast.wind_kph)} კმ/სთ</span>
+        </div>
+      </div>
+    `;
+    
+    return card;
+  }
+
+  function createDailyForecastCard(forecast) {
+    const card = document.createElement('div');
+    card.className = 'weather-card';
+    
+    const date = new Date(forecast.date);
+    const dateString = formatGeorgianDate(date);
+    const icon = getWeatherIconFromCode(forecast.weather_code);
+    const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
+    const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
+    
+    const avgTemp = (forecast.temp_max + forecast.temp_min) / 2;
+    
+    card.innerHTML = `
+      <div class="weather-date">${dateString}</div>
+      <div class="weather-icon"><i class="${icon}"></i></div>
+      <div class="weather-temp">${Math.round(avgTemp)}°C</div>
+      <div class="weather-description">${description}</div>
+      <div class="weather-details">
+        <div class="weather-detail">
+          <i class="fas fa-temperature-high"></i>
+          <span>${Math.round(forecast.temp_max)}°C</span>
+        </div>
+        <div class="weather-detail">
+          <i class="fas fa-temperature-low"></i>
+          <span>${Math.round(forecast.temp_min)}°C</span>
+        </div>
+        <div class="weather-detail">
+          <i class="fas fa-wind"></i>
+          <span>${Math.round(forecast.wind_kph)} კმ/სთ</span>
+        </div>
+      </div>
+    `;
+    
+    return card;
+  }
+
+  async function fetchWeatherData() {
+    const forecastType = document.getElementById('forecast-type').value;
+    const weatherContainer = document.getElementById('weather-container');
+    
+    weatherContainer.innerHTML = `<div class="loading-weather">${window.languageSwitcher?.translate('homeLoading') || 'იტვირთება...'}</div>`;
+    
+    try {
+      let url = '';
+      
+      if (forecastType === 'current') {
+        url = `https://api.open-meteo.com/v1/forecast?latitude=${REGION_COORDS.lat}&longitude=${REGION_COORDS.lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,pressure_msl&timezone=auto`;
+      } else if (forecastType === '24h') {
+        url = `https://api.open-meteo.com/v1/forecast?latitude=${REGION_COORDS.lat}&longitude=${REGION_COORDS.lon}&hourly=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto&forecast_days=2`;
+      } else if (forecastType === '7day') {
+        url = `https://api.open-meteo.com/v1/forecast?latitude=${REGION_COORDS.lat}&longitude=${REGION_COORDS.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&timezone=auto&forecast_days=7`;
+      } else if (forecastType === '30day') {
+        url = `https://api.open-meteo.com/v1/forecast?latitude=${REGION_COORDS.lat}&longitude=${REGION_COORDS.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max&timezone=auto&forecast_days=16`;
+      }
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      displayWeatherData(data, forecastType);
+    } catch (error) {
+      console.error('ამინდის მონაცემების მიღების შეცდომა:', error);
+      weatherContainer.innerHTML = `<div class="no-weather">${window.languageSwitcher?.translate('homeWeatherLoadError') || 'ამინდის მონაცემების მიღება ვერ მოხერხდა. გთხოვთ სცადოთ მოგვიანებით.'}</div>`;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadTours()
+    loadTransport()
+    
+    // ამინდის ჩატვირთვა
+    document.getElementById('forecast-type').addEventListener('change', fetchWeatherData);
+    fetchWeatherData();
+    
+    window.addEventListener('languageChanged', () => {
+      setTimeout(() => {
+        loadTours()
+        loadTransport()
+        fetchWeatherData()
+      }, 100)
+    })
+  })
+  </script>
+  <script type="module" src="navbar.js"></script>
+  <script src="/pages/js/footer.js"></script>
+</body>
+</html>

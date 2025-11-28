@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Georgia Trips - about us</title>
+  <link rel="stylesheet" href="/pages/css/about.css" />
+  <link rel="stylesheet" href="/pages/css/navbar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <!-- Enhanced hero section with animated gradient background -->
+  <section class="about-hero">
+    <div class="hero-background"></div>
+    <div class="about-hero-text">
+      <h1 class="fade-in-up" data-i18n="aboutHeroTitle">ჩვენს შესახებ</h1>
+      <p class="fade-in-up delay-1" data-i18n="aboutHeroSubtitle">პატარა გუნდი დიდი მისიით — გავხადოთ თქვენი მგზავრობა უსაფრთხო და სასიამოვნო.</p>
+    </div>
+  </section>
+
+  <!-- Enhanced statistics section with better animations -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="stat-icon">
+            <i class="fas fa-car"></i>
+          </div>
+          <div class="stat-number" data-target="0" id="carsCount">0</div>
+          <div class="stat-label" data-i18n="aboutStatTransport">ტრანსპორტი</div>
+          <div class="stat-progress">
+            <div class="stat-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="stat-icon">
+            <i class="fas fa-route"></i>
+          </div>
+          <div class="stat-number" data-target="0" id="toursCount">0</div>
+          <div class="stat-label" data-i18n="aboutStatTours">ტურები</div>
+          <div class="stat-progress">
+            <div class="stat-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="stat-number" data-target="0" id="bookingsCount">0</div>
+          <div class="stat-label" data-i18n="aboutStatBookings">დაჯავშნები</div>
+          <div class="stat-progress">
+            <div class="stat-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-number" data-target="0" id="usersCount">0</div>
+          <div class="stat-label" data-i18n="aboutStatUsers">მომხმარებლები</div>
+          <div class="stat-progress">
+            <div class="stat-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-content">
+    <div class="container">
+      <!-- Added scroll-triggered animations to content sections -->
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutWhoAreWeTitle">ვინ ვართ ჩვენ?</h2>
+        <p>
+          <span data-i18n="aboutWhoAreWeText">ჩვენ ვართ მცირე გუნდი ენთუზიასტებისგან, რომელთაც წლებია უმაღლეს ხარისხს ვთავაზობთ საქართველოს გზებზე. ჩვენი პრიორიტეტია</span>
+          <strong data-i18n="aboutSafety">უსაფრთხოება, გამოცდილება</strong> <span data-i18n="aboutAnd">და</span> <strong data-i18n="aboutLocalKnowledge">ადგილობრივი ცოდნა</strong> <span data-i18n="aboutWhoAreWeTextEnd">— სწორედ ეს გამოგვარჩევს სხვებისგან.</span>
+        </p>
+      </div>
+
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutWhyUsTitle">რატომ ჩვენ?</h2>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureCleanTransport">მოწესრიგებული და სუფთა ტრანსპორტი</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureProfessionalDrivers">პროფესიონალი მძღოლები</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureRoutePrep">მარშრუტის ზუსტი დაგეგმვა</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureFriendly">მეგობრული დამოკიდებულება</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureSupport">24/7 მხარდაჭერა</span></li>
+          <li><i class="fas fa-check"></i> <span data-i18n="aboutFeatureCompetitivePrices">კონკურენტული ფასები</span></li>
+        </ul>
+      </div>
+
+      <!-- Enhanced detailed statistics with better visual design -->
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutAchievementsTitle">ჩვენი მიღწევები რიცხვებში</h2>
+        <div class="detailed-stats">
+          <div class="detailed-stat-item">
+            <div class="stat-item-icon">
+              <i class="fas fa-car-side"></i>
+            </div>
+            <div class="stat-item-content">
+              <strong id="carsDetailCount">0</strong>
+              <span data-i18n="aboutAchievementTransport">ტრანსპორტის ერთეული სხვადასხვა კატეგორიაში</span>
+            </div>
+          </div>
+          <div class="detailed-stat-item">
+            <div class="stat-item-icon">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="stat-item-content">
+              <strong id="toursDetailCount">0</strong>
+              <span data-i18n="aboutAchievementTours">საინტერესო ტური საქართველოს მასშტაბით</span>
+            </div>
+          </div>
+          <div class="detailed-stat-item">
+            <div class="stat-item-icon">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <div class="stat-item-content">
+              <strong id="bookingsDetailCount">0</strong>
+              <span data-i18n="aboutAchievementBookings">წარმატებით შესრულებული დაჯავშნა</span>
+            </div>
+          </div>
+          <div class="detailed-stat-item">
+            <div class="stat-item-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div class="stat-item-content">
+              <strong id="usersDetailCount">0</strong>
+              <span data-i18n="aboutAchievementUsers">კმაყოფილი მომხმარებელი</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-quote fade-in-section">
+        <i class="fas fa-quote-left quote-icon"></i>
+        <p data-i18n="aboutQuote">"მგზავრობა მხოლოდ გადაადგილება არაა — ეს არის გამოცდილება, და ჩვენ მას საუკეთესოდ ვაკეთებთ."</p>
+        <i class="fas fa-quote-right quote-icon"></i>
+      </div>
+
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutMissionTitle">ჩვენი მისია</h2>
+        <p data-i18n="aboutMissionText">
+          ჩვენი მისიაა გავხადოთ მგზავრობა საქართველოში ხელმისაწვდომი, უსაფრთხო და დაუვიწყარი ყველასთვის.
+          ვცდილობთ, რომ თითოეული მგზავრობა იყოს არა მხოლოდ გადაადგილება წერტილიდან A წერტილამდე B,
+          არამედ სრულყოფილი გამოცდილება, რომელიც გაგიხსნით საქართველოს სილამაზეს.
+        </p>
+      </div>
+
+      <!-- Enhanced values section with better card design -->
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutValuesTitle">ჩვენი ღირებულებები</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon-wrapper">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 data-i18n="aboutValueSafetyTitle">უსაფრთხოება</h3>
+            <p data-i18n="aboutValueSafetyText">თქვენი უსაფრთხოება ჩვენი პირველი პრიორიტეტია. ყველა ტრანსპორტი რეგულარულად გადის ტექნიკურ შემოწმებას.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon-wrapper">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3 data-i18n="aboutValueQualityTitle">ხარისხი</h3>
+            <p data-i18n="aboutValueQualityText">ვთავაზობთ მხოლოდ მაღალი ხარისხის სერვისს და კომფორტულ ტრანსპორტს.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon-wrapper">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3 data-i18n="aboutValueReliabilityTitle">სანდოობა</h3>
+            <p data-i18n="aboutValueReliabilityText">ჩვენ ვიცავთ ჩვენს დანაპირებს და ყოველთვის ვართ დროზე.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon-wrapper">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 data-i18n="aboutValueCareTitle">მზრუნველობა</h3>
+            <p data-i18n="aboutValueCareText">თითოეული კლიენტი ჩვენთვის განსაკუთრებულია და ვზრუნავთ მის კომფორტზე.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enhanced testimonials section with review management -->
+      <div class="content-block fade-in-section">
+        <h2 data-i18n="aboutReviewsTitle">რას ამბობენ ჩვენი კლიენტები</h2>
+        
+        <!-- Review submission form (only visible to users with completed bookings) -->
+        <div class="review-submission-section" id="reviewSubmissionSection" style="display: none;">
+          <div class="review-form-card">
+            <h3 data-i18n="aboutLeaveReview">${t('aboutLeaveReview')}</h3>
+            <form id="reviewForm">
+              <div class="form-group">
+                <label data-i18n="aboutRating">${t('aboutRating')} *</label>
+                <div class="star-rating-input">
+                  <i class="fas fa-star" data-rating="1"></i>
+                  <i class="fas fa-star" data-rating="2"></i>
+                  <i class="fas fa-star" data-rating="3"></i>
+                  <i class="fas fa-star" data-rating="4"></i>
+                  <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="ratingValue" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="reviewRegion" data-i18n="aboutRegion">${t('aboutRegion')} *</label>
+                <select id="reviewRegion" required>
+                  <option value="" data-i18n="aboutSelectRegion">${t('aboutSelectRegion')}</option>
+                  <option value="თბილისი">თბილისი</option>
+                  <option value="ბათუმი">ბათუმი</option>
+                  <option value="ქუთაისი">ქუთაისი</option>
+                  <option value="რუსთავი">რუსთავი</option>
+                  <option value="გორი">გორი</option>
+                  <option value="ზუგდიდი">ზუგდიდი</option>
+                  <option value="ფოთი">ფოთი</option>
+                  <option value="ხაშური">ხაშური</option>
+                  <option value="სამტრედია">სამტრედია</option>
+                  <option value="სენაკი">სენაკი</option>
+                  <option value="ზესტაფონი">ზესტაფონი</option>
+                  <option value="მარნეული">მარნეული</option>
+                  <option value="თელავი">თელავი</option>
+                  <option value="ახალციხე">ახალციხე</option>
+                  <option value="ქობულეთი">ქობულეთი</option>
+                  <option value="ოზურგეთი">ოზურგეთი</option>
+                  <option value="კასპი">კასპი</option>
+                  <option value="ჭიათურა">ჭიათურა</option>
+                  <option value="ცხინვალი">ცხინვალი</option>
+                  <option value="საგარეჯო">საგარეჯო</option>
+                  <option value="გარდაბანი">გარდაბანი</option>
+                  <option value="ბორჯომი">ბორჯომი</option>
+                  <option value="ახალქალაქი">ახალქალაქი</option>
+                  <option value="ნინოწმინდა">ნინოწმინდა</option>
+                  <option value="მცხეთა">მცხეთა</option>
+                  <option value="ქარელი">ქარელი</option>
+                  <option value="ახმეტა">ახმეტა</option>
+                  <option value="გურჯაანი">გურჯაანი</option>
+                  <option value="დედოფლისწყარო">დედოფლისწყარო</option>
+                  <option value="ლაგოდეხი">ლაგოდეხი</option>
+                  <option value="სიღნაღი">სიღნაღი</option>
+                  <option value="ყვარელი">ყვარელი</option>
+                  <option value="ონი">ონი</option>
+                  <option value="ამბროლაური">ამბროლაური</option>
+                  <option value="ცაგერი">ცაგერი</option>
+                  <option value="ლენტეხი">ლენტეხი</option>
+                  <option value="მესტია">მესტია</option>
+                  <option value="სხვა" data-i18n="aboutRegionOther">${t('aboutRegionOther')}</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="reviewText" data-i18n="aboutComment">${t('aboutComment')} *</label>
+                <textarea id="reviewText" rows="4" data-i18n="aboutCommentPlaceholder" placeholder="გაგვიზიარეთ თქვენი გამოცდილება..." required></textarea>
+              </div>
+              
+              <button type="submit" class="submit-review-btn">
+                <i class="fas fa-paper-plane"></i> <span data-i18n="aboutSubmit">${t('aboutSubmit')}</span>
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Reviews display -->
+        <div class="testimonials-slider" id="reviewsContainer">
+          <div class="loading-reviews">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p data-i18n="aboutLoadingReviews">${t('aboutLoadingReviews')}</p>
+          </div>
+        </div>
+        <div class="testimonial-controls" id="reviewControls" style="display: none;">
+          <button class="testimonial-btn prev-btn" onclick="changeTestimonial(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="testimonial-dots" id="reviewDots"></div>
+          <button class="testimonial-btn next-btn" onclick="changeTestimonial(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        
+        <!-- Message for users without completed bookings -->
+        <div class="no-booking-message" id="noBookingMessage" style="display: none;">
+          <i class="fas fa-info-circle"></i>
+          <p data-i18n="aboutNoBookingMsg">${t('aboutNoBookingMsg')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="translations.js"></script>
+  <script type="module" src="navbar.js"></script>
+  <script src="/pages/js/footer.js"></script>
+  
+  <!-- Enhanced Firebase integration with review management -->
+  <script type="module">
+    // Import Firebase
+    import { db } from "./firebase-config.js"
+    import { 
+      collection, 
+      getDocs, 
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      doc,
+      query, 
+      where,
+      orderBy,
+      serverTimestamp,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+
+    const auth = getAuth()
+    let currentUser = null
+    let currentTestimonialIndex = 0
+    let reviews = []
+
+    const t = (key) => window.languageSwitcher.translate(key)
+
+    // Counter animation function with progress bar
+    function animateCounter(element, target, duration = 2000, progressBar = null) {
+      const start = 0
+      const increment = target / (duration / 16)
+      let current = start
+
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= target) {
+          element.textContent = target
+          if (progressBar) {
+            progressBar.style.width = '100%'
+          }
+          clearInterval(timer)
+        } else {
+          element.textContent = Math.floor(current)
+          if (progressBar) {
+            const percentage = (current / target) * 100
+            progressBar.style.width = percentage + '%'
+          }
+        }
+      }, 16)
+    }
+
+    // Load real statistics from Firebase
+    async function loadStatistics() {
+      try {
+        const carsSnapshot = await getDocs(collection(db, "cars"))
+        const carsCount = carsSnapshot.size
+
+        const toursSnapshot = await getDocs(collection(db, "tours"))
+        const toursCount = toursSnapshot.size
+
+        const bookingsSnapshot = await getDocs(collection(db, "bookings"))
+        const bookingsCount = bookingsSnapshot.size
+
+        const usersSnapshot = await getDocs(collection(db, "users"))
+        const usersCount = usersSnapshot.size
+
+        const counters = [
+          { id: 'carsCount', value: carsCount, hasProgress: true },
+          { id: 'toursCount', value: toursCount, hasProgress: true },
+          { id: 'bookingsCount', value: bookingsCount, hasProgress: true },
+          { id: 'usersCount', value: usersCount, hasProgress: true },
+          { id: 'carsDetailCount', value: carsCount, hasProgress: false },
+          { id: 'toursDetailCount', value: toursCount, hasProgress: false },
+          { id: 'bookingsDetailCount', value: bookingsCount, hasProgress: false },
+          { id: 'usersDetailCount', value: usersCount, hasProgress: false }
+        ]
+
+        counters.forEach(counter => {
+          const element = document.getElementById(counter.id)
+          if (element) {
+            let progressBar = null
+            if (counter.hasProgress) {
+              const statCard = element.closest('.stat-card')
+              if (statCard) {
+                progressBar = statCard.querySelector('.stat-progress-bar')
+              }
+            }
+            animateCounter(element, counter.value, 2000, progressBar)
+          }
+        })
+
+        console.log('[v0] Statistics loaded successfully:', { carsCount, toursCount, bookingsCount, usersCount })
+      } catch (error) {
+        console.error('[v0] Error loading statistics:', error)
+        const defaultCounters = [
+          { id: 'carsCount', value: 0 },
+          { id: 'toursCount', value: 0 },
+          { id: 'bookingsCount', value: 0 },
+          { id: 'usersCount', value: 0 },
+          { id: 'carsDetailCount', value: 0 },
+          { id: 'toursDetailCount', value: 0 },
+          { id: 'bookingsDetailCount', value: 0 },
+          { id: 'usersDetailCount', value: 0 }
+        ]
+        
+        defaultCounters.forEach(counter => {
+          const element = document.getElementById(counter.id)
+          if (element) {
+            element.textContent = counter.value
+          }
+        })
+      }
+    }
+
+    async function checkUserBookings(userId) {
+      try {
+        const q = query(
+          collection(db, "bookings"),
+          where("userId", "==", userId),
+          where("status", "==", "დადასტურებული")
+        )
+        const snapshot = await getDocs(q)
+        return snapshot.size > 0
+      } catch (error) {
+        console.error('[v0] Error checking user bookings:', error)
+        return false
+      }
+    }
+
+    async function loadUserProfile(userId) {
+      try {
+        const userDoc = await getDoc(doc(db, "users", userId))
+        if (userDoc.exists()) {
+          return userDoc.data()
+        }
+        return null
+      } catch (error) {
+        console.error('[v0] Error loading user profile:', error)
+        return null
+      }
+    }
+
+    function showNotification(messageKey, type = 'info') {
+      const message = typeof messageKey === 'string' && messageKey.startsWith('about') ? t(messageKey) : messageKey
+      const notification = document.createElement('div')
+      notification.className = `notification ${type}`
+      notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+      `
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#2ecc71' : type === 'error' ? '#e74c3c' : '#3498db'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideIn 0.3s ease;
+      `
+      document.body.appendChild(notification)
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease'
+        setTimeout(() => notification.remove(), 300)
+      }, 3000)
+    }
+
+    // Load reviews from Firebase
+    async function loadReviews() {
+      try {
+        const reviewsContainer = document.getElementById('reviewsContainer')
+        const reviewControls = document.getElementById('reviewControls')
+        const reviewDots = document.getElementById('reviewDots')
+        
+        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"))
+        const snapshot = await getDocs(q)
+        
+        reviews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        
+        if (reviews.length === 0) {
+          reviewsContainer.innerHTML = `
+            <div class="no-reviews">
+              <i class="fas fa-comments"></i>
+              <p data-i18n="aboutNoReviews">${t('aboutNoReviews')}</p>
+            </div>
+          `
+          reviewControls.style.display = 'none'
+          return
+        }
+        
+        reviewsContainer.innerHTML = reviews.map((review, index) => {
+          const isCurrentUserReview = currentUser && review.userId === currentUser.uid
+          return `
+            <div class="testimonial-card ${index === 0 ? 'active' : ''}" data-review-id="${review.id}">
+              <div class="testimonial-header">
+                <div class="testimonial-rating">
+                  ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
+                  ${Array(5 - review.rating).fill('<i class="far fa-star"></i>').join('')}
+                </div>
+                ${isCurrentUserReview ? `
+                  <div class="review-actions">
+                    <button class="edit-review-btn" onclick="editReview('${review.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="delete-review-btn" onclick="deleteReview('${review.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+              <p class="testimonial-text">"${review.comment}"</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">
+                  ${review.userAvatar ? `<img src="${review.userAvatar}" alt="${review.userName}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : '<i class="fas fa-user"></i>'}
+                </div>
+                <div class="author-info">
+                  <strong>${review.userName}</strong>
+                  <span>${review.region}</span>
+                </div>
+              </div>
+            </div>
+          `
+        }).join('')
+        
+        reviewDots.innerHTML = reviews.map((_, index) => 
+          `<span class="dot ${index === 0 ? 'active' : ''}" onclick="currentTestimonial(${index})"></span>`
+        ).join('')
+        
+        reviewControls.style.display = 'flex'
+        
+        console.log('[v0] Reviews loaded successfully:', reviews.length)
+      } catch (error) {
+        console.error('[v0] Error loading reviews:', error)
+        document.getElementById('reviewsContainer').innerHTML = `
+          <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p data-i18n="aboutReviewsLoadError">${t('aboutReviewsLoadError')}</p>
+          </div>
+        `
+      }
+    }
+
+    window.editReview = async function(reviewId) {
+      const review = reviews.find(r => r.id === reviewId)
+      if (!review) return
+      
+      const modal = document.createElement('div')
+      modal.className = 'modal-overlay'
+      modal.innerHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 data-i18n="aboutEditReview">${t('aboutEditReview')}</h3>
+            <button class="close-modal" onclick="this.closest('.modal-overlay').remove()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <form id="editReviewForm" class="edit-review-form">
+            <div class="form-group">
+              <label data-i18n="aboutRating">${t('aboutRating')} *</label>
+              <div class="star-rating-input edit-rating">
+                <i class="fas fa-star ${review.rating >= 1 ? 'active' : ''}" data-rating="1"></i>
+                <i class="fas fa-star ${review.rating >= 2 ? 'active' : ''}" data-rating="2"></i>
+                <i class="fas fa-star ${review.rating >= 3 ? 'active' : ''}" data-rating="3"></i>
+                <i class="fas fa-star ${review.rating >= 4 ? 'active' : ''}" data-rating="4"></i>
+                <i class="fas fa-star ${review.rating >= 5 ? 'active' : ''}" data-rating="5"></i>
+              </div>
+              <input type="hidden" id="editRatingValue" value="${review.rating}" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="editReviewRegion" data-i18n="aboutRegion">${t('aboutRegion')} *</label>
+              <select id="editReviewRegion" required>
+                <option value="" data-i18n="aboutSelectRegion">${t('aboutSelectRegion')}</option>
+                <option value="თბილისი" ${review.region === 'თბილისი' ? 'selected' : ''}>თბილისი</option>
+                <option value="ბათუმი" ${review.region === 'ბათუმი' ? 'selected' : ''}>ბათუმი</option>
+                <option value="ქუთაისი" ${review.region === 'ქუთაისი' ? 'selected' : ''}>ქუთაისი</option>
+                <option value="რუსთავი" ${review.region === 'რუსთავი' ? 'selected' : ''}>რუსთავი</option>
+                <option value="გორი" ${review.region === 'გორი' ? 'selected' : ''}>გორი</option>
+                <option value="ზუგდიდი" ${review.region === 'ზუგდიდი' ? 'selected' : ''}>ზუგდიდი</option>
+                <option value="ფოთი" ${review.region === 'ფოთი' ? 'selected' : ''}>ფოთი</option>
+                <option value="ხაშური" ${review.region === 'ხაშური' ? 'selected' : ''}>ხაშური</option>
+                <option value="სამტრედია" ${review.region === 'სამტრედია' ? 'selected' : ''}>სამტრედია</option>
+                <option value="სენაკი" ${review.region === 'სენაკი' ? 'selected' : ''}>სენაკი</option>
+                <option value="ზესტაფონი" ${review.region === 'ზესტაფონი' ? 'selected' : ''}>ზესტაფონი</option>
+                <option value="მარნეული" ${review.region === 'მარნეული' ? 'selected' : ''}>მარნეული</option>
+                <option value="თელავი" ${review.region === 'თელავი' ? 'selected' : ''}>თელავი</option>
+                <option value="ახალციხე" ${review.region === 'ახალციხე' ? 'selected' : ''}>ახალციხე</option>
+                <option value="ქობულეთი" ${review.region === 'ქობულეთი' ? 'selected' : ''}>ქობულეთი</option>
+                <option value="ოზურგეთი" ${review.region === 'ოზურგეთი' ? 'selected' : ''}>ოზურგეთი</option>
+                <option value="კასპი" ${review.region === 'კასპი' ? 'selected' : ''}>კასპი</option>
+                <option value="ჭიათურა" ${review.region === 'ჭიათურა' ? 'selected' : ''}>ჭიათურა</option>
+                <option value="ცხინვალი" ${review.region === 'ცხინვალი' ? 'selected' : ''}>ცხინვალი</option>
+                <option value="საგარეჯო" ${review.region === 'საგარეჯო' ? 'selected' : ''}>საგარეჯო</option>
+                <option value="გარდაბანი" ${review.region === 'გარდაბანი' ? 'selected' : ''}>გარდაბანი</option>
+                <option value="ბორჯომი" ${review.region === 'ბორჯომი' ? 'selected' : ''}>ბორჯომი</option>
+                <option value="ახალქალაქი" ${review.region === 'ახალქალაქი' ? 'selected' : ''}>ახალქალაქი</option>
+                <option value="ნინოწმინდა" ${review.region === 'ნინოწმინდა' ? 'selected' : ''}>ნინოწმინდა</option>
+                <option value="მცხეთა" ${review.region === 'მცხეთა' ? 'selected' : ''}>მცხეთა</option>
+                <option value="ქარელი" ${review.region === 'ქარელი' ? 'selected' : ''}>ქარელი</option>
+                <option value="ახმეტა" ${review.region === 'ახმეტა' ? 'selected' : ''}>ახმეტა</option>
+                <option value="გურჯაანი" ${review.region === 'გურჯაანი' ? 'selected' : ''}>გურჯაანი</option>
+                <option value="დედოფლისწყარო" ${review.region === 'დედოფლისწყარო' ? 'selected' : ''}>დედოფლისწყარო</option>
+                <option value="ლაგოდეხი" ${review.region === 'ლაგოდეხი' ? 'selected' : ''}>ლაგოდეხი</option>
+                <option value="სიღნაღი" ${review.region === 'სიღნაღი' ? 'selected' : ''}>სიღნაღი</option>
+                <option value="ყვარელი" ${review.region === 'ყვარელი' ? 'selected' : ''}>ყვარელი</option>
+                <option value="ონი" ${review.region === 'ონი' ? 'selected' : ''}>ონი</option>
+                <option value="ამბროლაური" ${review.region === 'ამბროლაური' ? 'selected' : ''}>ამბროლაური</option>
+                <option value="ცაგერი" ${review.region === 'ცაგერი' ? 'selected' : ''}>ცაგერი</option>
+                <option value="ლენტეხი" ${review.region === 'ლენტეხი' ? 'selected' : ''}>ლენტეხი</option>
+                <option value="მესტია" ${review.region === 'მესტია' ? 'selected' : ''}>მესტია</option>
+                <option value="სხვა" ${review.region === 'სხვა' ? 'selected' : ''} data-i18n="aboutRegionOther">${t('aboutRegionOther')}</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="editReviewText" data-i18n="aboutComment">${t('aboutComment')} *</label>
+              <textarea id="editReviewText" rows="4" required>${review.comment}</textarea>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="cancel-btn" data-i18n="aboutCancel" onclick="this.closest('.modal-overlay').remove()">${t('aboutCancel')}</button>
+              <button type="submit" class="save-btn" data-i18n="aboutSave">${t('aboutSave')}</button>
+            </div>
+          </form>
+        </div>
+      `
+      
+      document.body.appendChild(modal)
+      
+      const editStars = modal.querySelectorAll('.edit-rating i')
+      const editRatingValue = modal.getElementById('editRatingValue')
+      
+      editStars.forEach(star => {
+        star.addEventListener('click', function() {
+          const rating = parseInt(this.getAttribute('data-rating'))
+          editRatingValue.value = rating
+          
+          editStars.forEach((s, index) => {
+            if (index < rating) {
+              s.classList.add('active')
+            } else {
+              s.classList.remove('active')
+            }
+          })
+        })
+      })
+      
+      const editForm = modal.getElementById('editReviewForm')
+      editForm.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        
+        const rating = parseInt(editRatingValue.value)
+        const region = modal.getElementById('editReviewRegion').value
+        const comment = modal.getElementById('editReviewText').value.trim()
+        
+        if (!rating || !region || !comment) {
+          showNotification('aboutFillAllFields', 'error')
+          return
+        }
+        
+        try {
+          await updateDoc(doc(db, "reviews", reviewId), {
+            rating: rating,
+            region: region,
+            comment: comment,
+            updatedAt: serverTimestamp()
+          })
+          
+          showNotification('aboutReviewUpdated', 'success')
+          modal.remove()
+          await loadReviews()
+          
+          console.log('[v0] Review updated successfully')
+        } catch (error) {
+          console.error('[v0] Error updating review:', error)
+          showNotification('aboutReviewUpdateError', 'error')
+        }
+      })
+    }
+
+    window.deleteReview = async function(reviewId) {
+      if (!confirm(t('aboutDeleteReviewConfirm'))) {
+        return
+      }
+      
+      try {
+        await deleteDoc(doc(db, "reviews", reviewId))
+        showNotification('aboutReviewDeleted', 'success')
+        await loadReviews()
+        
+        console.log('[v0] Review deleted successfully')
+      } catch (error) {
+        console.error('[v0] Error deleting review:', error)
+        showNotification('aboutReviewDeleteError', 'error')
+      }
+    }
+
+    window.changeTestimonial = function(direction) {
+      if (reviews.length === 0) return
+      
+      const testimonials = document.querySelectorAll('.testimonial-card')
+      const dots = document.querySelectorAll('.dot')
+      
+      testimonials[currentTestimonialIndex].classList.remove('active')
+      dots[currentTestimonialIndex].classList.remove('active')
+      
+      currentTestimonialIndex += direction
+      
+      if (currentTestimonialIndex >= reviews.length) {
+        currentTestimonialIndex = 0
+      } else if (currentTestimonialIndex < 0) {
+        currentTestimonialIndex = reviews.length - 1
+      }
+      
+      testimonials[currentTestimonialIndex].classList.add('active')
+      dots[currentTestimonialIndex].classList.add('active')
+    }
+
+    window.currentTestimonial = function(index) {
+      if (reviews.length === 0) return
+      
+      const testimonials = document.querySelectorAll('.testimonial-card')
+      const dots = document.querySelectorAll('.dot')
+      
+      testimonials[currentTestimonialIndex].classList.remove('active')
+      dots[currentTestimonialIndex].classList.remove('active')
+      
+      currentTestimonialIndex = index
+      
+      testimonials[currentTestimonialIndex].classList.add('active')
+      dots[currentTestimonialIndex].classList.add('active')
+    }
+
+    setInterval(() => {
+      if (reviews.length > 1) {
+        changeTestimonial(1)
+      }
+    }, 5000)
+
+    const starRatingInput = document.querySelectorAll('.star-rating-input i')
+    const ratingValue = document.getElementById('ratingValue')
+    
+    starRatingInput.forEach(star => {
+      star.addEventListener('click', function() {
+        const rating = parseInt(this.getAttribute('data-rating'))
+        ratingValue.value = rating
+        
+        starRatingInput.forEach((s, index) => {
+          if (index < rating) {
+            s.classList.remove('far')
+            s.classList.add('fas')
+            s.style.color = '#ffc107'
+          } else {
+            s.classList.remove('fas')
+            s.classList.add('far')
+            s.style.color = '#ccc'
+          }
+        })
+      })
+      
+      star.addEventListener('mouseenter', function() {
+        const rating = parseInt(this.getAttribute('data-rating'))
+        starRatingInput.forEach((s, index) => {
+          if (index < rating) {
+            s.style.color = '#ffc107'
+          } else {
+            s.style.color = '#ccc'
+          }
+        })
+      })
+    })
+    
+    document.querySelector('.star-rating-input').addEventListener('mouseleave', function() {
+      const currentRating = parseInt(ratingValue.value) || 0
+      starRatingInput.forEach((s, index) => {
+        if (index < currentRating) {
+          s.style.color = '#ffc107'
+        } else {
+          s.style.color = '#ccc'
+        }
+      })
+    })
+
+    const reviewForm = document.getElementById('reviewForm')
+    reviewForm.addEventListener('submit', async function(e) {
+      e.preventDefault()
+      
+      if (!currentUser) {
+        showNotification('postsAuthRequired', 'error')
+        return
+      }
+      
+      const rating = parseInt(ratingValue.value)
+      const region = document.getElementById('reviewRegion').value
+      const comment = document.getElementById('reviewText').value.trim()
+      
+      if (!rating || !region || !comment) {
+        showNotification('aboutFillAllFields', 'error')
+        return
+      }
+      
+      try {
+        const userProfile = await loadUserProfile(currentUser.uid)
+        
+        if (!userProfile) {
+          showNotification('aboutProfileLoadError', 'error')
+          return
+        }
+        
+        await addDoc(collection(db, "reviews"), {
+          userId: currentUser.uid,
+          userName: userProfile.name || currentUser.displayName || 'მომხმარებელი',
+          userAvatar: userProfile.avatar || currentUser.photoURL || '',
+          rating: rating,
+          region: region,
+          comment: comment,
+          createdAt: serverTimestamp()
+        })
+        
+        showNotification('aboutReviewAdded', 'success')
+        
+        reviewForm.reset()
+        ratingValue.value = ''
+        starRatingInput.forEach(s => {
+          s.classList.remove('fas')
+          s.classList.add('far')
+          s.style.color = '#ccc'
+        })
+        
+        await loadReviews()
+        
+        console.log('[v0] Review submitted successfully')
+      } catch (error) {
+        console.error('[v0] Error submitting review:', error)
+        showNotification('aboutReviewAddError', 'error')
+      }
+    })
+
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user
+      
+      const reviewSubmissionSection = document.getElementById('reviewSubmissionSection')
+      const noBookingMessage = document.getElementById('noBookingMessage')
+      
+      if (user) {
+        const hasCompletedBookings = await checkUserBookings(user.uid)
+        
+        if (hasCompletedBookings) {
+          reviewSubmissionSection.style.display = 'block'
+          noBookingMessage.style.display = 'none'
+          console.log('[v0] User has completed bookings, showing review form')
+        } else {
+          reviewSubmissionSection.style.display = 'none'
+          noBookingMessage.style.display = 'block'
+          console.log('[v0] User has no completed bookings')
+        }
+        
+        await loadReviews()
+      } else {
+        reviewSubmissionSection.style.display = 'none'
+        noBookingMessage.style.display = 'none'
+        console.log('[v0] User not authenticated')
+      }
+    })
+
+    window.addEventListener('languageChanged', () => {
+      window.languageSwitcher.updatePageTranslations()
+      loadReviews() // Reload reviews to update UI text
+    })
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }, observerOptions)
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStatistics()
+      loadReviews()
+      
+      document.querySelectorAll('.stat-card, .value-card, .fade-in-section').forEach(element => {
+        observer.observe(element)
+      })
+    })
+  </script>
+
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "BPG Glaho", sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Variables */
+    :root {
+      --primary-color: #e5383b;
+      --primary-dark: #c42f32;
+      --secondary-color: #0a0a0a; /* Changed to match dark background */
+      --text-color: #ccc;
+      --light-bg: #1a1a1a;
+      --dark-bg: #0f0f0f;
+      --border-radius: 12px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Enhanced hero section with animated gradient background */
+    .about-hero {
+      position: relative;
+      padding: 8rem 1rem 5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+      overflow: hidden;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(229, 56, 59, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(229, 56, 59, 0.1) 0%, transparent 50%);
+      animation: gradientShift 8s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translateY(-20px) scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    .about-hero-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .about-hero-text p {
+      font-size: 1.25rem;
+      color: var(--text-color);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .fade-in-up.delay-1 {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    /* Enhanced statistics section with progress bars */
+    .stats-section {
+      padding: 4rem 1rem;
+      background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+      position: relative;
+    }
+
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--light-bg) 0%, var(--dark-bg) 100%);
+      padding: 2.5rem 2rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(229, 56, 59, 0.1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(229, 56, 59, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .stat-card:hover::before {
+      left: 100%;
+    }
+
+    .stat-card[data-aos="fade-up"] {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .stat-card[data-aos-delay="0"] { animation-delay: 0.1s; }
+    .stat-card[data-aos-delay="100"] { animation-delay: 0.2s; }
+    .stat-card[data-aos-delay="200"] { animation-delay: 0.3s; }
+    .stat-card[data-aos-delay="300"] { animation-delay: 0.4s; }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary-color);
+      box-shadow: 0 20px 40px rgba(229, 56, 59, 0.3);
+    }
+
+    .stat-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover .stat-icon {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: var(--text-color);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .stat-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .stat-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      border-radius: 2px;
+      transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    /* Content Section */
+    .about-content {
+      padding: 4rem 1rem;
+      background-color: var(--secondary-color);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Enhanced content blocks with fade-in animations */
+    .content-block {
+      margin-bottom: 4rem;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .container h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+
+    .container h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), transparent);
+      border-radius: 2px;
+    }
+
+    .container p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .features-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .features-list li {
+      padding: 1rem;
+      font-size: 1.05rem;
+      color: #ddd;
+      display: flex;
+      align-items: center;
+      background: var(--light-bg);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .features-list li:hover {
+      transform: translateX(10px);
+      background: linear-gradient(90deg, var(--light-bg), rgba(229, 56, 59, 0.1));
+    }
+
+    .features-list li i {
+      color: var(--primary-color);
+      margin-right: 1rem;
+      font-size: 1.2rem;
+      min-width: 20px;
+    }
+
+    .features-list li span {
+      flex: 1;
+    }
+
+    /* Enhanced detailed statistics section */
+    .detailed-stats {
+      background: linear-gradient(135deg, var(--light-bg) 0%, rgba(26, 26, 26, 0.5) 100%);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      margin: 2rem 0;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .detailed-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+    }
+
+    .detailed-stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .detailed-stat-item:hover {
+      transform: translateX(10px);
+      padding-left: 1rem;
+    }
+
+    .stat-item-icon {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .stat-item-icon i {
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .stat-item-content {
+      flex: 1;
+    }
+
+    .stat-item-content strong {
+      font-size: 1.8rem;
+      color: #fff;
+      display: block;
+      margin-bottom: 0.25rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .stat-item-content span {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Enhanced quote section */
+    .about-quote {
+      position: relative;
+      border-left: 4px solid var(--primary-color);
+      padding: 2rem 2rem 2rem 3rem;
+      font-style: italic;
+      color: #ddd;
+      margin: 3rem 0;
+      background: linear-gradient(90deg, rgba(229, 56, 59, 0.05), transparent);
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    .quote-icon {
+      color: var(--primary-color);
+      opacity: 0.3;
+      font-size: 2rem;
+    }
+
+    .about-quote .fa-quote-left {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .about-quote .fa-quote-right {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+    }
+
+    .about-quote p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Enhanced values grid */
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .values-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .value-card {
+      background: linear-gradient(135deg, var(--light-bg) 0%, rgba(26, 26, 26, 0.5) 100%);
+      padding: 2.5rem 2rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(229, 56, 59, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .value-card:hover::before {
+      opacity: 1;
+    }
+
+    .value-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(229, 56, 59, 0.2);
+    }
+
+    .value-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .value-card:hover .value-icon-wrapper {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    .value-icon-wrapper i {
+      font-size: 2.5rem;
+      color: #fff;
+    }
+
+    .value-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .value-card p {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* New testimonials section */
+    .testimonials-slider {
+      position: relative;
+      max-width: 700px;
+      margin: 2rem auto;
+      min-height: 300px;
+    }
+
+    .testimonial-card {
+      background: linear-gradient(135deg, var(--light-bg) 0%, rgba(26, 26, 26, 0.8) 100%);
+      padding: 3rem 2.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(229, 56, 59, 0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .testimonial-card.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .testimonial-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-rating {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .testimonial-rating i {
+      color: #ffc107;
+      font-size: 1.2rem;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .edit-review-btn,
+    .delete-review-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-color);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .edit-review-btn:hover {
+      color: #3498db;
+      background: rgba(52, 152, 219, 0.1);
+    }
+
+    .delete-review-btn:hover {
+      color: #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+    }
+
+    .testimonial-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ddd;
+      font-style: italic;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .author-avatar i {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .author-info {
+      text-align: left;
+    }
+
+    .author-info strong {
+      display: block;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-info span {
+      color: var(--text-color);
+      font-size: 0.9rem;
+    }
+
+    .testimonial-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .testimonial-btn {
+      width: 45px;
+      height: 45px;
+      background: var(--light-bg);
+      border: 1px solid rgba(229, 56, 59, 0.3);
+      border-radius: 50%;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .testimonial-btn:hover {
+      background: var(--primary-color);
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    .testimonial-dots {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: var(--primary-color);
+      transform: scale(1.3);
+    }
+
+    .dot:hover {
+      background: var(--primary-color);
+    }
+
+    /* Added styles for review submission form and dynamic reviews */
+    .review-submission-section {
+      margin-bottom: 3rem;
+    }
+
+    .review-form-card {
+      background: linear-gradient(135deg, var(--light-bg) 0%, rgba(26, 26, 26, 0.8) 100%);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(229, 56, 59, 0.2);
+      margin-bottom: 2rem;
+    }
+
+    .review-form-card h3 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .star-rating-input {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    .star-rating-input i {
+      color: #ccc;
+      transition: color 0.2s ease;
+    }
+
+    .star-rating-input i:hover {
+      color: #ffc107;
+    }
+
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--dark-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'BPG Glaho', sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .submit-review-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .submit-review-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(229, 56, 59, 0.4);
+    }
+
+    .no-booking-message {
+      background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      border-left: 4px solid #3498db;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .no-booking-message i {
+      font-size: 2rem;
+      color: #3498db;
+    }
+
+    .no-booking-message p {
+      color: #ddd;
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .loading-reviews {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-color);
+    }
+
+    .loading-reviews i {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .loading-reviews p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .no-reviews,
+    .error-message {
+      text-align: center;
+      padding: 3rem;
+      background: linear-gradient(135deg, var(--light-bg) 0%, rgba(26, 26, 26, 0.8) 100%);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(229, 56, 59, 0.2);
+    }
+
+    .no-reviews i,
+    .error-message i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .no-reviews p,
+    .error-message p {
+      color: var(--text-color);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    /* Modal styles for editing reviews */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, var(--light-bg) 0%, var(--dark-bg) 100%);
+      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid rgba(229, 56, 59, 0.3);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-header h3 {
+      color: #fff;
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .close-modal:hover {
+      color: var(--primary-color);
+      background: rgba(229, 56, 59, 0.1);
+    }
+
+    .edit-review-form {
+      padding: 2rem;
+    }
+
+    .edit-rating {
+      font-size: 1.8rem;
+    }
+
+    .edit-rating i {
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .edit-rating i.active {
+      color: #ffc107;
+    }
+
+    .edit-rating i:hover {
+      color: #ffc107;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .cancel-btn,
+    .save-btn {
+      flex: 1;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .cancel-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+    }
+
+    .cancel-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: #fff;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(229, 56, 59, 0.4);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-hero {
+        padding: 6rem 1rem 4rem;
+      }
+
+      .about-hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .about-hero-text p {
+        font-size: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .stat-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+      }
+
+      .stat-icon {
+        font-size: 2.5rem;
+      }
+
+      .container h2 {
+        font-size: 1.6rem;
+      }
+
+      .container p {
+        font-size: 1rem;
+      }
+
+      .detailed-stats {
+        padding: 1.5rem;
+      }
+
+      .stat-item-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .stat-item-icon i {
+        font-size: 1.5rem;
+      }
+
+      .stat-item-content strong {
+        font-size: 1.5rem;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonial-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .testimonial-text {
+        font-size: 1rem;
+      }
+
+      /* Responsive styles for review section */
+      .review-form-card {
+        padding: 1.5rem;
+      }
+
+      .review-form-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .star-rating-input {
+        font-size: 1.8rem;
+      }
+
+      .modal-content {
+        margin: 1rem;
+        max-width: calc(100% - 2rem);
+      }
+
+      .modal-header,
+      .edit-review-form {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-hero-text h1 {
+        font-size: 1.8rem;
+      }
+
+      .about-hero-text p {
+        font-size: 0.95rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .stat-icon {
+        font-size: 2rem;
+      }
+
+      .container h2 {
+        font-size: 1.4rem;
+      }
+
+      .features-list li {
+        font-size: 0.95rem;
+      }
+
+      .about-quote p {
+        font-size: 1rem;
+      }
+
+      .value-icon-wrapper {
+        width: 60px;
+        height: 60px;
+      }
+
+      .value-icon-wrapper i {
+        font-size: 2rem;
+      }
+
+      /* Responsive styles for review section */
+      .star-rating-input {
+        font-size: 1.5rem;
+      }
+
+      .no-booking-message {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</body>
+</html>

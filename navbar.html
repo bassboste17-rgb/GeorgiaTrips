@@ -1,0 +1,30 @@
+<header class="navbar" id="navbar">
+  <div class="logo">Georgia Trips</div>
+  <link rel="stylesheet" href="css/navbar.css">
+  <button class="mobile-menu-toggle" aria-label="მენიუ">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="navbar-right">
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="home.html" data-i18n="navHome">მთავარი</a></li>
+        <li><a href="posts.html" data-i18n="navPosts">პოსტები</a></li>
+        <li><a href="about.html" data-i18n="navAbout">ჩვენს შესახებ</a></li>
+        <li><a href="contact.html" data-i18n="navContact">კონტაქტი</a></li>
+        <li><a href="booking.html" data-i18n="navBooking">დაჯავშნა</a></li>
+      </ul>
+    </nav>
+
+    <div class="languages">
+      <button onclick="window.languageSwitcher.setLanguage('ka')" class="active">KA</button>
+      <button onclick="window.languageSwitcher.setLanguage('en')">EN</button>
+      <button onclick="window.languageSwitcher.setLanguage('ru')">RU</button>
+    </div>
+
+    <div class="auth-button-wrapper">
+      <div id="auth-link">
+      </div>
+    </div>
+  </div>
+</header>
