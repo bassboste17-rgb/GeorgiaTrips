@@ -135,7 +135,19 @@ monthDecember: "დეკემბერი",
       "ნოემბერი",
       "დეკემბერი",
     ],
+ // Hero section additions
+    heroBadge: "საუკეთესო ტრანსპორტირება",
+    homeLearnMore: "გაიგე მეტი",
 
+    // Vehicles section additions
+    homeVehiclesTitle: "ჩვენი ავტომობილები",
+    homeVehiclesSubtitle: "აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე",
+
+    // Map section additions
+    homeMapSubtitle: "გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად",
+
+    // Weather section additions
+    homeWeatherSubtitle: "დაგეგმე შენი მოგზაურობა ამინდის პროგნოზის მიხედვით",
     //Navbar
     navHome: "მთავარი",
     navPosts: "პოსტები",
@@ -1222,7 +1234,19 @@ profileAvatarSaveError: "ავატარის შენახვა ვე�
     userProfileNoPosts: "No posts found",
     userProfileUnknown: "Unknown User",
     userProfileError: "User data not found",
-    
+     // Hero section additions
+    heroBadge: "Best Transportation",
+    homeLearnMore: "Learn More",
+
+    // Vehicles section additions
+    homeVehiclesTitle: "Our Vehicles",
+    homeVehiclesSubtitle: "Choose your preferred transport and start your journey today",
+
+    // Map section additions
+    homeMapSubtitle: "Explore every corner of Georgia with us",
+
+    // Weather section additions
+    homeWeatherSubtitle: "Plan your trip according to the weather forecast",
     // Time ago translations
     timeSecondsAgo: "seconds ago",
     timeMinutesAgo: "minutes ago",
@@ -2770,7 +2794,19 @@ profileAvatarSaveError: "Не удалось сохранить аватар.",
     contactWaitSeconds: "Пожалуйста, подождите {seconds} секунд перед отправкой следующего сообщения",
     contactSystemName: "Система",
     contactSystemReply: "Спасибо за сообщение! Наш оператор скоро свяжется с вами.",
+ // Hero section additions
+    heroBadge: "Лучшая транспортировка",
+    homeLearnMore: "Узнать больше",
 
+    // Vehicles section additions
+    homeVehiclesTitle: "Наш транспорт",
+    homeVehiclesSubtitle: "Выберите подходящий транспорт и начните путешествие сегодня",
+
+    // Map section additions
+    homeMapSubtitle: "Исследуйте каждый уголок Грузии вместе с нами",
+
+    // Weather section additions
+    homeWeatherSubtitle: "Планируйте поездку согласно прогнозу погоды",
     // Map Regions
     regionAbkhazia: "Абхазия",
     regionAdjara: "Аджара",

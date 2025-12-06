@@ -20,12 +20,33 @@
     body {
       margin: 0;
       font-family: "BPG Glaho", sans-serif;
-      background: #0d0d0d; /* მუქი ფონი body-სთვის */
+      background: linear-gradient(135deg, #00000059 0%, #0000008e 50%, #00000081 50%);
       color: #fff;
       width: 100%;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+    }
+
+    /* Animated Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(126, 124, 124, 0.274) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(51, 26, 26, 0.137) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(110, 89, 90, 0.068) 0%, transparent 50%);
+      animation: bgShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
     }
 
     /* Hero Section - New Modern Design */
@@ -41,6 +62,7 @@
         url('https://www.turebi.ge/uploads/photos/tours1/large/35733_1.jpg');
       background-size: cover;
       background-position: center;
+      /* background-attachment: fixed; <-- ეს ხაზი ამოღებულია, რათა ფონი სქროლს გაჰყვეს */
     }
 
     .hero::before {
@@ -75,7 +97,7 @@
 
     .hero-badge {
       display: inline-block;
-      background: rgb(255, 255, 255);
+      background: rgba(184, 177, 177, 0.925);
       border: 1px solid rgba(44, 6, 7, 0.062);
       color: #e5383b;
       padding: 0.6rem 1.5rem;
@@ -198,78 +220,7 @@
     .section {
       padding: 6rem 0;
       position: relative;
-      /* Default background for non-specific sections */
-      background: #0d0d0d;
     }
-
-    /* --- SECTION BACKGROUNDS --- */
-    
-    /* Vehicles Section */
-    #vehicles {
-      background: 
-           linear-gradient(135deg, rgba(0, 0, 0, 0.726) 0%, rgba(0, 0, 0, 0.719) 100%),
-        url('https://buytravel.ge/wp-content/uploads/2021/05/Georgia.jpg'); /* Tbilisi Old Town placeholder */
-      background-size: cover;
-      background-position: center;
-      background-attachment: scroll; /* Scroll with the content */
-    }
-
-    /* Latest Post Section */
-    .latest-post-section {
-      padding: 6rem 2rem; /* Adjusted padding as it's the inner section */
-    }
-    
-    .section:nth-of-type(3) { /* Targeting the section containing latest-post-section */
-      background: 
-           linear-gradient(135deg, rgba(0, 0, 0, 0.726) 0%, rgba(0, 0, 0, 0.719) 100%),
-        url('https://buytravel.ge/wp-content/uploads/2021/05/view-of-the-village-adishi-upper-svaneti-georgia-1920x1080-1.jpg'); /* Caucasus Mountains placeholder */
-      background-size: cover;
-      background-position: center;
-      background-attachment: scroll;
-    }
-
-    /* Map Section */
-    .map-section {
-      padding: 6rem 2rem; /* Adjusted padding as it's the inner section */
-    }
-    
-    .section:nth-of-type(4) { /* Targeting the section containing map-section */
-      background: 
-         linear-gradient(135deg, rgba(0, 0, 0, 0.726) 0%, rgba(0, 0, 0, 0.719) 100%),
-        url('https://cdn.fortuna.ge/app/uploads/2019/10/tbilisi-panorama-georgia-l-2019-10-03_11-59-33_515799.jpg'); /* Svaneti Towers placeholder */
-      background-size: cover;
-      background-position: center;
-      background-attachment: scroll;
-    }
-
-    /* Weather Section */
-    .section:nth-of-type(5) { /* Targeting the section containing weather-section */
-      background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.726) 0%, rgba(0, 0, 0, 0.719) 100%),
-        url('https://madloba.info/media/images/Ozero_Bateti_007.max-1920x1080.format-webp.mwtmk.webp'); /* Georgian Nature placeholder */
-      background-size: cover;
-      background-position: center;
-      background-attachment: scroll;
-    }
-    
-    /* Ensure content inside sections is readable */
-    .latest-post-section,
-    .map-section,
-    .weather-section {
-      background: transparent;
-      backdrop-filter: none;
-      border-radius: 0;
-      border: none;
-    }
-    
-    /* Ensure weather-section container is transparent to show background */
-    .weather-section .weather-section {
-        background: transparent;
-        backdrop-filter: none;
-        border: none;
-    }
-    /* --- END SECTION BACKGROUNDS --- */
-
 
     .section-header {
       text-align: center;
@@ -311,8 +262,6 @@
       backdrop-filter: blur(10px);
       position: relative;
       overflow: hidden;
-      /* გაუმჯობესებული ჩრდილი */
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); 
     }
 
     .vehicle-card::before {
@@ -334,8 +283,7 @@
     .vehicle-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 20px 50px rgba(229, 56, 59, 0.2);
-      /* გლუვი საზღვრის ეფექტი hover-ზე */
-      border-color: rgba(229, 56, 59, 0.5); 
+      border-color: rgba(229, 56, 59, 0.3);
     }
 
     .vehicle-card a {
@@ -378,7 +326,7 @@
     .vehicle-image img {
       width: 100%;
       height: auto;
-      transition: transform 0.4s ease, filter 0.4s ease; /* დავამატე filter-ის transition */
+      transition: transform 0.4s ease;
       filter: brightness(0.95);
     }
 
@@ -389,10 +337,11 @@
 
     /* Latest Post Section - New Design */
     .latest-post-section {
-      /* background and backdrop-filter moved to its parent section */
-      border-radius: 0;
-      padding: 6rem 2rem;
-      border: none;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 4rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .latest-post {
@@ -400,11 +349,10 @@
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 3.5rem;
+      padding: 2.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px); /* Added blur back to the post card */
     }
 
     .latest-post-header {
@@ -450,13 +398,12 @@
       max-height: 500px;
       object-fit: contain;
       cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease; /* დავამატე transition */
+      transition: transform 0.4s ease;
       display: block;
     }
 
     .latest-post-image img:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 20px rgba(229, 56, 59, 0.8); /* მცირე ჩრდილის ეფექტი hover-ზე */
     }
 
     .latest-post-content {
@@ -530,14 +477,15 @@
 
     /* Map Section - Modern Design */
     .map-section {
-      /* background and backdrop-filter moved to its parent section */
-      border-radius: 0;
-      padding: 6rem 2rem;
-      border: none;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 4rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .map-container {
-      max-width: 800px;
+      max-width: 900px;
       width: 100%;
       margin: 2rem auto 0;
       position: relative;
@@ -547,7 +495,6 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       border: 2px solid rgba(255, 255, 255, 0.15);
       background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(5px); /* Added blur to map container */
     }
 
     .svg-map {
@@ -592,7 +539,6 @@
       border-radius: 30px;
       padding: 4rem 2rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      /* background and backdrop-filter for the inner container */
     }
 
     .weather-controls {
@@ -741,18 +687,6 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
-      /* ახალი CSS: გლუვი გარდამავალი ეფექტი */
-      opacity: 0; /* საწყისი დამალული მდგომარეობა */
-      transition: opacity 0.5s ease-in-out; /* 500ms-იანი გაფერმკრთალება */
-      /* ფოტოებს შორის საზღვრის შესანიღბი ეფექტი */
-      border: 5px solid rgba(255, 255, 255, 0.1); 
-      /* გლუვი საზღვარი */
-      outline: 5px solid rgba(229, 56, 59, 0.3); /* მცირე წითელი "ბზინვარება" */
-      outline-offset: -5px;
-    }
-
-    .modal-content img.loaded {
-      opacity: 1; /* სრული გამჭვირვალობა ჩატვირთვის შემდეგ */
     }
 
     .modal-close {
@@ -981,18 +915,18 @@
 
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge" data-i18n="heroBadge">
+      <div class="hero-badge">
         <i class="fas fa-car"></i> საუკეთესო ტრანსპორტირება
       </div>
       <h1 data-i18n="homeWelcome">მოგესალმებით GeorgiaTrips-ში</h1>
       <h2 data-i18n="homeSubtitle">ავტომობილური მომსახურება მთელ საქართველოში</h2>
-      <p data-i18n="homeDescription">იქირავე ავტომობილი მარტივად და სწრაფად. პროფესიონალური მომსახურება, კომფორტული მგზავრობა და საუკეთესი ფასები.</p>
+      <p data-i18n="homeDescription">იქირავე ავტომობილი მარტივად და სწრაფად. პროფესიონალური მომსახურება, კომფორტული მგზავრობა და საუკეთესო ფასები.</p>
       <div class="hero-buttons">
         <a href="booking.html" class="btn-primary" data-i18n="homeBookNow">
           <i class="fas fa-calendar-check"></i>
           დაჯავშნე ახლავე
         </a>
-        <a href="#vehicles" class="btn-secondary" data-i18n="homeLearnMore">
+        <a href="#vehicles" class="btn-secondary">
           <i class="fas fa-arrow-down"></i>
           გაიგე მეტი
         </a>
@@ -1003,8 +937,8 @@
   <section class="section" id="vehicles">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title" data-i18n="homeVehiclesTitle">ჩვენი ავტომობილები</h2>
-        <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე</p>
+        <h2 class="section-title">ჩვენი ავტომობილები</h2>
+        <p class="section-subtitle">აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე</p>
       </div>
       
       <div class="vehicle-grid">
@@ -1077,7 +1011,7 @@
       <div class="map-section">
         <div class="section-header">
           <h2 class="section-title" data-i18n="homeChooseRegion">აირჩიე რეგიონი</h2>
-          <p class="section-subtitle" data-i18n="homeMapSubtitle">გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად</p>
+          <p class="section-subtitle">გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად</p>
         </div>
         <div class="map-container">
           <object id="georgia-map" data="addhome/georgiaHigh.svg" type="image/svg+xml" class="svg-map">
@@ -1093,7 +1027,7 @@
       <div class="weather-section">
         <div class="section-header">
           <h2 class="section-title" data-i18n="homeWeatherForecast">ამინდის პროგნოზი</h2>
-          <p class="section-subtitle" data-i18n="homeWeatherSubtitle">დაგეგმე შენი მოგზაურობა ამინდის პროგნოზის მიხედვით</p>
+          <p class="section-subtitle">დაგეგმე შენი მოგზაურობა ამინდის პროგნოზის მიხედვით</p>
         </div>
         <div class="weather-controls">
           <select id="region-select">
@@ -1185,13 +1119,6 @@
     const forecastTypeSelect = document.getElementById('forecast-type');
     const weatherContainer = document.getElementById('weather-container');
 
-    function safeTranslate(key, fallback = '') {
-      if (window.languageSwitcher && typeof window.languageSwitcher.translate === 'function') {
-        return window.languageSwitcher.translate(key);
-      }
-      return fallback || key;
-    }
-
     // Weather Data
     const weatherData = {
       'აფხაზეთი': { lat: 43.0015, lon: 41.0230 },
@@ -1225,11 +1152,11 @@
       const coords = weatherData[region];
       
       if (!coords) {
-        weatherContainer.innerHTML = `<div class="no-weather" data-i18n="homeRegionNotFound">${safeTranslate('homeRegionNotFound', 'რეგიონი ვერ მოიძებნა')}</div>`;
+        weatherContainer.innerHTML = '<div class="no-weather">რეგიონი არ მოიძებნა</div>';
         return;
       }
       
-      weatherContainer.innerHTML = `<div class="loading-weather" data-i18n="homeLoading">${safeTranslate('homeLoading', 'იტვირთება...')}</div>`;
+      weatherContainer.innerHTML = '<div class="loading-weather">იტვირთება...</div>';
       
       try {
         let url = '';
@@ -1255,7 +1182,7 @@
         displayWeatherData(data, forecastType);
       } catch (error) {
         console.error('ამინდის მონაცემების მიღების შეცდომა:', error);
-        weatherContainer.innerHTML = `<div class="no-weather" data-i18n="homeWeatherLoadError">${safeTranslate('homeWeatherLoadError', 'ამინდის მონაცემების ჩატვირთვა ვერ მოხერხდა')}</div>`;
+        weatherContainer.innerHTML = '<div class="no-weather">ამინდის მონაცემების მიღება ვერ მოხერხდა. გთხოვთ სცადოთ მოგვიანებით.</div>';
       }
     }
 
@@ -1307,7 +1234,7 @@
       const timeString = formatGeorgianTime(date);
       const icon = getWeatherIconFromCode(data.current.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(data.current.weather_code);
-      const description = safeTranslate(descriptionKey);
+      const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
       
       card.innerHTML = `
         <div class="weather-date">${dateString}<br>${timeString}</div>
@@ -1341,7 +1268,7 @@
       const timeString = formatGeorgianTime(date);
       const icon = getWeatherIconFromCode(forecast.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
-      const description = safeTranslate(descriptionKey);
+      const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
       
       card.innerHTML = `
         <div class="weather-date">${timeString}</div>
@@ -1371,7 +1298,7 @@
       const dateString = formatGeorgianDate(date);
       const icon = getWeatherIconFromCode(forecast.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
-      const description = safeTranslate(descriptionKey);
+      const description = window.languageSwitcher ? window.languageSwitcher.translate(descriptionKey) : descriptionKey;
       
       const avgTemp = (forecast.temp_max + forecast.temp_min) / 2;
       
@@ -1459,17 +1386,17 @@
         const seconds = Math.floor(diff / 1000);
         
         if (seconds < 60) {
-            return seconds + ' ' + safeTranslate('homeSecondsAgo', 'წამი');
+            return seconds + ' ' + window.languageSwitcher.translate('homeSecondsAgo');
         }
         
         const minutes = Math.floor(seconds / 60);
         if (minutes < 60) {
-            return minutes + ' ' + safeTranslate('homeMinutesAgo', 'წუთი');
+            return minutes + ' ' + window.languageSwitcher.translate('homeMinutesAgo');
         }
         
         const hours = Math.floor(minutes / 60);
         if (hours < 24) {
-            return hours + ' ' + safeTranslate('homeHoursAgo', 'საათი');
+            return hours + ' ' + window.languageSwitcher.translate('homeHoursAgo');
         }
         
         return date.toLocaleDateString('ka-GE', {
@@ -1492,7 +1419,7 @@
             latestPostContainer.innerHTML = '';
             
             if (querySnapshot.empty) {
-                latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeAddFirstPost', 'პირველი პოსტის დამატება')}</div>`;
+                latestPostContainer.innerHTML = `<div class="no-posts">${window.languageSwitcher.translate('homeAddFirstPost')}</div>`;
                 return;
             }
             
@@ -1505,12 +1432,12 @@
             });
         }, (error) => {
             console.error("პოსტების ჩატვირთვის შეცდომა:", error);
-            latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeFailedToLoadPosts', 'პოსტების ჩატვირთვა ვერ მოხერხდა')}</div>`;
+            latestPostContainer.innerHTML = `<div class="no-posts">${window.languageSwitcher.translate('homeFailedToLoadPosts')}</div>`;
         });
     }
 
     function createLatestPostElement(postData, postId) {
-        const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : safeTranslate('homeTimeUnknown', 'დრო უცნობია');
+        const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : window.languageSwitcher.translate('homeTimeUnknown');
         
         const regionNames = {
             'აფხაზეთი': 'აფხაზეთი',
@@ -1548,17 +1475,17 @@
             <div class="latest-post-header">
                 <img src="${postData.authorAvatar || 'https://via.placeholder.com/50?text=User'}" alt="Author" class="latest-post-avatar" loading="lazy">
                 <div>
-                    <div class="latest-post-author">${postData.authorName || safeTranslate('homeAnonymous', 'ანონიმური')}</div>
+                    <div class="latest-post-author">${postData.authorName || window.languageSwitcher.translate('homeAnonymous')}</div>
                     <div class="latest-post-time">${postTime} · ${regionName}</div>
                 </div>
             </div>
             ${imagesHTML}
             <div class="latest-post-content">
-                ${postData.content || safeTranslate('homeNoContentProvided', 'შინაარსი არ არის მოწოდებული')}
+                ${postData.content || window.languageSwitcher.translate('homeNoContentProvided')}
             </div>
             <div class="latest-post-location">
                 <i class="fas fa-map-marker-alt"></i>
-                ${postData.location || safeTranslate('homeNoLocationProvided', 'ადგილმდებარეობა არ არის მოწოდებული')}
+                ${postData.location || window.languageSwitcher.translate('homeNoLocationProvided')}
             </div>
             <div class="latest-post-actions">
                 <div class="post-action">
@@ -1569,7 +1496,7 @@
                     <i class="far fa-comment"></i>
                     <span>${commentsCount}</span>
                 </div>
-                <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">${safeTranslate('homeViewAllPosts', 'ყველა პოსტის ნახვა')}</a>
+                <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">${window.languageSwitcher.translate('homeViewAllPosts')}</a>
             </div>
         `;
         
@@ -1598,23 +1525,8 @@
 
     function showImageModal() {
         if (currentImages.length === 0) return;
-
-        // 1. დავიწყოთ სურათის დამალვით (opacity: 0)
-        modalImage.classList.remove('loaded');
         
-        // 2. ახალი სურათის წყაროს დაყენება (ეს გამოიწვევს მის ჩატვირთვას)
         modalImage.src = currentImages[currentImageIndex];
-
-        // 3. როდესაც სურათი სრულად ჩაიტვირთება, გამოვაჩინოთ ის გლუვი ეფექტით
-        modalImage.onload = () => {
-             modalImage.classList.add('loaded');
-        };
-
-        // თუ სურათი ქეშიდან იტვირთება, onload შეიძლება არ გამოიძახოს, ამიტომ დავამატოთ fallback
-        if (modalImage.complete) {
-            modalImage.classList.add('loaded');
-        }
-        
         imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
         imageModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
@@ -1623,21 +1535,22 @@
     function closeModal() {
         imageModal.style.display = 'none';
         document.body.style.overflow = '';
-        modalImage.classList.remove('loaded'); // გადატვირთვისთვის
     }
 
     function showPrevImage() {
         if (currentImages.length === 0) return;
         
         currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-        showImageModal();
+        modalImage.src = currentImages[currentImageIndex];
+        imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
     }
 
     function showNextImage() {
         if (currentImages.length === 0) return;
         
         currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-        showImageModal();
+        modalImage.src = currentImages[currentImageIndex];
+        imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
     }
 
     // Event Setup Functions
