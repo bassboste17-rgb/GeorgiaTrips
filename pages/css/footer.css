@@ -1,0 +1,387 @@
+/* Footer Styles */
+.site-footer {
+  background-color: #000000;
+  color: white;
+  padding: 3rem 0 1rem;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem;
+  box-sizing: border-box;
+}
+
+/* ყველა კოლონა ცენტრში */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.footer-column h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding-bottom: 0.7rem;
+  word-break: break-word;
+  width: 100%;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #e5383b;
+}
+
+.footer-column p {
+  color: #adb5bd;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  word-break: break-word;
+  width: 100%;
+}
+
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #343a40;
+  color: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.footer-social a:hover {
+  background-color: #e5383b;
+  transform: translateY(-3px);
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+
+.footer-column ul li a {
+  color: #adb5bd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+  display: inline-block;
+  padding: 0.2rem 0;
+  word-break: break-word;
+}
+
+.footer-column ul li a:hover {
+  color: #e5383b;
+}
+
+/* ტელეფონის ნომრის სტილები */
+.footer-column > p:has(.fa-phone) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #adb5bd;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.footer-column > p:has(.fa-phone) i {
+  color: #e5383b;
+  margin-right: 0.8rem;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Newsletter ფორმა */
+.newsletter-form {
+  display: flex;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.95rem;
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #343a40;
+  border-right: none;
+  min-width: 0;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: #e5383b;
+  box-shadow: 0 0 0 2px rgba(229, 56, 59, 0.2);
+}
+
+.newsletter-form button {
+  background-color: #e5383b;
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newsletter-form button:hover {
+  background-color: #c1121f;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid #343a40;
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  text-align: center;
+  color: #adb5bd;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-bottom p {
+  margin: 0;
+  padding: 0 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .footer-column {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .site-footer {
+    padding: 1.5rem 0 1rem;
+  }
+  
+  .footer-container {
+    padding: 0 0.8rem;
+    gap: 1.5rem;
+  }
+  
+  .footer-column h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-column p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-social {
+    gap: 0.5rem;
+  }
+  
+  .footer-social a {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .footer-column > p:has(.fa-phone) {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-column > p:has(.fa-phone) i {
+    margin-right: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .newsletter-form {
+    max-width: 280px;
+  }
+  
+  .newsletter-form input {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9rem;
+  }
+  
+  .newsletter-form button {
+    padding: 0 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .footer-bottom {
+    padding: 1rem 0;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-container {
+    padding: 0 0.5rem;
+    gap: 1.2rem;
+  }
+  
+  .footer-column {
+    padding: 0 0.3rem;
+  }
+  
+  .footer-column h3 {
+    font-size: 1rem;
+  }
+  
+  .footer-column p,
+  .footer-column ul li a {
+    font-size: 0.85rem;
+  }
+  
+  .footer-social a {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+  
+  .footer-column > p:has(.fa-phone) {
+    font-size: 0.85rem;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .footer-column > p:has(.fa-phone) i {
+    margin-right: 0;
+    margin-bottom: 0.2rem;
+  }
+  
+  .newsletter-form {
+    max-width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 4px;
+    padding: 0.7rem 1rem;
+  }
+  
+  .newsletter-form input {
+    border-right: 1px solid #343a40;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .site-footer {
+    padding: 1rem 0 0.5rem;
+  }
+  
+  .footer-container {
+    padding: 0 0.3rem;
+    gap: 1rem;
+  }
+  
+  .footer-column h3 {
+    font-size: 0.95rem;
+  }
+  
+  .footer-column p,
+  .footer-column ul li a {
+    font-size: 0.8rem;
+  }
+  
+  .footer-social a {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+  
+  .footer-bottom {
+    padding: 0.8rem 0;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* დამატებითი გასწორება iPhone SE და პატარა ეკრანებისთვის */
+@media (max-width: 280px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .footer-social {
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  .footer-social a {
+    flex: 1;
+    max-width: 40px;
+    margin: 0 2px;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 0.5rem;
+  }
+}
