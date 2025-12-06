@@ -4,6 +4,7 @@ const translations = {
   ka: {
     
     // Login page translations - ka (ქართული)
+ windSpeedUnit: "კმ/სთ",       
 welcome: "კეთილი იყოს თქვენი მობრძანება",
 signInOrRegister: "შედით ან დარეგისტრირდით თქვენს ანგარიშზე",
 signIn: "შესვლა",
@@ -1201,6 +1202,8 @@ profileAvatarSaveError: "ავატარის შენახვა ვე�
       "November",
       "December",
     ],
+    windSpeedUnit: "m/s",    
+
 // Add Post page translations
     addPostTitle: "Georgia Trips - Add Post",
     addPostLoading: "Post is loading...",
@@ -2394,6 +2397,7 @@ profileAvatarSaveError: "Failed to save avatar.",
       "Ноябрь",
       "Декабрь",
     ],
+    windSpeedUnit: "км/ч",
     // Profile1 page translations
     userProfileLoading: "Загрузка...",
     userProfileBack: "Назад",

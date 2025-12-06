@@ -380,6 +380,7 @@
       width: auto; /* Allow image to shrink based on max-width */
       max-width: 240px; /* NEW: Set a maximum width for the image */
       height: auto;
+      display: block; /* Centers the image */
       margin: 0 auto; /* Centers the image */
       transition: transform 0.4s ease, filter 0.4s ease; /* დავამატე filter-ის transition */
       filter: brightness(0.95);
@@ -541,7 +542,7 @@
     }
 
     .map-container {
-      max-width: 900px;
+      max-width: 800px;
       width: 100%;
       margin: 2rem auto 0;
       position: relative;
@@ -1312,6 +1313,7 @@
       const icon = getWeatherIconFromCode(data.current.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(data.current.weather_code);
       const description = safeTranslate(descriptionKey);
+      const windUnit = safeTranslate('windSpeedUnit', 'კმ/სთ');
       
       card.innerHTML = `
         <div class="weather-date">${dateString}<br>${timeString}</div>
@@ -1325,7 +1327,7 @@
           </div>
           <div class="weather-detail">
             <i class="fas fa-wind"></i>
-            <span>${Math.round(data.current.wind_speed_10m)} კმ/სთ</span>
+            <span>${Math.round(data.current.wind_speed_10m)} ${windUnit}</span>
           </div>
           <div class="weather-detail">
             <i class="fas fa-compress-alt"></i>
@@ -1346,6 +1348,7 @@
       const icon = getWeatherIconFromCode(forecast.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
       const description = safeTranslate(descriptionKey);
+      const windUnit = safeTranslate('windSpeedUnit', 'კმ/სთ');
       
       card.innerHTML = `
         <div class="weather-date">${timeString}</div>
@@ -1359,7 +1362,7 @@
           </div>
           <div class="weather-detail">
             <i class="fas fa-wind"></i>
-            <span>${Math.round(forecast.wind_kph)} კმ/სთ</span>
+            <span>${Math.round(forecast.wind_kph)} ${windUnit}</span>
           </div>
         </div>
       `;
@@ -1378,7 +1381,8 @@
       const description = safeTranslate(descriptionKey);
       
       const avgTemp = (forecast.temp_max + forecast.temp_min) / 2;
-      
+      const windUnit = safeTranslate('windSpeedUnit', 'კმ/სთ');
+
       card.innerHTML = `
         <div class="weather-date">${dateString}</div>
         <div class="weather-icon"><i class="${icon}"></i></div>
@@ -1395,7 +1399,7 @@
           </div>
           <div class="weather-detail">
             <i class="fas fa-wind"></i>
-            <span>${Math.round(forecast.wind_kph)} კმ/სთ</span>
+            <span>${Math.round(forecast.wind_kph)} ${windUnit}</span>
           </div>
         </div>
       `;

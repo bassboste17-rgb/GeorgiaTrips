@@ -197,6 +197,20 @@
             font-weight: 400;
         }
 
+        /* დავამატე რეგიონის ლინკის სტილი */
+        .region-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .region-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
         .post-content {
             margin-top: 12px;
             white-space: pre-wrap;
@@ -1561,6 +1575,21 @@
         let authRequiredShown = false;
         let authCheckComplete = false;
 
+        const regionPages = {
+            'afkhazeti': 'abkhazia.html',
+            'achara': 'ajara.html',
+            'guria': 'guria.html',
+            'imereti': 'imereti.html',
+            'kakheti': 'kakheti.html',
+            'kvemo-kartli': 'kvemo-kartli.html',
+            'mtsketa-mtianeti': 'mtkheta-mtianeti.html',
+            'racha-lechkhumi': 'racha-lechkhumi.html',
+            'samtskhe-javakheti': 'samtskhe-javakheti.html',
+            'shida-kartli': 'shida-kartli.html',
+            'samegrelo-svaneti': 'samegrelo-zemo-svaneti.html',
+            'tbilisi': 'tbilisi.html'
+        };
+
         window.openImageModal = openImageModal;
         window.likePost = likePost;
         window.savePost = savePost;
@@ -2101,6 +2130,11 @@
             
             const regionName = regionNames[postData.region] || postData.region;
             const locationName = locationNames[postData.location] || postData.location;
+            
+            const regionPage = regionPages[postData.region] || '';
+            const regionLinkHTML = regionPage 
+                ? `<a href="${regionPage}" class="region-link">${regionName}</a>` 
+                : regionName;
 
             const hasLiked = isAuthenticated && postData.likedBy && postData.likedBy.includes(userData?.uid);
             const hasSaved = isAuthenticated && postData.savedBy && postData.savedBy.includes(userData?.uid);
@@ -2217,7 +2251,7 @@
                     '<img src="' + (postData.authorAvatar || 'https://via.placeholder.com/40') + '" alt="Author" class="post-avatar">' +
                     '<div>' +
                         '<div class="post-author" style="cursor: pointer; transition: color 0.2s;" onclick="goToProfile(\'' + postData.authorId + '\')" onmouseover="this.style.color=\'var(--primary-color)\'" onmouseout="this.style.color=\'var(--text-color)\'">' + postData.authorName + '</div>' +
-                        '<div class="post-time">' + postTime + ' · ' + regionName + '</div>' +
+                        '<div class="post-time">' + postTime + ' · ' + regionLinkHTML + '</div>' +
                     '</div>' +
                 '</div>' +
                 '<div class="post-content">' +
