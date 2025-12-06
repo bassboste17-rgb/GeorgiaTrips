@@ -28,27 +28,22 @@
       overflow-x: hidden;
     }
 
-    /* Hero Video Background - Updated for YouTube iframe */
+    /* Hero Video Background */
     .hero-video-bg {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
+      left: -100px;
+      width: 110%;
       height: 100vh;
       z-index: -2;
       overflow: hidden;
     }
 
-    .hero-video-bg iframe {
-      width: 100vw;
-      height: 56.25vw; /* 16:9 Aspect Ratio */
-      min-height: 100vh;
-      min-width: 177.77vh; /* 16:9 Aspect Ratio */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+    .hero-video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       filter: brightness(0.6);
     }
 
@@ -993,16 +988,14 @@
 
   <div id="navbar"></div>
 
-  <!-- Hero Section with YouTube Video Background - Replaced video element with YouTube iframe -->
+  <!-- Hero Section with Video Background -->
   <section class="hero">
     <div class="hero-video-bg">
-      <iframe 
-        src="https://www.youtube.com/embed/MGFgGlaBeG8?autoplay=1&mute=1&loop=1&playlist=MGFgGlaBeG8&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        title="Georgia Trips Hero Video">
-      </iframe>
+      <video autoplay muted loop playsinline>
+        <source src="addhome/herov.mov" type="video/webm">
+        <!-- Fallback image if video doesn't load -->
+        <img src="https://www.turebi.ge/uploads/photos/tours1/large/35733_1.jpg" alt="Georgia landscape" style="width:100%;height:100%;object-fit:cover;">
+      </video>
       <div class="hero-overlay"></div>
     </div>
     
@@ -1641,6 +1634,13 @@
             loadLatestPost();
             fetchWeatherData();
         });
+        
+        // Play video muted for autoplay compliance
+        const video = document.querySelector('.hero-video-bg video');
+        if (video) {
+            video.muted = true;
+            video.play().catch(e => console.log("Video autoplay prevented:", e));
+        }
     });
 
     // Global functions
