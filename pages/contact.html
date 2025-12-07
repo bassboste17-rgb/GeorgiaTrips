@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Georgia Trips - contact</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+      <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
 <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
 <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
 <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
-  <!-- Updated EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="translations.js"></script>
   <script>
@@ -200,6 +199,92 @@
     .btn-primary:active {
       transform: translateY(0);
     }
+
+    /* Added office address section styles */
+    .office-section {
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .office-container {
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(30, 30, 30, 0.95) 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(229, 56, 59, 0.2);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 2.5rem; /* Space from contact form/info */
+    }
+
+    .office-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(229, 56, 59, 0.3);
+    }
+
+    .office-header {
+      padding: 2.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(229, 56, 59, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+      border-bottom: 1px solid rgba(229, 56, 59, 0.2);
+    }
+
+    .office-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #e5383b 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .office-address {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 1.3rem;
+      color: #fff;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin: 0 auto;
+      max-width: 500px;
+      transition: all 0.3s ease;
+    }
+
+    .office-address:hover {
+      background: rgba(229, 56, 59, 0.1);
+      transform: scale(1.02);
+    }
+
+    .office-address i {
+      color: #e5383b;
+      font-size: 1.5rem;
+      background: rgba(229, 56, 59, 0.2);
+      padding: 0.8rem;
+      border-radius: 10px;
+    }
+
+    .map-container {
+      width: 100%; /* Changed: Full width */
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: brightness(0.9) contrast(1.1);
+      transition: filter 0.3s ease;
+      display: block;
+    }
+
+    .map-container:hover iframe {
+      filter: brightness(1) contrast(1.2);
+    }
     
     .popup-message {
       position: fixed;
@@ -231,13 +316,15 @@
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
 
-    /* Chat widget styles */
+    /* Chat widget styles (unchanged) */
     .chat-widget {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 1000;
     }
+    
+    /* ... (Chat widget styles remain the same) ... */
 
     .chat-button {
       width: 65px;
@@ -480,7 +567,7 @@
     }
     
     .chat-send:active:not(:disabled) {
-      transform: scale(0.95);
+      transform: translateY(0);
     }
     
     .chat-disabled {
@@ -506,6 +593,21 @@
       
       .contact-form h2 {
         font-size: 1.7rem;
+      }
+
+      .office-header h2 {
+        font-size: 2rem;
+      }
+
+      .office-address {
+        font-size: 1.1rem;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      /* Changed: Map container height adjustment for mobile */
+      .map-container {
+        height: 350px; /* Reduced height for better fit on phone screens */
       }
 
       /* Mobile chat styles */
@@ -535,7 +637,6 @@
   <section class="contact-section">
     <div class="contact-container">
       <div class="contact-info">
-        <!-- Added translation -->
         <h1 data-i18n="contactHeading">კონტაქტი</h1>
         <div class="contact-details">
           <p>
@@ -552,7 +653,6 @@
       </div>
 
       <div class="contact-form">
-        <!-- Added translation -->
         <h2 data-i18n="contactFormTitle">მოგვწერე</h2>
         <form id="contact-form">
           <div class="form-group">
@@ -570,7 +670,27 @@
     </div>
   </section>
 
-  <!-- Chat Widget -->
+  <section class="office-section">
+    <div class="office-container">
+      <div class="office-header">
+        <h2 data-i18n="officeHeading">ჩვენი ოფისი</h2>
+        <div class="office-address">
+          <i class="fas fa-map-marker-alt"></i>
+          <span data-i18n="officeAddress">ბათუმი, ბაგრატიონის ქუჩა 161</span>
+        </div>
+      </div>
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2973.0!2d41.6168!3d41.6168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406786e1e4d5c3f1%3A0x0!2sBagrationi%20Street%20161%2C%20Batumi!5e0!3m2!1sen!2sge!4v1234567890" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Office Location Map">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
   <div class="chat-widget">
     <button class="chat-button" id="chatToggle">
       <i class="fas fa-comments"></i>
@@ -578,20 +698,17 @@
     
     <div class="chat-window" id="chatWindow">
       <div class="chat-header">
-        <!-- Added translation -->
         <h3 data-i18n="contactChatOnline">ონლაინ ჩატი</h3>
-        <button class="chat-close" id="chatClose">&times;</button>
+        <button class="chat-close" id="chatClose">×</button>
       </div>
       
       <div class="chat-messages" id="chatMessages">
         <div class="chat-message system">
-          <!-- Added translation -->
           <div data-i18n="contactChatWelcome">მოგესალმებით! რით შემიძლია დაგეხმაროთ?</div>
         </div>
       </div>
       
       <div class="chat-input-container">
-        <!-- Added translation -->
         <input type="text" class="chat-input" id="chatInput" data-i18n="contactChatInputPlaceholder" placeholder="დაწერეთ შეტყობინება..." />
         <button class="chat-send" id="chatSend">
           <i class="fas fa-paper-plane"></i>
@@ -658,10 +775,27 @@
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
 
+    // Added translation updates for office section
     window.addEventListener('languageChanged', () => {
       updateChatTranslations();
       updateContactFormTranslations();
+      updateOfficeTranslations();
     });
+
+    // Added translation updates for office section
+    function updateOfficeTranslations() {
+      const elements = {
+        'officeHeading': 'textContent',
+        'officeAddress': 'textContent'
+      };
+      
+      for (const [key, prop] of Object.entries(elements)) {
+        const el = document.querySelector(`[data-i18n="${key}"]`);
+        if (el) {
+          el[prop] = window.languageSwitcher.translate(key);
+        }
+      }
+    }
 
     function updateChatTranslations() {
       // Update welcome message if no active chat
@@ -1118,13 +1252,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateContactFormTranslations();
       updateChatTranslations();
+      updateOfficeTranslations();
     });
 
     // Cleanup on page unload
     window.addEventListener('beforeunload', cleanupChatListeners);
   </script>
 
-  <script type="module" src="footer.js"></script>
+  <script src="js/footer.js"></script>
   <script type="module" src="navbar.js"></script>
 
 </body>

@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
 <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
 <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    
     <style>
 :root {
   --primary-color: #dc3545;
@@ -274,8 +275,6 @@ body {
   margin-bottom: 2rem;
   border-bottom: 2px solid var(--border-color);
   padding: 0 0.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .tab-btn {
@@ -290,8 +289,6 @@ body {
   transition: var(--transition);
   position: relative;
   border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .tab-btn:hover {
@@ -305,12 +302,12 @@ body {
   background: rgba(229, 56, 59, 0.05);
 }
 
-/* Enhanced filters with PERFECT mobile responsiveness */
+/* Enhanced filters with better spacing */
 .filters {
   display: flex;
-  flex-direction: column;
   gap: 1rem;
   margin-bottom: 2.5rem;
+  flex-wrap: wrap;
   padding: 1.5rem;
   background: rgba(26, 26, 26, 0.5);
   border-radius: var(--border-radius);
@@ -321,19 +318,19 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  width: 100%;
+  flex: 1;
+  min-width: 280px;
 }
 
 .price-range-group .input {
   flex: 1;
-  min-width: 0;
+  min-width: 110px;
 }
 
 .price-range-separator {
   color: var(--text-color);
   font-weight: 600;
   font-size: 1.1rem;
-  flex-shrink: 0;
 }
 
 .input,
@@ -344,7 +341,8 @@ body {
   padding: 0.875rem 1.25rem;
   color: var(--text-color);
   font-size: 0.95rem;
-  width: 100%;
+  flex: 1;
+  min-width: 200px;
   transition: var(--transition);
 }
 
@@ -353,7 +351,7 @@ body {
   outline: none;
   border-color: var(--primary-color);
   background: var(--light-bg);
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 31, 204, 0.1);
 }
 
 .input::placeholder {
@@ -369,8 +367,8 @@ body {
 /* Refined item cards with better shadows and hover effects */
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
 .card {
@@ -656,6 +654,201 @@ body {
 .modal-large {
   max-width: 850px;
 }
+
+/* Warning Popup Modal Styles */
+.warning-popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.warning-popup-content {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border: 2px solid var(--warning-color);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  animation: warningPopupSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 40px rgba(255, 193, 7, 0.3), 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes warningPopupSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.warning-popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.warning-popup-close:hover {
+  color: var(--warning-color);
+  transform: rotate(90deg);
+  background: rgba(255, 193, 7, 0.15);
+  border-color: var(--warning-color);
+}
+
+.warning-popup-icon {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.warning-popup-icon i {
+  font-size: 4rem;
+  color: var(--warning-color);
+  animation: warningPulse 2s infinite;
+}
+
+@keyframes warningPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.warning-popup-title {
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.warning-popup-title i {
+  color: var(--warning-color);
+}
+
+.warning-popup-message {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.warning-popup-message p {
+  color: var(--text-color);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.warning-popup-message p:first-child {
+  margin-bottom: 1rem;
+}
+
+.warning-popup-contact {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.warning-popup-contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.warning-popup-contact a.whatsapp-link {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff;
+}
+
+.warning-popup-contact a.whatsapp-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.warning-popup-contact a.chat-link {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  color: #fff;
+}
+
+.warning-popup-contact a.chat-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.warning-popup-continue {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.warning-popup-continue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+}
+
+@media (max-width: 600px) {
+  .warning-popup-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .warning-popup-icon i {
+    font-size: 3rem;
+  }
+  
+  .warning-popup-title {
+    font-size: 1.25rem;
+  }
+  
+  .warning-popup-message p {
+    font-size: 0.95rem;
+  }
+}
+/* </CHANGE> */
 
 /* Hide calendar in detail modal (modal-large) */
 .modal-large .detail-calendar-section {
@@ -2037,7 +2230,7 @@ textarea.input {
 /* Responsive improvements */
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .header h1 {
@@ -2045,116 +2238,120 @@ textarea.input {
   }
 
   .hero {
-    padding: 2rem 0 1.5rem;
+    padding: 3rem 0 2rem;
   }
 
   .hero h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .hero p {
-    font-size: 1rem;
-  }
-
-  .nav-cards {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .nav-card,
-  .nav-card1 {
-    padding: 1.5rem 1rem;
-  }
-
-  .tabs {
-    padding: 0;
-    gap: 0;
-  }
-
-  .tab-btn {
-    padding: 0.875rem 1.25rem;
-    font-size: 0.9rem;
-  }
-
-  /* Perfect mobile filters */
-  .filters {
-    padding: 1rem;
-    gap: 0.875rem;
-  }
-
-  .price-range-group {
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-
-  .price-range-separator {
-    font-size: 1rem;
-  }
-
-  .input,
-  .select {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 
   .items-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
   }
 
-  .card-image {
-    height: 200px;
-  }
-
-  .card-content {
+  .filters {
+    flex-direction: column;
     padding: 1.25rem;
   }
 
-  .card-content h3 {
-    font-size: 1.1rem;
+  .input,
+  .select {
+    min-width: 100%;
   }
 
-  .price {
-    font-size: 1.2rem;
+  .price-range-group {
+    min-width: 100%;
   }
 
-  .popularity-btn {
-    padding: 0.5rem 0.75rem;
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-main-image {
+    height: 250px;
+  }
+
+  .detail-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+  }
+
+  .toast-container {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+
+  .toast {
+    padding: 1rem 1.25rem;
+  }
+
+  .toast-icon {
+    font-size: 1.5rem;
+  }
+
+  .toast-title {
+    font-size: 0.95rem;
+  }
+
+  .toast-message {
     font-size: 0.85rem;
   }
 
-  .license-plate-badge {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.85rem;
+  .confirm-actions {
+    flex-direction: column;
   }
 
-  .modal-content {
-    padding: 1.5rem;
-    margin: 0.5rem;
-  }
-
-  .close {
-    top: 1rem;
-    right: 1rem;
+  .confirm-actions .btn {
+    width: 100%;
   }
 
   .booking-item-info {
     flex-direction: column;
-    padding: 1.25rem;
   }
 
   .booking-item-info img {
     width: 100%;
-    height: 150px;
+    height: 200px;
   }
 
+  .booking-dates-grid,
+  .booking-times-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-calendar {
+    min-width: 280px;
+  }
+
+  .nav-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+  }
+
+  /* Mobile responsive for new elements */
   .booking-dates-visual {
     flex-direction: column;
-    padding: 1rem;
-  }
-
-  .booking-date-box {
-    width: 100%;
   }
 
   .booking-date-arrow {
@@ -2165,103 +2362,41 @@ textarea.input {
     grid-template-columns: 1fr;
   }
 
-  .booking-card {
-    padding: 1.25rem;
-  }
-
-  .btn {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .booking-actions {
-    flex-direction: column;
-  }
-
-  .booking-actions .btn {
-    width: 100%;
-  }
-}
-
-/* Small mobile devices */
-@media (max-width: 480px) {
-  .container {
-    padding: 0.75rem;
-  }
-
-  .header h1 {
-    font-size: 1.25rem;
-  }
-
-  .hero h1 {
-    font-size: 1.5rem;
-  }
-
-  .hero p {
-    font-size: 0.9rem;
-  }
-
-  .tab-btn {
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
-  }
-
-  .filters {
-    padding: 0.875rem;
-  }
-
-  .input,
-  .select {
-    padding: 0.625rem 0.875rem;
-    font-size: 0.85rem;
-  }
-
-  .price-range-separator {
-    font-size: 0.9rem;
-  }
-
-  .card-content {
-    padding: 1rem;
-  }
-
-  .card-details span {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.6rem;
-  }
-
-  .popularity-btn {
-    top: 8px;
-    right: 8px;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
-  }
-
-  .license-plate-badge {
-    top: 8px;
-    left: 8px;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
-  }
-
-  .booking-date-day {
-    font-size: 2rem;
-  }
-
-  .booking-date-month {
-    font-size: 1rem;
-  }
-
-  .modal-content {
-    padding: 1.25rem;
-  }
-
-  .form-row {
+  .form-group-inline {
     grid-template-columns: 1fr;
   }
+
+  .tour-dates-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  /* Style for booking user info form */
+  .booking-user-info {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .booking-user-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .booking-user-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .booking-user-form-grid .form-group {
+    margin-bottom: 0;
+  }
 }
-/* </CHANGE> */
 
 /* Calendar Styles for Detail Modal */
 .seasonal-calendar {
@@ -2915,13 +3050,48 @@ textarea.input {
 </head>
 <body>
     <div id="toastContainer" class="toast-container"></div>
+    
+    <!-- Warning Popup Modal -->
+    <div id="bookingWarningPopup" class="warning-popup-overlay">
+      <div class="warning-popup-content">
+        <span class="warning-popup-close" id="closeWarningPopup">&times;</span>
+        <div class="warning-popup-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2 class="warning-popup-title">
+          <i class="fas fa-info-circle"></i>
+          მნიშვნელოვანი ინფორმაცია
+        </h2>
+        <div class="warning-popup-message">
+          <p>
+            <strong>ფასები ცვალებადია</strong>, ამიტომ გთხოვთ გაითვალისწინოთ და გადაამოწმოთ ფასები WhatsApp-ზე ან Online Chat-ში მიწერით.
+          </p>
+          <p>
+            ასევე, გთხოვთ <strong>დაჯავშნისას სწორად მიუთითოთ საკონტაქტო ინფორმაცია</strong>, რომ შევძლოთ თქვენთან დაკავშირება.
+          </p>
+          <div class="warning-popup-contact">
+            <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="whatsapp-link">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="#" class="chat-link" onclick="openChat(); return false;">
+              <i class="fas fa-comments"></i> Online Chat
+            </a>
+          </div>
+        </div>
+        <button class="warning-popup-continue" id="continueToBooking">
+          <i class="fas fa-arrow-right"></i> გასაგებია, გაგრძელება
+        </button>
+      </div>
+    </div>
+    <!-- </CHANGE> -->
 
     <div id="homeView" class="view">
+        <div id="navbar"></div>
         <div class="container">
             <div class="hero">
                 <h1 data-i18n="bookingWelcome">მოგესალმებით დაჯავშნის პლატფორმაზე</h1>
                 <p data-i18n="bookingSubtitle">დაჯავშნეთ მანქანები და ტურები მარტივად და სწრაფად</p>
-                <div id="navbar"></div>
+                
                 <div class="nav-cards">
                     <a href="#" class="nav-card" data-view="booking">
                         <div class="nav-card-icon">🚗</div>
@@ -3108,6 +3278,8 @@ textarea.input {
         <span class="close" id="closeBookingModal">&times;</span>
         <h2 id="modalTitle" data-i18n="bookingModalTitle">დაჯავშნა</h2>
         
+        <!-- წავშალე booking-warning-alert რადგან ახლა ცალკე popup-ია -->
+        
         <div id="modalBody"></div>
         
         <div class="booking-dates-grid">
@@ -3237,7 +3409,6 @@ textarea.input {
     <div id="detailModal" class="modal">
       <div class="modal-content modal-large">
         <span class="close" id="closeDetailModal">&times;</span>
-        <!-- <div class="modal-title"></div> --> <!-- Removed modal-title h2 element from detailModal -->
         <div id="detailModalContent"></div>
       </div>
     </div>
@@ -3348,7 +3519,7 @@ textarea.input {
               'მარნეული': 'regionMarneuli',
               'თერჯოლა': 'regionTerjola',
               'ოზურგეთი': 'regionOzurgeti',
-              'ქობულეთი': 'regionKobuleti',
+              'ქობულეთ': 'regionKobuleti',
               'კასპი': 'regionKaspi',
               'ახალქალაქი': 'regionAkhalkalaki',
               'ცაგერი': 'regionTsageri',
@@ -4237,6 +4408,53 @@ let currentItemType = null
 
 let startCalendar, endCalendar // Renamed from startAvailabilityCalendar, endAvailabilityCalendar
 
+let pendingBookingItem = null;
+let pendingBookingType = null;
+
+function showBookingWarningPopup(item, type) {
+  pendingBookingItem = item;
+  pendingBookingType = type;
+  const warningPopup = document.getElementById("bookingWarningPopup");
+  if (warningPopup) {
+    warningPopup.style.display = "flex";
+  }
+}
+
+function closeBookingWarningPopup() {
+  const warningPopup = document.getElementById("bookingWarningPopup");
+  if (warningPopup) {
+    warningPopup.style.display = "none";
+  }
+  pendingBookingItem = null;
+  pendingBookingType = null;
+}
+
+function continueToBookingModal() {
+  const warningPopup = document.getElementById("bookingWarningPopup");
+  if (warningPopup) {
+    warningPopup.style.display = "none";
+  }
+  
+  if (pendingBookingItem && pendingBookingType) {
+    openBookingModalDirect(pendingBookingItem, pendingBookingType);
+  }
+  
+  pendingBookingItem = null;
+  pendingBookingType = null;
+}
+
+// Warning popup event listeners
+document.getElementById("closeWarningPopup")?.addEventListener("click", closeBookingWarningPopup);
+document.getElementById("continueToBooking")?.addEventListener("click", continueToBookingModal);
+
+// Close warning popup on overlay click
+document.getElementById("bookingWarningPopup")?.addEventListener("click", (e) => {
+  if (e.target.id === "bookingWarningPopup") {
+    closeBookingWarningPopup();
+  }
+});
+// </CHANGE>
+
 async function setupNotificationsListener() {
   if (!currentUser) return;
   
@@ -4710,10 +4928,9 @@ function createItemCard(item, type) {
   
   const ls = window.languageSwitcher;
   const perDay = ls ? ls.translate('bookingPerDay') : '/დღე';
-  const perTour = ls ? ls.translate('bookingPerTour') : '/დღე'; // <-- Updated this line
-  const withDriver = ls ? ls.translate('bookingWithDriver') : 'მძღოლით';
   const doors = ls ? ls.translate('bookingDoors') : 'კარი';
   const seats = ls ? ls.translate('bookingSeats') : 'ადგილი';
+  const withDriver = ls ? ls.translate('bookingWithDriver') : 'მძღოლით';
   const durationLabel = ls ? ls.translate('bookingDuration') : 'ხანგრძლივობა';
   const capacity = ls ? ls.translate('bookingCapacity') : 'ადგილები';
   const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
@@ -4777,7 +4994,7 @@ function createItemCard(item, type) {
                         <span>👥 ${item.capacity} ${capacity}</span>
                     </div>
                     <div class="card-footer">
-                        <div class="price">${item.pricePerDay}₾${perDay}</div>
+                        <div class="price">${item.pricePerDay}₾</div>
                         <button class="btn btn-sm book-btn" data-id="${item.id}">${bookBtn}</button>
                     </div>
                 </div>
@@ -4811,7 +5028,7 @@ window.setDetailImage = (index) => {
 
 window.bookFromDetail = () => {
   closeDetailModal()
-  openBookingModal(selectedItem, selectedItemType)
+  openBookingModal(selectedItem, selectedItemType) // Changed to openBookingModal to trigger warning popup
 }
 
 window.closeDetailModal = () => {
@@ -4827,6 +5044,11 @@ function setDetailImage(index) {
 }
 
 async function openBookingModal(item, type) {
+  showBookingWarningPopup(item, type);
+}
+
+async function openBookingModalDirect(item, type) {
+  // </CHANGE> ეს არის ორიგინალი openBookingModal ლოგიკა
   selectedItem = item
   selectedItemType = type
 
@@ -4834,6 +5056,7 @@ async function openBookingModal(item, type) {
   
   // Translate all fields
   const name = (lang !== 'ka' && item.nameTranslations?.[lang]) ? item.nameTranslations[lang] : item.name;
+  const description = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || "");
   
   // --- Region Translation Update in Modal ---
   let regionModalText = '';
@@ -4850,7 +5073,6 @@ async function openBookingModal(item, type) {
   }
   // --- End Region Translation Update ---
   
-  const description = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || "");
   const type_translated = (lang !== 'ka' && item.typeTranslations?.[lang]) ? item.typeTranslations[lang] : item.type;
   const fuelType = (lang !== 'ka' && item.fuelTypeTranslations?.[lang]) ? item.fuelTypeTranslations[lang] : item.fuelType;
   const transmission = (lang !== 'ka' && item.transmissionTranslations?.[lang]) ? item.transmissionTranslations[lang] : item.transmission;
@@ -4887,7 +5109,7 @@ async function openBookingModal(item, type) {
   const isRestricted = item.restrictedMode || false;
   
   const perDay = ls ? ls.translate('bookingPerDay') : 'დღე';
-  const perTour = ls ? ls.translate('bookingPerTour') : '/ტური';
+  const perTour = ls ? ls.translate('bookingPerTour') : 'ტური';
   const withDriver = ls ? ls.translate('bookingWithDriver') : 'მძღოლით';
   const fullyBookedTitle = ls ? ls.translate('bookingFullyBooked') : 'სრულად დაკავებულია';
   const fullyBookedMsg = ls ? ls.translate('bookingFullyBookedMessage') : `ამ ${type === "cars" ? "მანქანას" : "ტურს"} ამჟამად არ აქვს ხელმისაწვდომი თარიღები`;
@@ -4945,7 +5167,7 @@ async function openBookingModal(item, type) {
                   ${item.fuelType ? `<span><i class="fas fa-gas-pump"></i> ${translatedFuelType}</span>` : ''}
                   ${item.transmission ? `<span><i class="fas fa-cog"></i> ${translatedTransmission}</span>` : ''}
                   ${item.year ? `<span><i class="fas fa-calendar"></i> ${item.year}</span>` : ''}
-                  ${item.color ? `<span><i class="fas fa-palette"></i> ${translateValue(color, 'color')}</span>` : ''}
+                  ${item.color ? `<span><i class="fas fa-palette"></i> ${translatedColor}</span>` : ''}
                   ${item.engineCapacity ? `<span><i class="fas fa-tachometer-alt"></i> ${item.engineCapacity}L</span>` : ''}
                   ${item.withDriver ? `<span class="with-driver"><i class="fas fa-user-tie"></i> ${withDriver}</span>` : ''}
                   ${item.features ? `<div class="booking-features"><i class="fas fa-star"></i> <span>${item.features}</span></div>` : ''}
@@ -5229,7 +5451,7 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
 
       const notificationTitle = window.languageSwitcher?.translate("bookingNotificationNewRequest") || "🔔 ახალი დაჯავშნის მოთხოვნა";
       const requestFromText = window.languageSwitcher?.translate("bookingNotificationRequestFrom") || "ითხოვს დაჯავშნას:";
-      const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || " გადადით \"დაჯავშნის მართვა\" განყოფილებაში დასადასტურებლად ან უარსაყოფად.";
+      const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || "გადადით \"დაჯავშნის მართვა\" განყოფილებაში დასადასტურებლად ან უარსაყოფად.";
       
       // Use contact info for notification
       const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
@@ -5327,17 +5549,41 @@ async function loadMyBookings() {
     const loadingText = window.languageSwitcher?.translate("bookingMyBookingsLoading") || "იტვირთება";
     container.innerHTML = `<div class="loading">${loadingText}</div>`;
 
-    // Removed orderBy to avoid composite index requirement
-    const q = query(
+    // Query 1: userId-ით (ავტორიზებული დაჯავშნები)
+    const userIdQuery = query(
       collection(db, "bookings"),
       where("userId", "==", currentUser.uid)
     );
 
-    const snapshot = await getDocs(q);
-    let bookings = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+    // Query 2: contactEmail-ით (guest bookings რომლებიც ჯერ არ დაუკავშირდა)
+    const emailQuery = query(
+      collection(db, "bookings"),
+      where("contactEmail", "==", currentUser.email),
+      where("isGuest", "==", true)
+    );
+
+    // ორივე query-ს პარალელურად ვაშვებთ
+    const [userIdSnapshot, emailSnapshot] = await Promise.all([
+      getDocs(userIdQuery),
+      getDocs(emailQuery)
+    ]);
+
+    // შედეგების გაერთიანება (დუბლიკატების გარეშე)
+    const bookingsMap = new Map();
+    
+    userIdSnapshot.docs.forEach(doc => {
+      bookingsMap.set(doc.id, { id: doc.id, ...doc.data() });
+    });
+    
+    // Guest bookings-ს ვამატებთ თუ ჯერ არ არის map-ში
+    emailSnapshot.docs.forEach(doc => {
+      if (!bookingsMap.has(doc.id)) {
+        bookingsMap.set(doc.id, { id: doc.id, ...doc.data() });
+      }
+    });
+
+    let bookings = Array.from(bookingsMap.values());
+    // </CHANGE>
 
     // Sort in JavaScript instead of Firestore
     bookings.sort((a, b) => {
@@ -5364,7 +5610,7 @@ async function loadMyBookings() {
 
   } catch (error) {
     console.error("Error loading bookings:", error);
-    const errorText = window.languageSwitcher?.translate("bookingMyBookingsLoadError") || "დაჯავშნების ჩატვირთვაში მოხდა შეცდომა";
+    const errorText = window.languageSwitcher?.translate("bookingMyBookingsLoadError") || "დაჯავშნების ჩატვირთვისას მოხდა შეცდომა";
     container.innerHTML = `<div class="empty-state">${errorText}</div>`;
     const toastText = window.languageSwitcher?.translate("bookingMyBookingsLoadFailed") || "დაჯავშნების ჩატვირთვა ვერ მოხერხდა";
     showToast(toastText, "error");
@@ -5374,6 +5620,16 @@ async function loadMyBookings() {
 function createBookingCard(booking) {
   const statusClass = `status-${booking.status}`;
   const imageUrl = booking.itemImage || 'https://via.placeholder.com/800x400/e0e0e0/666666?text=No+Image';
+  
+  // Calculate days between start and end date
+  let days = 1; // default value
+  if (booking.startDate && booking.endDate) {
+    const start = new Date(booking.startDate);
+    const end = new Date(booking.endDate);
+    const diffTime = Math.abs(end - start);
+    days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+  }
+  // </CHANGE>
   
   //  Use languageSwitcher for date formatting
   const formatDate = (dateStr) => {
@@ -5458,7 +5714,7 @@ function createBookingCard(booking) {
             <div class="booking-date-month">${endDate}</div>
           </div>
           <div class="booking-date-duration">
-            <div class="booking-date-duration-number">${booking.duration}</div>
+            <div class="booking-date-duration-number">${days}</div>
             <div class="booking-date-duration-label">${daysText}</div>
           </div>
         </div>
@@ -5570,11 +5826,11 @@ async function loadNotifications() {
       return;
     }
 
-    // Create notification cards with translation
     const notificationCards = await Promise.all(
       notifications.map(notif => createNotificationCard(notif))
     );
     container.innerHTML = notificationCards.join('');
+    // </CHANGE>
 
     notifications.forEach(async (notif) => {
       if (!notif.read) {
@@ -5586,13 +5842,16 @@ async function loadNotifications() {
 
   } catch (error) {
     console.error('Error loading notifications:', error);
-    const errorText = window.languageSwitcher?.translate("bookingNotificationLoadError") || "შეტყობინებების ჩატვირთვაში მოხდა შეცდომა";
+    const errorText = window.languageSwitcher?.translate("bookingNotificationLoadError") || "შეტყობინებების ჩატვირთვისას მოხდა შეცდომა";
     container.innerHTML = `<div class="empty-state">${errorText}</div>`;
     const toastText = window.languageSwitcher?.translate("bookingNotificationLoadFailed") || "შეტყობინებების ჩატვირთვა ვერ მოხერხდა";
     showToast(toastText, 'error');
   }
 }
 
+// 
+// The createNotificationCard function is now async and needs to be called correctly
+// within an async context or handled with promises.
 async function createNotificationCard(notif) {
   const unreadClass = notif.read ? '' : 'unread';
   const timeAgo = getTimeAgo(notif.createdAt);
@@ -5628,10 +5887,7 @@ async function createNotificationCard(notif) {
     </div>
   `;
 }
-
-// The loadNotifications function is already async and uses Promise.all,
-// so the change is integrated into the existing structure.
-// No further structural changes needed here for this specific update.
+// </CHANGE>
 
 function getTimeAgo(timestamp) {
   if (!timestamp) {
@@ -6020,7 +6276,7 @@ function openDetailModal(item, type) {
     
     <div id="footer"></div>
     <script type="module" src="navbar.js"></script>
+    <script src="js/footer.js"></script>
     <script src="translations.js"></script>
-    <script type="module" src="footer.js"></script>
 </body>
 </html>

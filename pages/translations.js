@@ -205,7 +205,8 @@ monthDecember: "დეკემბერი",
     homeRegionNotFound: "რეგიონი არ მოიძებნა",
     homeWeatherLoadError: "ამინდის მონაცემების მიღება ვერ მოხერხდა. გთხოვთ სცადოთ მოგვიანებით.",
     homeFailedToLoadPosts: "პოსტების ჩატვირთვა ვერ მოხერხდა",
-
+officeHeading: "ჩვენი ოფისი",
+officeAddress: "ბათუმი, ბაგრატიონის ქუჩა 161",
     // My Posts page
     myPostsTitle: "ჩემი პოსტები",
     myPostsNewPost: "ახალი პოსტი",
@@ -634,6 +635,7 @@ monthDecember: "დეკემბერი",
     bookingDuration: "ხანგრძლივობა",
     bookingCapacity: "ადგილები",
     bookingLikeBtn: "მოწონება",
+    
     // Detail modal
     bookingDetailRegion: "რეგიონი",
     bookingDetailType: "ტიპი",
@@ -1565,7 +1567,8 @@ authDefaultError: "An error occurred. Please try again later",
     contactWaitSeconds: "Please wait {seconds} seconds before sending next message",
     contactSystemName: "System",
     contactSystemReply: "Thank you for your message! Our operator will contact you soon.",
-
+    officeHeading: "Our Office",
+    officeAddress: "Batumi, 161 Bagrationi Street",
     // Map Regions
     regionAbkhazia: "Abkhazia",
     regionAdjara: "Adjara",
@@ -2605,7 +2608,8 @@ profileAvatarSaveError: "Не удалось сохранить аватар.",
     homeRegionNotFound: "Регион не найден",
     homeWeatherLoadError: "Не удалось получить данные о погоде. Пожалуйста, попробуйте позже.",
     homeFailedToLoadPosts: "Не удалось загрузить посты",
-
+officeHeading: "Наш офис",
+officeAddress: "Батуми, улица Багратиони 161",
     // My Posts page
     myPostsTitle: "Мои посты",
     myPostsNewPost: "Новый пост",

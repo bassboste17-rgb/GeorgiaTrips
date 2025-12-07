@@ -1,8 +1,4 @@
 <header class="navbar" id="navbar">
-  <link rel="icon" type="image/x-icon" href="addhome/bus.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/bus.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/bus.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/bus.png">
   <div class="logo">Georgia Trips</div>
   <link rel="stylesheet" href="css/navbar.css">
   <button class="mobile-menu-toggle" aria-label="მენიუ">
@@ -24,6 +20,14 @@
       <button onclick="window.languageSwitcher.setLanguage('ka')" class="active">KA</button>
       <button onclick="window.languageSwitcher.setLanguage('en')">EN</button>
       <button onclick="window.languageSwitcher.setLanguage('ru')">RU</button>
+    </div>
+
+    <!-- შეტყობინებების ზარი -->
+    <div class="notification-bell" id="notificationBell">
+      <a href="booking.html#notifications" class="bell-icon">
+        <i class="fas fa-bell"></i>
+        <span id="navbarNotifBadge" class="navbar-notif-badge" style="display: none;">0</span>
+      </a>
     </div>
 
     <div class="auth-button-wrapper">

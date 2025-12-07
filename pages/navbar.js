@@ -1,5 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
 
 // Firebase კონფიგურაცია
 const firebaseConfig = {
@@ -14,6 +21,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
+const db = getFirestore(app)
 
 // Load navbar
 fetch("navbar.html")
@@ -34,6 +42,7 @@ fetch("navbar.html")
     })
 
     const authLink = document.getElementById("auth-link")
+    const notificationBell = document.getElementById("notificationBell")
 
     function updateActiveLanguageButton() {
       const currentLang = localStorage.getItem("language") || "ka"
@@ -90,6 +99,33 @@ fetch("navbar.html")
       updateActiveLanguageButton()
     }, 100)
 
+    // შეტყობინებების listener ფუნქცია navbar-ისთვის
+    function setupNavbarNotificationsListener(user) {
+      if (!user) return
+
+      const notifQuery = query(
+        collection(db, "notifications"),
+        where("userId", "==", user.uid),
+        where("read", "==", false),
+      )
+
+      onSnapshot(
+        notifQuery,
+        (snapshot) => {
+          const unreadCount = snapshot.size
+          const navbarNotifBadge = document.getElementById("navbarNotifBadge")
+
+          if (navbarNotifBadge) {
+            navbarNotifBadge.textContent = unreadCount
+            navbarNotifBadge.style.display = unreadCount > 0 ? "flex" : "none"
+          }
+        },
+        (error) => {
+          console.error("Notification listener error:", error)
+        },
+      )
+    }
+
     onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
         // მომხმარებელი ავტორიზირებულია და email დადასტურებულია
@@ -98,6 +134,14 @@ fetch("navbar.html")
         // განახლება localStorage-ში სინქრონიზაციისთვის
         localStorage.setItem("username", username)
         localStorage.setItem("userEmail", user.email)
+
+        // აჩვენე notification bell როცა მომხმარებელი ავტორიზებულია
+        if (notificationBell) {
+          notificationBell.classList.add("show")
+        }
+
+        // დაიწყე შეტყობინებების მოსმენა
+        setupNavbarNotificationsListener(user)
 
         // dropdown მენიუს HTML
         authLink.innerHTML = `
@@ -159,6 +203,11 @@ fetch("navbar.html")
         // მომხმარებელი არ არის ავტორიზირებული
         localStorage.removeItem("username")
         localStorage.removeItem("userEmail")
+
+        // დამალე notification bell როცა მომხმარებელი არ არის ავტორიზებული
+        if (notificationBell) {
+          notificationBell.classList.remove("show")
+        }
 
         authLink.innerHTML = `<a href="login.html" class="auth-link" data-i18n="navAuth">${window.languageSwitcher?.translate("navAuth") || "ავტორიზაცია"}</a>`
       }
