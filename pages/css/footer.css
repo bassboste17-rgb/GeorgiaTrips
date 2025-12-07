@@ -5,6 +5,8 @@
   padding: 3rem 0 1rem;
   width: 100%;
   overflow-x: hidden;
+  /* დაემატა box-sizing და text-align ძირითადი ცენტრირებისთვის */
+  box-sizing: border-box;
 }
 
 .footer-container {
@@ -25,6 +27,8 @@
   text-align: center;
   min-width: 0;
   width: 100%;
+  /* დაემატა box-sizing */
+  box-sizing: border-box;
 }
 
 .footer-column h3 {
@@ -200,56 +204,44 @@
   }
 }
 
-/* გასწორებული tablet და mobile ზომები */
 @media (max-width: 768px) {
-  .site-footer {
-    padding: 2.5rem 0 1rem;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding: 0 2rem;
-    /* დაემატა ცენტრირება */
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .footer-column {
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .footer-column h3 {
-    font-size: 1.2rem;
-  }
-
-  .footer-column p {
-    font-size: 0.95rem;
-  }
-}
-
-/* მთლიანად გადაწერილი mobile სტილები პატარა ეკრანებისთვის */
-@media (max-width: 576px) {
   .site-footer {
     padding: 2rem 0 1rem;
   }
 
   .footer-container {
-    padding: 0 1.5rem;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    max-width: 500px;
+    /* შემცირებული padding და დამატებული max-width ცენტრირებისთვის */
+    padding: 0 1.5rem;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .footer-column {
-    padding: 0;
+    /* წაშლილია padding და დამატებულია width: 100% */
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .site-footer {
+    padding: 1.5rem 0 1rem;
+  }
+
+  .footer-container {
+    /* შემცირებული padding და დაზუსტებული ცენტრირება */
+    padding: 0 1rem;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .footer-column h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
   }
 
   .footer-column p {
@@ -258,154 +250,68 @@
   }
 
   .footer-social {
-    gap: 0.6rem;
-    justify-content: center;
-  }
-
-  .footer-social a {
-    width: 38px;
-    height: 38px;
-    font-size: 0.95rem;
-  }
-
-  .footer-column > p:has(.fa-phone) {
-    font-size: 0.9rem;
-    margin-bottom: 1.2rem;
-    justify-content: center;
-  }
-
-  .footer-column > p:has(.fa-phone) i {
-    margin-right: 0.6rem;
-    font-size: 0.95rem;
-  }
-
-  .newsletter-form {
-    max-width: 100%;
-  }
-
-  .newsletter-form input {
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .newsletter-form button {
-    padding: 0 1.3rem;
-    font-size: 0.95rem;
-  }
-
-  .footer-bottom {
-    padding: 1.2rem 0;
-    margin-top: 2rem;
-    font-size: 0.85rem;
-  }
-}
-
-/* iPhone SE და ძალიან პატარა ეკრანები (375px-400px) */
-@media (max-width: 400px) {
-  .site-footer {
-    padding: 1.5rem 0 1rem;
-  }
-
-  .footer-container {
-    padding: 0 1rem;
-    gap: 1.8rem;
-    max-width: 100%;
-  }
-
-  .footer-column {
-    padding: 0;
-  }
-
-  .footer-column h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.9rem;
-  }
-
-  .footer-column p,
-  .footer-column ul li a {
-    font-size: 0.88rem;
-  }
-
-  .footer-social {
     gap: 0.5rem;
+    /* დაემატა width და მარგინი სრული ცენტრირებისთვის */
     width: 100%;
-    max-width: 280px;
-    margin: 0 auto 1rem;
+    justify-content: center;
   }
 
   .footer-social a {
     width: 36px;
     height: 36px;
-    font-size: 0.9rem;
   }
 
-  /* ტელეფონის ნომერი ცენტრში */
   .footer-column > p:has(.fa-phone) {
-    font-size: 0.88rem;
-    flex-direction: row;
-    gap: 0;
-    justify-content: center;
-    align-items: center;
+    font-size: 0.9rem;
     margin-bottom: 1rem;
-    padding: 0 0.5rem;
+    /* დაემატა width სრული ცენტრირებისთვის */
+    width: 100%;
   }
 
   .footer-column > p:has(.fa-phone) i {
-    margin-right: 0.5rem;
-    margin-bottom: 0;
+    margin-right: 0.6rem;
     font-size: 0.9rem;
   }
 
-  /* Newsletter ფორმა - vertical layout პატარა ეკრანებზე */
   .newsletter-form {
-    flex-direction: column;
-    gap: 0.6rem;
-    max-width: 100%;
-    width: 100%;
+    max-width: 280px;
+    /* დაემატა margin: 0 auto ზუსტი ცენტრირებისთვის */
+    margin: 0 auto;
   }
 
   .newsletter-form input {
-    width: 100%;
-    border-radius: 6px;
-    border: 1px solid #343a40;
-    border-right: 1px solid #343a40;
-    padding: 0.75rem 1rem;
-    font-size: 0.88rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9rem;
   }
 
   .newsletter-form button {
-    width: 100%;
-    border-radius: 6px;
-    padding: 0.75rem 1rem;
+    padding: 0 1.2rem;
     font-size: 0.9rem;
-    justify-content: center;
   }
 
   .footer-bottom {
     padding: 1rem 0;
-    margin-top: 1.5rem;
-    font-size: 0.82rem;
-  }
-
-  .footer-bottom p {
-    padding: 0 0.5rem;
+    margin-top: 2rem;
+    font-size: 0.85rem;
   }
 }
 
-/* ძალიან პატარა ეკრანები (320px და ნაკლები) */
-@media (max-width: 320px) {
-  .site-footer {
-    padding: 1.2rem 0 0.8rem;
+@media (max-width: 400px) {
+  .footer-container {
+    /* გასწორებული padding ტელეფონის ზომისთვის */
+    padding: 0 1rem;
+    gap: 1.2rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .footer-container {
-    padding: 0 0.8rem;
-    gap: 1.5rem;
+  .footer-column {
+    /* წაშლილია ზედმეტი padding */
+    width: 100%;
   }
 
   .footer-column h3 {
     font-size: 1rem;
-    margin-bottom: 0.8rem;
   }
 
   .footer-column p,
@@ -413,64 +319,105 @@
     font-size: 0.85rem;
   }
 
-  .footer-social {
-    gap: 0.4rem;
-    max-width: 260px;
-  }
-
   .footer-social a {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     font-size: 0.85rem;
   }
 
   .footer-column > p:has(.fa-phone) {
     font-size: 0.85rem;
+    flex-direction: row;
+    gap: 0;
+    justify-content: center;
+    margin-bottom: 1rem;
+    /* დაემატა width სრული ცენტრირებისთვის */
+    width: 100%;
   }
 
   .footer-column > p:has(.fa-phone) i {
-    font-size: 0.85rem;
+    margin-right: 0.6rem;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .newsletter-form {
+    /* შეცვლილია max-width 100%-ზე და დამატებულია padding */
+    max-width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
   }
 
   .newsletter-form input,
   .newsletter-form button {
-    padding: 0.7rem 0.9rem;
-    font-size: 0.85rem;
+    width: 100%;
+    border-radius: 4px;
+    padding: 0.7rem 1rem;
   }
 
-  .footer-bottom {
-    padding: 0.9rem 0;
-    font-size: 0.8rem;
-    margin-top: 1.2rem;
+  .newsletter-form input {
+    border-right: 1px solid #343a40;
+    margin-bottom: 0;
   }
 }
 
-/* დამატებითი გასწორება ექსტრემალურად პატარა ეკრანებისთვის */
+@media (max-width: 320px) {
+  .site-footer {
+    padding: 1rem 0 0.5rem;
+  }
+
+  .footer-container {
+    /* გასწორებული padding 320px-ზე */
+    padding: 0 0.8rem;
+    gap: 1rem;
+  }
+
+  .footer-column h3 {
+    font-size: 0.95rem;
+  }
+
+  .footer-column p,
+  .footer-column ul li a {
+    font-size: 0.8rem;
+  }
+
+  .footer-social a {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom {
+    padding: 0.8rem 0;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* დამატებითი გასწორება iPhone SE და პატარა ეკრანებისთვის */
 @media (max-width: 280px) {
   .footer-container {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 0.8rem;
+    /* დამატებული padding */
     padding: 0 0.5rem;
   }
 
   .footer-social {
     justify-content: center;
     width: 100%;
-    max-width: 240px;
+    /* დამატებული flex-wrap */
+    flex-wrap: wrap;
   }
 
   .footer-social a {
-    width: 32px;
-    height: 32px;
-    font-size: 0.8rem;
-    margin: 0;
+    /* შეცვლილია flex: 1 width-ით */
+    width: 30px;
+    margin: 0 0.2rem;
   }
 
   .footer-column ul li {
     margin-bottom: 0.5rem;
-  }
-
-  .newsletter-form {
-    padding: 0;
   }
 }
