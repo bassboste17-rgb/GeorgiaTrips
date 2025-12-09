@@ -5094,10 +5094,6 @@ window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
 }
 
-function closeDetailModal() {
-  window.closeDetailModal()
-}
-
 function setDetailImage(index) {
   window.setDetailImage(index)
 }
@@ -5694,6 +5690,18 @@ function createBookingCard(booking) {
   const startDate = formatDate(booking.startDate);
   const endDate = formatDate(booking.endDate);
 
+  const calculateDays = (start, end) => {
+    if (!start || !end) return 0;
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const numberOfDays = calculateDays(booking.startDate, booking.endDate);
+  // </CHANGE>
+
   let statusMessage = '';
   let actions = '';
 
@@ -5763,7 +5771,7 @@ function createBookingCard(booking) {
             <div class="booking-date-month">${endDate}</div>
           </div>
           <div class="booking-date-duration">
-            <div class="booking-date-duration-number">${booking.days}</div>
+            <div class="booking-date-duration-number">${numberOfDays}</div>
             <div class="booking-date-duration-label">${daysText}</div>
           </div>
         </div>
