@@ -5680,16 +5680,6 @@ function createBookingCard(booking) {
   const statusClass = `status-${booking.status}`;
   const imageUrl = booking.itemImage || 'https://via.placeholder.com/800x400/e0e0e0/666666?text=No+Image';
   
-  // Calculate days between start and end date
-  let days = 1; // default value
-  if (booking.startDate && booking.endDate) {
-    const start = new Date(booking.startDate);
-    const end = new Date(booking.endDate);
-    const diffTime = Math.abs(end - start);
-    days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
-  }
-  // </CHANGE>
-  
   //  Use languageSwitcher for date formatting
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
@@ -5773,7 +5763,7 @@ function createBookingCard(booking) {
             <div class="booking-date-month">${endDate}</div>
           </div>
           <div class="booking-date-duration">
-            <div class="booking-date-duration-number">${days}</div>
+            <div class="booking-date-duration-number">${booking.days}</div>
             <div class="booking-date-duration-label">${daysText}</div>
           </div>
         </div>
