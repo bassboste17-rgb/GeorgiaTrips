@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Georgia Trips - booking</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
-    
+        <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
     <style>
 :root {
   --primary-color: #dc3545;
@@ -36,18 +35,30 @@
   box-sizing: border-box;
 }
 
+/* დამატებულია overflow-x: hidden body და html-ისთვის */
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: var(--text-color);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
 }
+/* </CHANGE> */
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  /* დამატებულია width: 100% container-ისთვის */
+  width: 100%;
+  /* </CHANGE> */
 }
 
 .header {
@@ -2229,9 +2240,12 @@ textarea.input {
 
 /* Responsive improvements */
 @media (max-width: 768px) {
+  /* შემცირებულია padding mobile-ზე */
   .container {
-    padding: 1.25rem;
+    padding: 1rem;
+    width: 100%;
   }
+  /* </CHANGE> */
 
   .header h1 {
     font-size: 1.5rem;
@@ -2241,12 +2255,18 @@ textarea.input {
     padding: 3rem 0 2rem;
   }
 
+  /* შემცირებულია hero h1 font-size mobile-ზე */
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    padding: 0 1rem;
   }
+  /* </CHANGE> */
 
   .hero p {
     font-size: 1.1rem;
+    /* დამატებულია padding hero p-ზე */
+    padding: 0 1rem;
+    /* </CHANGE> */
   }
 
   .items-grid {
@@ -2255,16 +2275,51 @@ textarea.input {
 
   .filters {
     flex-direction: column;
-    padding: 1.25rem;
+    padding: 1rem;
+    gap: 0.75rem;
   }
 
   .input,
   .select {
     min-width: 100%;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
 
   .price-range-group {
     min-width: 100%;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .price-range-group .input {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .price-range-separator {
+    display: none;
+  }
+
+  .region-filter-container {
+    width: 100%;
+  }
+
+  .region-filter-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .region-dropdown {
+    max-height: 250px;
+  }
+
+  .region-option {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
 
   .form-row {
@@ -2336,84 +2391,22 @@ textarea.input {
     min-width: 280px;
   }
 
-  .nav-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .tabs {
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-
-  .tab-btn {
-    white-space: nowrap;
-  }
-
-  /* Mobile responsive fixes for filter boxes */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  .header h1 {
-    font-size: 1.5rem;
-  }
-
-  /* Fixed all filters to stack vertically on mobile */
-  .filters {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0.75rem;
-  }
-
-  .input,
-  .select {
-    min-width: 100%;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  /* Fixed price range to stack vertically on mobile */
-  .price-range-group {
-    flex-direction: column;
-    min-width: 100%;
-    width: 100%;
-    gap: 0.5rem;
-    align-items: stretch;
-  }
-
-  .price-range-group .input {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .price-range-separator {
-    text-align: center;
-    font-size: 1rem;
-    padding: 0.25rem 0;
-  }
-
-  /* Fixed search and region filter button width */
-  #searchInput,
-  #regionFilterButton {
-    width: 100%;
-    min-width: 100%;
-  }
-
-  .items-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
+  /* დამატებულია nav-cards responsive styling */
   .nav-cards {
     grid-template-columns: 1fr;
     gap: 1rem;
+    padding: 0;
   }
+
+  .nav-card {
+    padding: 2rem 1.5rem;
+  }
+  /* </CHANGE> */
 
   .tabs {
     overflow-x: auto;
     padding-bottom: 0.5rem;
+    gap: 0.25rem;
   }
 
   .tab-btn {
@@ -2421,30 +2414,26 @@ textarea.input {
     padding: 0.875rem 1.5rem;
     font-size: 0.9rem;
   }
-}
 
-/* Extra small devices */
-@media (max-width: 480px) {
-  .container {
-    padding: 0.75rem;
+  .booking-dates-visual {
+    flex-direction: column;
   }
 
-  .filters {
-    padding: 0.75rem;
+  .booking-date-arrow {
+    transform: rotate(90deg);
   }
 
-  .input,
-  .select {
-    padding: 0.65rem 0.875rem;
-    font-size: 0.875rem;
+  .booking-info-grid {
+    grid-template-columns: 1fr;
   }
 
-  .tab-btn {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.85rem;
+  .form-group-inline {
+    grid-template-columns: 1fr;
   }
-}
-/* </CHANGE> */
+
+  .tour-dates-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
 
   /* Style for booking user info form */
   .booking-user-info {
@@ -2465,7 +2454,6 @@ textarea.input {
   }
 
   .booking-user-form-grid {
-    display: grid;
     grid-template-columns: 1fr;
   }
 
@@ -3868,15 +3856,13 @@ textarea.input {
                     `;
                 // </CHANGE>
                 
-                const ls = window.languageSwitcher;
-                
-                const monday = ls ? ls.translate('bookingCalendarMonday') : 'ორშ';
-                const tuesday = ls ? ls.translate('bookingCalendarTuesday') : 'სამ';
-                const wednesday = ls ? ls.translate('bookingCalendarWednesday') : 'ოთხ';
-                const thursday = ls ? ls.translate('bookingCalendarThursday') : 'ხუთ';
-                const friday = ls ? ls.translate('bookingCalendarFriday') : 'პარ';
-                const saturday = ls ? ls.translate('bookingCalendarSaturday') : 'შაბ';
-                const sunday = ls ? ls.translate('bookingCalendarSunday') : 'კვი';
+                const monday = window.languageSwitcher?.translate('bookingCalendarMonday') || 'ორშ';
+                const tuesday = window.languageSwitcher?.translate('bookingCalendarTuesday') || 'სამ';
+                const wednesday = window.languageSwitcher?.translate('bookingCalendarWednesday') || 'ოთხ';
+                const thursday = window.languageSwitcher?.translate('bookingCalendarThursday') || 'ხუთ';
+                const friday = window.languageSwitcher?.translate('bookingCalendarFriday') || 'პარ';
+                const saturday = window.languageSwitcher?.translate('bookingCalendarSaturday') || 'შაბ';
+                const sunday = window.languageSwitcher?.translate('bookingCalendarSunday') || 'კვი';
                 
                 this.container.innerHTML = `
                     <div class="calendar-header">
@@ -5111,6 +5097,10 @@ window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
 }
 
+function closeDetailModal() {
+  window.closeDetailModal()
+}
+
 function setDetailImage(index) {
   window.setDetailImage(index)
 }
@@ -5128,7 +5118,6 @@ async function openBookingModalDirect(item, type) {
   
   // Translate all fields
   const name = (lang !== 'ka' && item.nameTranslations?.[lang]) ? item.nameTranslations[lang] : item.name;
-  const description = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || "");
   
   // --- Region Translation Update in Modal ---
   let regionModalText = '';
@@ -5145,6 +5134,7 @@ async function openBookingModalDirect(item, type) {
   }
   // --- End Region Translation Update ---
   
+  const description = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || "");
   const type_translated = (lang !== 'ka' && item.typeTranslations?.[lang]) ? item.typeTranslations[lang] : item.type;
   const fuelType = (lang !== 'ka' && item.fuelTypeTranslations?.[lang]) ? item.fuelTypeTranslations[lang] : item.fuelType;
   const transmission = (lang !== 'ka' && item.transmissionTranslations?.[lang]) ? item.transmissionTranslations[lang] : item.transmission;
@@ -6348,7 +6338,7 @@ function openDetailModal(item, type) {
     
     <div id="footer"></div>
     <script type="module" src="navbar.js"></script>
-    <script src="footer.js"></script>
+    <script src="js/footer.js"></script>
     <script src="translations.js"></script>
 </body>
 </html>
