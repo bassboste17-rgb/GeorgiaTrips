@@ -1,0 +1,570 @@
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: "BPG Glaho", sans-serif;
+  background-color: #0f0f0f;
+  color: #fff;
+  /* Increased padding-top to prevent navbar from covering content */
+  padding-top: 80px;
+}
+
+/* Footer */
+footer {
+  padding: 8rem 1rem;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer-content p {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-content i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.social-links a:hover {
+  color: var(--primary-color);
+}
+
+:root {
+  --primary-color: #e5383b;
+  --secondary-color: #0f0f0f;
+  --text-color: #ccc;
+  --light-bg: #1f1f1f;
+  --dark-bg: #141414;
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+/* Fixed navbar positioning to stay at top */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--dark-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  /* Set explicit height for consistent spacing */
+  height: 70px;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-menu ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav-menu li {
+  margin-left: 1.5rem;
+}
+
+.nav-menu a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: var(--primary-color);
+}
+
+/* Languages Section */
+.languages {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.languages button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--primary-color);
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+}
+
+.languages button:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
+}
+
+.languages button.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: transparent;
+}
+
+/* Notification Bell Styles */
+.notification-bell {
+  position: relative;
+  display: none;
+}
+
+.notification-bell.show {
+  display: flex;
+  align-items: center;
+}
+
+.bell-icon {
+  position: relative;
+  color: var(--text-color);
+  font-size: 1.3rem;
+  padding: 8px;
+  border-radius: 50%;
+  transition: var(--transition);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bell-icon:hover {
+  color: var(--primary-color);
+  background: rgba(229, 56, 59, 0.1);
+  transform: scale(1.1);
+}
+
+.bell-icon:hover i {
+  animation: bellRing 0.5s ease-in-out;
+}
+
+@keyframes bellRing {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(-15deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(-10deg);
+  }
+}
+
+.navbar-notif-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(229, 56, 59, 0.4);
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  /* Adjusted body padding for mobile navbar height */
+  body {
+    padding-top: 70px;
+  }
+
+  .navbar {
+    padding: 1rem;
+    height: 60px;
+  }
+
+  .navbar-right {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--dark-bg);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .navbar-right.active {
+    display: flex;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-menu li {
+    margin: 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #333;
+    text-align: center;
+  }
+
+  .languages {
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  /* Notification bell mobile */
+  .notification-bell {
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  .notification-bell.show {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border-bottom: 1px solid #333;
+  }
+
+  .bell-icon {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further adjusted for small mobile screens */
+  body {
+    padding-top: 65px;
+  }
+
+  .navbar {
+    height: 55px;
+    padding: 0.75rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .languages button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* ავტორიზაციის ბმულის სპეციალური დიზაინი */
+.auth-button-wrapper {
+  margin-left: 1rem;
+}
+
+.auth-link {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 25px;
+  background-color: transparent;
+  color: #ccc;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 0 15px rgba(229, 56, 59, 0.4);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .auth-button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem 0;
+    border-bottom: none !important;
+  }
+
+  .auth-link {
+    width: 100%;
+    padding: 0.6rem 0;
+    max-width: 200px;
+  }
+
+  .nav-menu ul li {
+    margin: 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #333;
+    text-align: center;
+  }
+
+  .auth-button-wrapper,
+  .auth-button-wrapper li {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ახალი სტილები user-menu-სთვის */
+.user-menu {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-name {
+  font-weight: 600;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 25px;
+  background: #bb2b2e;
+  border: 1px solid #e5383b;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.95rem;
+}
+
+.user-name:hover {
+  background: #850f11;
+}
+
+.user-name::after {
+  content: "▼";
+  font-size: 0.7rem;
+  margin-left: 4px;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--light-bg);
+  border-radius: var(--border-radius);
+  min-width: 200px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 8px 0;
+  margin-top: 8px;
+  border: 1px solid #333;
+  text-align: left;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--light-bg);
+}
+
+.dropdown a {
+  display: block;
+  padding: 12px 20px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  position: relative;
+}
+
+.dropdown a:hover {
+  color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdown a:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--primary-color);
+}
+
+#logout-btn {
+  color: #ff6b6b !important;
+  border-top: 1px solid #333;
+  margin-top: 5px;
+  padding-top: 15px !important;
+}
+
+#logout-btn:hover {
+  color: #ff5252 !important;
+}
+
+/* მობილურისთვის დამატებითი სტილები */
+@media (max-width: 768px) {
+  .user-menu {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  .user-name {
+    justify-content: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .dropdown {
+    position: static;
+    width: 100%;
+    margin-top: 0.5rem;
+    box-shadow: none;
+    border: none;
+    background: #1a1a1a;
+  }
+
+  .dropdown::before {
+    display: none;
+  }
+}
+
+/* Added styles for region pages to prevent navbar overlap */
+.region-hero {
+  margin-top: 0 !important;
+  padding-top: 2rem;
+}
+
+/* Ensure all hero sections have proper spacing */
+section:first-of-type,
+.hero-section,
+.region-hero,
+.posts-hero {
+  margin-top: 0;
+}
+
+/* მთლიანი გვერდი */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* კონტენტი */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* footer */
+.site-footer {
+  background: #111;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  max-width: 300px;
+}
+
+.footer-social a {
+  margin: 0 8px;
+  color: #fff;
+}

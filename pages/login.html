@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgia Trips - login</title>
+    <!-- დამატებულია navbar.css -->
+    <link rel="stylesheet" href="/pages/css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'BPG Glaho', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #e5383b;
+            --primary-hover: #d42e2b;
+            --secondary-color: #0f0f0f;
+            --text-primary: #fff;
+            --text-secondary: #ccc;
+            --background-light: #1f1f1f;
+            --background-dark: #141414;
+            --border-color: #555;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+            
+            /* Star animation variables */
+            --starFieldWidth: 2560;
+            --starFieldHeight: 2560;
+            --starStartOffset: 600px;
+            --starOneScrollDuration: 100s;
+            --starTwoScrollDuration: 125s;
+            --starThreeScrollDuration: 175s;
+            --numStarOneStars: 1700;
+            --numStarTwoStars: 700;
+            --numStarThreeStars: 200;
+            --numShootingStars: 10;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #470f83 0%, #0e44a1 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px; /* დამატებული navbar-ისთვის ადგილი */
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* დამატებული main container ცენტრირებისთვის */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* Starry night background */
+        .starry-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .stars, .stars1, .stars2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .shooting-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* Stars Animation Keyframes */
+        @keyframes animStar {
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(calc(var(--starFieldHeight) * -1px)) translateX(calc(var(--starFieldWidth) * -1px));
+            }
+        }
+        
+        @keyframes animShootingStar {
+            from {
+                transform: translateY(0px) translateX(0px) rotate(-45deg);
+                opacity: 1;
+                height: 5px;
+            }
+            to {
+                transform: translateY(calc(var(--starFieldHeight) * -1px)) translateX(calc(var(--starFieldWidth) * -1px)) rotate(-45deg);
+                opacity: 0;
+                height: 800px;
+            }
+        }
+        
+        /* Generate star layers */
+        .stars {
+            box-shadow: var(--stars-one);
+            animation: animStar var(--starOneScrollDuration) linear infinite;
+            width: 1px;
+            height: 1px;
+        }
+        
+        .stars:after {
+            content: "";
+            position: absolute;
+            top: calc(var(--starStartOffset) * -1);
+            width: 1px;
+            height: 1px;
+            box-shadow: var(--stars-one);
+        }
+        
+        .stars1 {
+            box-shadow: var(--stars-two);
+            animation: animStar var(--starTwoScrollDuration) linear infinite;
+            width: 2px;
+            height: 2px;
+        }
+        
+        .stars1:after {
+            content: "";
+            position: absolute;
+            top: calc(var(--starStartOffset) * -1);
+            width: 2px;
+            height: 2px;
+            box-shadow: var(--stars-two);
+        }
+        
+        .stars2 {
+            box-shadow: var(--stars-three);
+            animation: animStar var(--starThreeScrollDuration) linear infinite;
+            width: 3px;
+            height: 3px;
+        }
+        
+        .stars2:after {
+            content: "";
+            position: absolute;
+            top: calc(var(--starStartOffset) * -1);
+            width: 3px;
+            height: 3px;
+            box-shadow: var(--stars-three);
+        }
+        
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 5px;
+            height: 80px;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1));
+            animation: animShootingStar 10s linear infinite;
+            opacity: 0;
+        }
+        
+        .auth-container {
+            background-color: var(--background-light);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .auth-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .auth-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .auth-toggle {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            margin: 20px;
+            overflow: hidden;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .toggle-btn.active {
+            background-color: var(--primary-color);
+        }
+        
+        .auth-form {
+            padding: 0 25px 25px;
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .auth-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .auth-form input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .auth-form button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: relative;
+        }
+        
+        .auth-form button:disabled {
+            background: #7a7a7a;
+            cursor: not-allowed;
+        }
+        
+        .auth-form button .button-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .auth-form button:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+        
+        .divider:before {
+            left: 0;
+        }
+        
+        .divider:after {
+            right: 0;
+        }
+        
+        .google-btn {
+            width: calc(100% - 50px);
+            margin: 0 25px 25px;
+            padding: 12px;
+            background: var(--background-dark);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        
+        .google-btn:hover {
+            background: #333;
+        }
+        
+        #message {
+            text-align: center;
+            margin: 0 25px 25px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+        
+        .message.success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .message.error {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .step.active {
+            background-color: var(--primary-color);
+        }
+        
+        .step.completed {
+            background-color: #2ecc71;
+        }
+        
+        .step-line {
+            width: 40px;
+            height: 2px;
+            background-color: var(--border-color);
+            margin: 0 5px;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin: -10px 0 15px;
+        }
+        
+        .forgot-password a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .forgot-password a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .account-link-info {
+            background-color: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin: 0 25px 25px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .account-link-info p {
+            margin-bottom: 10px;
+        }
+        
+        .account-link-info button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0 5px;
+        }
+        
+        .account-link-info button:hover {
+            background: var(--primary-hover);
+        }
+        
+        .account-link-info button.secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+        }
+        
+        .account-link-info button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Google Name Input Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .name-modal {
+            background-color: var(--background-light);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            padding: 25px;
+            color: var(--text-primary);
+        }
+        
+        .name-modal h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .name-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .name-modal input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .name-modal input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .name-modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .name-modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .name-modal-buttons button.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .name-modal-buttons button.primary:hover {
+            background: var(--primary-hover);
+        }
+        
+        .name-modal-buttons button.secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .name-modal-buttons button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 2FA სტილები */
+        .two-factor-step {
+            display: none;
+        }
+        
+        .two-factor-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .phone-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .country-code {
+            width: 80px;
+            padding: 15px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+        }
+        
+        .phone-number {
+            flex: 1;
+        }
+        
+        .verification-code {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .verification-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .verification-input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+        }
+        
+        .verification-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .resend-code {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .resend-code a {
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .resend-code a:hover {
+            text-decoration: underline;
+        }
+        
+        .resend-code .countdown {
+            color: var(--text-secondary);
+        }
+        
+        .method-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .method-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .method-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .method-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* ტელეფონით შესვლის სტილები */
+        .login-method-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .login-method-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .login-method-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .login-method-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .phone-login-section {
+            display: none;
+        }
+        
+        .phone-login-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        /* რეგისტრაციის მეთოდის არჩევა */
+        .register-method-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .register-method-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .register-method-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .register-method-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .phone-register-section {
+            display: none;
+        }
+        
+        .phone-register-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        /* Validation styles */
+        .input-error {
+            border-color: #e74c3c !important;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- დამატებული navbar -->
+    <div id="navbar"></div>
+
+    <!-- Starry background -->
+    <div class="starry-background">
+        <div class="stars"></div>
+        <div class="stars1"></div>
+        <div class="stars2"></div>
+        <div class="shooting-stars">
+            <div class="shooting-star"></div>
+        </div>
+    </div>
+    
+    <!-- დამატებული main tag auth-container-ის შესაფუთად -->
+    <main>
+        <!-- Name Input Modal for Google Sign-in -->
+        <div class="modal-overlay" id="nameModal">
+            <div class="name-modal">
+                <h3 data-i18n="pleaseEnterName">გთხოვთ მიუთითოთ თქვენი სახელი</h3>
+                <p data-i18n="googleNameNotFound">Google-ის ანგარიშიდან ვერ მოიძებნა თქვენი სახელი. გთხოვთ მიუთითოთ ის ხელით.</p>
+                <input type="text" id="googleUserName" placeholder="სახელი" required data-i18n-placeholder="name">
+                <div class="name-modal-buttons">
+                    <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმება</button>
+                    <button class="primary" id="submitName" data-i18n="save">შენახვა</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-container" id="auth-container">
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="auth-header">
+                <h2 data-i18n="welcome">კეთილი იყოს თქვენი მობრძანება</h2>
+                <p data-i18n="signInOrRegister">შედით ან დარეგისტრირდით თქვენს ანგარიშზე</p>
+            </div>
+            
+            <div class="auth-toggle">
+                <button id="showLogin" class="toggle-btn active" data-i18n="signIn">შესვლა</button>
+                <button id="showRegister" class="toggle-btn" data-i18n="register">რეგისტრაცია</button>
+            </div>
+
+            <!-- შესვლა -->
+            <form id="loginForm" class="auth-form active" novalidate>
+                <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                <div class="error-message" id="loginEmailError"></div>
+                
+                <input type="password" id="loginPassword" name="loginPassword" placeholder="პაროლი" required data-i18n-placeholder="password" />
+                <div class="error-message" id="loginPasswordError"></div>
+                
+                <div class="forgot-password">
+                    <a href="#" id="showForgotPassword" data-i18n="forgotPassword">დაგავიწყდათ პაროლი?</a>
+                </div>
+                <button type="submit" id="loginBtn">
+                    <span id="loginBtnText" data-i18n="signIn">შესვლა</span>
+                </button>
+            </form>
+
+            <!-- პაროლის აღდგენა -->
+            <form id="forgotPasswordForm" class="auth-form" novalidate>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;" data-i18n="resetPasswordInfo">
+                    შეიყვანეთ თქვენი ელ. ფოსტა, რათა გამოგიგზავნოთ პაროლის აღდგენის ბმული.
+                </p>
+                <input type="email" id="resetEmail" name="resetEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                <div class="error-message" id="resetEmailError"></div>
+                
+                <button type="submit" id="resetPasswordBtn">
+                    <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
+                </button>
+                <button type="button" id="backToLogin" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                    უკან
+                </button>
+            </form>
+
+            <!-- რეგისტრაცია - ეტაპობრივი ფორმა -->
+            <form id="registerForm" class="auth-form" novalidate>
+                <!-- ეტაპი 1: Email -->
+                <div class="form-step active" id="step1">
+                    <div class="step-indicator">
+                        <div class="step active">1</div>
+                        <div class="step-line"></div>
+                        <div class="step">2</div>
+                    </div>
+                    <input type="email" id="email" name="email" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                    <div class="error-message" id="emailError"></div>
+                    
+                    <button type="button" id="nextToStep2">
+                        <span id="nextToStep2Text" data-i18n="next">შემდეგი</span>
+                    </button>
+                </div>
+                
+                <!-- ეტაპი 2: მონაცემების შევსება -->
+                <div class="form-step" id="step2">
+                    <div class="step-indicator">
+                        <div class="step completed">1</div>
+                        <div class="step-line"></div>
+                        <div class="step active">2</div>
+                    </div>
+                    <input type="text" id="username" name="username" placeholder="სახელი" required data-i18n-placeholder="name" />
+                    <div class="error-message" id="usernameError"></div>
+                    
+                    <input type="password" id="password" name="password" placeholder="პაროლი" required minlength="6" data-i18n-placeholder="password" />
+                    <div class="error-message" id="passwordError"></div>
+                    
+                    <button type="submit" id="registerBtn">
+                        <span id="registerBtnText" data-i18n="register">რეგისტრაცია</span>
+                    </button>
+                    <button type="button" id="backToStep1" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                        უკან
+                    </button>
+                </div>
+            </form>
+
+            <p class="divider" data-i18n="or">ან</p>
+
+            <button id="googleSignIn" class="google-btn">
+                <i class="fab fa-google"></i> <span data-i18n="signInWithGoogle">Google-ით შესვლა</span>
+            </button>
+
+            <p id="message"></p>
+            
+            <!-- Account linking information -->
+            <div id="accountLinkInfo" class="account-link-info" style="display: none;">
+                <p id="accountLinkMessage"></p>
+                <div>
+                    <button id="linkAccount" data-i18n="linkAccounts">ანგარიშების დაკავშირება</button>
+                    <button id="cancelLink" class="secondary" data-i18n="cancel">გაუქმება</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- დამატებული footer -->
+    <div id="footer"></div>
+
+    <!-- დაემატა translations.js სკრიპტი თარგმნის სისტემისთვის -->
+    <script src="translations.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword,
+            sendEmailVerification,
+            sendPasswordResetEmail,
+            signInWithPopup,
+            GoogleAuthProvider,
+            updateProfile,
+            signOut,
+            fetchSignInMethodsForEmail,
+            linkWithCredential,
+            EmailAuthProvider
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
+            authDomain: "rentime-e201e.firebaseapp.com",
+            projectId: "rentime-e201e",
+            storageBucket: "rentime-e201e.firebasestorage.app",
+            messagingSenderId: "420054668757",
+            appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
+            measurementId: "G-DGWLG9P1ZB"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        const messageBox = document.getElementById("message");
+        const loadingOverlay = document.getElementById("loadingOverlay");
+        const accountLinkInfo = document.getElementById("accountLinkInfo");
+        const accountLinkMessage = document.getElementById("accountLinkMessage");
+        const nameModal = document.getElementById("nameModal");
+        
+        const loginBtnText = document.getElementById("loginBtnText");
+        const nextToStep2Text = document.getElementById("nextToStep2Text");
+        const registerBtnText = document.getElementById("registerBtnText");
+        const resetPasswordBtnText = document.getElementById("resetPasswordBtnText");
+
+        const errorMessages = {
+            'auth/invalid-credential': 'authInvalidCredential',
+            'auth/invalid-email': 'authInvalidEmail',
+            'auth/user-disabled': 'authUserDisabled',
+            'auth/user-not-found': 'authUserNotFound',
+            'auth/wrong-password': 'authWrongPassword',
+            'auth/email-already-in-use': 'authEmailInUse',
+            'auth/operation-not-allowed': 'authOperationNotAllowed',
+            'auth/weak-password': 'authWeakPassword',
+            'auth/too-many-requests': 'authTooManyRequests',
+            'auth/missing-email': 'authMissingEmail',
+            'auth/account-exists-with-different-credential': 'authAccountExistsDifferent',
+            'default': 'authDefaultError'
+        };
+
+        // Variables to store Google user data
+        let tempGoogleCredential = null;
+        let tempGoogleUser = null;
+
+        // Star animation generation
+        function generateStars(count) {
+            let result = '';
+            const width = 2560;
+            const height = 2560;
+            for (let i = 0; i < count; i++) {
+                const x = Math.floor(Math.random() * width);
+                const y = Math.floor(Math.random() * height);
+                result += `${x}px ${y}px #FFF${i < count - 1 ? ', ' : ''}`;
+            }
+            return result;
+        }
+
+        document.documentElement.style.setProperty('--stars-one', generateStars(1700));
+        document.documentElement.style.setProperty('--stars-two', generateStars(700));
+        document.documentElement.style.setProperty('--stars-three', generateStars(200));
+
+        // Shooting stars
+        const shootingStarsContainer = document.querySelector('.shooting-stars');
+        for (let i = 0; i < 10; i++) {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.top = `${Math.random() * 100}%`;
+            shootingStar.style.left = `${Math.random() * 100}%`;
+            shootingStar.style.animationDelay = `${Math.random() * 10}s`;
+            shootingStar.style.animationDuration = `${5 + Math.random() * 5}s`;
+            shootingStarsContainer.appendChild(shootingStar);
+        }
+
+        function showLoading() {
+            loadingOverlay.style.display = "flex";
+        }
+
+        function hideLoading() {
+            loadingOverlay.style.display = "none";
+        }
+
+        function setButtonLoading(button, textElement, originalText) {
+            button.disabled = true;
+            textElement.innerHTML = `<span class="button-spinner"></span>${originalText}`;
+        }
+
+        function resetButton(button, textElement, originalText) {
+            button.disabled = false;
+            textElement.textContent = originalText;
+        }
+
+        function showMessage(msg, type = "success") {
+            messageBox.textContent = msg;
+            messageBox.className = `message ${type}`;
+            messageBox.style.display = "block";
+            setTimeout(() => {
+                messageBox.style.display = "none";
+            }, 5000);
+        }
+
+        function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}Error`);
+            if (input) {
+                input.classList.add('input-error');
+            }
+            if (errorElement) {
+                const translatedMessage = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(message) : message;
+                errorElement.textContent = translatedMessage;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function hideError(inputId) {
+            const input = document.getElementById(inputId);
+            const errorElement = document.getElementById(`${inputId}Error`);
+            if (input) {
+                input.classList.remove('input-error');
+            }
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function validateEmail(email) {
+            if (!email) {
+                return 'validationEmailRequired';
+            }
+            if (!isValidEmail(email)) {
+                return 'validationEmailInvalid';
+            }
+            return null;
+        }
+
+        function validatePassword(password) {
+            if (!password) {
+                return 'validationPasswordRequired';
+            }
+            if (password.length < 6) {
+                return 'validationPasswordLength';
+            }
+            return null;
+        }
+
+        function validateUsername(username) {
+            if (!username) {
+                return 'validationUsernameRequired';
+            }
+            if (username.length < 2) {
+                return 'validationUsernameLength';
+            }
+            return null;
+        }
+
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const nextToStep2Btn = document.getElementById('nextToStep2');
+        const backToStep1Btn = document.getElementById('backToStep1');
+        
+        let userEmail = '';
+        
+        nextToStep2Btn.addEventListener('click', async () => {
+            userEmail = document.getElementById('email').value.trim();
+            
+            // Validation
+            const emailError = validateEmail(userEmail);
+            if (emailError) {
+                showError('email', emailError);
+                return;
+            }
+            hideError('email');
+            
+            try {
+                const nextText = window.languageSwitcher ? window.languageSwitcher.translate('next') : 'შემდეგი';
+                setButtonLoading(nextToStep2Btn, nextToStep2Text, nextText);
+                
+                const signInMethods = await fetchSignInMethodsForEmail(auth, userEmail);
+                if (signInMethods.length > 0) {
+                    showError('email', 'validationEmailAlreadyInUse');
+                    resetButton(nextToStep2Btn, nextToStep2Text, nextText);
+                    return;
+                }
+                
+                step1.classList.remove('active');
+                step2.classList.add('active');
+                resetButton(nextToStep2Btn, nextToStep2Text, nextText);
+            } catch (error) {
+                console.error("Error checking email:", error);
+                const nextText = window.languageSwitcher ? window.languageSwitcher.translate('next') : 'შემდეგი';
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                    error.message;
+                showMessage(errorMsg, "error");
+                resetButton(nextToStep2Btn, nextToStep2Text, nextText);
+            }
+        });
+        
+        backToStep1Btn.addEventListener('click', () => {
+            step2.classList.remove('active');
+            step1.classList.add('active');
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        const showLoginBtn = document.getElementById("showLogin");
+        const showRegisterBtn = document.getElementById("showRegister");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+
+        showLoginBtn.addEventListener("click", () => {
+            showLoginBtn.classList.add("active");
+            showRegisterBtn.classList.remove("active");
+            loginForm.classList.add("active");
+            registerForm.classList.remove("active");
+            forgotPasswordForm.classList.remove("active");
+            messageBox.style.display = "none";
+        });
+
+        showRegisterBtn.addEventListener("click", () => {
+            showRegisterBtn.classList.add("active");
+            showLoginBtn.classList.remove("active");
+            registerForm.classList.add("active");
+            loginForm.classList.remove("active");
+            forgotPasswordForm.classList.remove("active");
+            messageBox.style.display = "none";
+            step2.classList.remove('active');
+            step1.classList.add('active');
+        });
+
+        document.getElementById("showForgotPassword").addEventListener("click", (e) => {
+            e.preventDefault();
+            loginForm.classList.remove("active");
+            forgotPasswordForm.classList.add("active");
+            messageBox.style.display = "none";
+        });
+
+        document.getElementById("backToLogin").addEventListener("click", () => {
+            forgotPasswordForm.classList.remove("active");
+            loginForm.classList.add("active");
+            messageBox.style.display = "none";
+        });
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            
+            const emailError = validateEmail(email);
+            if (emailError) {
+                showError('loginEmail', emailError);
+                return;
+            }
+            hideError('loginEmail');
+            
+            const passwordError = validatePassword(password);
+            if (passwordError) {
+                showError('loginPassword', passwordError);
+                return;
+            }
+            hideError('loginPassword');
+            
+            const loginText = window.languageSwitcher ? window.languageSwitcher.translate('signIn') : 'შესვლა';
+            setButtonLoading(loginBtn, loginBtnText, loginText);
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                
+                if (!userCredential.user.emailVerified) {
+                    await signOut(auth);
+                    const verifyMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('emailVerificationRequired') : 
+                        'გთხოვთ დაადასტუროთ თქვენი ელ. ფოსტა';
+                    showMessage(verifyMsg, "error");
+                    resetButton(loginBtn, loginBtnText, loginText);
+                    return;
+                }
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('loginSuccess') : 
+                    'წარმატებით შეხვედით სისტემაში!';
+                showMessage(successMsg, "success");
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+            } catch (error) {
+                console.error("Login error:", error);
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                    error.message;
+                showMessage(errorMsg, "error");
+                resetButton(loginBtn, loginBtnText, loginText);
+            }
+        });
+
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            
+            const usernameError = validateUsername(username);
+            if (usernameError) {
+                showError('username', usernameError);
+                return;
+            }
+            hideError('username');
+            
+            const passwordError = validatePassword(password);
+            if (passwordError) {
+                showError('password', passwordError);
+                return;
+            }
+            hideError('password');
+            
+            const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რეგისტრაცია';
+            setButtonLoading(registerBtn, registerBtnText, registerText);
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
+                const user = userCredential.user;
+
+                await updateProfile(user, {
+                    displayName: username
+                });
+
+                await setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
+                    email: userEmail,
+                    displayName: username,
+                    photoURL: user.photoURL || '',
+                    createdAt: serverTimestamp(),
+                    emailVerified: false
+                });
+
+                await sendEmailVerification(user);
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('registrationSuccess') : 
+                    'რეგისტრაცია წარმატებულია! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა დასადასტურებლად.';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    showRegisterBtn.classList.remove("active");
+                    showLoginBtn.classList.add("active");
+                    registerForm.classList.remove("active");
+                    loginForm.classList.add("active");
+                    step2.classList.remove('active');
+                    step1.classList.add('active');
+                    registerForm.reset();
+                }, 2000);
+                
+                resetButton(registerBtn, registerBtnText, registerText);
+            } catch (error) {
+                console.error("Registration error:", error);
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                    error.message;
+                showMessage(errorMsg, "error");
+                resetButton(registerBtn, registerBtnText, registerText);
+            }
+        });
+
+        document.getElementById("forgotPasswordForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById("resetEmail").value.trim();
+            
+            const emailError = validateEmail(email);
+            if (emailError) {
+                showError('resetEmail', emailError);
+                return;
+            }
+            hideError('resetEmail');
+            
+            const resetText = window.languageSwitcher ? window.languageSwitcher.translate('resetPassword') : 'პაროლის აღდგენა';
+            setButtonLoading(resetPasswordBtn, resetPasswordBtnText, resetText);
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('resetPasswordSuccess') : 
+                    'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ფოსტაზე';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    forgotPasswordForm.classList.remove("active");
+                    loginForm.classList.add("active");
+                    document.getElementById("resetEmail").value = "";
+                }, 2000);
+                
+                resetButton(resetPasswordBtn, resetPasswordBtnText, resetText);
+            } catch (error) {
+                console.error("Password reset error:", error);
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                    error.message;
+                showMessage(errorMsg, "error");
+                resetButton(resetPasswordBtn, resetPasswordBtnText, resetText);
+            }
+        });
+
+        document.getElementById("googleSignIn").addEventListener("click", async () => {
+            showLoading();
+            const provider = new GoogleAuthProvider();
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                let displayName = user.displayName;
+                
+                if (!displayName || displayName.trim() === '') {
+                    tempGoogleCredential = result.credential;
+                    tempGoogleUser = user;
+                    hideLoading();
+                    nameModal.style.display = 'flex';
+                    return;
+                }
+                
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                
+                if (!userDoc.exists()) {
+                    await setDoc(doc(db, "users", user.uid), {
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: displayName,
+                        photoURL: user.photoURL || '',
+                        createdAt: serverTimestamp(),
+                        emailVerified: user.emailVerified
+                    });
+                }
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('loginSuccess') : 
+                    'წარმატებით შეხვედით სისტემაში!';
+                showMessage(successMsg, "success");
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+            } catch (error) {
+                console.error("Google Sign-In error:", error);
+                
+                if (error.code === 'auth/account-exists-with-different-credential') {
+                    try {
+                        const email = error.customData.email;
+                        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+                        
+                        hideLoading();
+                        accountLinkInfo.style.display = 'block';
+                        const linkMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('accountLinkMessage') : 
+                            `ანგარიში ელ. ფოსტით ${email} უკვე არსებობს. გსურთ დაუკავშიროთ Google ანგარიში?`;
+                        accountLinkMessage.textContent = linkMsg;
+                        
+                        tempGoogleCredential = GoogleAuthProvider.credentialFromError(error);
+                        
+                        document.getElementById('linkAccount').onclick = async () => {
+                            try {
+                                showLoading();
+                                const password = prompt(window.languageSwitcher ? 
+                                    window.languageSwitcher.translate('enterPasswordToLink') : 
+                                    'შეიყვანეთ თქვენი პაროლი დასაკავშირებლად:');
+                                
+                                if (!password) {
+                                    hideLoading();
+                                    return;
+                                }
+                                
+                                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                                await linkWithCredential(userCredential.user, tempGoogleCredential);
+                                
+                                const successMsg = window.languageSwitcher ? 
+                                    window.languageSwitcher.translate('accountsLinkedSuccess') : 
+                                    'ანგარიშები წარმატებით დაკავშირდა!';
+                                showMessage(successMsg, "success");
+                                accountLinkInfo.style.display = 'none';
+                                
+                                setTimeout(() => {
+                                    window.location.href = "home.html";
+                                }, 1500);
+                            } catch (linkError) {
+                                console.error("Account linking error:", linkError);
+                                const errorMsg = window.languageSwitcher ? 
+                                    window.languageSwitcher.translate(errorMessages[linkError.code] || errorMessages['default']) : 
+                                    linkError.message;
+                                showMessage(errorMsg, "error");
+                                hideLoading();
+                            }
+                        };
+                        
+                        document.getElementById('cancelLink').onclick = () => {
+                            accountLinkInfo.style.display = 'none';
+                            tempGoogleCredential = null;
+                        };
+                        
+                        return;
+                    } catch (fetchError) {
+                        console.error("Error fetching sign-in methods:", fetchError);
+                        hideLoading();
+                        const errorMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('authDefaultError') : 
+                            'დაფიქსირდა შეცდომა';
+                        showMessage(errorMsg, "error");
+                        return;
+                    }
+                }
+                
+                hideLoading();
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                    error.message;
+                showMessage(errorMsg, "error");
+            }
+        });
+
+        document.getElementById('submitName').addEventListener('click', async () => {
+            const userName = document.getElementById('googleUserName').value.trim();
+            
+            if (!userName) {
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('validationUsernameRequired') : 
+                    'გთხოვთ შეიყვანოთ სახელი';
+                alert(errorMsg);
+                return;
+            }
+            
+            try {
+                showLoading();
+                nameModal.style.display = 'none';
+                
+                await updateProfile(tempGoogleUser, {
+                    displayName: userName
+                });
+                
+                await setDoc(doc(db, "users", tempGoogleUser.uid), {
+                    uid: tempGoogleUser.uid,
+                    email: tempGoogleUser.email,
+                    displayName: userName,
+                    photoURL: tempGoogleUser.photoURL || '',
+                    createdAt: serverTimestamp(),
+                    emailVerified: tempGoogleUser.emailVerified
+                });
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('loginSuccess') : 
+                    'წარმატებით შეხვედით სისტემაში!';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                hideLoading();
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('authDefaultError') : 
+                    'დაფიქსირდა შეცდომა';
+                showMessage(errorMsg, "error");
+            }
+        });
+
+        document.getElementById('cancelName').addEventListener('click', async () => {
+            nameModal.style.display = 'none';
+            if (tempGoogleUser) {
+                await signOut(auth);
+                tempGoogleUser = null;
+                tempGoogleCredential = null;
+            }
+        });
+    </script>
+    
+    <!-- დამატებული navbar და footer სკრიპტები -->
+    <script type="module" src="navbar.js"></script>
+    <script type="module" src="footer.js"></script>
+</body>
+</html>
