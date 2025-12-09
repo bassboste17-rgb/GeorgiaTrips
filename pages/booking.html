@@ -5142,7 +5142,7 @@ async function openBookingModalDirect(item, type) {
   const images =
     item.images && item.images.length > 0
       ? item.images
-      : [`https://placehold.co/150x100/e0e0e0/666666?text=${encodeURIComponent(name || "No Image")}`]
+      : [`https://placehold.co/150x100/e0e0e0/666666?text=${encodeURIComponent(item.name || "No Image")}`]
 
   const ls = window.languageSwitcher;
   const bookingTitle = ls ? ls.translate('bookingModalTitle') : 'დაჯავშნა';
@@ -5691,16 +5691,15 @@ function createBookingCard(booking) {
   const endDate = formatDate(booking.endDate);
 
   const calculateDays = (start, end) => {
-    if (!start || !end) return 0;
+    if (!start || !end) return 1; // Return 1 instead of 0 for minimum days
     const startDate = new Date(start);
     const endDate = new Date(end);
     const diffTime = Math.abs(endDate - startDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    return diffDays + 1; // Add +1 to include both start and end days
   };
 
   const numberOfDays = calculateDays(booking.startDate, booking.endDate);
-  // </CHANGE>
 
   let statusMessage = '';
   let actions = '';
