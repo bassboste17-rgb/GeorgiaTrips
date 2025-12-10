@@ -176,7 +176,7 @@ monthDecember: "დეკემბერი",
 
     // Home Page
     homeWelcome: "მოგესალმებით GeorgiaTrips-ში",
-    homeSubtitle: "ავტომობილური მომსახურება მთელ საქართველოში",
+    homeSubtitle: "ავტომობილის მომსახურება მთელ საქართველოში",
     homeDescription: "იქირავე ავტომობილი მარტივად და სწრაფად",
     homeBookNow: "დაჯავშნე ახლავე",
     homeSedan: "• სედანი",
