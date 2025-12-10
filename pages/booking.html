@@ -964,8 +964,10 @@ textarea.input {
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 2rem;
-  margin-bottom: 1.75rem;
+  /* reduced padding and margin for more compact cards */
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  /* </CHANGE> */
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
   position: relative;
@@ -1005,17 +1007,28 @@ textarea.input {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 1.5rem 0;
-  padding: 1.25rem;
+  /* reduced margin for more compact layout */
+  margin: 1rem 0;
+  padding: 1rem;
+  /* </CHANGE> */
   background: rgba(0, 0, 0, 0.3);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-color);
+  /* added flex-wrap to prevent overflow */
+  flex-wrap: wrap;
+  justify-content: center;
+  /* </CHANGE> */
 }
 
 .booking-date-box {
-  flex: 1;
+  /* removed flex: 1 and set fixed width for consistent sizing */
+  min-width: 100px;
+  max-width: 130px;
+  /* </CHANGE> */
   text-align: center;
-  padding: 1rem;
+  /* reduced padding */
+  padding: 0.75rem;
+  /* </CHANGE> */
   background: linear-gradient(135deg, rgba(31, 31, 31, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-color);
@@ -1055,21 +1068,56 @@ textarea.input {
   flex-shrink: 0;
 }
 
+.booking-date-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* set consistent sizing for duration box */
+  min-width: 80px;
+  /* </CHANGE> */
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.booking-date-duration-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1;
+}
+
+.booking-date-duration-label {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  margin-top: 0.25rem;
+}
+
 .booking-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* improved grid layout for better spacing */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  /* </CHANGE> */
   gap: 1rem;
-  margin: 1.5rem 0;
+  /* reduced margin for more compact layout */
+  margin: 1rem 0;
+  /* </CHANGE> */
 }
 
 .booking-info-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.875rem;
+  /* reduced padding for more compact items */
+  padding: 0.75rem;
+  /* </CHANGE> */
   background: rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  /* prevent items from being too narrow or too wide */
+  min-width: 180px;
+  /* </CHANGE> */
 }
 
 /* Adding special styling for driver field with green background */
@@ -2412,24 +2460,56 @@ textarea.input {
     font-size: 0.9rem;
   }
 
+  .booking-card {
+    /* even more compact on mobile */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    /* </CHANGE> */
+  }
+
   .booking-dates-visual {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    /* reduced mobile padding */
+    padding: 0.75rem;
+    /* </CHANGE> */
+  }
+
+  .booking-date-box {
+    min-width: 90px;
+    max-width: 110px;
+    /* smaller mobile padding */
+    padding: 0.5rem;
+    /* </CHANGE> */
   }
 
   .booking-date-arrow {
-    transform: rotate(90deg);
+    /* keep arrow horizontal on mobile */
+    transform: none;
+    font-size: 1.2rem;
+    /* </CHANGE> */
+  }
+
+  .booking-date-duration {
+    /* adjusted mobile size */
+    min-width: 70px;
+    padding: 0.5rem 0.75rem;
+    /* </CHANGE> */
   }
 
   .booking-info-grid {
     grid-template-columns: 1fr;
+    /* added gap adjustment for mobile */
+    gap: 0.75rem;
+    /* </CHANGE> */
   }
 
-  .form-group-inline {
-    grid-template-columns: 1fr;
-  }
-
-  .tour-dates-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  .booking-info-item {
+    min-width: 100%;
+    /* smaller mobile padding */
+    padding: 0.65rem;
+    /* </CHANGE> */
   }
 
   /* Style for booking user info form */
@@ -4834,7 +4914,7 @@ function displayItems(itemsToDisplay) { // Accept filtered items as argument
   if (items.length === 0) {
     const notFoundText = window.languageSwitcher?.translate("bookingNotFound") || "მონაცემები არ მოიძებნა";
     container.innerHTML = `<div class="empty-state">${notFoundText}</div>`
-    return
+    return;
   }
 
   container.innerHTML = items.map((item) => createItemCard(item, currentTab)).join("")
@@ -5673,10 +5753,12 @@ async function loadMyBookings() {
 }
 
 function createBookingCard(booking) {
-  const statusClass = `status-${booking.status}`;
-  const imageUrl = booking.itemImage || 'https://via.placeholder.com/800x400/e0e0e0/666666?text=No+Image';
-  
-  //  Use languageSwitcher for date formatting
+  const statusClass = booking.status === 'მოლოდინში' || booking.status === (window.languageSwitcher?.translate("bookingMyBookingsStatusPending") || "მოლოდინში") 
+    ? 'pending' 
+    : booking.status === 'დადასტურებული' || booking.status === (window.languageSwitcher?.translate("bookingMyBookingsStatusConfirmed") || "დადასტურებული")
+    ? 'confirmed' 
+    : 'cancelled';
+
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -5691,15 +5773,15 @@ function createBookingCard(booking) {
   const endDate = formatDate(booking.endDate);
 
   const calculateDays = (start, end) => {
-    if (!start || !end) return 1; // Return 1 instead of 0 for minimum days
+    if (!start || !end) return 1;
     const startDate = new Date(start);
     const endDate = new Date(end);
     const diffTime = Math.abs(endDate - startDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays + 1; // Add +1 to include both start and end days
+    return diffDays + 1;
   };
 
-  const numberOfDays = calculateDays(booking.startDate, booking.endDate);
+  const numberOfDays = booking.duration || calculateDays(booking.startDate, booking.endDate);
 
   let statusMessage = '';
   let actions = '';
@@ -5748,10 +5830,12 @@ function createBookingCard(booking) {
       </div>`
     : '';
 
+  const bookingImage = booking.itemImage || `https://via.placeholder.com/300x200/e0e0e0/666666?text=${encodeURIComponent(booking.itemName || 'No Image')}`;
+
   return `
     <div class="booking-card">
       <div class="booking-card-header">
-        <img src="${imageUrl}" alt="${booking.itemName}" class="booking-card-image">
+        <img src="${bookingImage}" alt="${booking.itemName}" class="booking-card-image">
         <div class="booking-card-title-section">
           <h3>${booking.itemName}</h3>
           <span class="status-badge ${statusClass}">${translatedStatus}</span>
@@ -5776,13 +5860,8 @@ function createBookingCard(booking) {
         </div>
         <div class="booking-info-grid">
           ${licensePlateHtml}
-        </div>
-      </div>
-      <div class="booking-card-footer">
-        ${actions}
-      </div>
-    </div>
-  `;
+
+    `;
 }
 
 async function cancelBooking(bookingId) {

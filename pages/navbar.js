@@ -57,6 +57,41 @@ fetch("navbar.html")
       })
     }
 
+    function changeLanguageAndReload(lang) {
+      // ენის შეცვლა
+      if (window.languageSwitcher && typeof window.languageSwitcher.setLanguage === "function") {
+        window.languageSwitcher.setLanguage(lang)
+      }
+
+      // 2 წამის შემდეგ გვერდის გადატვირთვა
+      setTimeout(() => {
+        window.location.reload()
+      }, 20)
+    }
+
+    // გავხადოთ ფუნქცია გლობალური რათა navbar.html-დან მივწვდეთ
+    window.changeLanguageAndReload = changeLanguageAndReload
+
+    function setupLanguageButtons() {
+      const langButtons = document.querySelectorAll(".languages button")
+
+      langButtons.forEach((btn) => {
+        // წავშალოთ ძველი onclick ატრიბუტი
+        btn.removeAttribute("onclick")
+
+        // დავამატოთ ახალი event listener
+        btn.addEventListener("click", function () {
+          const langMatch = this.textContent.trim().toLowerCase()
+          let lang = "ka"
+          if (langMatch === "en") lang = "en"
+          else if (langMatch === "ru") lang = "ru"
+          else if (langMatch === "ka") lang = "ka"
+
+          changeLanguageAndReload(lang)
+        })
+      })
+    }
+
     // Update navbar translations when language changes
     function updateNavbarTranslations() {
       if (typeof window.languageSwitcher !== "undefined") {
@@ -97,6 +132,7 @@ fetch("navbar.html")
 
     setTimeout(() => {
       updateActiveLanguageButton()
+      setupLanguageButtons()
     }, 100)
 
     // შეტყობინებების listener ფუნქცია navbar-ისთვის
@@ -135,7 +171,7 @@ fetch("navbar.html")
         localStorage.setItem("username", username)
         localStorage.setItem("userEmail", user.email)
 
-        // აჩვენე notification bell როცა მომხმარებელი ავტორიზებულია
+        // აჩვენე notification bell როცა მომხმარებელი ავტორიზირებულია
         if (notificationBell) {
           notificationBell.classList.add("show")
         }
