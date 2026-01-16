@@ -13,8 +13,10 @@
     /* Region Page Specific Styles */
 .region-hero {
   height: 70vh;
+  min-height: 400px; /* დამატებული */
   background-size: cover;
-  background-position: center;
+  background-position: center center; /* გავასწორებული */
+  background-repeat: no-repeat; /* დამატებული */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,6 +444,7 @@
 @media (max-width: 768px) {
   .region-hero {
     height: 60vh;
+    min-height: 350px; /* გავასწორებული */
   }
 
   .region-hero .hero-text h1 {
@@ -469,6 +472,7 @@
 @media (max-width: 576px) {
   .region-hero {
     height: 50vh;
+    min-height: 300px; /* გავასწორებული */
   }
 
   .region-hero .hero-text h1 {
@@ -662,7 +666,7 @@
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('addhome/samcxe.png');">
     <div class="hero-text">
       <h1 data-i18n="samtskheJavakhetiTitle">სამცხე-ჯავახეთი</h1>
       <p data-i18n="samtskheJavakhetiSubtitle">ისტორიული ციხეები და ვულკანური ლანდშაფტები</p>
@@ -905,7 +909,7 @@
       // Query all tours (no query limitations)
       const toursSnapshot = await getDocs(collection(db, "tours"))
       
-      // Filter results on client side to include items with 'all' or current region
+      // Filter results on client side to include items with 'all' OR includes current region
       const tours = toursSnapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data(), category: "tour" }))
         .filter(tour => {
@@ -946,7 +950,7 @@
       // Query all cars (no query limitations)
       const carsSnapshot = await getDocs(collection(db, "cars"))
       
-      // Filter results on client side to include items with 'all' or current region
+      // Filter results on client side to include items with 'all' OR includes current region
       const cars = carsSnapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data(), category: "car" }))
         .filter(car => {

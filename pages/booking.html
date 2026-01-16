@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Georgia Trips - booking</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
     <style>
 :root {
   --primary-color: #dc3545;
@@ -32,30 +35,18 @@
   box-sizing: border-box;
 }
 
-/* დამატებულია overflow-x: hidden body და html-ისთვის */
-html {
-  overflow-x: hidden;
-  width: 100%;
-}
-
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: var(--text-color);
   line-height: 1.6;
   min-height: 100vh;
-  overflow-x: hidden;
-  width: 100%;
 }
-/* </CHANGE> */
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  /* დამატებულია width: 100% container-ისთვის */
-  width: 100%;
-  /* </CHANGE> */
 }
 
 .header {
@@ -964,10 +955,8 @@ textarea.input {
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  /* reduced padding and margin for more compact cards */
-  padding: 1.5rem;
-  margin-bottom: 1.25rem;
-  /* </CHANGE> */
+  padding: 2rem;
+  margin-bottom: 1.75rem;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
   position: relative;
@@ -1007,28 +996,17 @@ textarea.input {
   display: flex;
   align-items: center;
   gap: 1rem;
-  /* reduced margin for more compact layout */
-  margin: 1rem 0;
-  padding: 1rem;
-  /* </CHANGE> */
+  margin: 1.5rem 0;
+  padding: 1.25rem;
   background: rgba(0, 0, 0, 0.3);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-color);
-  /* added flex-wrap to prevent overflow */
-  flex-wrap: wrap;
-  justify-content: center;
-  /* </CHANGE> */
 }
 
 .booking-date-box {
-  /* removed flex: 1 and set fixed width for consistent sizing */
-  min-width: 100px;
-  max-width: 130px;
-  /* </CHANGE> */
+  flex: 1;
   text-align: center;
-  /* reduced padding */
-  padding: 0.75rem;
-  /* </CHANGE> */
+  padding: 1rem;
   background: linear-gradient(135deg, rgba(31, 31, 31, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-color);
@@ -1068,56 +1046,21 @@ textarea.input {
   flex-shrink: 0;
 }
 
-.booking-date-duration {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* set consistent sizing for duration box */
-  min-width: 80px;
-  /* </CHANGE> */
-  padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--border-color);
-}
-
-.booking-date-duration-number {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  line-height: 1;
-}
-
-.booking-date-duration-label {
-  font-size: 0.75rem;
-  color: var(--text-color);
-  margin-top: 0.25rem;
-}
-
 .booking-info-grid {
   display: grid;
-  /* improved grid layout for better spacing */
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  /* </CHANGE> */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  /* reduced margin for more compact layout */
-  margin: 1rem 0;
-  /* </CHANGE> */
+  margin: 1.5rem 0;
 }
 
 .booking-info-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  /* reduced padding for more compact items */
-  padding: 0.75rem;
-  /* </CHANGE> */
+  padding: 0.875rem;
   background: rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  /* prevent items from being too narrow or too wide */
-  min-width: 180px;
-  /* </CHANGE> */
 }
 
 /* Adding special styling for driver field with green background */
@@ -2285,12 +2228,9 @@ textarea.input {
 
 /* Responsive improvements */
 @media (max-width: 768px) {
-  /* შემცირებულია padding mobile-ზე */
   .container {
-    padding: 1rem;
-    width: 100%;
+    padding: 1.25rem;
   }
-  /* </CHANGE> */
 
   .header h1 {
     font-size: 1.5rem;
@@ -2300,18 +2240,12 @@ textarea.input {
     padding: 3rem 0 2rem;
   }
 
-  /* შემცირებულია hero h1 font-size mobile-ზე */
   .hero h1 {
-    font-size: 1.75rem;
-    padding: 0 1rem;
+    font-size: 2rem;
   }
-  /* </CHANGE> */
 
   .hero p {
     font-size: 1.1rem;
-    /* დამატებულია padding hero p-ზე */
-    padding: 0 1rem;
-    /* </CHANGE> */
   }
 
   .items-grid {
@@ -2320,51 +2254,16 @@ textarea.input {
 
   .filters {
     flex-direction: column;
-    padding: 1rem;
-    gap: 0.75rem;
+    padding: 1.25rem;
   }
 
   .input,
   .select {
     min-width: 100%;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
   }
 
   .price-range-group {
     min-width: 100%;
-    width: 100%;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .price-range-group .input {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .price-range-separator {
-    display: none;
-  }
-
-  .region-filter-container {
-    width: 100%;
-  }
-
-  .region-filter-button {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .region-dropdown {
-    max-height: 250px;
-  }
-
-  .region-option {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
   }
 
   .form-row {
@@ -2436,80 +2335,38 @@ textarea.input {
     min-width: 280px;
   }
 
-  /* დამატებულია nav-cards responsive styling */
   .nav-cards {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 0;
   }
-
-  .nav-card {
-    padding: 2rem 1.5rem;
-  }
-  /* </CHANGE> */
 
   .tabs {
     overflow-x: auto;
     padding-bottom: 0.5rem;
-    gap: 0.25rem;
   }
 
   .tab-btn {
     white-space: nowrap;
-    padding: 0.875rem 1.5rem;
-    font-size: 0.9rem;
   }
 
-  .booking-card {
-    /* even more compact on mobile */
-    padding: 1rem;
-    margin-bottom: 1rem;
-    /* </CHANGE> */
-  }
-
+  /* Mobile responsive for new elements */
   .booking-dates-visual {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    /* reduced mobile padding */
-    padding: 0.75rem;
-    /* </CHANGE> */
-  }
-
-  .booking-date-box {
-    min-width: 90px;
-    max-width: 110px;
-    /* smaller mobile padding */
-    padding: 0.5rem;
-    /* </CHANGE> */
+    flex-direction: column;
   }
 
   .booking-date-arrow {
-    /* keep arrow horizontal on mobile */
-    transform: none;
-    font-size: 1.2rem;
-    /* </CHANGE> */
-  }
-
-  .booking-date-duration {
-    /* adjusted mobile size */
-    min-width: 70px;
-    padding: 0.5rem 0.75rem;
-    /* </CHANGE> */
+    transform: rotate(90deg);
   }
 
   .booking-info-grid {
     grid-template-columns: 1fr;
-    /* added gap adjustment for mobile */
-    gap: 0.75rem;
-    /* </CHANGE> */
   }
 
-  .booking-info-item {
-    min-width: 100%;
-    /* smaller mobile padding */
-    padding: 0.65rem;
-    /* </CHANGE> */
+  .form-group-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .tour-dates-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 
   /* Style for booking user info form */
@@ -2531,6 +2388,7 @@ textarea.input {
   }
 
   .booking-user-form-grid {
+    display: grid;
     grid-template-columns: 1fr;
   }
 
@@ -3192,7 +3050,7 @@ textarea.input {
 <body>
     <div id="toastContainer" class="toast-container"></div>
     
-    <!-- Warning Popup Modal -->
+     <!-- Warning Popup Modal -->
     <div id="bookingWarningPopup" class="warning-popup-overlay">
       <div class="warning-popup-content">
         <span class="warning-popup-close" id="closeWarningPopup">&times;</span>
@@ -3201,29 +3059,32 @@ textarea.input {
         </div>
         <h2 class="warning-popup-title">
           <i class="fas fa-info-circle"></i>
-          მნიშვნელოვანი ინფორმაცია
+          <span data-i18n="warningPopupTitle">მნიშვნელოვანი ინფორმაცია</span>
         </h2>
         <div class="warning-popup-message">
           <p>
-            <strong>ფასები ცვალებადია</strong>, ამიტომ გთხოვთ გაითვალისწინოთ და გადაამოწმოთ ფასები WhatsApp-ზე ან Online Chat-ში მიწერით.
+            <strong data-i18n=>ფასები ცვალებადია</strong><span data-i18n="warningPopupPricesMessage">ამიტომ გთხოვთ გაითვალისწინოთ და გადაამოწმოთ ფასები WhatsApp-ზე ან Online Chat-ში მიწერით.</span>
           </p>
-          <p>
-            ასევე, გთხოვთ <strong>დაჯავშნისას სწორად მიუთითოთ საკონტაქტო ინფორმაცია</strong>, რომ შევძლოთ თქვენთან დაკავშირება.
+          <p data-i18n="warningPopupContactMessage">
+            ასევე, გთხოვთ დაჯავშნისას სწორად მიუთითოთ საკონტაქტო ინფორმაცია, რომ შევძლოთ თქვენთან დაკავშირება.
           </p>
           <div class="warning-popup-contact">
             <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="whatsapp-link">
-              <i class="fab fa-whatsapp"></i> WhatsApp
+              <i class="fab fa-whatsapp"></i> <span data-i18n="warningPopupWhatsApp">WhatsApp</span>
             </a>
             <a href="#" class="chat-link" onclick="openChat(); return false;">
-              <i class="fas fa-comments"></i> Online Chat
+              <i class="fas fa-comments"></i> <span data-i18n="warningPopupOnlineChat">Online Chat</span>
             </a>
           </div>
         </div>
         <button class="warning-popup-continue" id="continueToBooking">
-          <i class="fas fa-arrow-right"></i> გასაგებია, გაგრძელება
+          <i class="fas fa-arrow-right"></i> <span data-i18n="warningPopupContinue">გასაგებია, გაგრძელება</span>
         </button>
       </div>
     </div>
+
+<!-- ... existing code continues ... -->
+
     <!-- </CHANGE> -->
 
     <div id="homeView" class="view">
@@ -3243,7 +3104,7 @@ textarea.input {
                     <a href="#" class="nav-card" data-view="myBookings">
                         <div class="nav-card-icon">📋</div>
                         <h3 data-i18n="bookingCardMyBookings">ჩემი დაჯავშნები</h3>
-                        <p data-i18n="bookingCardMyBookingsDesc">ნახეთ თქვენი დაჯავშვნის ისტორია</p>
+                        <p data-i18n="bookingCardMyBookingsDesc">ნახეთ თქვენი დაჯავშნის ისტორია</p>
                     </a>
                     
                     <a href="#" class="nav-card" data-view="notifications">
@@ -3933,13 +3794,15 @@ textarea.input {
                     `;
                 // </CHANGE>
                 
-                const monday = window.languageSwitcher?.translate('bookingCalendarMonday') || 'ორშ';
-                const tuesday = window.languageSwitcher?.translate('bookingCalendarTuesday') || 'სამ';
-                const wednesday = window.languageSwitcher?.translate('bookingCalendarWednesday') || 'ოთხ';
-                const thursday = window.languageSwitcher?.translate('bookingCalendarThursday') || 'ხუთ';
-                const friday = window.languageSwitcher?.translate('bookingCalendarFriday') || 'პარ';
-                const saturday = window.languageSwitcher?.translate('bookingCalendarSaturday') || 'შაბ';
-                const sunday = window.languageSwitcher?.translate('bookingCalendarSunday') || 'კვი';
+                const ls = window.languageSwitcher;
+                
+                const monday = ls ? ls.translate('bookingCalendarMonday') : 'ორშ';
+                const tuesday = ls ? ls.translate('bookingCalendarTuesday') : 'სამ';
+                const wednesday = ls ? ls.translate('bookingCalendarWednesday') : 'ოთხ';
+                const thursday = ls ? ls.translate('bookingCalendarThursday') : 'ხუთ';
+                const friday = ls ? ls.translate('bookingCalendarFriday') : 'პარ';
+                const saturday = ls ? ls.translate('bookingCalendarSaturday') : 'შაბ';
+                const sunday = ls ? ls.translate('bookingCalendarSunday') : 'კვი';
                 
                 this.container.innerHTML = `
                     <div class="calendar-header">
@@ -4023,7 +3886,7 @@ textarea.input {
                 }
                 else if (this.itemType === 'tours' && this.tourDuration && !this.restrictedMode) {
                     // For tours with specified duration (not Fixed Time, not Fully Disabled)
-                    // When user clicks a date, select exactly that many consecutive days
+                    // When user clicks a date, select exactly many consecutive days
                     
                     const clickedDate = new Date(dateString);
                     
@@ -4081,7 +3944,7 @@ textarea.input {
                 const consecutiveDates = [];
                 let currentDate = new Date(startDateString);
                 
-                // Find consecutive available days starting from the clicked date
+                // Find consecutive available dates starting from the clicked date
                 for (let i = 0; i < requiredDays; i++) {
                     const dateString = formatDateToLocal(currentDate);
                     const isBooked = this.bookedDates.includes(dateString);
@@ -4914,7 +4777,7 @@ function displayItems(itemsToDisplay) { // Accept filtered items as argument
   if (items.length === 0) {
     const notFoundText = window.languageSwitcher?.translate("bookingNotFound") || "მონაცემები არ მოიძებნა";
     container.innerHTML = `<div class="empty-state">${notFoundText}</div>`
-    return;
+    return
   }
 
   container.innerHTML = items.map((item) => createItemCard(item, currentTab)).join("")
@@ -5174,6 +5037,10 @@ window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
 }
 
+function closeDetailModal() {
+  window.closeDetailModal()
+}
+
 function setDetailImage(index) {
   window.setDetailImage(index)
 }
@@ -5183,7 +5050,7 @@ async function openBookingModal(item, type) {
 }
 
 async function openBookingModalDirect(item, type) {
-  // </CHANGE> ეს არის ორიგინალი openBookingModal ლოგიკა
+  // </CHANGE> This is the original openBookingModal logic
   selectedItem = item
   selectedItemType = type
 
@@ -5222,7 +5089,7 @@ async function openBookingModalDirect(item, type) {
   const images =
     item.images && item.images.length > 0
       ? item.images
-      : [`https://placehold.co/150x100/e0e0e0/666666?text=${encodeURIComponent(item.name || "No Image")}`]
+      : [`https://placehold.co/150x100/e0e0e0/666666?text=${encodeURIComponent(name || "No Image")}`]
 
   const ls = window.languageSwitcher;
   const bookingTitle = ls ? ls.translate('bookingModalTitle') : 'დაჯავშნა';
@@ -5513,19 +5380,26 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
   const end = parseDate(endDate);
   
   let days = 1;
+  let selectedDatesArray = [];
   if (selectedItemType === "cars") {
     if (startCalendar && startCalendar.selectedDates && startCalendar.selectedDates.length > 0) {
       days = startCalendar.selectedDates.length;
+      selectedDatesArray = [...startCalendar.selectedDates];
     } else {
       const diffTime = end.getTime() - start.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       days = Math.max(1, diffDays + 1);
     }
-  } else if (selectedItemType === "tours" && startCalendar && startCalendar.selectedDates) {
-    days = startCalendar.selectedDates.length;
+  } else if (selectedItemType === "tours") {
+    if (startCalendar && startCalendar.selectedDates && startCalendar.selectedDates.length > 0) {
+      days = startCalendar.selectedDates.length;
+      selectedDatesArray = [...startCalendar.selectedDates];
+    } else {
+      days = parseTourDuration(selectedItem.duration) || 1;
+    }
   }
 
-  const total = days * selectedItem.pricePerDay;
+  const totalPrice = days * selectedItem.pricePerDay;
 
   const confirmBtn = document.getElementById("confirmBooking");
   const originalText = confirmBtn.textContent; // Store original text
@@ -5546,7 +5420,7 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
       endDate,
       duration: days, // Use calculated days
       // basePrice: parseFloat(selectedItem.price), // Removed basePrice, using pricePerDay instead
-      totalPrice: total,
+      totalPrice: totalPrice,
       status: "მოლოდინში", // Changed from "pending" to Georgian
       createdAt: serverTimestamp(),
       contactName: contactName,
@@ -5684,41 +5558,17 @@ async function loadMyBookings() {
     const loadingText = window.languageSwitcher?.translate("bookingMyBookingsLoading") || "იტვირთება";
     container.innerHTML = `<div class="loading">${loadingText}</div>`;
 
-    // Query 1: userId-ით (ავტორიზებული დაჯავშნები)
-    const userIdQuery = query(
+    // Removed orderBy to avoid composite index requirement
+    const q = query(
       collection(db, "bookings"),
       where("userId", "==", currentUser.uid)
     );
 
-    // Query 2: contactEmail-ით (guest bookings რომლებიც ჯერ არ დაუკავშირდა)
-    const emailQuery = query(
-      collection(db, "bookings"),
-      where("contactEmail", "==", currentUser.email),
-      where("isGuest", "==", true)
-    );
-
-    // ორივე query-ს პარალელურად ვაშვებთ
-    const [userIdSnapshot, emailSnapshot] = await Promise.all([
-      getDocs(userIdQuery),
-      getDocs(emailQuery)
-    ]);
-
-    // შედეგების გაერთიანება (დუბლიკატების გარეშე)
-    const bookingsMap = new Map();
-    
-    userIdSnapshot.docs.forEach(doc => {
-      bookingsMap.set(doc.id, { id: doc.id, ...doc.data() });
-    });
-    
-    // Guest bookings-ს ვამატებთ თუ ჯერ არ არის map-ში
-    emailSnapshot.docs.forEach(doc => {
-      if (!bookingsMap.has(doc.id)) {
-        bookingsMap.set(doc.id, { id: doc.id, ...doc.data() });
-      }
-    });
-
-    let bookings = Array.from(bookingsMap.values());
-    // </CHANGE>
+    const snapshot = await getDocs(q);
+    let bookings = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
     // Sort in JavaScript instead of Firestore
     bookings.sort((a, b) => {
@@ -5753,12 +5603,27 @@ async function loadMyBookings() {
 }
 
 function createBookingCard(booking) {
-  const statusClass = booking.status === 'მოლოდინში' || booking.status === (window.languageSwitcher?.translate("bookingMyBookingsStatusPending") || "მოლოდინში") 
-    ? 'pending' 
-    : booking.status === 'დადასტურებული' || booking.status === (window.languageSwitcher?.translate("bookingMyBookingsStatusConfirmed") || "დადასტურებული")
-    ? 'confirmed' 
-    : 'cancelled';
-
+  const statusClass = `status-${booking.status}`;
+  const imageUrl = booking.itemImage || 'https://via.placeholder.com/800x400/e0e0e0/666666?text=No+Image';
+  
+  // Calculate booking days correctly based on selected dates length if available
+  let bookingDays = booking.duration || 1;
+  if (booking.selectedDates && booking.selectedDates.length > 0) {
+    // Use the actual count of selected dates
+    bookingDays = booking.selectedDates.length;
+  } else if (booking.startDate && booking.endDate) {
+    // Fallback to date calculation only if selectedDates not available
+    const start = new Date(booking.startDate);
+    const end = new Date(booking.endDate);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+    const diffTime = end.getTime() - start.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    bookingDays = Math.max(1, diffDays + 1);
+  }
+  // </CHANGE>
+  
+  //  Use languageSwitcher for date formatting
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -5771,17 +5636,6 @@ function createBookingCard(booking) {
 
   const startDate = formatDate(booking.startDate);
   const endDate = formatDate(booking.endDate);
-
-  const calculateDays = (start, end) => {
-    if (!start || !end) return 1;
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    const diffTime = Math.abs(endDate - startDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays + 1;
-  };
-
-  const numberOfDays = booking.duration || calculateDays(booking.startDate, booking.endDate);
 
   let statusMessage = '';
   let actions = '';
@@ -5830,12 +5684,10 @@ function createBookingCard(booking) {
       </div>`
     : '';
 
-  const bookingImage = booking.itemImage || `https://via.placeholder.com/300x200/e0e0e0/666666?text=${encodeURIComponent(booking.itemName || 'No Image')}`;
-
   return `
     <div class="booking-card">
       <div class="booking-card-header">
-        <img src="${bookingImage}" alt="${booking.itemName}" class="booking-card-image">
+        <img src="${imageUrl}" alt="${booking.itemName}" class="booking-card-image">
         <div class="booking-card-title-section">
           <h3>${booking.itemName}</h3>
           <span class="status-badge ${statusClass}">${translatedStatus}</span>
@@ -5854,14 +5706,19 @@ function createBookingCard(booking) {
             <div class="booking-date-month">${endDate}</div>
           </div>
           <div class="booking-date-duration">
-            <div class="booking-date-duration-number">${numberOfDays}</div>
+            <div class="booking-date-duration-number">${bookingDays}</div>
             <div class="booking-date-duration-label">${daysText}</div>
           </div>
         </div>
         <div class="booking-info-grid">
           ${licensePlateHtml}
-
-    `;
+        </div>
+      </div>
+      <div class="booking-card-footer">
+        ${actions}
+      </div>
+    </div>
+  `;
 }
 
 async function cancelBooking(bookingId) {
@@ -5961,11 +5818,11 @@ async function loadNotifications() {
       return;
     }
 
+    // Create notification cards with translation
     const notificationCards = await Promise.all(
       notifications.map(notif => createNotificationCard(notif))
     );
     container.innerHTML = notificationCards.join('');
-    // </CHANGE>
 
     notifications.forEach(async (notif) => {
       if (!notif.read) {
@@ -5984,9 +5841,6 @@ async function loadNotifications() {
   }
 }
 
-// 
-// The createNotificationCard function is now async and needs to be called correctly
-// within an async context or handled with promises.
 async function createNotificationCard(notif) {
   const unreadClass = notif.read ? '' : 'unread';
   const timeAgo = getTimeAgo(notif.createdAt);
@@ -6022,7 +5876,10 @@ async function createNotificationCard(notif) {
     </div>
   `;
 }
-// </CHANGE>
+
+// The loadNotifications function is already async and uses Promise.all,
+// so the change is integrated into the existing structure.
+// No further structural changes needed here for this specific update.
 
 function getTimeAgo(timestamp) {
   if (!timestamp) {
@@ -6170,7 +6027,7 @@ function openDetailModal(item, type) {
   const engineLabel = ls ? ls.translate('bookingEngineCapacity') : 'ძრავის მოცულობა';
   const driverLabel = ls ? ls.translate('bookingDriver') : 'მძღოლი';
   const driverAvailable = ls ? ls.translate('bookingDriverAvailable') : 'ხელმისაწვდომი';
-  const featuresLabel = ls ? ls.translate('bookingFeatures') : 'დამატებითი მახასიათებლები';
+  const featuresLabel = ls ? ls.translate('bookingFeatures') : 'დამატებითი მახასიqquad� quartos';
   const durationLabel = ls ? ls.translate('bookingDuration') : 'ხანგრძლივობა';
   const capacityLabel = ls ? ls.translate('bookingCapacity') : 'ადგილები';
   const routeLabel = ls ? ls.translate('bookingRoute') : 'მარშრუტი';

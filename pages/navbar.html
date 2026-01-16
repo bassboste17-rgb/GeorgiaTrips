@@ -1,5 +1,83 @@
 <header class="navbar" id="navbar">
-  <div class="logo">Georgia Trips</div>
+  <!-- Updated logo with travel animation SVG and red "Trips" text -->
+  <a href="home.html" class="logo-link">
+    <div class="logo-container">
+      <!-- Increased viewBox and font-size for larger logo and text -->
+      <svg class="logo-svg" viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Globe background -->
+        <defs>
+          <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a2e"/>
+            <stop offset="100%" style="stop-color:#16213e"/>
+          </linearGradient>
+          <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:transparent"/>
+            <stop offset="20%" style="stop-color:#e5383b"/>
+            <stop offset="80%" style="stop-color:#e5383b"/>
+            <stop offset="100%" style="stop-color:transparent"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Globe circle - increased size -->
+        <circle cx="55" cy="60" r="42" fill="url(#globeGradient)" stroke="#e5383b" stroke-width="2.5" class="globe"/>
+        
+        <!-- Globe lines -->
+        <ellipse cx="55" cy="60" rx="42" ry="18" fill="none" stroke="#e5383b" stroke-width="0.6" opacity="0.5"/>
+        <ellipse cx="55" cy="60" rx="18" ry="42" fill="none" stroke="#e5383b" stroke-width="0.6" opacity="0.5"/>
+        <line x1="13" y1="60" x2="97" y2="60" stroke="#e5383b" stroke-width="0.6" opacity="0.5"/>
+        <line x1="55" y1="18" x2="55" y2="102" stroke="#e5383b" stroke-width="0.6" opacity="0.5"/>
+        
+        <!-- Airplane circling the globe -->
+        <g class="airplane-orbit">
+          <path d="M0,-4 L10,0 L0,4 L2.5,0 Z" fill="#ffffff" transform="translate(55,60)"/>
+        </g>
+        
+        <!-- Text Georgia - increased font-size -->
+        <text x="115" y="52" class="logo-text-georgia" fill="#ffffff" font-family="Arial, sans-serif" font-size="30" font-weight="bold">Georgia</text>
+        
+        <!-- Text Trips (red) - increased font-size -->
+        <text x="115" y="88" class="logo-text-trips" fill="#e5383b" font-family="Arial, sans-serif" font-size="30" font-weight="bold">Trips</text>
+        
+        <!-- Road under text - adjusted position -->
+        <rect x="115" y="95" width="95" height="4" fill="url(#roadGradient)" rx="2" class="road"/>
+        
+        <!-- Road dashes -->
+        <g class="road-dashes">
+          <rect x="120" y="96.5" width="10" height="1.5" fill="rgba(255,255,255,0.5)"/>
+          <rect x="138" y="96.5" width="10" height="1.5" fill="rgba(255,255,255,0.5)"/>
+          <rect x="156" y="96.5" width="10" height="1.5" fill="rgba(255,255,255,0.5)"/>
+          <rect x="174" y="96.5" width="10" height="1.5" fill="rgba(255,255,255,0.5)"/>
+          <rect x="192" y="96.5" width="10" height="1.5" fill="rgba(255,255,255,0.5)"/>
+        </g>
+        
+        <!-- Car on the road - slightly bigger -->
+        <g class="car">
+          <path d="M0,0 L15,0 L17,4 L17,9 L0,9 L0,4 Z" fill="#e5383b"/>
+          <circle cx="4" cy="9" r="2.5" fill="#333"/>
+          <circle cx="13" cy="9" r="2.5" fill="#333"/>
+          <rect x="2" y="1" width="5" height="3" fill="rgba(255,255,255,0.3)" rx="0.5"/>
+          <rect x="8" y="1" width="5" height="3" fill="rgba(255,255,255,0.3)" rx="0.5"/>
+        </g>
+        
+        <!-- Location pin on globe - adjusted position -->
+        <g class="location-pin">
+          <path d="M55,35 C49,35 44,40 44,46 C44,54 55,65 55,65 C55,65 66,54 66,46 C66,40 61,35 55,35 Z" fill="#e5383b"/>
+          <circle cx="55" cy="46" r="4" fill="#ffffff"/>
+        </g>
+        
+        <!-- Clouds -->
+        <g class="cloud cloud1" opacity="0.6">
+          <ellipse cx="230" cy="22" rx="14" ry="7" fill="#ffffff"/>
+          <ellipse cx="242" cy="20" rx="10" ry="6" fill="#ffffff"/>
+          <ellipse cx="223" cy="20" rx="7" ry="5" fill="#ffffff"/>
+        </g>
+        <g class="cloud cloud2" opacity="0.4">
+          <ellipse cx="280" cy="40" rx="12" ry="6" fill="#ffffff"/>
+          <ellipse cx="290" cy="38" rx="8" ry="5" fill="#ffffff"/>
+        </g>
+      </svg>
+    </div>
+  </a>
   <link rel="stylesheet" href="navbar.css">
   <button class="mobile-menu-toggle" aria-label="მენიუ">
     <i class="fas fa-bars"></i>
@@ -20,14 +98,7 @@
       <button onclick="window.languageSwitcher.setLanguage('ka')" class="active">KA</button>
       <button onclick="window.languageSwitcher.setLanguage('en')">EN</button>
       <button onclick="window.languageSwitcher.setLanguage('ru')">RU</button>
-    </div>
-
-    <!-- შეტყობინებების ზარი -->
-    <div class="notification-bell" id="notificationBell">
-      <a href="booking.html#notifications" class="bell-icon">
-        <i class="fas fa-bell"></i>
-        <span id="navbarNotifBadge" class="navbar-notif-badge" style="display: none;">0</span>
-      </a>
+      <button onclick="window.languageSwitcher.setLanguage('ar')">AR</button>
     </div>
 
     <div class="auth-button-wrapper">

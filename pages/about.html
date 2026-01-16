@@ -16,7 +16,6 @@
 
   <div id="navbar"></div>
 
-  <!-- Enhanced hero section with animated gradient background -->
   <section class="about-hero">
     <div class="hero-background"></div>
     <div class="about-hero-text">
@@ -24,14 +23,12 @@
     </div>
   </section>
 
-  <!-- Enhanced statistics section with better animations -->
   <section class="stats-section">
     <div class="container">
       <div class="stats-grid">
         <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
           <div class="stat-icon">
-            <i class="fas fa-car"></i>
-          </div>
+            <i class="fas fa-car-side"></i> </div>
           <div class="stat-number" data-target="0" id="carsCount">0</div>
           <div class="stat-label" data-i18n="aboutStatTransport">ტრანსპორტი</div>
           <div class="stat-progress">
@@ -41,8 +38,7 @@
         
         <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
           <div class="stat-icon">
-            <i class="fas fa-route"></i>
-          </div>
+            <i class="fas fa-map-marked-alt"></i> </div>
           <div class="stat-number" data-target="0" id="toursCount">0</div>
           <div class="stat-label" data-i18n="aboutStatTours">ტურები</div>
           <div class="stat-progress">
@@ -52,8 +48,7 @@
         
         <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
           <div class="stat-icon">
-            <i class="fas fa-calendar-check"></i>
-          </div>
+            <i class="fas fa-clipboard-check"></i> </div>
           <div class="stat-number" data-target="0" id="bookingsCount">0</div>
           <div class="stat-label" data-i18n="aboutStatBookings">დაჯავშნები</div>
           <div class="stat-progress">
@@ -63,8 +58,7 @@
         
         <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
           <div class="stat-icon">
-            <i class="fas fa-users"></i>
-          </div>
+            <i class="fas fa-user-check"></i> </div>
           <div class="stat-number" data-target="0" id="usersCount">0</div>
           <div class="stat-label" data-i18n="aboutStatUsers">მომხმარებლები</div>
           <div class="stat-progress">
@@ -77,7 +71,6 @@
 
   <section class="about-content">
     <div class="container">
-      <!-- Added scroll-triggered animations to content sections -->
       <div class="content-block fade-in-section">
         <h2 data-i18n="aboutWhoAreWeTitle">ვინ ვართ ჩვენ?</h2>
         <p>
@@ -98,7 +91,6 @@
         </ul>
       </div>
 
-      <!-- Enhanced detailed statistics with better visual design -->
       <div class="content-block fade-in-section">
         <h2 data-i18n="aboutAchievementsTitle">ჩვენი მიღწევები რიცხვებში</h2>
         <div class="detailed-stats">
@@ -156,7 +148,6 @@
         </p>
       </div>
 
-      <!-- Enhanced values section with better card design -->
       <div class="content-block fade-in-section">
         <h2 data-i18n="aboutValuesTitle">ჩვენი ღირებულებები</h2>
         <div class="values-grid">
@@ -191,11 +182,9 @@
         </div>
       </div>
 
-      <!-- Enhanced testimonials section with review management -->
       <div class="content-block fade-in-section">
         <h2 data-i18n="aboutReviewsTitle">რას ამბობენ ჩვენი კლიენტები</h2>
         
-        <!-- Review submission form (only visible to users with completed bookings) -->
         <div class="review-submission-section" id="reviewSubmissionSection" style="display: none;">
           <div class="review-form-card">
             <h3 data-i18n="aboutLeaveReview">დატოვე შეფასება</h3>
@@ -269,7 +258,6 @@
           </div>
         </div>
         
-        <!-- Reviews display -->
         <div class="testimonials-slider" id="reviewsContainer">
           <div class="loading-reviews">
             <i class="fas fa-spinner fa-spin"></i>
@@ -286,7 +274,6 @@
           </button>
         </div>
         
-        <!-- Message for users without completed bookings -->
         <div class="no-booking-message" id="noBookingMessage" style="display: none;">
           <i class="fas fa-info-circle"></i>
           <p data-i18n="aboutNoBookingMsg">შეფასების დასატოვებლად საჭიროა გქონდეთ დადასტურებული ჯავშანი.</p>
@@ -297,12 +284,10 @@
 
   <div id="footer"></div>
 
-  <!-- Scripts -->
   <script type="module" src="translations.js"></script>
   <script type="module" src="navbar.js"></script>
   <script type="module" src="footer.js"></script>
 
-  <!-- Enhanced Firebase integration with review management -->
   <script type="module">
     // Import Firebase
     import { db } from "./firebase-config.js"
@@ -954,37 +939,22 @@
       --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Enhanced hero section with animated gradient background */
+    /* Cleaned up Hero Section - Replaced the animated gradient background */
     .about-hero {
       position: relative;
       padding: 8rem 1rem 5rem;
       text-align: center;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+      /* Using a simpler background */
+      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
       overflow: hidden;
+      border-bottom: 3px solid var(--primary-color);
     }
 
     .hero-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(229, 56, 59, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(229, 56, 59, 0.1) 0%, transparent 50%);
-      animation: gradientShift 8s ease-in-out infinite;
-      z-index: 0;
+      /* Removing the animated background layer */
+      display: none;
     }
-
-    @keyframes gradientShift {
-      0%, 100% {
-        transform: scale(1) rotate(0deg);
-      }
-      50% {
-        transform: scale(1.1) rotate(5deg);
-      }
-    }
-
+    
     .about-hero-text {
       position: relative;
       z-index: 1;
@@ -993,10 +963,8 @@
     .about-hero h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff 0%, #e5383b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #fff; /* Simple color instead of gradient clip */
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Subtle effect */
     }
 
     .about-hero p {
@@ -1686,12 +1654,6 @@
       font-size: 1rem;
       cursor: pointer;
       transition: var(--transition);
-    }
-
-    .cancel-btn {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-color);
     }
 
     .cancel-btn:hover {

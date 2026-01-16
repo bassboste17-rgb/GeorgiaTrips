@@ -13,8 +13,10 @@
     /* Region Page Specific Styles */
 .region-hero {
   height: 70vh;
+  min-height: 400px;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,6 +444,8 @@
 @media (max-width: 768px) {
   .region-hero {
     height: 60vh;
+    min-height: 350px;
+    background-position: center top;
   }
 
   .region-hero .hero-text h1 {
@@ -469,10 +473,7 @@
 @media (max-width: 576px) {
   .region-hero {
     height: 50vh;
-  }
-
-  .region-hero .hero-text h1 {
-    font-size: 2rem;
+    min-height: 300px;
   }
 
   .btn-hero {
@@ -633,174 +634,12 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
   </style>
-  <style>
-    /* ამინდის სექციის სტილები - ajara.html-დან გადმოტანილი Open-Meteo API-სთვის */
-    .weather-section {
-      padding: 3rem 1rem;
-      background: linear-gradient(135deg, rgba(35, 45, 65, 0.9) 0%, rgba(25, 35, 55, 0.85) 100%);
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      margin: 4rem auto;
-      max-width: 70%;
-      width: 70%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    }
-    
-    .weather-section h2 {
-      text-align: center;
-      font-size: 2.5rem;
-      color: #fff;
-      margin-bottom: 2.5rem;
-      font-weight: 700;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    }
-    
-    .weather-controls {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .weather-controls select {
-      background: linear-gradient(145deg, rgba(50, 60, 80, 0.95), rgba(40, 50, 70, 0.9));
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
-      padding: 0.8rem 1.2rem;
-      font-size: 1rem;
-      font-family: "BPG Glaho", sans-serif;
-      outline: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-    
-    .weather-controls select option {
-      background: rgba(40, 50, 70, 0.95);
-      color: #fff;
-    }
-    
-    .weather-controls select:hover {
-      border-color: rgba(229, 56, 59, 0.5);
-    }
-    
-    .weather-controls select:focus {
-      border-color: #e5383b;
-      box-shadow: 0 0 0 2px rgba(229, 56, 59, 0.3);
-    }
-    
-    .weather-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-      width: 100%;
-    }
-    
-    .weather-card {
-      background: linear-gradient(145deg, rgba(50, 60, 80, 0.95), rgba(40, 50, 70, 0.9));
-      border-radius: 16px;
-      padding: 1.2rem;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .weather-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(229, 56, 59, 0.2);
-      border-color: rgba(229, 56, 59, 0.3);
-    }
-    
-    .weather-date {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-      color: #fff;
-    }
-    
-    .weather-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    .weather-temp {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-    
-    .weather-description {
-      font-size: 0.9rem;
-      color: #c0c0c0;
-      margin-bottom: 0.8rem;
-    }
-    
-    .weather-details {
-      display: flex;
-      justify-content: space-around;
-      font-size: 0.8rem;
-      color: #b0b0b0;
-    }
-    
-    .weather-detail {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .weather-detail i {
-      margin-bottom: 0.2rem;
-      font-size: 1rem;
-    }
-    
-    .loading-weather, .no-weather {
-      text-align: center;
-      padding: 3rem;
-      color: #aaa;
-      font-size: 1.2rem;
-      background: linear-gradient(145deg, rgba(50, 60, 80, 0.9), rgba(40, 50, 70, 0.85));
-      border-radius: 16px;
-      max-width: 600px;
-      margin: 0 auto;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
-    
-    @media (max-width: 768px) {
-      .weather-container {
-        grid-template-columns: 1fr;
-      }
-      
-      .weather-section h2 {
-        font-size: 1.8rem;
-      }
-      
-      .weather-section {
-        padding: 2rem 1rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .weather-controls {
-        flex-direction: column;
-      }
-      
-      .weather-controls select {
-        width: 100%;
-      }
-    }
-  </style>
 </head>
 <body>
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('addhome/shida.png');">
     <div class="hero-text">
       <!-- Added data-i18n for hero title -->
       <h1 data-i18n="regionShidaKartli">შიდა ქართლი</h1>

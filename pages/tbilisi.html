@@ -11,6 +11,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
   <style>
     /* Region Page Specific Styles */
+    
 .region-hero {
   height: 70vh;
   background-size: cover;
@@ -655,14 +656,46 @@
       .weather-controls select {
         width: 100%;
       }
+    
     }
-  </style>
+.region-hero {
+  height: 70vh;
+  min-height: 500px; /* მინიმალური სიმაღლე დავამატე */
+  background-size: cover;
+  background-position: center center; /* ცენტრში პოზიციონირება */
+  background-repeat: no-repeat; /* არ გამეორდეს */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* მობილურზე უკეთესი ჩვენებისთვის */
+@media (max-width: 768px) {
+  .region-hero {
+    height: 50vh;
+    min-height: 350px;
+    background-position: center top; /* მობილურზე ზედა ნაწილი აჩვენოს */
+  }
+}
+
+@media (max-width: 576px) {
+  .region-hero {
+    height: 45vh;
+    min-height: 300px;
+  }
+}
+
+  </style>  
 </head>
 <body>
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1585856262797-5e5c0e8b0d0f?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('addhome/tbilisi.png');">
     <div class="hero-text">
       <h1 data-i18n="regionTbilisi">თბილისი</h1>
       <p data-i18n="tbilisiSubtitle">დედაქალაქი, ისტორია და თანამედროვე კულტურა</p>

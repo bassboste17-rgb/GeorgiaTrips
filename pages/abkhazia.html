@@ -13,8 +13,10 @@
     /* Region Page Specific Styles */
 .region-hero {
   height: 70vh;
+  min-height: 400px; /* მინიმალური სიმაღლე პატარა ეკრანებზე */
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,6 +444,9 @@
 @media (max-width: 768px) {
   .region-hero {
     height: 60vh;
+    min-height: 350px;
+    /* მობილურზე ზედა ნაწილი უკეთესად ჩანს */
+    background-position: center top;
   }
 
   .region-hero .hero-text h1 {
@@ -469,6 +474,7 @@
 @media (max-width: 576px) {
   .region-hero {
     height: 50vh;
+    min-height: 300px;
   }
 
   .region-hero .hero-text h1 {
@@ -662,7 +668,7 @@
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('addhome/afxazeti.png');">
     <div class="hero-text">
       <h1 data-i18n="abkhaziaTitle">აფხაზეთი</h1>
       <p data-i18n="abkhaziaSubtitle">ზღვა და მთები</p>

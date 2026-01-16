@@ -15,8 +15,10 @@
     /* Region Page Specific Styles */
 .region-hero {
   height: 70vh;
+  min-height: 400px;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,6 +446,8 @@
 @media (max-width: 768px) {
   .region-hero {
     height: 60vh;
+    min-height: 350px;
+    background-position: center top;
   }
 
   .region-hero .hero-text h1 {
@@ -471,10 +475,7 @@
 @media (max-width: 576px) {
   .region-hero {
     height: 50vh;
-  }
-
-  .region-hero .hero-text h1 {
-    font-size: 2rem;
+    min-height: 300px;
   }
 
   .btn-hero {
@@ -664,7 +665,7 @@
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('addhome/racha.png');">
     <div class="hero-text">
       <h1 data-i18n="rachaLechkhumiTitle">რაჭა-ლეჩხუმი და ქვემო სვანეთი</h1>
       <p data-i18n="rachaLechkhumiSubtitle">მთების სამეფო და ბუნების შესანიშნავი ძეგლები</p>

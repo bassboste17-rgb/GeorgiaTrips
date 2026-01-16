@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GeorgiaTrips - home</title>
+  <title>Georgia Trips - home</title>
   <link rel="stylesheet" href="navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -852,9 +852,45 @@
     }
 
     @media (max-width: 768px) {
+      /* მობილურზე background ფოტოების შეცვლა horizontal ვერსიებით */
       .hero {
         padding: 10rem 1.5rem 6rem;
         min-height: 80vh;
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
+          url('addhome/1horizontal.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+
+      #vehicles {
+        background:
+          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
+          url("addhome/2horizontal.jpg");
+        background-position: center;
+      }
+
+      .section:nth-of-type(3) {
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
+          url("addhome/3horizontal.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .section:nth-of-type(4) {
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
+          url('addhome/4horizontal.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+
+      .section:nth-of-type(5) {
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
+          url('addhome/5.jpeg');
+        background-position: center;
       }
 
       .hero h1 {

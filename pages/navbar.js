@@ -50,9 +50,15 @@ fetch("navbar.html")
 
       langButtons.forEach((btn) => {
         btn.classList.remove("active")
-        const btnLang = btn.getAttribute("onclick").match(/'(\w+)'/)[1]
-        if (btnLang === currentLang) {
-          btn.classList.add("active")
+        const onclickAttr = btn.getAttribute("onclick")
+        if (onclickAttr) {
+          const match = onclickAttr.match(/'(\w+)'/)
+          if (match) {
+            const btnLang = match[1]
+            if (btnLang === currentLang) {
+              btn.classList.add("active")
+            }
+          }
         }
       })
     }
@@ -76,22 +82,20 @@ fetch("navbar.html")
       const langButtons = document.querySelectorAll(".languages button")
 
       langButtons.forEach((btn) => {
-        // წავშალოთ ძველი onclick ატრიბუტი
         btn.removeAttribute("onclick")
 
-        // დავამატოთ ახალი event listener
         btn.addEventListener("click", function () {
           const langMatch = this.textContent.trim().toLowerCase()
           let lang = "ka"
           if (langMatch === "en") lang = "en"
           else if (langMatch === "ru") lang = "ru"
+          else if (langMatch === "ar") lang = "ar"
           else if (langMatch === "ka") lang = "ka"
 
           changeLanguageAndReload(lang)
         })
       })
     }
-
     // Update navbar translations when language changes
     function updateNavbarTranslations() {
       if (typeof window.languageSwitcher !== "undefined") {
@@ -217,8 +221,6 @@ fetch("navbar.html")
 
             // sessionStorage-ის გასუფთავება
             sessionStorage.clear()
-
-            console.log("[v0] User signed out successfully")
 
             // გადამისამართება login გვერდზე
             window.location.href = "login.html"

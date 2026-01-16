@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Georgia Trips - admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    
     <style>
 :root {
   --primary-color: #dc3545;
@@ -238,12 +235,12 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* Enhanced admin panel styles */
+/* გაუმჯობესებული admin panel header ღილაკებისთვის */
 .admin-panel-header {
   background: linear-gradient(135deg, rgba(229, 56, 59, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
@@ -251,6 +248,52 @@ body {
   flex-wrap: wrap;
   gap: 1.5rem;
 }
+
+.admin-panel-header h1 {
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ღილაკების კონტეინერი - უკეთესი განლაგება */
+.admin-header-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ყველა ღილაკი თანაბარი სიმაღლით */
+.admin-header-buttons .btn {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+
+/* მობილურზე ღილაკები ერთმანეთის ქვეშ */
+@media (max-width: 768px) {
+  .admin-panel-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .admin-header-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .admin-header-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* </CHANGE> */
 
 .admin-stats {
   display: grid;
@@ -736,15 +779,20 @@ textarea.input {
 }
 
 
-/* Enhanced booking card styles */
+/* გაუმჯობესებული booking card სტილები - ფოტოები უკეთ გამოჩნდება desktop-ზე */
 .booking-card {
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 2rem;
+  padding: 1.5rem;
   margin-bottom: 1.75rem;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
+  /* Desktop-ზე flexbox layout */
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
 .booking-card:hover {
@@ -752,6 +800,42 @@ textarea.input {
   box-shadow: var(--shadow-md);
   transform: translateX(4px);
 }
+
+/* ფოტო კონტეინერი - ფიქსირებული ზომა desktop-ზე */
+.booking-card-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 150px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.booking-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content section */
+.booking-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* მობილურზე ვერტიკალური layout */
+@media (max-width: 768px) {
+  .booking-card {
+    flex-direction: column;
+  }
+  
+  .booking-card-image {
+    width: 100%;
+    height: 180px;
+  }
+}
+/* </CHANGE> */
 
 .booking-header {
   display: flex;
@@ -1087,145 +1171,6 @@ textarea.input {
   }
 }
 
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.calendar-header h2 {
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.calendar-nav {
-  background: var(--light-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 0.9rem;
-}
-
-.calendar-nav:hover {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
-  color: white;
-  transform: scale(1.05);
-}
-
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.calendar-weekday {
-  text-align: center;
-  font-weight: 600;
-  color: var(--primary-color);
-  padding: 0.5rem 0;
-  font-size: 0.8rem;
-}
-
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.25rem;
-}
-
-.calendar-day {
-  aspect-ratio: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-  font-weight: 500;
-  color: var(--text-color);
-  font-size: 0.85rem;
-  position: relative;
-  background: linear-gradient(135deg, #3a8200 0%, #509600 100%);
-  border: 1px solid var(--border-color);
-}
-
-.calendar-day:not(.disabled):not(.other-month):hover {
-  background: var(--light-bg);
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.calendar-day.today {
-  border: 2px solid var(--primary-color);
-  font-weight: 700;
-}
-
-.calendar-day.selected {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
-}
-
-.calendar-day.disabled {
-  background: rgba(255, 255, 255, 0.05);
-  color: #666;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.calendar-day.other-month {
-  background: rgba(255, 255, 255, 0.02);
-  color: #666;
-  cursor: default;
-  opacity: 0.4;
-}
-
-.calendar-legend {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
-  flex-wrap: wrap;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
-.legend-color {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.legend-color.available {
-  background: linear-gradient(135deg, #3a8200 0%, #509600 100%);
-}
-
-.legend-color.selected {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-.legend-color.past {
-  background: rgba(255, 255, 255, 0.05);
-}
-
 .admin-calendar-section {
   margin-top: 1.5rem;
   padding: 1.5rem;
@@ -1246,13 +1191,6 @@ textarea.input {
 
 .admin-calendar-section h3 i {
   color: var(--primary-color);
-}
-
-.admin-calendar-container {
-  background: linear-gradient(135deg, rgba(31, 31, 31, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
 }
 
 .admin-calendar-legend {
@@ -1656,6 +1594,48 @@ input:checked + .toggle-slider:before {
     accent-color: var(--primary-color, #3b82f6);
 }
 
+/* User photo section გაუმჯობესება booking card-ში */
+.booking-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-sm);
+}
+
+.booking-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.booking-user-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.booking-user-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.booking-user-details p:first-child {
+  font-weight: 600;
+  color: #fff;
+}
+/* </CHANGE> */
+
     </style>
 </head>
 <body>
@@ -1663,21 +1643,22 @@ input:checked + .toggle-slider:before {
 
     <div id="adminView" class="view">
         <div class="container">
-            <!-- Enhanced admin panel styles -->
+            <!-- გაუმჯობესებული admin panel header ღილაკებით -->
             <div class="admin-panel-header">
                 <h1>ადმინ პანელი</h1>
-                <div>
-                    <a href="onlinechat.html" class="btn btn-secondary" style="text-decoration: none;">
+                <div class="admin-header-buttons">
+                    <a href="onlinechat.html" class="btn btn-secondary">
                         <i class="fas fa-comments"></i> ონლაინ ჩატი
                     </a>
                     <button class="btn btn-secondary" data-view="adminBookings">
                         <i class="fas fa-tasks"></i> დაჯავშნის მართვა
                     </button>
-                    <a href="booking.html" class="btn btn-secondary" style="text-decoration: none;">
+                    <a href="booking.html" class="btn btn-secondary">
                         <i class="fas fa-arrow-left"></i> უკან
                     </a>
                 </div>
             </div>
+            <!-- </CHANGE> -->
             
             <!-- Added admin stats cards -->
             <div class="admin-stats" id="adminStatsContainer">
@@ -1797,61 +1778,62 @@ input:checked + .toggle-slider:before {
         const TRANSLATION_DICT = {
             // Car types
             types: {
-                "სედანი": { en: "Sedan", ru: "Седан" },
-                "ჯიპი": { en: "Jeep", ru: "Джип" },
-                "მინივენი": { en: "Minivan", ru: "Минивэн" },
-                "ავტობუსი": { en: "Bus", ru: "Автобус" }
+                "სედანი": { en: "Sedan", ru: "Седан", ar: "سيدان" },
+                "ჯიპი": { en: "Jeep", ru: "Джип", ar: "جيب" },
+                "მინივენი": { en: "Minivan", ru: "Минивэн", ar: "ميني فان" },
+                "ავტობუსი": { en: "Bus", ru: "Автобус", ar: "حافلة" }
             },
             // Regions
             regions: {
-                "აფხაზეთი": { en: "Abkhazia", ru: "Абхазия" },
-                "სამეგრელო": { en: "Samegrelo", ru: "Самегрело" },
-                "რაჭა-ლეჩხუმი": { en: "Racha-Lechkhumi", ru: "Рача-Лечхуми" },
-                "იმერეთი": { en: "Imereti", ru: "Имерети" },
-                "გურია": { en: "Guria", ru: "Гурия" },
-                "აჭარა": { en: "Adjara", ru: "Аджара" },
-                "სამცხე-ჯავახეთი": { en: "Samtskhe-Javakheti", ru: "Самцхе-Джавахети" },
-                "შიდა ქართლი": { en: "Shida Kartli", ru: "Шида Картли" },
-                "მცხეთა-მთიანეთი": { en: "Mtskheta-Mtianeti", ru: "Мцхета-Мтианети" },
-                "ქვემო ქართლი": { en: "Kvemo Kartli", ru: "Квемо Картли" },
-                "კახეთი": { en: "Kakheti", ru: "Кахети" },
-                "თბილისი": { en: "Tbilisi", ru: "Тбилиси" }
+                "აფხაზეთი": { en: "Abkhazia", ru: "Абхазия", ar: "أبخازيا" },
+                "სამეგრელო": { en: "Samegrelo", ru: "Самегрело", ar: "سامغريلو" },
+                "რაჭა-ლეჩხუმი": { en: "Racha-Lechkhumi", ru: "Рача-Лечхуми", ar: "راتشا-ليتشخومي" },
+                "იმერეთი": { en: "Imereti", ru: "Имерети", ar: "إيميريتي" },
+                "გურია": { en: "Guria", ru: "Гурия", ar: "غوريا" },
+                "აჭარა": { en: "Adjara", ru: "Аджара", ar: "أجاريا" },
+                "სამცხე-ჯავახეთი": { en: "Samtskhe-Javakheti", ru: "Самцхе-Джавахети", ar: "سامتسخه-جافاخيتي" },
+                "შიდა ქართლი": { en: "Shida Kartli", ru: "Шида Картли", ar: "شيدا كارتلي" },
+                "მცხეთა-მთიანეთი": { en: "Mtskheta-Mtianeti", ru: "Мцхета-Мтианети", ar: "متسخيتا-متيانيتي" },
+                "ქვემო ქართლი": { en: "Kvemo Kartli", ru: "Квемо Картли", ar: "كفيمو كارتلي" },
+                "კახეთი": { en: "Kakheti", ru: "Кахети", ar: "كاخيتي" },
+                "თბილისი": { en: "Tbilisi", ru: "Тбилиси", ar: "تبليسي" }
             },
             // Fuel types
             fuelTypes: {
-                "ბენზინი": { en: "Gasoline", ru: "Бензин" },
-                "დიზელი": { en: "Diesel", ru: "Дизель" },
-                "ჰიბრიდი": { en: "Hybrid", ru: "Гибрид" },
-                "ელექტრო": { en: "Electric", ru: "Электро" },
-                "გაზი": { en: "Gas", ru: "Газ" }
+                "ბენზინი": { en: "Gasoline", ru: "Бензин", ar: "بنزين" },
+                "დიზელი": { en: "Diesel", ru: "Дизель", ar: "ديزل" },
+                "ჰიბრიდი": { en: "Hybrid", ru: "Гибрид", ar: "هجين" },
+                "ელექტრო": { en: "Electric", ru: "Электро", ar: "كهربائي" },
+                "გაზი": { en: "Gas", ru: "Газ", ar: "غاز" }
             },
             // Transmission types
             transmissions: {
-                "მექანიკური": { en: "Manual", ru: "Механическая" },
-                "ავტომატური": { en: "Automatic", ru: "Автоматическая" }
+                "მექანიკური": { en: "Manual", ru: "Механическая", ar: "يدوي" },
+                "ავტომატური": { en: "Automatic", ru: "Автоматическая", ar: "أوتوماتيكي" }
             },
             // Common colors
             colors: {
-                "თეთრი": { en: "White", ru: "Белый" },
-                "შავი": { en: "Black", ru: "Черный" },
-                "ნაცრისფერი": { en: "Gray", ru: "Серый" },
-                "ვერცხლისფერი": { en: "Silver", ru: "Серебристый" },
-                "წითელი": { en: "Red", ru: "Красный" },
-                "ლურჯი": { en: "Blue", ru: "Синий" },
-                "ყავისფერი": { en: "Brown", ru: "Коричневый" },
-                "მწვანე": { en: "Green", ru: "Зеленый" },
-                "ყვითელი": { en: "Yellow", ru: "Желтый" },
-                "ნარინჯისფერი": { en: "Orange", ru: "Оранжевый" },
-                "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый" },
-                "იისფერი": { en: "Purple", ru: "Фиолетовый" },
-                "ვარდისფერი": { en: "Pink", ru: "Розовый" },
-                "ოქროსფერი": { en: "Gold", ru: "Золотой" }
+                "თეთრი": { en: "White", ru: "Белый", ar: "أبيض" },
+                "შავი": { en: "Black", ru: "Черный", ar: "أسود" },
+                "ნაცრისფერი": { en: "Gray", ru: "Серый", ar: "رمادي" },
+                "ვერცხლისფერი": { en: "Silver", ru: "Серебристый", ar: "فضي" },
+                "წითელი": { en: "Red", ru: "Красный", ar: "أحمر" },
+                "ლურჯი": { en: "Blue", ru: "Синий", ar: "أزرق" },
+                "ყავისფერი": { en: "Brown", ru: "Коричневый", ar: "بني" },
+                "მწვანე": { en: "Green", ru: "Зеленый", ar: "أخضر" },
+                "ყვითელი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
+                "ნარინჯისფერი": { en: "Orange", ru: "Оранжевый", ar: "برتقالي" },
+                "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
+                "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
+                "ვარდისფერი": { en: "Pink", ru: "Розовый", ar: "وردي" },
+                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذهبي" }
             }
         };
+        // </CHANGE>
 
         async function getTranslation(text, fieldType = null) {
           if (!text || text.trim() === '') {
-            return { ka: text, en: text, ru: text };
+            return { ka: text, en: text, ru: text, ar: text };
           }
 
           // Prioritize dictionary lookup for known categories
@@ -1859,7 +1841,8 @@ input:checked + .toggle-slider:before {
               return {
                   ka: text,
                   en: TRANSLATION_DICT[fieldType][text].en,
-                  ru: TRANSLATION_DICT[fieldType][text].ru
+                  ru: TRANSLATION_DICT[fieldType][text].ru,
+                  ar: TRANSLATION_DICT[fieldType][text].ar
               };
           }
 
@@ -1867,30 +1850,36 @@ input:checked + .toggle-slider:before {
             // Using MyMemory Translation API for real translations
             const enUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ka|en`;
             const ruUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ka|ru`;
+            const arUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ka|ar`;
             
-            const [enResponse, ruResponse] = await Promise.all([
+            const [enResponse, ruResponse, arResponse] = await Promise.all([
               fetch(enUrl),
-              fetch(ruUrl)
+              fetch(ruUrl),
+              fetch(arUrl)
             ]);
             
             const enData = await enResponse.json();
             const ruData = await ruResponse.json();
+            const arData = await arResponse.json();
             
             const enTranslation = enData.responseData?.translatedText || text;
             const ruTranslation = ruData.responseData?.translatedText || text;
+            const arTranslation = arData.responseData?.translatedText || text;
 
-            console.log('[v0] Translation:', { original: text, en: enTranslation, ru: ruTranslation });
+            console.log('[v0] Translation:', { original: text, en: enTranslation, ru: ruTranslation, ar: arTranslation });
 
             return {
               ka: text,
               en: enTranslation,
-              ru: ruTranslation
+              ru: ruTranslation,
+              ar: arTranslation
             };
           } catch (error) {
             console.error('[v0] Translation error:', error);
-            return { ka: text, en: text, ru: text };
+            return { ka: text, en: text, ru: text, ar: text };
           }
         }
+        // </CHANGE>
 
         const CLOUD_NAME = "dmxmlw0ln"
         const UPLOAD_PRESET = "rentime"
@@ -2429,23 +2418,17 @@ input:checked + .toggle-slider:before {
                 allTours = toursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
             } catch (error) {
                 console.error("Error loading data:", error)
-                showToast("მონაცემების ჩატვირთვა ვერ მოხერხდა", "error")
             }
         }
 
         async function loadAdminStats() {
             try {
-                const totalBookingsSnapshot = await getDocs(collection(db, "bookings"));
-                const totalCarsSnapshot = await getDocs(collection(db, "cars"));
-                const totalToursSnapshot = await getDocs(collection(db, "tours"));
-
-                document.getElementById("totalBookingsStat").textContent = totalBookingsSnapshot.size;
-                document.getElementById("totalCarsStat").textContent = totalCarsSnapshot.size;
-                document.getElementById("totalToursStat").textContent = totalToursSnapshot.size;
-
+                const bookingsSnapshot = await getDocs(collection(db, "bookings"))
+                document.getElementById("totalBookingsStat").textContent = bookingsSnapshot.size
+                document.getElementById("totalCarsStat").textContent = allCars.length
+                document.getElementById("totalToursStat").textContent = allTours.length
             } catch (error) {
-                console.error("Error loading admin stats:", error);
-                document.getElementById("adminStatsContainer").innerHTML = '<div class="empty-state">შეცდომა სტატისტიკის ჩატვირთვისას</div>';
+                console.error("Error loading stats:", error)
             }
         }
 
@@ -2462,12 +2445,10 @@ input:checked + .toggle-slider:before {
 
         function displayAdminItems() {
             const container = document.getElementById("adminItemsContainer")
-            if (!container) return
-
             const items = currentAdminTab === "cars" ? allCars : allTours
 
             if (items.length === 0) {
-                container.innerHTML = '<div class="empty-state">მონაცემები არ მოიძებნა</div>'
+                container.innerHTML = `<div class="empty-state">${currentAdminTab === "cars" ? "მანქანები" : "ტურები"} არ მოიძებნა</div>`
                 return
             }
 
@@ -2475,31 +2456,32 @@ input:checked + .toggle-slider:before {
 
             container.querySelectorAll(".edit-item-btn").forEach((btn) => {
                 btn.addEventListener("click", () => {
-                    const itemId = btn.dataset.id
-                    const item = items.find((i) => i.id === itemId)
+                    const item = items.find((i) => i.id === btn.dataset.id)
                     openAdminFormModal(item, currentAdminTab)
                 })
             })
 
             container.querySelectorAll(".delete-item-btn").forEach((btn) => {
-                btn.addEventListener("click", () => deleteItem(btn.dataset.id, currentAdminTab))
+                btn.addEventListener("click", () => {
+                    deleteItem(btn.dataset.id, currentAdminTab)
+                })
             })
         }
 
         function createAdminItemCard(item, type) {
-            const imageUrl =
-                item.images?.[0] ||
-                `https://placehold.co/150x100/e0e0e0/666666?text=${encodeURIComponent(item.name || "No Image")}`
-
+            const imageUrl = item.images && item.images.length > 0 ? item.images[0] : '/placeholder.svg?height=120&width=180'
             const licensePlateHtml = item.licensePlate 
-                ? `<span><i class="fas fa-id-card"></i> ${item.licensePlate}</span>` 
+                ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444; font-weight: 700; padding: 0.375rem 0.875rem; border-radius: 6px; border: 1px solid rgba(220, 53, 69, 0.3);"><i class="fas fa-id-card"></i> ${item.licensePlate}</span>` 
                 : ''
-
-            const availableDatesHtml = type === "tours" && item.availableDates?.length > 0 && !item.restrictedMode
-                ? `<span><i class="fas fa-calendar-check"></i> ${item.availableDates.length} ხელმისაწვდომი თარიღი</span>`
-                : ''
-
-            const withDriverHtml = type === "cars" && item.withDriver 
+            
+            const availableDatesCount = item.bookedDates ? item.bookedDates.length : 0
+            const availableDatesHtml = item.restrictedMode 
+                ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444;"><i class="fas fa-ban"></i> სრულად დაკავებული</span>` 
+                : availableDatesCount > 0 
+                    ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444;"><i class="fas fa-calendar-times"></i> ${availableDatesCount} დაკავებული</span>` 
+                    : ''
+            
+            const withDriverHtml = item.withDriver 
                 ? `<span style="background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;"><i class="fas fa-user-tie"></i> მძღოლით</span>` 
                 : ''
 
@@ -2593,22 +2575,25 @@ input:checked + .toggle-slider:before {
         }
 
         function createAdminBookingCard(booking) {
-            const imageHTML = booking.itemImage 
-                ? `<img src="${booking.itemImage}" alt="${booking.itemName}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">` 
-                : '';
-            
             const userName = booking.contactName || booking.userEmail || 'User';
             const userInitial = userName ? userName.charAt(0).toUpperCase() : 'U';
             
+            // ფოტო ცალკე div-ში უკეთესი კონტროლისთვის
+            const imageHTML = booking.itemImage 
+                ? `<div class="booking-card-image">
+                     <img src="${booking.itemImage}" alt="${booking.itemName}">
+                   </div>` 
+                : '';
+            
             const userPhotoHTML = `
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
-                    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">
+                <div class="booking-user-info">
+                    <div class="booking-user-avatar">
                         ${userInitial}
                     </div>
-                    <div style="flex: 1;">
-                        <p style="margin: 0; font-weight: 600; color: var(--text-color);">${booking.contactName || 'N/A'} ${booking.contactSurname || ''}</p>
-                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">${booking.contactEmail || booking.userEmail || 'N/A'}</p>
-                        ${booking.contactPhone ? `<p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-phone"></i> ${booking.contactPhone}</p>` : ''}
+                    <div class="booking-user-details">
+                        <p>${booking.contactName || 'N/A'} ${booking.contactSurname || ''}</p>
+                        <p>${booking.contactEmail || booking.userEmail || 'N/A'}</p>
+                        ${booking.contactPhone ? `<p><i class="fas fa-phone"></i> ${booking.contactPhone}</p>` : ''}
                     </div>
                 </div>
             `;
@@ -2622,47 +2607,50 @@ input:checked + .toggle-slider:before {
             return `
                     <div class="booking-card">
                         ${imageHTML}
-                        ${userPhotoHTML}
-                        ${licensePlateHTML}
-                        <div class="booking-header">
-                            <div>
-                                <h3>${booking.itemName}</h3>
-                                <p class="text-muted">${booking.itemType === "cars" ? "🚗 მანქანა" : "🗺️ ტური"}</p>
+                        <div class="booking-card-content">
+                            ${userPhotoHTML}
+                            ${licensePlateHTML}
+                            <div class="booking-header">
+                                <div>
+                                    <h3>${booking.itemName}</h3>
+                                    <p class="text-muted">${booking.itemType === "cars" ? "🚗 მანქანა" : "🗺️ ტური"}</p>
+                                </div>
+                                <span class="status-badge status-${booking.status}">${booking.status}</span>
                             </div>
-                            <span class="status-badge status-${booking.status}">${booking.status}</span>
-                        </div>
-                        <div class="booking-details">
-                            <p><strong>დაწყება:</strong> ${booking.startDate} ${booking.startTime || ""}</p>
-                            <p><strong>დასრულება:</strong> ${booking.endDate} ${booking.endTime || ""}</p>
-                            <p><strong>ხანგრძლივობა:</strong> ${booking.duration} დღე</p>
-                            <p><strong>ფასი:</strong> ${booking.totalPrice}₾</p>
-                            ${booking.contactDescription ? `<p><strong>აღწერა:</strong> ${booking.contactDescription}</p>` : ''}
-                        </div>
-                        ${
-                            booking.status === "მოლოდინში"
-                            ? `
-                            <div class="booking-actions">
-                                <button class="btn btn-sm confirm-booking-btn" 
-                                        data-id="${booking.id}" 
-                                        data-user="${booking.userId}"
-                                        data-item="${booking.itemName}"
-                                        data-item-image="${booking.itemImage || ''}">
-                                    დადასტურება
-                                </button>
-                                <button class="btn btn-sm btn-danger cancel-admin-booking-btn" 
-                                        data-id="${booking.id}" 
-                                        data-user="${booking.userId}"
-                                        data-item="${booking.itemName}"
-                                        data-item-image="${booking.itemImage || ''}">
-                                    უარყოფა
-                                </button>
+                            <div class="booking-details">
+                                <p><strong>დაწყება:</strong> ${booking.startDate} ${booking.startTime || ""}</p>
+                                <p><strong>დასრულება:</strong> ${booking.endDate} ${booking.endTime || ""}</p>
+                                <p><strong>ხანგრძლივობა:</strong> ${booking.duration} დღე</p>
+                                <p><strong>ფასი:</strong> ${booking.totalPrice}₾</p>
+                                ${booking.contactDescription ? `<p><strong>აღწერა:</strong> ${booking.contactDescription}</p>` : ''}
                             </div>
-                        `
-                            : ""
-                        }
+                            ${
+                                booking.status === "მოლოდინში"
+                                ? `
+                                <div class="booking-actions">
+                                    <button class="btn btn-sm confirm-booking-btn" 
+                                            data-id="${booking.id}" 
+                                            data-user="${booking.userId}"
+                                            data-item="${booking.itemName}"
+                                            data-item-image="${booking.itemImage || ''}">
+                                        დადასტურება
+                                    </button>
+                                    <button class="btn btn-sm btn-danger cancel-admin-booking-btn" 
+                                            data-id="${booking.id}" 
+                                            data-user="${booking.userId}"
+                                            data-item="${booking.itemName}"
+                                            data-item-image="${booking.itemImage || ''}">
+                                        უარყოფა
+                                    </button>
+                                </div>
+                            `
+                                : ""
+                            }
+                        </div>
                     </div>
                 `
         }
+        // </CHANGE>
 
         async function updateBookingStatus(bookingId, status, userId, itemName, itemImage) { // Added itemImage parameter
             const confirmMessage =
@@ -2827,6 +2815,11 @@ input:checked + .toggle-slider:before {
                                         <span class="lang-label">Русский:</span>
                                         <span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span>
                                     </div>
+                                    <div class="translation-item">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span>
+                                    </div>
                                 </div>
                                 ` : ''}
                             </div>
@@ -2844,6 +2837,11 @@ input:checked + .toggle-slider:before {
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
                                         <span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span>
+                                    </div>
+                                    <div class="translation-item">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span>
                                     </div>
                                 </div>
                                 ` : ''}
@@ -2907,100 +2905,80 @@ input:checked + .toggle-slider:before {
                                 <div class="form-group">
                                     <label>ტიპი *</label>
                                     <select id="itemType" class="select" required>
-                                        <option value="">აირჩიეთ ტიპი</option>
-                                        ${["სედანი", "ჯიპი", "მინივენი", "ავტობუსი"]
-                                            .map((t) => `<option value="${t}" ${item?.type === t ? "selected" : ""}>${t}</option>`)
-                                            .join("")}
+                                        <option value="სედანი" ${item?.type === "სედანი" ? "selected" : ""}>სედანი</option>
+                                        <option value="ჯიპი" ${item?.type === "ჯიპი" ? "selected" : ""}>ჯიპი</option>
+                                        <option value="მინივენი" ${item?.type === "მინივენი" ? "selected" : ""}>მინივენი</option>
+                                        <option value="ავტობუსი" ${item?.type === "ავტობუსი" ? "selected" : ""}>ავტობუსი</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>ფასი დღეში (₾) *</label>
-                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required min="0" placeholder="100">
-                                </div>
-                                <div class="form-group">
-                                    <label>კარები *</label>
-                                    <input type="number" id="itemDoors" class="input" value="${item?.doors || ""}" required min="2" max="6" placeholder="4">
-                                </div>
-                                <div class="form-group">
-                                    <label>ადგილები *</label>
-                                    <input type="number" id="itemSeats" class="input" value="${item?.seats || ""}" required min="2" max="50" placeholder="5">
-                                </div>
-                            </div>
-                            
-                            <!-- Added additional car specifications -->
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>საწვავის ტიპი *</label>
-                                    <select id="itemFuelType" class="select" required>
-                                        <option value="">აირჩიეთ საწვავი</option>
-                                        ${["ბენზინი", "დიზელი", "ჰიბრიდი", "ელექტრო", "გაზი"]
-                                            .map((f) => `<option value="${f}" ${item?.fuelType === f ? "selected" : ""}>${f}</option>`)
-                                            .join("")}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>ძრავის მოცულობა (L)</label>
-                                    <input type="number" id="itemEngineCapacity" class="input" value="${item?.engineCapacity || ""}" step="0.1" min="0.8" max="8.0" placeholder="2.0">
-                                </div>
-                                <div class="form-group">
-                                    <label>ტრანსმისია *</label>
-                                    <select id="itemTransmission" class="select" required>
-                                        <option value="">აირჩიეთ ტიპი</option>
-                                        ${["მექანიკური", "ავტომატური"]
-                                            .map((t) => `<option value="${t}" ${item?.transmission === t ? "selected" : ""}>${t}</option>`)
-                                            .join("")}
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>წელი</label>
-                                    <input type="number" id="itemYear" class="input" value="${item?.year || ""}" min="1990" max="2025" placeholder="2020">
-                                </div>
-                                <div class="form-group">
-                                    <label>ფერი</label>
-                                    <input type="text" id="itemColor" class="input" value="${item?.color || ""}" placeholder="მაგ: თეთრი">
-                                    ${item && item.colorTranslations ? `
+                                    ${item && item.typeTranslations ? `
                                     <div class="translation-preview">
                                         <div class="translation-item">
                                             <span class="flag">🇬🇧</span>
-                                            <span class="translation-text">${item.colorTranslations.en || 'N/A'}</span>
+                                            <span class="lang-label">English:</span>
+                                            <span class="translation-text">${item.typeTranslations.en || 'N/A'}</span>
                                         </div>
                                         <div class="translation-item">
                                             <span class="flag">🇷🇺</span>
-                                            <span class="translation-text">${item.colorTranslations.ru || 'N/A'}</span>
+                                            <span class="lang-label">Русский:</span>
+                                            <span class="translation-text">${item.typeTranslations.ru || 'N/A'}</span>
+                                        </div>
+                                        <div class="translation-item">
+                                            <span class="flag">🇸🇦</span>
+                                            <span class="lang-label">العربية:</span>
+                                            <span class="translation-text">${item.typeTranslations.ar || 'N/A'}</span>
                                         </div>
                                     </div>
                                     ` : ''}
                                 </div>
                                 <div class="form-group">
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-bottom: 0;">
-                                        <input type="checkbox" id="itemWithDriver" ${item?.withDriver ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
-                                        <span><i class="fas fa-user-tie"></i> მძღოლით</span>
-                                    </label>
+                                    <label>ფასი (დღიური) *</label>
+                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="100">
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>დამატებითი მახასიათებლები</label>
-                                <textarea id="itemFeatures" class="input" rows="2" placeholder="მაგ: კონდიციონერი, GPS, Bluetooth, უკანა ხედვის კამერა">${item?.features || ""}</textarea>
-                                ${item && item.featuresTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
-                                        <span class="flag">🇬🇧</span>
-                                        <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.featuresTranslations.en || 'N/A'}</span>
-                                    </div>
-                                    <div class="translation-item">
-                                        <span class="flag">🇷🇺</span>
-                                        <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.featuresTranslations.ru || 'N/A'}</span>
-                                    </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>წელი *</label>
+                                    <input type="number" id="itemYear" class="input" value="${item?.year || ""}" required placeholder="2024">
                                 </div>
-                                ` : ''}
+                                <div class="form-group">
+                                    <label>კარების რაოდენობა *</label>
+                                    <input type="number" id="itemDoors" class="input" value="${item?.doors || ""}" required placeholder="4">
+                                </div>
+                                <div class="form-group">
+                                    <label>ადგილების რაოდენობა *</label>
+                                    <input type="number" id="itemSeats" class="input" value="${item?.seats || ""}" required placeholder="5">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>საწვავის ტიპი *</label>
+                                    <select id="itemFuelType" class="select" required>
+                                        <option value="ბენზინი" ${item?.fuelType === "ბენზინი" ? "selected" : ""}>ბენზინი</option>
+                                        <option value="დიზელი" ${item?.fuelType === "დიზელი" ? "selected" : ""}>დიზელი</option>
+                                        <option value="ჰიბრიდი" ${item?.fuelType === "ჰიბრიდი" ? "selected" : ""}>ჰიბრიდი</option>
+                                        <option value="ელექტრო" ${item?.fuelType === "ელექტრო" ? "selected" : ""}>ელექტრო</option>
+                                        <option value="გაზი" ${item?.fuelType === "გაზი" ? "selected" : ""}>გაზი</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>ტრანსმისია *</label>
+                                    <select id="itemTransmission" class="select" required>
+                                        <option value="ავტომატური" ${item?.transmission === "ავტომატური" ? "selected" : ""}>ავტომატური</option>
+                                        <option value="მექანიკური" ${item?.transmission === "მექანიკური" ? "selected" : ""}>მექანიკური</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>ფერი</label>
+                                    <input type="text" id="itemColor" class="input" value="${item?.color || ""}" placeholder="შავი">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="checkbox" id="itemWithDriver" ${item?.withDriver ? 'checked' : ''} style="width: 20px; height: 20px;">
+                                        <span>მძღოლით</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -3080,12 +3058,12 @@ input:checked + .toggle-slider:before {
                             </div>
                         </div>
                     `
+                // </CHANGE>
                 
                 setTimeout(() => {
-                    let fixedCalendarInstance = null; // Use a different name to avoid conflict
-                    let regularCalendarInstance = null; // Use a different name
+                    let fixedCalendarInstance = null;
+                    let regularCalendarInstance = null;
                     
-                    // Initialize fixed calendar if in fixed mode
                     const calendarModeInput = document.getElementById('calendarMode');
                     const currentCalendarMode = calendarModeInput ? calendarModeInput.value : 'select-unavailable';
 
@@ -3098,17 +3076,15 @@ input:checked + .toggle-slider:before {
                             }
                         })
                     } else if (!restrictedMode) {
-                        // Initialize regular calendar if not in fixed mode and not restricted
                         regularCalendarInstance = new AdminCalendar('carBookedDatesCalendar', {
                             selectedDates: existingBookedDates,
-                            mode: 'booked', // For cars, selected means booked
+                            mode: 'booked',
                             onDatesChange: (dates) => {
                                 document.getElementById('carBookedDates').value = JSON.stringify(dates)
                             }
                         })
                     }
                     
-                    // Fixed time toggle handler
                     const fixedTimeToggle = document.getElementById('fixedTimeToggle')
                     const fixedCalendarContainer = document.getElementById('fixedCalendarContainer')
                     const calendarSection = document.getElementById('calendarSection')
@@ -3118,12 +3094,10 @@ input:checked + .toggle-slider:before {
                             const isFixed = e.target.checked
                             
                             if (isFixed) {
-                                // Switch to fixed mode
                                 if(calendarModeInput) calendarModeInput.value = 'fixed-booked';
                                 fixedCalendarContainer.style.display = 'block'
                                 calendarSection.style.display = 'none'
                                 
-                                // Initialize fixed calendar with all dates booked if it's not already initialized
                                 if (!fixedCalendarInstance) {
                                     const currentBookedDates = JSON.parse(document.getElementById('carBookedDates').value || '[]');
                                     fixedCalendarInstance = new FixedCalendar({
@@ -3135,16 +3109,13 @@ input:checked + .toggle-slider:before {
                                     });
                                 }
                             } else {
-                                // Switch to regular mode
                                 if(calendarModeInput) calendarModeInput.value = 'select-unavailable';
                                 fixedCalendarContainer.style.display = 'none';
                                 
-                                // Show old calendar if not restricted
                                 const restrictedToggle = document.getElementById('restrictedModeToggle');
                                 if (restrictedToggle && !restrictedToggle.checked) {
                                     calendarSection.style.display = 'block';
                                     
-                                    // Initialize regular calendar if it's not already initialized
                                     if (!regularCalendarInstance) {
                                         const currentBookedDates = JSON.parse(document.getElementById('carBookedDates').value || '[]');
                                         regularCalendarInstance = new AdminCalendar('carBookedDatesCalendar', {
@@ -3160,7 +3131,6 @@ input:checked + .toggle-slider:before {
                         });
                     }
                     
-                    // Restricted mode toggle handler
                     const restrictedModeToggle = document.getElementById('restrictedModeToggle');
                     const restrictedMessage = document.getElementById('restrictedMessage');
                     const restrictedModeInput = document.getElementById('restrictedMode');
@@ -3189,10 +3159,10 @@ input:checked + .toggle-slider:before {
                     }
                 }, 100);
 
-            } else { // It's a Tour
-                const existingBookedDates = item?.bookedDates || [] // Using bookedDates for tours now
+            } else {
+                const existingBookedDates = item?.bookedDates || []
                 const restrictedMode = item?.restrictedMode || false
-                const calendarMode = item?.calendarMode || 'select-unavailable' // Added calendarMode for tours
+                const calendarMode = item?.calendarMode || 'select-unavailable'
                 
                 formFields.innerHTML = `
                         <div class="enhanced-form-section">
@@ -3212,6 +3182,11 @@ input:checked + .toggle-slider:before {
                                         <span class="lang-label">Русский:</span>
                                         <span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span>
                                     </div>
+                                    <div class="translation-item">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span>
+                                    </div>
                                 </div>
                                 ` : ''}
                             </div>
@@ -3230,6 +3205,11 @@ input:checked + .toggle-slider:before {
                                         <span class="lang-label">Русский:</span>
                                         <span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span>
                                     </div>
+                                    <div class="translation-item">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span>
+                                    </div>
                                 </div>
                                 ` : ''}
                             </div>
@@ -3243,13 +3223,12 @@ input:checked + .toggle-slider:before {
                                     value="${item?.licensePlate || ""}" 
                                     placeholder="111"
                                     title="ფორმატი: 111">
-                                <small style="color: var(--text-color); font-size: 0.85rem;"> მითითეთ ტურის ნომერი (სურვილისამებრ)</small>
+                                <small style="color: var(--text-color); font-size: 0.85rem;">✱ მითითეთ ტურის ნომერი (სურვილისამებრ)</small>
                             </div>
                         </div>
 
                         <div class="enhanced-form-section">
                             <h3><i class="fas fa-cog"></i> დეტალები</h3>
-
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
                                     <label>რეგიონი (რეგიონები) *</label>
@@ -3293,59 +3272,42 @@ input:checked + .toggle-slider:before {
                                 <div class="form-group">
                                     <label>ტიპი *</label>
                                     <select id="itemType" class="select" required>
-                                        <option value="">აირჩიეთ ტიპი</option>
-                                        ${["კულტურული", "სათავგადასავლო", "გასტრონომიული", "ისტორიული"]
-                                            .map((t) => `<option value="${t}" ${item?.type === t ? "selected" : ""}>${t}</option>`)
-                                            .join("")}
+                                        <option value="კულტურული" ${item?.type === "კულტურული" ? "selected" : ""}>კულტურული</option>
+                                        <option value="სათავგადასავლო" ${item?.type === "სათავგადასავლო" ? "selected" : ""}>სათავგადასავლო</option>
+                                        <option value="გასტრონომიული" ${item?.type === "გასტრონომიული" ? "selected" : ""}>გასტრონომიული</option>
+                                        <option value="ისტორიული" ${item?.type === "ისტორიული" ? "selected" : ""}>ისტორიული</option>
+                                        <option value="ბუნება" ${item?.type === "ბუნება" ? "selected" : ""}>ბუნება</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>ფასი (დღიური) *</label>
+                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="200">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label>ფასი (₾) *</label>
-                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required min="0" placeholder="150">
-                                </div>
-                                <div class="form-group">
                                     <label>ხანგრძლივობა *</label>
-                                    <input type="text" id="itemDuration" class="input" value="${item?.duration || ""}" placeholder="მაგ: 3 დღე" required>
+                                    <input type="text" id="itemDuration" class="input" value="${item?.duration || ""}" required placeholder="მაგ: 3 დღე">
                                 </div>
                                 <div class="form-group">
-                                    <label>ადგილები *</label>
-                                    <input type="number" id="itemCapacity" class="input" value="${item?.capacity || ""}" required min="1" placeholder="10">
+                                    <label>მაქსიმალური რაოდენობა *</label>
+                                    <input type="number" id="itemCapacity" class="input" value="${item?.capacity || ""}" required placeholder="10">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>მარშრუტი</label>
-                                <textarea id="itemRoute" class="input" rows="2" placeholder="მაგ: თბილისი - სიღნაღი - ბოდბე - თბილისი">${item?.route || ""}</textarea>
-                                ${item && item.routeTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
-                                        <span class="flag">🇬🇧</span>
-                                        <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.routeTranslations.en || 'N/A'}</span>
-                                    </div>
-                                    <div class="translation-item">
-                                        <span class="flag">🇷🇺</span>
-                                        <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.routeTranslations.ru || 'N/A'}</span>
-                                    </div>
-                                </div>
-                                ` : ''}
                             </div>
                         </div>
-                        
+
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-calendar-times"></i> ხელმისაწვდომი თარიღები</h3>
+                            <h3><i class="fas fa-calendar-times"></i> დაკავებული თარიღები</h3>
                             
                             <div class="form-group" style="margin-bottom: 1rem;">
                                 <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid var(--border-color);">
                                     <input type="checkbox" id="fixedTimeToggleTour" ${calendarMode === 'fixed-booked' ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
                                     <div style="flex: 1;">
                                         <div style="font-weight: 600; color: #fff; margin-bottom: 0.25rem;">
-                                            <i class="fas fa-clock"></i> ყველა დღე დაკავებულია (ფიქსირებული)
+                                            <i class="fas fa-clock"></i> ფიქსირებული დრო
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            ყველა დღე დაკავებულად გამოჩნდება, ხელით დაამატეთ ხელმისაწვდომი დღეები
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
                                         </div>
                                     </div>
                                 </label>
@@ -3410,12 +3372,12 @@ input:checked + .toggle-slider:before {
                             </div>
                         </div>
                     `
-
+                // </CHANGE>
+                
                 setTimeout(() => {
-                    let tourFixedCalendarInstance = null; // Instance for tour fixed calendar
-                    let tourRegularCalendarInstance = null; // Instance for tour regular calendar
+                    let tourFixedCalendarInstance = null;
+                    let tourRegularCalendarInstance = null;
                     
-                    // Initialize tour calendar based on mode
                     const calendarModeInput = document.getElementById('calendarMode');
                     const currentCalendarMode = calendarModeInput ? calendarModeInput.value : 'select-unavailable';
 
@@ -3427,116 +3389,23 @@ input:checked + .toggle-slider:before {
                                 document.getElementById('tourBookedDates').value = JSON.stringify(dates)
                             }
                         })
-                        // Update DOM element references for tour
-                        const prevTourBtn = document.getElementById('fixedCalendarPrevTour');
-                        const nextTourBtn = document.getElementById('fixedCalendarNextTour');
-
-                        if(prevTourBtn) prevTourBtn.onclick = () => { tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() - 1); tourFixedCalendarInstance.render(); tourFixedCalendarInstance.attachEventListeners(); };
-                        if(nextTourBtn) nextTourBtn.onclick = () => { tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() + 1); tourFixedCalendarInstance.render(); tourFixedCalendarInstance.attachEventListeners(); };
                         
-                        // Override render to use tour-specific elements
-                        const originalRender = tourFixedCalendarInstance.render.bind(tourFixedCalendarInstance);
-                        tourFixedCalendarInstance.render = function() {
-                            const weekdaysContainer = document.getElementById('fixedCalendarWeekdaysTour');
-                            const contentContainer = document.getElementById('fixedCalendarContentTour');
-                            const titleElement = document.getElementById('fixedCalendarTitleTour');
-                            const headerElement = document.querySelector('#fixedCalendarContainerTour .fixed-calendar-header');
-                            
-                            if (!weekdaysContainer || !contentContainer || !titleElement) return;
-                            
-                            const year = this.currentDate.getFullYear();
-                            const month = this.currentDate.getMonth();
-                            
-                            if (window.languageSwitcher) {
-                                this.monthNames = window.languageSwitcher.getMonthNames();
-                                const currentLang = window.languageSwitcher.getCurrentLanguage();
-                                this.weekdays = currentLang === 'en'
-                                    ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-                                    : currentLang === 'ru'
-                                    ? ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-                                    : ['კვი', 'ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'];
-                            }
-                            
-                            const firstDay = new Date(year, month, 1);
-                            const lastDay = new Date(year, month + 1, 0);
-                            const daysInMonth = lastDay.getDate();
-                            
-                            // Render weekdays
-                            weekdaysContainer.innerHTML = '';
-                            for (let w = 0; w < 7; w++) {
-                                const div = document.createElement('div');
-                                div.textContent = this.weekdays[w];
-                                weekdaysContainer.appendChild(div);
-                            }
-                            
-                            // Set header color
-                            const color = this.monthColors[month % this.monthColors.length];
-                            if(headerElement) headerElement.style.backgroundColor = color;
-                            titleElement.textContent = this.monthNames[month] + ' ' + year;
-                            
-                            // Render calendar days
-                            contentContainer.innerHTML = '';
-                            
-                            // Adjusting for Sunday being the first day of the week in JS getDay()
-                            const jsFirstWeekdayIndex = firstDay.getDay(); // 0 for Sunday, 1 for Monday ... 6 for Saturday
-                            const fixedCalendarFirstWeekdayIndex = jsFirstWeekdayIndex === 0 ? 6 : jsFirstWeekdayIndex - 1; // 0 for Monday, 6 for Sunday
-
-                            for (let b = 0; b < fixedCalendarFirstWeekdayIndex; b++) {
-                                const div = document.createElement('div');
-                                div.className = 'blank';
-                                contentContainer.appendChild(div);
-                            }
-                            
-                            const today = new Date();
-                            today.setHours(0, 0, 0, 0);
-                            
-                            // Add days of the month
-                            for (let day = 1; day <= daysInMonth; day++) {
-                                const currentDate = new Date(year, month, day);
-                                currentDate.setHours(0, 0, 0, 0);
-                                const dateString = formatDateToLocal(currentDate);
-                                
-                                const div = document.createElement('div');
-                                div.textContent = day;
-                                div.dataset.date = dateString;
-                                
-                                const isToday = currentDate.getTime() === today.getTime();
-                                const isPast = currentDate < today;
-                                const isBooked = this.bookedDates.includes(dateString);
-                                
-                                if (isToday) {
-                                    div.classList.add('today');
-                                    div.style.backgroundColor = color;
-                                }
-                                
-                                if (isPast) {
-                                    div.classList.add('past');
-                                } else if (isBooked) {
-                                    div.classList.add('booked');
-                                } else {
-                                    div.classList.add('available');
-                                }
-                                
-                                contentContainer.appendChild(div);
-                            }
-                            
-                            // Add blank cells to fill the grid
-                            const totalCells = fixedCalendarFirstWeekdayIndex + daysInMonth;
-                            const blanksAtEnd = totalCells <= 42 ? (42 - totalCells) : 0; // Ensure grid is 6 rows
-                            for (let e = 0; e < blanksAtEnd; e++) {
-                                const div = document.createElement('div');
-                                div.className = 'blank';
-                                contentContainer.appendChild(div);
-                            }
+                        document.getElementById('fixedCalendarPrevTour').onclick = () => { 
+                            tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() - 1); 
+                            tourFixedCalendarInstance.render(); 
+                            tourFixedCalendarInstance.attachEventListeners(); 
                         };
-                        tourFixedCalendarInstance.render();
-                        tourFixedCalendarInstance.attachEventListeners();
+                        document.getElementById('fixedCalendarNextTour').onclick = () => { 
+                            tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() + 1); 
+                            tourFixedCalendarInstance.render(); 
+                            tourFixedCalendarInstance.attachEventListeners(); 
+                        };
                     } else if (!restrictedMode) {
                         tourRegularCalendarInstance = new AdminCalendar('tourBookedDatesCalendar', {
                             selectedDates: existingBookedDates,
-                            mode: 'booked', // For tours, this calendar shows available dates, so selected means available
+                            mode: 'booked',
                             itemType: 'tours',
-                            tourDuration: (() => { // Calculate tour duration from input field
+                            tourDuration: (() => {
                                 const durationField = document.getElementById('itemDuration');
                                 if (durationField && durationField.value) {
                                     const match = durationField.value.match(/\d+/);
@@ -3572,101 +3441,17 @@ input:checked + .toggle-slider:before {
                                             document.getElementById('tourBookedDates').value = JSON.stringify(dates);
                                         }
                                     });
-                                    // Ensure the tour fixed calendar's DOM elements are correctly referenced
-                                    const tourFixedCalendar = tourFixedCalendarInstance;
-                                    document.getElementById('fixedCalendarPrevTour').onclick = () => { tourFixedCalendar.currentDate.setMonth(tourFixedCalendar.currentDate.getMonth() - 1); tourFixedCalendar.render(); tourFixedCalendar.attachEventListeners(); };
-                                    document.getElementById('fixedCalendarNextTour').onclick = () => { tourFixedCalendar.currentDate.setMonth(tourFixedCalendar.currentDate.getMonth() + 1); tourFixedCalendar.render(); tourFixedCalendar.attachEventListeners(); };
-                                    // Override render method same as above
-                                    const originalRenderLocal = tourFixedCalendarInstance.render.bind(tourFixedCalendarInstance);
-                                    tourFixedCalendarInstance.render = function() {
-                                        const weekdaysContainer = document.getElementById('fixedCalendarWeekdaysTour');
-                                        const contentContainer = document.getElementById('fixedCalendarContentTour');
-                                        const titleElement = document.getElementById('fixedCalendarTitleTour');
-                                        const headerElement = document.querySelector('#fixedCalendarContainerTour .fixed-calendar-header');
-                                        
-                                        if (!weekdaysContainer || !contentContainer || !titleElement) return;
-                                        
-                                        const year = this.currentDate.getFullYear();
-                                        const month = this.currentDate.getMonth();
-                                        
-                                        if (window.languageSwitcher) {
-                                            this.monthNames = window.languageSwitcher.getMonthNames();
-                                            const currentLang = window.languageSwitcher.getCurrentLanguage();
-                                            this.weekdays = currentLang === 'en'
-                                                ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-                                                : currentLang === 'ru'
-                                                ? ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-                                                : ['კვი', 'ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'];
-                                        }
-                                        
-                                        const firstDay = new Date(year, month, 1);
-                                        const lastDay = new Date(year, month + 1, 0);
-                                        const daysInMonth = lastDay.getDate();
-                                        
-                                        weekdaysContainer.innerHTML = '';
-                                        for (let w = 0; w < 7; w++) {
-                                            const div = document.createElement('div');
-                                            div.textContent = this.weekdays[w];
-                                            weekdaysContainer.appendChild(div);
-                                        }
-                                        
-                                        const color = this.monthColors[month % this.monthColors.length];
-                                        if(headerElement) headerElement.style.backgroundColor = color;
-                                        titleElement.textContent = this.monthNames[month] + ' ' + year;
-                                        
-                                        contentContainer.innerHTML = '';
-                                        
-                                        const jsFirstWeekdayIndex = firstDay.getDay();
-                                        const fixedCalendarFirstWeekdayIndex = jsFirstWeekdayIndex === 0 ? 6 : jsFirstWeekdayIndex - 1;
-
-                                        for (let b = 0; b < fixedCalendarFirstWeekdayIndex; b++) {
-                                            const div = document.createElement('div');
-                                            div.className = 'blank';
-                                            contentContainer.appendChild(div);
-                                        }
-                                        
-                                        const today = new Date();
-                                        today.setHours(0, 0, 0, 0);
-                                        
-                                        for (let day = 1; day <= daysInMonth; day++) {
-                                            const currentDate = new Date(year, month, day);
-                                            currentDate.setHours(0, 0, 0, 0);
-                                            const dateString = formatDateToLocal(currentDate);
-                                            
-                                            const div = document.createElement('div');
-                                            div.textContent = day;
-                                            div.dataset.date = dateString;
-                                            
-                                            const isToday = currentDate.getTime() === today.getTime();
-                                            const isPast = currentDate < today;
-                                            const isBooked = this.bookedDates.includes(dateString);
-                                            
-                                            if (isToday) {
-                                                div.classList.add('today');
-                                                div.style.backgroundColor = color;
-                                            }
-                                            
-                                            if (isPast) {
-                                                div.classList.add('past');
-                                            } else if (isBooked) {
-                                                div.classList.add('booked');
-                                            } else {
-                                                div.classList.add('available');
-                                            }
-                                            
-                                            contentContainer.appendChild(div);
-                                        }
-                                        
-                                        const totalCells = fixedCalendarFirstWeekdayIndex + daysInMonth;
-                                        const blanksAtEnd = totalCells <= 42 ? (42 - totalCells) : 0;
-                                        for (let e = 0; e < blanksAtEnd; e++) {
-                                            const div = document.createElement('div');
-                                            div.className = 'blank';
-                                            contentContainer.appendChild(div);
-                                        }
+                                    
+                                    document.getElementById('fixedCalendarPrevTour').onclick = () => { 
+                                        tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() - 1); 
+                                        tourFixedCalendarInstance.render(); 
+                                        tourFixedCalendarInstance.attachEventListeners(); 
                                     };
-                                    tourFixedCalendarInstance.render();
-                                    tourFixedCalendarInstance.attachEventListeners();
+                                    document.getElementById('fixedCalendarNextTour').onclick = () => { 
+                                        tourFixedCalendarInstance.currentDate.setMonth(tourFixedCalendarInstance.currentDate.getMonth() + 1); 
+                                        tourFixedCalendarInstance.render(); 
+                                        tourFixedCalendarInstance.attachEventListeners(); 
+                                    };
                                 }
                             } else {
                                 if(calendarModeInput) calendarModeInput.value = 'select-unavailable';
@@ -3691,7 +3476,7 @@ input:checked + .toggle-slider:before {
                                             selectedDates: currentBookedDates,
                                             mode: 'booked',
                                             itemType: 'tours',
-                                            tourDuration: durationDays, // Pass duration limit
+                                            tourDuration: durationDays,
                                             onDatesChange: (dates) => {
                                                 document.getElementById('tourBookedDates').value = JSON.stringify(dates);
                                             }
@@ -3733,7 +3518,6 @@ input:checked + .toggle-slider:before {
 
             modal.style.display = "flex"
             
-            // Initialize region checkboxes after modal is rendered
             setTimeout(() => initializeRegionCheckboxes(item), 0);
         }
 
@@ -3744,18 +3528,15 @@ input:checked + .toggle-slider:before {
             const description = document.getElementById("itemDescription").value
             
             const allCheckbox = document.getElementById('regionAllAdmin');
-            const regionCheckboxes = document.querySelectorAll('.region-checkbox-admin[data-region-admin]:checked');
+            const regionCheckboxes = document.querySelectorAll('.region-checkbox-admin[data-region-admin]');
             
             let regions = [];
             if (allCheckbox.checked) {
-                // Store 'all' as the only element
                 regions = ['all'];
             } else {
-                // Store selected regions as array
                 regions = Array.from(regionCheckboxes).map(cb => cb.value);
             }
             
-            // Changed the check: if regions is empty, show toast. This applies to both cars and tours.
             if (regions.length === 0) {
                 showToast("გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი ან ყველა რეგიონი", "warning");
                 return;
@@ -3771,16 +3552,14 @@ input:checked + .toggle-slider:before {
             uploadButton.disabled = true
 
             try {
-                // Translate each region separately
                 const regionTranslationsPromises = regions.map(r => 
                     r === 'all' 
-                        ? Promise.resolve({ ka: 'all', en: 'Universal', ru: 'Универсальный' })
+                        ? Promise.resolve({ ka: 'all', en: 'Universal', ru: 'Универсальный', ar: 'عالمي' })
                         : getTranslation(r, 'regions')
                 );
                 
                 const regionTranslationsArray = await Promise.all(regionTranslationsPromises);
                 
-                // Translate name, description, type
                 const [nameTranslations, descTranslations, typeTranslations] = await Promise.all([
                     getTranslation(name, null),
                     getTranslation(description, null),
@@ -3792,8 +3571,8 @@ input:checked + .toggle-slider:before {
                     nameTranslations: nameTranslations,
                     description: descTranslations.ka,
                     descriptionTranslations: descTranslations,
-                    regions: regions, // Store as array - e.g., ['აჭარა'] or ['აჭარა', 'გურია'] or ['all']
-                    regionsTranslations: regionTranslationsArray, // Store translations array
+                    regions: regions,
+                    regionsTranslations: regionTranslationsArray,
                     type: typeTranslations.ka,
                     typeTranslations: typeTranslations,
                     pricePerDay
@@ -3816,313 +3595,177 @@ input:checked + .toggle-slider:before {
                     
                     itemData.doors = Number.parseInt(document.getElementById("itemDoors").value)
                     itemData.seats = Number.parseInt(document.getElementById("itemSeats").value)
-                    
-                    const fuelType = document.getElementById("itemFuelType").value;
-                    const transmission = document.getElementById("itemTransmission").value;
-                    const color = document.getElementById("itemColor").value;
-                    const features = document.getElementById("itemFeatures").value;
-                    const engineCapacity = document.getElementById("itemEngineCapacity").value;
-                    const year = document.getElementById("itemYear").value;
-                    const withDriver = document.getElementById("itemWithDriver").checked;
-                    
-                    const translationPromises = [];
-                    
-                    if (fuelType) {
-                        translationPromises.push(
-                            getTranslation(fuelType, 'fuelTypes').then(t => {
-                                itemData.fuelType = t.ka;
-                                itemData.fuelTypeTranslations = t;
-                            })
-                        );
-                    }
-                    
-                    if (transmission) {
-                        translationPromises.push(
-                            getTranslation(transmission, 'transmissions').then(t => {
-                                itemData.transmission = t.ka;
-                                itemData.transmissionTranslations = t;
-                            })
-                        );
-                    }
-                    
-                    if (color) {
-                        translationPromises.push(
-                            getTranslation(color, 'colors').then(t => {
-                                itemData.color = t.ka;
-                                itemData.colorTranslations = t;
-                            })
-                        );
-                    }
-                    
-                    if (features) {
-                        translationPromises.push(
-                            getTranslation(features, null).then(t => {
-                                itemData.features = t.ka;
-                                itemData.featuresTranslations = t;
-                            })
-                        );
-                    }
-                    
-                    await Promise.all(translationPromises);
-                    
-                    if (engineCapacity) itemData.engineCapacity = parseFloat(engineCapacity);
-                    if (year) itemData.year = parseInt(year);
-                    itemData.withDriver = withDriver;
-                    
-                    const bookedDatesInput = document.getElementById("carBookedDates")
-                    const bookedDates = JSON.parse(bookedDatesInput?.value || '[]')
-                    itemData.bookedDates = bookedDates
+                    itemData.year = Number.parseInt(document.getElementById("itemYear").value)
+                    itemData.fuelType = document.getElementById("itemFuelType").value
+                    itemData.transmission = document.getElementById("itemTransmission").value
+                    itemData.color = document.getElementById("itemColor").value
+                    itemData.withDriver = document.getElementById("itemWithDriver")?.checked || false
                     
                     const calendarModeInput = document.getElementById("calendarMode")
-                    itemData.calendarMode = calendarModeInput?.value || 'select-unavailable'
-                } else { // Tour
-                    const duration = document.getElementById("itemDuration").value;
-                    const route = document.getElementById("itemRoute").value;
+                    if (calendarModeInput) {
+                        itemData.calendarMode = calendarModeInput.value
+                    }
                     
+                    const bookedDatesInput = document.getElementById("carBookedDates")
+                    if (bookedDatesInput) {
+                        try {
+                            itemData.bookedDates = JSON.parse(bookedDatesInput.value)
+                        } catch (e) {
+                            itemData.bookedDates = []
+                        }
+                    }
+                    
+                    const fuelTranslation = await getTranslation(itemData.fuelType, 'fuelTypes');
+                    const transmissionTranslation = await getTranslation(itemData.transmission, 'transmissions');
+                    const colorTranslation = await getTranslation(itemData.color, 'colors');
+                    
+                    itemData.fuelTypeTranslations = fuelTranslation;
+                    itemData.transmissionTranslations = transmissionTranslation;
+                    itemData.colorTranslations = colorTranslation;
+                    
+                } else {
+                    itemData.duration = document.getElementById("itemDuration").value
                     itemData.capacity = Number.parseInt(document.getElementById("itemCapacity").value)
-                    itemData.fixedTime = document.getElementById("fixedTimeToggleTour").checked;
                     
-                    const [durationTranslations, routeTranslations] = await Promise.all([
-                        getTranslation(duration, null),
-                        getTranslation(route, null)
-                    ]);
-                    
-                    itemData.duration = durationTranslations.ka;
-                    itemData.durationTranslations = durationTranslations;
-                    itemData.route = routeTranslations.ka;
-                    itemData.routeTranslations = routeTranslations;
-                    
-                    const licensePlate = document.getElementById("itemLicensePlate").value.toUpperCase().trim()
+                    const licensePlate = document.getElementById("itemLicensePlate")?.value
                     if (licensePlate) {
                         itemData.licensePlate = licensePlate
                     }
                     
-                    const bookedDatesInput = document.getElementById("tourBookedDates")
-                    const bookedDates = JSON.parse(bookedDatesInput?.value || '[]')
-                    itemData.bookedDates = bookedDates
-                    
                     const calendarModeInput = document.getElementById("calendarMode")
-                    itemData.calendarMode = calendarModeInput?.value || 'select-unavailable'
+                    if (calendarModeInput) {
+                        itemData.calendarMode = calendarModeInput.value
+                    }
+                    
+                    const bookedDatesInput = document.getElementById("tourBookedDates")
+                    if (bookedDatesInput) {
+                        try {
+                            itemData.bookedDates = JSON.parse(bookedDatesInput.value)
+                        } catch (e) {
+                            itemData.bookedDates = []
+                        }
+                    }
+                    
+                    const durationTranslation = await getTranslation(itemData.duration, null);
+                    itemData.durationTranslations = durationTranslation;
                 }
 
-                uploadButton.textContent = originalText
+                uploadButton.textContent = "ატვირთვა..."
 
                 if (imagesInput.files.length > 0) {
-                    uploadButton.textContent = "ფოტოები იტვირთება..."
-
-                    try {
-                        const imageUrls = await uploadImagesToCloudinary(imagesInput.files)
+                    const imageUrls = await uploadImagesToCloudinary(imagesInput.files)
+                    if (editingItemId) {
+                        const existingItem = currentAdminTab === "cars" 
+                            ? allCars.find(c => c.id === editingItemId)
+                            : allTours.find(t => t.id === editingItemId)
+                        itemData.images = [...(existingItem?.images || []), ...imageUrls]
+                    } else {
                         itemData.images = imageUrls
-                    } catch (uploadError) {
-                        console.error("Error uploading images:", uploadError)
-                        showToast(`ფოტოების ატვირთვა ვერ მოხერხდა: ${uploadError.message}`, "error")
-                        uploadButton.textContent = originalText
-                        uploadButton.disabled = false
-                        return
                     }
-
-                    uploadButton.textContent = originalText
+                } else if (editingItemId) {
+                    const existingItem = currentAdminTab === "cars" 
+                        ? allCars.find(c => c.id === editingItemId)
+                        : allTours.find(t => t.id === editingItemId)
+                    itemData.images = existingItem?.images || []
                 }
+
+                uploadButton.textContent = "შენახვა..."
 
                 const collectionName = currentAdminTab === "cars" ? "cars" : "tours"
 
                 if (editingItemId) {
-                    const existingItem = (currentAdminTab === "cars" ? allCars : allTours).find((i) => i.id === editingItemId)
-                    // Only update images if new ones were uploaded. Otherwise, keep existing ones.
-                    if (!itemData.images && existingItem?.images) {
-                        itemData.images = existingItem.images;
-                    }
-                    await updateDoc(doc(db, collectionName, editingItemId), itemData)
+                    await updateDoc(doc(db, collectionName, editingItemId), {
+                        ...itemData,
+                        updatedAt: serverTimestamp(),
+                    })
                     showToast("წარმატებით განახლდა!", "success")
                 } else {
-                    itemData.bookings = 0
-                    itemData.createdAt = serverTimestamp() // Add creation timestamp
-                    await addDoc(collection(db, collectionName), itemData)
+                    await addDoc(collection(db, collectionName), {
+                        ...itemData,
+                        createdAt: serverTimestamp(),
+                    })
                     showToast("წარმატებით დაემატა!", "success")
                 }
 
                 closeAdminFormModal()
-                await loadAdminData()
+                loadAdminData()
             } catch (error) {
                 console.error("Error saving item:", error)
-                showToast(`შეცდომა: ${error.message}`, "error")
+                showToast("შენახვა ვერ მოხერხდა: " + error.message, "error")
             } finally {
                 uploadButton.textContent = originalText
                 uploadButton.disabled = false
             }
         })
 
-        // Placeholder for showConfirm function
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toastContainer")
+            const toast = document.createElement("div")
+            toast.className = `toast ${type}`
+
+            const icons = {
+                success: "fas fa-check-circle",
+                error: "fas fa-exclamation-circle",
+                warning: "fas fa-exclamation-triangle",
+                info: "fas fa-info-circle",
+            }
+
+            const titles = {
+                success: "წარმატება",
+                error: "შეცდომა",
+                warning: "გაფრთხილება",
+                info: "ინფორმაცია",
+            }
+
+            toast.innerHTML = `
+                    <i class="toast-icon ${icons[type] || icons.info}"></i>
+                    <div class="toast-content">
+                        <div class="toast-title">${titles[type] || titles.info}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close">&times;</button>
+                    <div class="toast-progress"></div>
+                `
+
+            container.appendChild(toast)
+
+            toast.querySelector(".toast-close").addEventListener("click", () => {
+                toast.classList.add("removing")
+                setTimeout(() => toast.remove(), 300)
+            })
+
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.classList.add("removing")
+                    setTimeout(() => toast.remove(), 300)
+                }
+            }, 5000)
+        }
+
         function showConfirm(message, title = "დადასტურება") {
             return new Promise((resolve) => {
-                const confirmModal = document.getElementById("confirmModal");
-                const confirmTitle = document.getElementById("confirmTitle");
-                const confirmMessage = document.getElementById("confirmMessage");
-                const confirmCancel = document.getElementById("confirmCancel");
-                const confirmOk = document.getElementById("confirmOk");
+                const modal = document.getElementById("confirmModal")
+                document.getElementById("confirmTitle").textContent = title
+                document.getElementById("confirmMessage").textContent = message
+                modal.style.display = "flex"
 
-                confirmTitle.textContent = title;
-                confirmMessage.textContent = message;
-                confirmModal.style.display = "flex";
+                document.getElementById("confirmOk").onclick = () => {
+                    modal.style.display = "none"
+                    resolve(true)
+                }
 
-                const handleOk = () => {
-                    cleanup();
-                    resolve(true);
-                };
-
-                const handleCancel = () => {
-                    cleanup();
-                    resolve(false);
-                };
-
-                const cleanup = () => {
-                    confirmOk.removeEventListener("click", handleOk);
-                    confirmCancel.removeEventListener("click", handleCancel);
-                    confirmModal.style.display = "none";
-                };
-
-                confirmOk.addEventListener("click", handleOk);
-                confirmCancel.addEventListener("click", handleCancel);
-            });
+                document.getElementById("confirmCancel").onclick = () => {
+                    modal.style.display = "none"
+                    resolve(false)
+                }
+            })
         }
 
-        // Placeholder for showToast function
-        function showToast(message, type = "info") {
-            const toastContainer = document.getElementById("toastContainer");
-            const toastId = `toast-${Date.now()}`;
-
-            const toast = document.createElement("div");
-            toast.id = toastId;
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <div class="toast-icon"><i class="fas ${
-                    type === "success"
-                        ? "fa-check-circle"
-                        : type === "error"
-                        ? "fa-exclamation-circle"
-                        : type === "warning"
-                        ? "fa-exclamation-triangle"
-                        : "fa-info-circle"
-                }"></i></div>
-                <div class="toast-content">
-                    <div class="toast-title">${type.charAt(0).toUpperCase() + type.slice(1)}</div>
-                    <div class="toast-message">${message}</div>
-                </div>
-                <button class="toast-close">&times;</button>
-                <div class="toast-progress"></div>
-            `;
-            toastContainer.appendChild(toast);
-
-            // Auto-close toast after 5 seconds
-            const autoCloseTimer = setTimeout(() => {
-                removeToast(toastId);
-            }, 5000);
-
-            // Manual close button
-            toast.querySelector(".toast-close").addEventListener("click", () => {
-                removeToast(toastId);
-                clearTimeout(autoCloseTimer);
-            });
-        }
-
-        function removeToast(toastId) {
-            const toast = document.getElementById(toastId);
-            if (toast) {
-                toast.classList.add("removing");
-                toast.addEventListener("animationend", () => {
-                    toast.remove();
-                });
+        window.addEventListener("click", (e) => {
+            if (e.target.classList.contains("modal")) {
+                e.target.style.display = "none"
             }
-        }
-        
-        // Initialize the FixedCalendar for cars if it's in fixed mode initially
-        // This should be called after the modal is rendered and its elements are available.
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if the modal form exists and is being opened to initialize calendars
-            const adminFormModal = document.getElementById('adminFormModal');
-            if (adminFormModal) {
-                const observer = new MutationObserver((mutations, obs) => {
-                    if (adminFormModal.style.display === 'flex') {
-                        // Car form initialization
-                        const isCarForm = document.getElementById('itemLicensePlate'); // Indicator for car form
-                        if (isCarForm) {
-                             const restrictedModeToggle = document.getElementById('restrictedModeToggle');
-                            const fixedTimeToggle = document.getElementById('fixedTimeToggle');
-                            const calendarModeInput = document.getElementById('calendarMode');
-
-                            if (fixedTimeToggle && fixedTimeToggle.checked) {
-                                const existingBookedDates = JSON.parse(document.getElementById('carBookedDates').value || '[]');
-                                window.fixedCalendarInstance = new FixedCalendar({ // Make instance globally accessible for form submission
-                                    container: document.getElementById('fixedCalendarContent'),
-                                    bookedDates: existingBookedDates.length > 0 ? existingBookedDates : generateNext5YearsDates(),
-                                    onDateToggle: (dates) => {
-                                        document.getElementById('carBookedDates').value = JSON.stringify(dates);
-                                    }
-                                });
-                            } else if (!restrictedModeToggle.checked) {
-                                // Initialize regular calendar if not restricted and not in fixed time mode
-                                const existingBookedDates = JSON.parse(document.getElementById('carBookedDates').value || '[]');
-                                window.regularCalendarInstance = new AdminCalendar('carBookedDatesCalendar', {
-                                    selectedDates: existingBookedDates,
-                                    mode: 'booked',
-                                    onDatesChange: (dates) => {
-                                        document.getElementById('carBookedDates').value = JSON.stringify(dates);
-                                    }
-                                });
-                            }
-                        }
-                        
-                        // Tour form initialization
-                        const isTourForm = document.getElementById('itemDuration'); // Indicator for tour form
-                        if (isTourForm) {
-                             const fixedTimeToggleTour = document.getElementById('fixedTimeToggleTour');
-                            if (fixedTimeToggleTour && fixedTimeToggleTour.checked) {
-                                const existingDatesFromHidden = JSON.parse(document.getElementById('tourBookedDates').value || '[]');
-                                window.tourFixedCalendarInstance = new FixedCalendar({ // Instance for tour fixed calendar
-                                    container: document.getElementById('fixedCalendarContentTour'),
-                                    bookedDates: existingDatesFromHidden.length > 0 ? existingDatesFromHidden : generateNext5YearsDates(), // Default to all booked if none provided
-                                    onDateToggle: (dates) => {
-                                        document.getElementById('tourBookedDates').value = JSON.stringify(dates);
-                                    }
-                                });
-                                // Ensure the tour fixed calendar's DOM elements are correctly referenced
-                                const tourFixedCalendar = window.tourFixedCalendarInstance;
-                                if (tourFixedCalendar) {
-                                    const prevTourBtn = document.getElementById('fixedCalendarPrevTour');
-                                    const nextTourBtn = document.getElementById('fixedCalendarNextTour');
-                                    if(prevTourBtn) prevTourBtn.onclick = () => { tourFixedCalendar.currentDate.setMonth(tourFixedCalendar.currentDate.getMonth() - 1); tourFixedCalendar.render(); tourFixedCalendar.attachEventListeners(); };
-                                    if(nextTourBtn) nextTourBtn.onclick = () => { tourFixedCalendar.currentDate.setMonth(tourFixedCalendar.currentDate.getMonth() + 1); tourFixedCalendar.render(); tourFixedCalendar.attachEventListeners(); };
-                                    tourFixedCalendar.render();
-                                    tourFixedCalendar.attachEventListeners();
-                                }
-                            } else {
-                                // Initialize regular calendar for tours if not restricted and not in fixed time mode
-                                const existingDates = JSON.parse(document.getElementById('tourBookedDates').value || '[]');
-                                window.tourRegularCalendarInstance = new AdminCalendar('tourBookedDatesCalendar', {
-                                    selectedDates: existingDates,
-                                    mode: 'booked',
-                                    itemType: 'tours',
-                                    tourDuration: (() => { // Calculate tour duration from input field
-                                        const durationField = document.getElementById('itemDuration');
-                                        if (durationField && durationField.value) {
-                                            const match = durationField.value.match(/\d+/);
-                                            if (match) return parseInt(match[0]);
-                                        }
-                                        return null;
-                                    })(),
-                                    onDatesChange: (dates) => {
-                                        document.getElementById('tourBookedDates').value = JSON.stringify(dates);
-                                    }
-                                });
-                            }
-                        }
-                        obs.disconnect(); // Stop observing once initialized
-                    }
-                });
-                observer.observe(adminFormModal, { attributes: true, attributeFilter: ['style'] });
-            }
-        });
-
+        })
     </script>
 </body>
 </html>

@@ -13,8 +13,10 @@
     /* Region Page Specific Styles */
 .region-hero {
   height: 70vh;
+  min-height: 400px;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,6 +444,7 @@
 @media (max-width: 768px) {
   .region-hero {
     height: 60vh;
+    background-position: center top;
   }
 
   .region-hero .hero-text h1 {
@@ -662,7 +665,7 @@
 
   <div id="navbar"></div>
 
-  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&h=1080&fit=crop');">
+  <section class="region-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),  url('addhome/ajara.png');">
     <div class="hero-text">
       <h1 data-i18n="ajaraTitle">აჭარა</h1>
       <p data-i18n="ajaraSubtitle">ზღვა, მთები და უნიკალური კულტურა</p>

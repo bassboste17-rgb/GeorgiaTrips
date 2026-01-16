@@ -4,7 +4,6 @@ body {
   font-family: "BPG Glaho", sans-serif;
   background-color: #0f0f0f;
   color: #fff;
-  /* Increased padding-top to prevent navbar from covering content */
   padding-top: 80px;
 }
 
@@ -70,16 +69,194 @@ footer {
   right: 0;
   z-index: 100;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  /* Set explicit height for consistent spacing */
   height: 70px;
   box-sizing: border-box;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+/* Logo link wrapper */
+.logo-link {
   text-decoration: none;
+  display: inline-block;
+}
+
+/* New animated logo styles */
+.logo-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
+}
+
+.logo-svg {
+  width: 250px; /* Increased logo SVG width */
+  height: 90px; /* Increased logo SVG height */
+}
+
+/* Globe rotation */
+.globe {
+  transform-origin: 55px 60px; /* Updated globe transform-origin for new position */
+  animation: globePulse 3s ease-in-out infinite;
+}
+
+@keyframes globePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Airplane orbit animation */
+.airplane-orbit {
+  transform-origin: 55px 60px; /* Updated airplane orbit transform-origin */
+  animation: orbit 6s linear infinite;
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(48px) rotate(90deg); /* Updated translateX */
+  }
+  100% {
+    transform: rotate(360deg) translateX(48px) rotate(90deg); /* Updated translateX */
+  }
+}
+
+/* Location pin bounce */
+.location-pin {
+  animation: pinBounce 2s ease-in-out infinite;
+}
+
+@keyframes pinBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Car driving animation */
+.car {
+  animation: carDriveNew 4s ease-in-out infinite;
+}
+
+@keyframes carDriveNew {
+  0% {
+    transform: translate(105px, 85px); /* Updated car animation positions for larger layout */
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(210px, 85px); /* Updated car animation positions for larger layout */
+    opacity: 0;
+  }
+}
+
+/* Road dashes moving */
+.road-dashes {
+  animation: dashMove 1s linear infinite;
+}
+
+@keyframes dashMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-15px);
+  }
+}
+
+/* Cloud floating animations */
+.cloud1 {
+  animation: cloudFloat1 8s ease-in-out infinite;
+}
+
+.cloud2 {
+  animation: cloudFloat2 10s ease-in-out infinite;
+}
+
+@keyframes cloudFloat1 {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+
+@keyframes cloudFloat2 {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+/* Text animations */
+.logo-text-georgia {
+  animation: textShine 3s ease-in-out infinite;
+}
+
+.logo-text-trips {
+  animation: tripsGlow 2s ease-in-out infinite;
+}
+
+@keyframes textShine {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes tripsGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px #e5383b);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px #e5383b) drop-shadow(0 0 15px rgba(229, 56, 59, 0.5));
+  }
+}
+
+/* Hover effects */
+.logo-link:hover .airplane-orbit {
+  animation: orbit 3s linear infinite;
+}
+
+.logo-link:hover .car {
+  animation: carDriveNew 2s ease-in-out infinite;
+}
+
+.logo-link:hover .logo-text-trips {
+  filter: drop-shadow(0 0 10px #e5383b) drop-shadow(0 0 20px rgba(229, 56, 59, 0.7));
+}
+
+.logo-link:hover .globe {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 5px rgba(229, 56, 59, 0.5));
+}
+
+/* Remove old logo styles that conflict */
+.logo {
+  display: none;
 }
 
 .navbar-right {
@@ -236,7 +413,6 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  /* Adjusted body padding for mobile navbar height */
   body {
     padding-top: 70px;
   }
@@ -285,7 +461,6 @@ footer {
     display: block;
   }
 
-  /* Notification bell mobile */
   .notification-bell {
     justify-content: center;
     padding: 0.5rem 0;
@@ -301,10 +476,19 @@ footer {
   .bell-icon {
     font-size: 1.5rem;
   }
+
+  /* Mobile logo adjustments */
+  .car-animation {
+    height: 12px;
+  }
+
+  .car-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 @media (max-width: 480px) {
-  /* Further adjusted for small mobile screens */
   body {
     padding-top: 65px;
   }
@@ -321,6 +505,12 @@ footer {
   .languages button {
     padding: 0.4rem 0.8rem;
     font-size: 0.7rem;
+  }
+
+  /* Small mobile car adjustments */
+  .car-icon {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -556,7 +746,7 @@ body {
 
 .footer-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: around;
   flex-wrap: wrap;
 }
 
