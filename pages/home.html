@@ -36,11 +36,55 @@
       padding: 12rem 2rem 8rem;
       min-height: 100vh;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.055) 0%, rgba(0, 0, 0, 0.082) 50%),
-        url('addhome/1.jpeg'); /* Hero background image placeholder - UPDATED */
-      background-size: cover;
-      background-position: center;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%) scale(1.2);
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.45) 50%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Mobile video adjustments */
+    @media (max-width: 768px) {
+      .hero-video {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-width: unset;
+        min-height: unset;
+        transform: none;
+        object-fit: cover;
+        object-position: center center;
+      }
+      
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
+      }
     }
 
     .hero::before {
@@ -305,17 +349,17 @@
     }
 
     .vehicle-card {
-      background: linear-gradient(145deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 30, 30, 0.9) 100%);
-      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+      border-radius: 20px;
       padding: 2rem;
       text-align: center;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       position: relative;
       overflow: hidden;
-      box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      /* გაუმჯობესებული ჩრდილი */
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); 
     }
 
     .vehicle-card::before {
@@ -325,10 +369,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, rgba(229, 56, 59, 0.08) 0%, transparent 50%);
+      background: linear-gradient(135deg, rgba(229, 56, 59, 0.1) 0%, transparent 100%);
       opacity: 0;
       transition: opacity 0.4s ease;
-      pointer-events: none;
     }
 
     .vehicle-card:hover::before {
@@ -336,12 +379,10 @@
     }
 
     .vehicle-card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 
-        0 25px 60px rgba(0, 0, 0, 0.5),
-        0 0 30px rgba(229, 56, 59, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      border-color: rgba(229, 56, 59, 0.4);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(229, 56, 59, 0.2);
+      /* გლუვი საზღვრის ეფექტი hover-ზე */
+      border-color: rgba(229, 56, 59, 0.5); 
     }
 
     .vehicle-card a {
@@ -350,27 +391,22 @@
     }
 
     .vehicle-icon {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 1.2rem;
-      background: linear-gradient(145deg, #e5383b 0%, #b82e31 100%);
-      border-radius: 18px;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #fff;
-      box-shadow: 
-        0 8px 25px rgba(229, 56, 59, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.3);
+      transition: transform 0.4s ease;
     }
 
     .vehicle-card:hover .vehicle-icon {
-      transform: scale(1.1);
-      box-shadow: 
-        0 12px 30px rgba(229, 56, 59, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transform: scale(1.1) rotate(5deg);
     }
 
     .vehicle-name {
@@ -382,27 +418,25 @@
 
     .vehicle-image {
       margin-top: 1.5rem;
-      border-radius: 16px;
-      overflow: visible;
-      position: relative;
-      padding: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
+    /* START: Vehicle Image Size Modification */
     .vehicle-image img {
-      width: auto;
-      max-width: 220px;
+      width: auto; /* Allow image to shrink based on max-width */
+      max-width: 240px; /* NEW: Set a maximum width for the image */
       height: auto;
-      display: block;
-      margin: 0 auto;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
-      position: relative;
-      z-index: 1;
+      display: block; /* Centers the image */
+      margin: 0 auto; /* Centers the image */
+      transition: transform 0.4s ease, filter 0.4s ease; /* დავამატე filter-ის transition */
+      filter: brightness(0.95);
     }
+    /* END: Vehicle Image Size Modification */
 
     .vehicle-card:hover .vehicle-image img {
-      transform: scale(1.08) translateY(-5px);
-      filter: drop-shadow(0 20px 30px rgba(229, 56, 59, 0.25));
+      transform: scale(1.05);
+      filter: brightness(1.05);
     }
 
     /* Latest Post Section - New Design */
@@ -1034,6 +1068,13 @@
   <div id="navbar"></div>
 
   <section class="hero">
+    <!-- Video Background -->
+    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+      <source src="addhome/herov.mov" type="video/mp4">
+      <source src="addhome/herov.mov" type="video/quicktime">
+    </video>
+    <div class="hero-overlay"></div>
+    
     <div class="hero-content">
       <div class="hero-badge" data-i18n="heroBadge">
         <i class="fas fa-car"></i> საუკეთესო ტრანსპორტირება
