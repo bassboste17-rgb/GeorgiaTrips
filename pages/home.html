@@ -20,7 +20,7 @@
     body {
       margin: 0;
       font-family: "BPG Glaho", sans-serif;
-      background: #0d0d0d; /* მუქი ფონი body-სთვის */
+      background: #0d0d0d;
       color: #fff;
       width: 100%;
       min-height: 100vh;
@@ -41,51 +41,37 @@
     }
 
     .hero-video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%) scale(1.2);
-      object-fit: cover;
-      z-index: 0;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 110%;
+  min-height: 110%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  z-index: 0;
+}
 
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.45) 50%);
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Mobile video adjustments */
-    @media (max-width: 768px) {
-      .hero-video {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        min-width: unset;
-        min-height: unset;
-        transform: none;
-        object-fit: cover;
-        object-position: center center;
-      }
-      
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
-    }
+/* Mobile video adjustments */
+@media (max-width: 768px) {
+  .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: none;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
+  }
+}
 
     .hero::before {
       content: '';
@@ -242,7 +228,6 @@
     .section {
       padding: 6rem 0;
       position: relative;
-      /* Default background for non-specific sections */
       background: #0d0d0d;
     }
 
@@ -253,21 +238,21 @@
       background: 
                    linear-gradient(135deg, rgba(0, 0, 0, 0.055) 0%, rgba(0, 0, 0, 0.082) 50%),
 
-        url('addhome/2.jpg'); /* Tbilisi Old Town placeholder - UPDATED */
+        url('addhome/2.jpg');
       background-size: cover;
       background-position: center;
-      background-attachment: scroll; /* Scroll with the content */
+      background-attachment: scroll;
     }
 
     /* Latest Post Section */
     .latest-post-section {
-      padding: 6rem 2rem; /* Adjusted padding as it's the inner section */
+      padding: 6rem 2rem;
     }
     
-    .section:nth-of-type(3) { /* Targeting the section containing latest-post-section */
+    .section:nth-of-type(3) {
       background: 
                  linear-gradient(135deg, rgba(0, 0, 0, 0.055) 0%, rgba(0, 0, 0, 0.082) 50%),
-        url("addhome/3.jpg"); /* Caucasus Mountains placeholder - UPDATED */
+        url("addhome/3.jpg");
       background-size: cover;
       background-position: center;
       background-attachment: scroll;
@@ -275,25 +260,25 @@
 
     /* Map Section */
     .map-section {
-      padding: 6rem 2rem; /* Adjusted padding as it's the inner section */
+      padding: 6rem 2rem;
     }
     
-    .section:nth-of-type(4) { /* Targeting the section containing map-section */
+    .section:nth-of-type(4) {
       background: 
                  linear-gradient(135deg, rgba(0, 0, 0, 0.055) 0%, rgba(0, 0, 0, 0.082) 50%),
 
-        url('addhome/4.jpg'); /* Svaneti Towers placeholder - UPDATED */
+        url('addhome/4.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: scroll;
     }
 
     /* Weather Section */
-    .section:nth-of-type(5) { /* Targeting the section containing weather-section */
+    .section:nth-of-type(5) {
       background: 
                 linear-gradient(135deg, rgba(0, 0, 0, 0.055) 0%, rgba(0, 0, 0, 0.082) 50%),
 
-        url('addhome/5.jpeg'); /* Georgian Nature placeholder - UPDATED */
+        url('addhome/5.jpeg');
       background-size: cover;
       background-position: center;
       background-attachment: scroll;
@@ -358,7 +343,6 @@
       backdrop-filter: blur(10px);
       position: relative;
       overflow: hidden;
-      /* გაუმჯობესებული ჩრდილი */
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); 
     }
 
@@ -381,7 +365,6 @@
     .vehicle-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 20px 50px rgba(229, 56, 59, 0.2);
-      /* გლუვი საზღვრის ეფექტი hover-ზე */
       border-color: rgba(229, 56, 59, 0.5); 
     }
 
@@ -424,12 +407,12 @@
 
     /* START: Vehicle Image Size Modification */
     .vehicle-image img {
-      width: auto; /* Allow image to shrink based on max-width */
-      max-width: 240px; /* NEW: Set a maximum width for the image */
+      width: auto;
+      max-width: 240px;
       height: auto;
-      display: block; /* Centers the image */
-      margin: 0 auto; /* Centers the image */
-      transition: transform 0.4s ease, filter 0.4s ease; /* დავამატე filter-ის transition */
+      display: block;
+      margin: 0 auto;
+      transition: transform 0.4s ease, filter 0.4s ease;
       filter: brightness(0.95);
     }
     /* END: Vehicle Image Size Modification */
@@ -441,7 +424,6 @@
 
     /* Latest Post Section - New Design */
     .latest-post-section {
-      /* background and backdrop-filter moved to its parent section */
       border-radius: 0;
       padding: 6rem 2rem;
       border: none;
@@ -456,7 +438,7 @@
       margin: 0 auto;
       padding: 3.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px); /* Added blur back to the post card */
+      backdrop-filter: blur(15px);
     }
 
     .latest-post-header {
@@ -502,13 +484,13 @@
       max-height: 500px;
       object-fit: contain;
       cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease; /* დავამატე transition */
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
       display: block;
     }
 
     .latest-post-image img:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 20px rgba(229, 56, 59, 0.8); /* მცირე ჩრდილის ეფექტი hover-ზე */
+      box-shadow: 0 0 20px rgba(229, 56, 59, 0.8);
     }
 
     .latest-post-content {
@@ -582,7 +564,6 @@
 
     /* Map Section - Modern Design */
     .map-section {
-      /* background and backdrop-filter moved to its parent section */
       border-radius: 0;
       padding: 6rem 2rem;
       border: none;
@@ -599,7 +580,7 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       border: 2px solid rgba(255, 255, 255, 0.15);
       background: rgba(0, 0, 0, 0.548);
-      backdrop-filter: blur(15px); /* Added blur to map container */
+      backdrop-filter: blur(15px);
     }
 
     .svg-map {
@@ -644,7 +625,6 @@
       border-radius: 30px;
       padding: 4rem 2rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      /* background and backdrop-filter for the inner container */
     }
 
     .weather-controls {
@@ -793,18 +773,15 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
-      /* ახალი CSS: გლუვი გარდამავალი ეფექტი */
-      opacity: 0; /* საწყისი დამალული მდგომარეობა */
-      transition: opacity 0.5s ease-in-out; /* 500ms-იანი გაფერმკრთალება */
-      /* ფოტოებს შორის საზღვრის შესანიღბი ეფექტი */
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
       border: 5px solid rgba(255, 255, 255, 0.1); 
-      /* გლუვი საზღვარი */
-      outline: 5px solid rgba(229, 56, 59, 0.3); /* მცირე წითელი "ბზინვარება" */
+      outline: 5px solid rgba(229, 56, 59, 0.3);
       outline-offset: -5px;
     }
 
     .modal-content img.loaded {
-      opacity: 1; /* სრული გამჭვირვალობა ჩატვირთვის შემდეგ */
+      opacity: 1;
     }
 
     .modal-close {
@@ -896,21 +873,32 @@
     }
 
     @media (max-width: 768px) {
-      /* მობილურზე background ფოტოების შეცვლა horizontal ვერსიებით */
+      /* მობილურზე ვიდეო რჩება აქტიური */
       .hero {
         padding: 10rem 1.5rem 6rem;
         min-height: 80vh;
-        background: 
-          linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
-          url('addhome/1horizontal.jpg');
-        background-size: cover;
-        background-position: center;
+      }
+
+      /* ვიდეო მობილურზე */
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
       }
 
       #vehicles {
         background:
           linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
           url("addhome/2horizontal.jpg");
+        background-size: cover;
         background-position: center;
       }
 
@@ -934,6 +922,7 @@
         background: 
           linear-gradient(135deg, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.363) 70%),
           url('addhome/5.jpeg');
+        background-size: cover;
         background-position: center;
       }
 
@@ -1093,7 +1082,7 @@
       </div>
       <h1 data-i18n="homeWelcome">მოგესალმებით GeorgiaTrips-ში</h1>
       <h2 data-i18n="homeSubtitle">ავტომობილის მომსახურება მთელ საქართველოში</h2>
-      <p data-i18n="homeDescription">იქირავე ავტომობილი მარტივად და სწრაფად. პროფესიონალური მომსახურება, კომფორტული მგზავრობა და საუკეთესი ფასები.</p>
+      <p data-i18n="homeDescription">იქირავე ავტომობილი მარტივად და სწრაფად. პროფესიონალური მომსახურება, კომფორტული მგზავრობა და საუკეთესო ფასები.</p>
       <div class="hero-buttons">
         <a href="booking.html" class="btn-primary" data-i18n="homeBookNow">
           <i class="fas fa-calendar-check"></i>
@@ -1710,18 +1699,14 @@
     function showImageModal() {
         if (currentImages.length === 0) return;
 
-        // 1. დავიწყოთ სურათის დამალვით (opacity: 0)
         modalImage.classList.remove('loaded');
         
-        // 2. ახალი სურათის წყაროს დაყენება (ეს გამოიწვევს მის ჩატვირთვას)
         modalImage.src = currentImages[currentImageIndex];
 
-        // 3. როდესაც სურათი სრულად ჩაიტვირთება, გამოვაჩინოთ ის გლუვი ეფექტით
         modalImage.onload = () => {
              modalImage.classList.add('loaded');
         };
 
-        // თუ სურათი ქეშიდან იტვირთება, onload შეიძლება არ გამოიძახოს, ამიტომ დავამატოთ fallback
         if (modalImage.complete) {
             modalImage.classList.add('loaded');
         }
@@ -1734,7 +1719,7 @@
     function closeModal() {
         imageModal.style.display = 'none';
         document.body.style.overflow = '';
-        modalImage.classList.remove('loaded'); // გადატვირთვისთვის
+        modalImage.classList.remove('loaded');
     }
 
     function showPrevImage() {
@@ -1782,18 +1767,11 @@
         setupModalEvents();
         setupWeatherEvents();
         
-        // *** ენის შეცვლის შემდეგ რუკის ხელახლა ინიციალიზაციის პრობლემის მოგვარება ***
-        // ამოვიღე window.location.reload(); და დავამატე რუკის ინიციალიზაციის გამოძახება
         window.addEventListener('languageChanged', () => {
-          // ენის ცვლილების შემდეგ, საჭიროა რუკის ხელახალი ინიციალიზაცია SVG ელემენტზე
-          // რადგან map.js-ის ლოგიკა მასზეა დამოკიდებული.
-          // ვივარაუდოთ, რომ map.js-ში initializeMap ფუნქცია არის გლობალური (window.initializeMap)
           if (window.initializeMap && typeof window.initializeMap === 'function') {
             window.initializeMap();
           }
-          // ასევე, განაახლეთ ამინდის მონაცემები ენის ცვლილების შემდეგ
           fetchWeatherData();
-          // და პოსტის განახლება
           loadLatestPost();
         });
         
@@ -1805,7 +1783,6 @@
 
     // Global functions
     window.openImageModal = openImageModal;
-    // რუკის ხელახალი ინიციალიზაციის ფუნქცია უნდა იყოს გლობალური map.js-ში
     
   </script>
   
