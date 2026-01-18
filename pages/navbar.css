@@ -478,6 +478,15 @@ footer {
   }
 
   /* Mobile logo adjustments */
+  .logo-svg {
+    width: 160px;
+    height: 60px;
+  }
+
+  .logo-container {
+    max-width: 160px;
+  }
+
   .car-animation {
     height: 12px;
   }
@@ -500,6 +509,16 @@ footer {
 
   .logo {
     font-size: 1.3rem;
+  }
+
+  /* Small mobile logo adjustments */
+  .logo-svg {
+    width: 130px;
+    height: 50px;
+  }
+
+  .logo-container {
+    max-width: 130px;
   }
 
   .languages button {
