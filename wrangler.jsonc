@@ -1,8 +1,0 @@
-{
-  "name": "georgiatrips",
-  "compatibility_date": "2026-01-20",
-  "main": "src/index.js",
-  "assets": {
-    "directory": "./pages" 
-  }
-}
