@@ -2,7 +2,7 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Georgia Trips - home</title>
   <link rel="stylesheet" href="navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,6 +15,7 @@
     /* Base Styles */
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -26,6 +27,8 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Hero Section - New Modern Design */
@@ -41,37 +44,37 @@
     }
 
     .hero-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 110%;
-  min-height: 110%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  z-index: 0;
-}
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 110%;
+      min-height: 110%;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+      z-index: 0;
+    }
 
-/* Mobile video adjustments */
-@media (max-width: 768px) {
-  .hero-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: none;
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-  
-  .hero-overlay {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-  }
-}
+    /* Mobile video adjustments */
+    @media (max-width: 768px) {
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none;
+        min-width: 100%;
+        min-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+      
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
+      }
+    }
 
     .hero::before {
       content: '';
@@ -171,6 +174,8 @@
       box-shadow: 0 10px 30px rgba(229, 56, 59, 0.4);
       position: relative;
       overflow: hidden;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     .btn-primary::before {
@@ -207,6 +212,7 @@
       gap: 0.8rem;
       transition: all 0.3s ease;
       border: 2px solid rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
 
@@ -334,6 +340,7 @@
       text-align: center;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       border: 1px solid rgba(229, 56, 59, 0.15);
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       position: relative;
       overflow: hidden;
@@ -341,6 +348,8 @@
                   0 5px 20px rgba(0, 0, 0, 0.3),
                   inset 0 1px 0 rgba(255, 255, 255, 0.08),
                   inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     .vehicle-card::before {
@@ -451,6 +460,7 @@
       padding: 4rem 2rem;
       border: none;
       background: transparent;
+      -webkit-backdrop-filter: none;
       backdrop-filter: none;
       min-height: auto;
       height: auto;
@@ -469,6 +479,7 @@
       margin: 0 auto;
       padding: 3.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(15px);
       backdrop-filter: blur(15px);
     }
 
@@ -599,6 +610,7 @@
       padding: 4rem 2rem;
       border: none;
       background: transparent;
+      -webkit-backdrop-filter: none;
       backdrop-filter: none;
       min-height: auto;
       position: relative;
@@ -618,6 +630,7 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       border: 2px solid rgba(255, 255, 255, 0.15);
       background: rgba(0, 0, 0, 0.548);
+      -webkit-backdrop-filter: blur(15px);
       backdrop-filter: blur(15px);
     }
 
@@ -659,6 +672,7 @@
     /* Weather Section - Modern Design */
     .weather-section {
       background: rgba(0, 0, 0, 0.459);
+      -webkit-backdrop-filter: blur(50px);
       backdrop-filter: blur(50px);
       border-radius: 30px;
       padding: 4rem 2rem;
@@ -691,7 +705,10 @@
       outline: none;
       transition: all 0.3s ease;
       cursor: pointer;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .weather-controls select option {
@@ -722,6 +739,7 @@
       padding: 1rem;
       scrollbar-width: thin;
       scrollbar-color: #e5383b rgba(255, 255, 255, 0.1);
+      -webkit-overflow-scrolling: touch;
     }
     
     .weather-container::-webkit-scrollbar {
@@ -750,7 +768,10 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.15);
       transition: all 0.3s ease;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     .weather-card:hover {
@@ -826,6 +847,7 @@
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
 
@@ -1055,6 +1077,8 @@
       .vehicle-carousel-track {
         display: flex;
         transition: transform 0.5s ease-in-out;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
       }
 
       .vehicle-carousel-slide {
@@ -1065,8 +1089,8 @@
       .vehicle-carousel-slide .vehicle-card {
         margin: 0;
         background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-        backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
         box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 
                     0 5px 20px rgba(0, 0, 0, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.08),
@@ -1097,6 +1121,8 @@
         color: white;
         width: 45px;
         height: 45px;
+        min-width: 45px;
+        min-height: 45px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -1108,9 +1134,13 @@
         pointer-events: auto;
         border: none;
         outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
       }
 
-      .carousel-arrow:hover {
+      .carousel-arrow:hover,
+      .carousel-arrow:active {
         background: rgba(229, 56, 59, 1);
         transform: scale(1.1);
       }
@@ -1120,32 +1150,44 @@
         pointer-events: none;
       }
 
-      /* Carousel Dots */
+      /* Carousel Dots - Safari optimized */
       .carousel-dots {
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
         margin-top: 1.5rem;
+        padding: 10px 0;
       }
 
       .carousel-dot {
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
+        min-width: 14px;
+        min-height: 14px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.3);
         cursor: pointer;
         transition: all 0.3s ease;
-        border: none;
+        border: 2px solid transparent;
         outline: none;
+        padding: 0;
+        -webkit-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
       }
 
       .carousel-dot.active {
-        background: #e5383b;
-        transform: scale(1.2);
+        background-color: #e5383b;
+        border-color: #e5383b;
+        transform: scale(1.3);
+        box-shadow: 0 0 10px rgba(229, 56, 59, 0.6);
       }
 
-      .carousel-dot:hover {
-        background: rgba(229, 56, 59, 0.7);
+      .carousel-dot:hover,
+      .carousel-dot:active {
+        background-color: rgba(229, 56, 59, 0.7);
+        border-color: rgba(229, 56, 59, 0.7);
       }
 
       .latest-post-section {
@@ -1247,6 +1289,7 @@
     /* Smooth Scrolling */
     html {
       scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Selection Color */
@@ -1271,6 +1314,29 @@
 
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(135deg, #ff4447, #e5383b);
+    }
+
+    /* Safari-specific fixes */
+    @supports (-webkit-touch-callout: none) {
+      /* iOS Safari specific */
+      .carousel-dot {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        min-height: 16px;
+      }
+      
+      .carousel-dot.active {
+        transform: scale(1.25);
+      }
+      
+      .btn-primary,
+      .btn-secondary,
+      .carousel-arrow,
+      .carousel-dot {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
     }
   </style>
 </head>
@@ -1428,10 +1494,10 @@
           
           <!-- Navigation Arrows -->
           <div class="carousel-nav">
-            <button class="carousel-arrow carousel-prev hidden" id="carouselPrev">
+            <button class="carousel-arrow carousel-prev hidden" id="carouselPrev" type="button" aria-label="Previous slide">
               <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="carousel-arrow carousel-next" id="carouselNext">
+            <button class="carousel-arrow carousel-next" id="carouselNext" type="button" aria-label="Next slide">
               <i class="fas fa-chevron-right"></i>
             </button>
           </div>
@@ -1439,10 +1505,10 @@
         
         <!-- Dots -->
         <div class="carousel-dots" id="carouselDots">
-          <button class="carousel-dot active" data-index="0"></button>
-          <button class="carousel-dot" data-index="1"></button>
-          <button class="carousel-dot" data-index="2"></button>
-          <button class="carousel-dot" data-index="3"></button>
+          <button class="carousel-dot active" data-index="0" type="button" aria-label="Go to slide 1"></button>
+          <button class="carousel-dot" data-index="1" type="button" aria-label="Go to slide 2"></button>
+          <button class="carousel-dot" data-index="2" type="button" aria-label="Go to slide 3"></button>
+          <button class="carousel-dot" data-index="3" type="button" aria-label="Go to slide 4"></button>
         </div>
       </div>
     </div>
@@ -1546,28 +1612,33 @@
       let autoSlideInterval;
       
       function updateCarousel() {
-        // Update track position
-        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Update track position with hardware acceleration for Safari
+        if (carouselTrack) {
+          carouselTrack.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+          carouselTrack.style.webkitTransform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+        }
         
         // Update dots
         dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentSlide);
+          if (index === currentSlide) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
         });
         
         // Update arrows visibility
-        // სედანი (0) - მხოლოდ მარჯვენა ისარი
-        // ჯიპი (1) - ორივე ისარი
-        // მინივენი (2) - ორივე ისარი
-        // ავტობუსი (3) - მხოლოდ მარცხენა ისარი
-        if (currentSlide === 0) {
-          prevBtn.classList.add('hidden');
-          nextBtn.classList.remove('hidden');
-        } else if (currentSlide === totalSlides - 1) {
-          prevBtn.classList.remove('hidden');
-          nextBtn.classList.add('hidden');
-        } else {
-          prevBtn.classList.remove('hidden');
-          nextBtn.classList.remove('hidden');
+        if (prevBtn && nextBtn) {
+          if (currentSlide === 0) {
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+          } else if (currentSlide === totalSlides - 1) {
+            prevBtn.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+          } else {
+            prevBtn.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+          }
         }
       }
       
@@ -1591,7 +1662,7 @@
         autoSlideInterval = setInterval(() => {
           currentSlide = (currentSlide + 1) % totalSlides;
           updateCarousel();
-        }, 10000); // 10 წამი
+        }, 10000);
       }
       
       function resetAutoSlide() {
@@ -1601,37 +1672,55 @@
       
       // Event Listeners
       if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
           nextSlide();
           resetAutoSlide();
-        });
+        }, { passive: false });
       }
       
       if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
           prevSlide();
           resetAutoSlide();
-        });
+        }, { passive: false });
       }
       
       dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
+        dot.addEventListener('click', function(e) {
+          e.preventDefault();
           goToSlide(index);
-        });
+        }, { passive: false });
+        
+        // Touch support for dots
+        dot.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          goToSlide(index);
+        }, { passive: false });
       });
       
       // Touch/Swipe support
       let touchStartX = 0;
       let touchEndX = 0;
+      let isSwiping = false;
       
       if (carouselTrack) {
-        carouselTrack.addEventListener('touchstart', (e) => {
+        carouselTrack.addEventListener('touchstart', function(e) {
           touchStartX = e.changedTouches[0].screenX;
+          isSwiping = true;
         }, { passive: true });
         
-        carouselTrack.addEventListener('touchend', (e) => {
+        carouselTrack.addEventListener('touchmove', function(e) {
+          if (!isSwiping) return;
+          touchEndX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        carouselTrack.addEventListener('touchend', function(e) {
+          if (!isSwiping) return;
           touchEndX = e.changedTouches[0].screenX;
           handleSwipe();
+          isSwiping = false;
         }, { passive: true });
       }
       
@@ -1640,13 +1729,11 @@
         const diff = touchStartX - touchEndX;
         
         if (diff > swipeThreshold) {
-          // Swipe left - next slide
           if (currentSlide < totalSlides - 1) {
             nextSlide();
             resetAutoSlide();
           }
         } else if (diff < -swipeThreshold) {
-          // Swipe right - prev slide
           if (currentSlide > 0) {
             prevSlide();
             resetAutoSlide();
@@ -1800,9 +1887,9 @@
         }
       } else {
         const daily = data.daily;
-        const limit = forecastType === '30day' ? 16 : 7;
+        const limitDays = forecastType === '30day' ? 16 : 7;
         
-        for (let i = 0; i < Math.min(limit, daily.time.length); i++) {
+        for (let i = 0; i < Math.min(limitDays, daily.time.length); i++) {
           const forecast = {
             date: daily.time[i],
             temp_max: daily.temperature_2m_max[i],
@@ -2204,24 +2291,18 @@
 
     // Global functions
     window.openImageModal = openImageModal;
-        // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
-function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
-    if (window.location.pathname.endsWith('.html')) {
-        // შექმენით ახალი URL .html-ის გარეშე
-        const newPath = window.location.pathname.replace(/\.html$/, '');
-        const newURL = newPath + window.location.search + window.location.hash;
-        
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
-        window.history.replaceState({}, '', newURL);
+    
+    // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+    function removeHtmlExtensionFromURL() {
+        if (window.location.pathname.endsWith('.html')) {
+            const newPath = window.location.pathname.replace(/\.html$/, '');
+            const newURL = newPath + window.location.search + window.location.hash;
+            window.history.replaceState({}, '', newURL);
+        }
     }
-}
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
-window.addEventListener('load', removeHtmlExtensionFromURL);
-
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
-window.addEventListener('popstate', removeHtmlExtensionFromURL);
+    window.addEventListener('load', removeHtmlExtensionFromURL);
+    window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
   
   <script type="module" src="navbar.js"></script>
