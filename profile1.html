@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgia Trips - profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        :root {
+            --primary-color: #e5383b;
+            --secondary-color: #0f0f0f;
+            --text-color: #ccc;
+            --light-bg: #1f1f1f;
+            --dark-bg: #141414;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+            --card-background: rgba(26, 26, 26, 0.85);
+            --background-color: #0f0f0f;
+            --border-color: #333;
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Completely new clean gradient background without stars */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 25%, #2c5364 50%, #203a43 75%, #0f2027 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: var(--text-color);
+            line-height: 1.5;
+            padding-top: 70px;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Add geometric pattern overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.02) 35px, rgba(255,255,255,.02) 70px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-header {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-name {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .profile-email {
+            font-size: 1.1em;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background-color: #d42e2b;
+            transform: translateY(-2px);
+        }
+
+        .posts-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .post-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .post-card-content {
+            padding: 15px;
+        }
+
+        .post-card-text {
+            font-size: 0.95em;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .post-card-stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .post-card-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            border: 5px solid #333;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        .loading-text {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-color);
+            font-size: 1.2em;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1003;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+            transition: visibility 0s, opacity 0.5s linear;
+            opacity: 0;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-name {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text" data-i18n="userProfileLoading">იტვირთება...</div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="container">
+        <button class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i>
+            <span data-i18n="userProfileBack">უკან</span>
+        </button>
+
+        <div class="profile-header" id="profile-header">
+            <!-- Profile info will be loaded here -->
+        </div>
+
+        <div class="posts-section">
+            <h2 class="section-title">
+                <i class="fas fa-th-large"></i>
+                <span data-i18n="userProfilePosts">პოსტები</span>
+            </h2>
+            <div class="posts-grid" id="posts-grid">
+                <!-- Posts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <!-- Translations -->
+    <script src="translations.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { 
+            getFirestore,
+            collection,
+            query,
+            where,
+            doc,
+            getDoc,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
+            authDomain: "rentime-e201e.firebaseapp.com",
+            projectId: "rentime-e201e",
+            storageBucket: "rentime-e201e.firebasestorage.app",
+            messagingSenderId: "420054668757",
+            appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
+            measurementId: "G-DGWLG9P1ZB"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const profileHeader = document.getElementById('profile-header');
+        const postsGrid = document.getElementById('posts-grid');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const toast = document.getElementById('toast');
+
+        let userId = null;
+        let currentLang = localStorage.getItem('language') || 'ka';
+
+        window.goBack = goBack;
+        window.goToPost = goToPost;
+
+        // Translation function
+        function t(key) {
+            if (typeof translations !== 'undefined' && translations[currentLang] && translations[currentLang][key]) {
+                return translations[currentLang][key];
+            }
+            return key;
+        }
+
+        // Apply translations to elements with data-i18n attribute
+        function applyTranslations() {
+            currentLang = localStorage.getItem('language') || 'ka';
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                const translation = t(key);
+                if (translation && translation !== key) {
+                    element.textContent = translation;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply translations on load
+            applyTranslations();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            userId = urlParams.get('userId');
+
+            if (!userId) {
+                showToast(t('userProfileError') || 'მომხმარებლის ID არ მოიძებნა');
+                setTimeout(() => {
+                    window.location.href = 'posts.html';
+                }, 2000);
+                return;
+            }
+
+            loadProfile();
+        });
+
+        // Listen for language changes
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'language') {
+                currentLang = e.newValue || 'ka';
+                applyTranslations();
+                loadProfile(); // Reload profile with new language
+            }
+        });
+
+        window.addEventListener('languageChanged', function() {
+            currentLang = localStorage.getItem('language') || 'ka';
+            applyTranslations();
+            loadProfile();
+        });
+
+        async function loadProfile() {
+            showLoading();
+            try {
+                // Load user data
+                const userDoc = await getDoc(doc(db, "users", userId));
+                if (!userDoc.exists()) {
+                    showToast(t('userProfileError') || 'მომხმარებელი არ მოიძებნა');
+                    setTimeout(() => {
+                        window.location.href = 'posts.html';
+                    }, 2000);
+                    return;
+                }
+
+                const userData = userDoc.data();
+
+                // Load user's posts
+                const postsQuery = query(
+                    collection(db, "posts"),
+                    where("authorId", "==", userId)
+                );
+                const postsSnapshot = await getDocs(postsQuery);
+
+                const postsCount = postsSnapshot.size;
+                let totalLikes = 0;
+                let totalComments = 0;
+
+                const postsArray = [];
+                postsSnapshot.forEach((doc) => {
+                    const postData = doc.data();
+                    totalLikes += postData.likesCount || 0;
+                    totalComments += postData.commentsCount || 0;
+                    postsArray.push({ id: doc.id, data: postData });
+                });
+
+                // Sort posts by createdAt in descending order (newest first)
+                postsArray.sort((a, b) => {
+                    const aTime = a.data.createdAt ? a.data.createdAt.toMillis() : 0;
+                    const bTime = b.data.createdAt ? b.data.createdAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
+
+                const unknownUser = t('userProfileUnknown') || 'უცნობი მომხმარებელი';
+                const postLabel = t('userProfilePostsCount') || 'პოსტი';
+                const likesLabel = t('userProfileLikesCount') || 'მოწონება';
+                const commentsLabel = t('userProfileCommentsCount') || 'კომენტარი';
+
+                profileHeader.innerHTML = `
+                    <img src="${userData.avatar || 'https://via.placeholder.com/120'}" alt="Profile" class="profile-avatar">
+                    <div class="profile-info">
+                        <div class="profile-name">${userData.name || unknownUser}</div>
+                        <div class="profile-email">${userData.email || ''}</div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">${postsCount}</div>
+                                <div class="stat-label">${postLabel}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${totalLikes}</div>
+                                <div class="stat-label">${likesLabel}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${totalComments}</div>
+                                <div class="stat-label">${commentsLabel}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const noPostsText = t('userProfileNoPosts') || 'პოსტები არ მოიძებნა';
+                if (postsArray.length === 0) {
+                    postsGrid.innerHTML = `<div class="no-posts"><p>${noPostsText}</p></div>`;
+                } else {
+                    postsGrid.innerHTML = '';
+                    postsArray.forEach((post) => {
+                        const postCard = createPostCard(post.data, post.id);
+                        postsGrid.appendChild(postCard);
+                    });
+                }
+
+                hideLoading();
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                showToast(t('userProfileError') || 'პროფილის ჩატვირთვა ვერ მოხერხდა');
+                hideLoading();
+            }
+        }
+
+        function createPostCard(postData, postId) {
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+            postCard.onclick = () => goToPost(postId);
+
+            const imageUrl = postData.images && postData.images.length > 0 
+                ? postData.images[0] 
+                : 'https://via.placeholder.com/300x200?text=No+Image';
+
+            const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : '';
+
+            postCard.innerHTML = `
+                <img src="${imageUrl}" alt="Post image" class="post-card-image">
+                <div class="post-card-content">
+                    <div class="post-card-text">${postData.content}</div>
+                    <div class="post-card-meta">
+                        <span>${postTime}</span>
+                        <div class="post-card-stats">
+                            <div class="post-card-stat">
+                                <i class="fas fa-heart"></i>
+                                <span>${postData.likesCount || 0}</span>
+                            </div>
+                            <div class="post-card-stat">
+                                <i class="fas fa-comment"></i>
+                                <span>${postData.commentsCount || 0}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return postCard;
+        }
+
+        function goToPost(postId) {
+            window.location.href = 'posts.html?postId=' + postId;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - date;
+            const seconds = Math.floor(diff / 1000);
+            
+            const secondsAgo = t('timeSecondsAgo') || 'წამის წინ';
+            const minutesAgo = t('timeMinutesAgo') || 'წუთის წინ';
+            const hoursAgo = t('timeHoursAgo') || 'საათის წინ';
+            const daysAgo = t('timeDaysAgo') || 'დღის წინ';
+            
+            if (seconds < 60) return seconds + ' ' + secondsAgo;
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return minutes + ' ' + minutesAgo;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return hours + ' ' + hoursAgo;
+            const days = Math.floor(hours / 24);
+            if (days < 30) return days + ' ' + daysAgo;
+            return date.toLocaleDateString(currentLang === 'ka' ? 'ka-GE' : (currentLang === 'ru' ? 'ru-RU' : 'en-US'), {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function showLoading() {
+            loadingOverlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+    <script type="module" src="navbar.js"></script>
+    <script src="/pages/js/footer.js"></script>
+</body>
+</html>
