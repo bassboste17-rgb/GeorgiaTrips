@@ -64,8 +64,8 @@
       overflow: hidden;
     }
 
-    /* Hero Video Container - iOS Safari optimized */
-    .hero-video-container {
+    /* Hero Slideshow Container - Safari optimized */
+    .hero-slideshow-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -75,34 +75,43 @@
       overflow: hidden;
     }
 
-    /* Hero Video - iOS Safari optimized with hardware acceleration */
-    .hero-video {
+    /* Hero Slideshow Images */
+    .hero-slide {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      /* iOS Safari specific */
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      -webkit-perspective: 1000;
-      perspective: 1000;
-      /* Prevent iOS controls */
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
+      will-change: opacity;
     }
 
-    /* iOS-specific video overlay to prevent controls */
-    .video-overlay {
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+
+    /* Slideshow Dark Overlay */
+    .hero-slideshow-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.55) 100%);
       z-index: 1;
       pointer-events: none;
     }
@@ -261,7 +270,7 @@
       font-size: 1.2rem;
     }
 
-    /* Mobile critical styles - iOS Safari optimized */
+    /* Mobile critical styles - Safari optimized */
     @media (max-width: 768px) {
       .hero {
         padding: 14rem 1.5rem 6rem;
@@ -269,13 +278,7 @@
         min-height: -webkit-fill-available;
       }
 
-      .hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      .hero-slide img {
         object-position: center 40%;
       }
 
@@ -1097,11 +1100,6 @@
     }
 
     @media (max-width: 768px) {
-      /* მობილურზე ვიდეო რჩება აქტიური */
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
-
       /* მობილურზე პარალაქსის ეფექტი გამორთულია - background-attachment: scroll */
       .section {
         background-attachment: scroll;
@@ -1412,10 +1410,9 @@
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
       }
-      
-      /* iOS Safari hero video fix */
-      .hero-video {
-        object-fit: cover;
+
+      /* Safari slideshow optimization */
+      .hero-slide {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
       }
@@ -1433,31 +1430,35 @@
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Video Background Container -->
-    <div class="hero-video-container">
-      <!-- Video Background - iOS Safari optimized with autoplay -->
-      <video 
-        class="hero-video" 
-        id="heroVideo"
-        autoplay 
-        muted 
-        loop 
-        playsinline 
-        webkit-playsinline
-        x5-playsinline
-        x5-video-player-type="h5"
-        x5-video-player-fullscreen="true"
-        preload="auto"
-        poster="addhome/hero-poster.jpg"
-        disablepictureinpicture
-        disableRemotePlayback
-        controlslist="nodownload nofullscreen noremoteplayback"
-      >
-        <source src="addhome/herovideo.mp4" type="video/mp4">
-        <source src="addhome/herovideo.webm" type="video/webm">
-      </video>
-      <!-- Overlay to prevent iOS video controls -->
-      <div class="video-overlay"></div>
+    <!-- Slideshow Background Container - Replaces Video for faster loading -->
+    <div class="hero-slideshow-container">
+      <!-- Slide 1 -->
+      <div class="hero-slide active">
+        <img src="addhome/hero1.jpg" alt="Georgia landscape 1" loading="eager" fetchpriority="high">
+      </div>
+      <!-- Slide 2 -->
+      <div class="hero-slide">
+        <img src="addhome/hero2.jpg" alt="Georgia landscape 2" loading="lazy">
+      </div>
+      <!-- Slide 3 -->
+      <div class="hero-slide">
+        <img src="addhome/hero3.jpg" alt="Georgia landscape 3" loading="lazy">
+      </div>
+      <!-- Slide 4 -->
+      <div class="hero-slide">
+        <img src="addhome/hero4.jpg" alt="Georgia landscape 4" loading="lazy">
+      </div>
+      <!-- Slide 5 -->
+      <div class="hero-slide">
+        <img src="addhome/hero5.jpg" alt="Georgia landscape 5" loading="lazy">
+      </div>
+      <!-- Slide 6 -->
+      <div class="hero-slide">
+        <img src="addhome/hero6.jpg" alt="Georgia landscape 6" loading="lazy">
+      </div>
+      
+      <!-- Dark Overlay -->
+      <div class="hero-slideshow-overlay"></div>
     </div>
     
     <div class="hero-content">
@@ -1713,159 +1714,66 @@
   <!-- Map loaded with defer (waits for DOM) -->
   <script defer src="map.js"></script>
 
-  <!-- iOS Safari Video Autoplay Fix - Must run immediately -->
+  <!-- Hero Slideshow Script - Lightweight and Safari optimized -->
   <script>
     (function() {
-      // Force video autoplay on all devices including iOS Safari
-      function initVideoAutoplay() {
-        const video = document.getElementById('heroVideo');
-        if (!video) return;
+      // Hero Slideshow - Fast and Safari compatible
+      const slides = document.querySelectorAll('.hero-slide');
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+      let slideshowInterval;
+      const intervalTime = 5000; // 5 seconds per slide
+
+      function showSlide(index) {
+        // Wrap around
+        if (index >= totalSlides) index = 0;
+        if (index < 0) index = totalSlides - 1;
         
-        // iOS Safari specific fixes
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        video.setAttribute('muted', '');
-        video.setAttribute('autoplay', '');
-        video.muted = true;
-        video.playsInline = true;
-        
-        // Prevent iOS video controls
-        video.removeAttribute('controls');
-        video.controls = false;
-        
-        // Disable iOS video player popup
-        video.addEventListener('webkitbeginfullscreen', function(e) {
-          e.preventDefault();
-        }, false);
-        
-        video.addEventListener('webkitpresentationmodechanged', function(e) {
-          if (video.webkitPresentationMode === 'picture-in-picture') {
-            video.webkitSetPresentationMode('inline');
+        currentSlide = index;
+
+        // Update slides
+        slides.forEach((slide, i) => {
+          if (i === currentSlide) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
           }
         });
-        
-        // Function to attempt play with multiple strategies
-        function attemptPlay() {
-          // Strategy 1: Direct play
-          const playPromise = video.play();
-          
-          if (playPromise !== undefined) {
-            playPromise.then(function() {
-              console.log('Video autoplay successful');
-            }).catch(function(error) {
-              console.log('Autoplay failed, trying fallback:', error);
-              
-              // Strategy 2: Wait for video to load more
-              if (video.readyState < 3) {
-                video.addEventListener('loadeddata', function onLoaded() {
-                  video.play().catch(function() {});
-                  video.removeEventListener('loadeddata', onLoaded);
-                }, { once: true });
-              }
-              
-              // Strategy 3: Try on user interaction
-              const tryOnInteraction = function() {
-                video.play().catch(function() {});
-                document.removeEventListener('touchstart', tryOnInteraction);
-                document.removeEventListener('click', tryOnInteraction);
-              };
-              
-              document.addEventListener('touchstart', tryOnInteraction, { once: true, passive: true });
-              document.addEventListener('click', tryOnInteraction, { once: true, passive: true });
-            });
-          }
-        }
-        
-        // Try to play immediately if video is ready
-        if (video.readyState >= 2) {
-          attemptPlay();
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function startSlideshow() {
+        slideshowInterval = setInterval(nextSlide, intervalTime);
+      }
+
+      // Handle visibility change (pause when tab not visible)
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          clearInterval(slideshowInterval);
         } else {
-          // Wait for video to be ready
-          video.addEventListener('loadedmetadata', function() {
-            setTimeout(attemptPlay, 100);
-          }, { once: true });
+          startSlideshow();
         }
-        
-        // Also listen for canplay event
-        video.addEventListener('canplay', function() {
-          if (video.paused) {
-            setTimeout(attemptPlay, 50);
-          }
-        }, { once: true });
-        
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', function() {
-          if (!document.hidden && video.paused) {
-            setTimeout(function() {
-              video.play().catch(function() {});
-            }, 300);
-          }
-        });
-        
-        // For iOS Safari - try play on page show
-        window.addEventListener('pageshow', function(event) {
-          if (video.paused) {
-            setTimeout(function() {
-              video.play().catch(function() {});
-            }, 100);
-          }
-        });
-        
-        // Handle window focus
-        window.addEventListener('focus', function() {
-          if (video.paused) {
-            setTimeout(function() {
-              video.play().catch(function() {});
-            }, 200);
-          }
-        });
-        
-        // Preload video more aggressively for iOS
-        video.load();
-        
-        // Fallback: Try play after a short delay
-        setTimeout(attemptPlay, 500);
-        
-        // One more attempt after everything loads
-        window.addEventListener('load', function() {
-          setTimeout(function() {
-            if (video.paused) {
-              video.play().catch(function() {});
-            }
-          }, 1000);
-        });
+      });
+
+      // Preload next image for smooth transitions
+      function preloadNextImage() {
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        const nextImg = slides[nextIndex].querySelector('img');
+        if (nextImg && !nextImg.complete) {
+          const img = new Image();
+          img.src = nextImg.src;
+        }
       }
-      
-      // Run immediately if DOM is ready, otherwise wait
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initVideoAutoplay);
-      } else {
-        initVideoAutoplay();
-      }
-      
-      // Additional iOS-specific fixes
-      document.addEventListener('touchstart', function() {
-        const video = document.getElementById('heroVideo');
-        if (video && video.paused) {
-          video.play().catch(function() {});
-        }
-      }, { passive: true });
-      
-      // Prevent context menu on video
-      document.addEventListener('contextmenu', function(e) {
-        if (e.target.tagName === 'VIDEO') {
-          e.preventDefault();
-          return false;
-        }
-      }, false);
-      
-      // Prevent video controls on iOS
-      document.addEventListener('touchmove', function(e) {
-        if (e.target.tagName === 'VIDEO') {
-          e.preventDefault();
-        }
-      }, { passive: false });
-      
+
+      // Preload on interval
+      setInterval(preloadNextImage, 3000);
+
+      // Initialize
+      showSlide(0);
+      startSlideshow();
     })();
   </script>
   
