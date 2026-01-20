@@ -564,185 +564,6 @@
         .name-modal-buttons button.secondary:hover {
             background: rgba(255, 255, 255, 0.1);
         }
-        
-        /* 2FA სტილები */
-        .two-factor-step {
-            display: none;
-        }
-        
-        .two-factor-step.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        .phone-input-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .country-code {
-            width: 80px;
-            padding: 15px;
-            background: var(--background-dark);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-        }
-        
-        .phone-number {
-            flex: 1;
-        }
-        
-        .verification-code {
-            text-align: center;
-            font-size: 24px;
-            letter-spacing: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .verification-inputs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .verification-input {
-            width: 40px;
-            height: 50px;
-            text-align: center;
-            font-size: 20px;
-            background: var(--background-dark);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-        }
-        
-        .verification-input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-        
-        .resend-code {
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        .resend-code a {
-            color: var(--primary-color);
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        .resend-code a:hover {
-            text-decoration: underline;
-        }
-        
-        .resend-code .countdown {
-            color: var(--text-secondary);
-        }
-        
-        .method-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .method-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--background-dark);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .method-btn.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .method-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* ტელეფონით შესვლის სტილები */
-        .login-method-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .login-method-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--background-dark);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-        
-        .login-method-btn.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .login-method-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .phone-login-section {
-            display: none;
-        }
-        
-        .phone-login-section.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        /* რეგისტრაციის მეთოდის არჩევა */
-        .register-method-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .register-method-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--background-dark);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-        
-        .register-method-btn.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .register-method-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .phone-register-section {
-            display: none;
-        }
-        
-        .phone-register-section.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
 
         /* Validation styles */
         .input-error {
@@ -755,6 +576,38 @@
             margin-top: -10px;
             margin-bottom: 15px;
             display: none;
+        }
+
+        /* Resend verification email button */
+        .resend-verification {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .resend-verification:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .verification-notice {
+            background-color: rgba(229, 56, 59, 0.2);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin: 0 25px 25px;
+            text-align: center;
+            color: var(--text-primary);
+            display: none;
+        }
+
+        .verification-notice p {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -817,6 +670,12 @@
                     <span id="loginBtnText" data-i18n="signIn">შესვლა</span>
                 </button>
             </form>
+
+            <!-- Email Verification Notice -->
+            <div class="verification-notice" id="verificationNotice">
+                <p data-i18n="emailNotVerified">თქვენი ელ. ფოსტა არ არის დადასტურებული. გთხოვთ შეამოწმოთ თქვენი ინბოქსი ან spam ფოლდერი.</p>
+                <button class="resend-verification" id="resendVerification" data-i18n="resendVerification">ხელახლა გაგზავნა</button>
+            </div>
 
             <!-- პაროლის აღდგენა -->
             <form id="forgotPasswordForm" class="auth-form" novalidate>
@@ -941,11 +800,15 @@
         const accountLinkInfo = document.getElementById("accountLinkInfo");
         const accountLinkMessage = document.getElementById("accountLinkMessage");
         const nameModal = document.getElementById("nameModal");
+        const verificationNotice = document.getElementById("verificationNotice");
         
         const loginBtnText = document.getElementById("loginBtnText");
         const nextToStep2Text = document.getElementById("nextToStep2Text");
         const registerBtnText = document.getElementById("registerBtnText");
         const resetPasswordBtnText = document.getElementById("resetPasswordBtnText");
+
+        // Store user for resending verification
+        let unverifiedUser = null;
 
         const errorMessages = {
             'auth/invalid-credential': 'authInvalidCredential',
@@ -1143,6 +1006,7 @@
             registerForm.classList.remove("active");
             forgotPasswordForm.classList.remove("active");
             messageBox.style.display = "none";
+            verificationNotice.style.display = "none";
         });
 
         showRegisterBtn.addEventListener("click", () => {
@@ -1152,6 +1016,7 @@
             loginForm.classList.remove("active");
             forgotPasswordForm.classList.remove("active");
             messageBox.style.display = "none";
+            verificationNotice.style.display = "none";
             step2.classList.remove('active');
             step1.classList.add('active');
         });
@@ -1161,12 +1026,46 @@
             loginForm.classList.remove("active");
             forgotPasswordForm.classList.add("active");
             messageBox.style.display = "none";
+            verificationNotice.style.display = "none";
         });
 
         document.getElementById("backToLogin").addEventListener("click", () => {
             forgotPasswordForm.classList.remove("active");
             loginForm.classList.add("active");
             messageBox.style.display = "none";
+        });
+
+        // Resend verification email
+        document.getElementById("resendVerification").addEventListener("click", async () => {
+            if (unverifiedUser) {
+                try {
+                    // Configure action code settings for custom redirect
+                    const actionCodeSettings = {
+                        url: window.location.origin + '/login.html',
+                        handleCodeInApp: false
+                    };
+                    
+                    await sendEmailVerification(unverifiedUser, actionCodeSettings);
+                    const successMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('verificationEmailSent') : 
+                        'დამადასტურებელი ემაილი გაიგზავნა! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა და spam ფოლდერი.';
+                    showMessage(successMsg, "success");
+                    console.log("Verification email sent successfully to:", unverifiedUser.email);
+                } catch (error) {
+                    console.error("Error sending verification email:", error);
+                    if (error.code === 'auth/too-many-requests') {
+                        const errorMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('authTooManyRequests') : 
+                            'ძალიან ბევრი მოთხოვნა. გთხოვთ სცადოთ მოგვიანებით.';
+                        showMessage(errorMsg, "error");
+                    } else {
+                        const errorMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('authDefaultError') : 
+                            'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.';
+                        showMessage(errorMsg, "error");
+                    }
+                }
+            }
         });
 
         loginForm.addEventListener("submit", async (e) => {
@@ -1196,10 +1095,15 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 
                 if (!userCredential.user.emailVerified) {
+                    // Store user for resend functionality
+                    unverifiedUser = userCredential.user;
                     await signOut(auth);
+                    
+                    // Show verification notice with resend option
+                    verificationNotice.style.display = "block";
                     const verifyMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('emailVerificationRequired') : 
-                        'გთხოვთ დაადასტუროთ თქვენი ელ. ფოსტა';
+                        'გთხოვთ დაადასტუროთ თქვენი ელ. ფოსტა. შეამოწმეთ თქვენი ინბოქსი და spam ფოლდერი.';
                     showMessage(verifyMsg, "error");
                     resetButton(loginBtn, loginBtnText, loginText);
                     return;
@@ -1262,12 +1166,29 @@
                     emailVerified: false
                 });
 
-                await sendEmailVerification(user);
-                
-                const successMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate('registrationSuccess') : 
-                    'რეგისტრაცია წარმატებულია! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა დასადასტურებლად.';
-                showMessage(successMsg, "success");
+                // Configure action code settings
+                const actionCodeSettings = {
+                    url: window.location.origin + '/login.html',
+                    handleCodeInApp: false
+                };
+
+                // Send verification email with better error handling
+                try {
+                    await sendEmailVerification(user, actionCodeSettings);
+                    console.log("Verification email sent successfully to:", userEmail);
+                    
+                    const successMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('registrationSuccess') : 
+                        'რეგისტრაცია წარმატებულია! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა დასადასტურებლად. შეამოწმეთ spam ფოლდერიც!';
+                    showMessage(successMsg, "success");
+                } catch (emailError) {
+                    console.error("Error sending verification email:", emailError);
+                    // Registration succeeded but email failed
+                    const warningMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('registrationSuccessEmailFailed') : 
+                        'რეგისტრაცია წარმატებულია, მაგრამ დამადასტურებელი ემაილის გაგზავნა ვერ მოხერხდა. გთხოვთ სცადოთ შესვლა და აირჩიოთ "ხელახლა გაგზავნა".';
+                    showMessage(warningMsg, "success");
+                }
                 
                 setTimeout(() => {
                     showRegisterBtn.classList.remove("active");
@@ -1277,7 +1198,7 @@
                     step2.classList.remove('active');
                     step1.classList.add('active');
                     registerForm.reset();
-                }, 2000);
+                }, 3000);
                 
                 resetButton(registerBtn, registerBtnText, registerText);
             } catch (error) {
@@ -1497,24 +1418,25 @@
                 tempGoogleCredential = null;
             }
         });
-          // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
-function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
-    if (window.location.pathname.endsWith('.html')) {
-        // შექმენით ახალი URL .html-ის გარეშე
-        const newPath = window.location.pathname.replace(/\.html$/, '');
-        const newURL = newPath + window.location.search + window.location.hash;
-        
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
-        window.history.replaceState({}, '', newURL);
-    }
-}
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
-window.addEventListener('load', removeHtmlExtensionFromURL);
+        // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+        function removeHtmlExtensionFromURL() {
+            // შეამოწმეთ, თუ URL შეიცავს .html
+            if (window.location.pathname.endsWith('.html')) {
+                // შექმენით ახალი URL .html-ის გარეშე
+                const newPath = window.location.pathname.replace(/\.html$/, '');
+                const newURL = newPath + window.location.search + window.location.hash;
+                
+                // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
+                window.history.replaceState({}, '', newURL);
+            }
+        }
 
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
-window.addEventListener('popstate', removeHtmlExtensionFromURL);
+        // გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
+        window.addEventListener('load', removeHtmlExtensionFromURL);
+
+        // ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
+        window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
     
     <!-- დამატებული navbar და footer სკრიპტები -->

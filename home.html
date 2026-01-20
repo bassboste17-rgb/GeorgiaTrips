@@ -2,7 +2,9 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Georgia Trips - home</title>
   
   <!-- Preconnect to external domains for faster loading -->
@@ -62,6 +64,7 @@
       overflow: hidden;
     }
 
+    /* Hero Video - iOS Safari optimized */
     .hero-video {
       position: absolute;
       top: 50%;
@@ -73,6 +76,10 @@
       height: auto;
       object-fit: cover;
       z-index: 0;
+      /* iOS Safari specific */
+      -webkit-transform: translate(-50%, -50%);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .hero::before {
@@ -229,11 +236,12 @@
       font-size: 1.2rem;
     }
 
-    /* Mobile critical styles */
+    /* Mobile critical styles - iOS Safari optimized */
     @media (max-width: 768px) {
       .hero {
-        padding: 10rem 1.5rem 6rem;
-        min-height: 80vh;
+        padding: 14rem 1.5rem 6rem;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
       }
 
       .hero-video {
@@ -241,12 +249,13 @@
         top: 0;
         left: 0;
         transform: none;
+        -webkit-transform: none;
         min-width: 100%;
         min-height: 100%;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center center;
+        object-position: center 40%;
       }
 
       .hero h1 {
@@ -274,7 +283,7 @@
 
     @media (max-width: 480px) {
       .hero {
-        padding: 8rem 1rem 4rem;
+        padding: 12rem 1rem 4rem;
       }
 
       .hero h1 {
@@ -286,10 +295,30 @@
       }
     }
 
+    /* iOS Safari specific - safe area support */
+    @supports (padding-top: env(safe-area-inset-top)) {
+      .hero {
+        padding-top: calc(14rem + env(safe-area-inset-top));
+      }
+      
+      @media (max-width: 768px) {
+        .hero {
+          padding-top: calc(16rem + env(safe-area-inset-top));
+        }
+      }
+    }
+
     /* Smooth Scrolling */
     html {
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix for iOS Safari 100vh issue */
+    @supports (-webkit-touch-callout: none) {
+      .hero {
+        min-height: -webkit-fill-available;
+      }
     }
   </style>
 
@@ -1362,6 +1391,13 @@
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
       }
+      
+      /* iOS Safari hero video fix */
+      .hero-video {
+        object-fit: cover;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
     }
 
     /* Footer placeholder */
@@ -1376,10 +1412,23 @@
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Video Background - preload="none" for faster page load -->
-    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="none" poster="addhome/hero-poster.jpg">
+    <!-- Video Background - iOS Safari optimized with autoplay -->
+    <video 
+      class="hero-video" 
+      id="heroVideo"
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      webkit-playsinline
+      x5-playsinline
+      x5-video-player-type="h5"
+      x5-video-player-fullscreen="true"
+      preload="auto"
+      poster="addhome/hero-poster.jpg"
+    >
       <source src="addhome/herovideo.mp4" type="video/mp4">
-      <source src="addhome/herovideo.mp4" type="video/quicktime">
+      <source src="addhome/herovideo.webm" type="video/webm">
     </video>
     <div class="hero-overlay"></div>
     
@@ -1636,19 +1685,85 @@
   <!-- Map loaded with defer (waits for DOM) -->
   <script defer src="map.js"></script>
 
-  <!-- Load video after page is interactive -->
+  <!-- iOS Safari Video Autoplay Fix - Must run immediately -->
   <script>
-    // Start loading video after initial paint
-    document.addEventListener('DOMContentLoaded', function() {
-      const video = document.querySelector('.hero-video');
-      if (video) {
-        // Start loading video after a small delay
-        setTimeout(() => {
-          video.preload = 'auto';
-          video.load();
-        }, 100);
+    (function() {
+      // Force video autoplay on all devices including iOS Safari
+      function initVideoAutoplay() {
+        const video = document.getElementById('heroVideo');
+        if (!video) return;
+        
+        // Set attributes for iOS compatibility
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('muted', '');
+        video.muted = true;
+        
+        // Function to attempt play
+        function attemptPlay() {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(function() {
+              // Autoplay started successfully
+            }).catch(function(error) {
+              // Autoplay failed, try again on user interaction
+              document.addEventListener('touchstart', function onTouch() {
+                video.play();
+                document.removeEventListener('touchstart', onTouch);
+              }, { once: true, passive: true });
+              
+              document.addEventListener('click', function onClick() {
+                video.play();
+                document.removeEventListener('click', onClick);
+              }, { once: true, passive: true });
+            });
+          }
+        }
+        
+        // Try to play immediately
+        if (video.readyState >= 2) {
+          attemptPlay();
+        } else {
+          video.addEventListener('loadeddata', attemptPlay, { once: true });
+        }
+        
+        // Also try on canplay event
+        video.addEventListener('canplay', function() {
+          if (video.paused) {
+            attemptPlay();
+          }
+        }, { once: true });
+        
+        // Visibility change handler - resume video when page becomes visible
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden && video.paused) {
+            attemptPlay();
+          }
+        });
+        
+        // For iOS Safari - try play on page show
+        window.addEventListener('pageshow', function(event) {
+          if (video.paused) {
+            attemptPlay();
+          }
+        });
       }
-    });
+      
+      // Run immediately if DOM is ready, otherwise wait
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVideoAutoplay);
+      } else {
+        initVideoAutoplay();
+      }
+      
+      // Also try after window load as a fallback
+      window.addEventListener('load', function() {
+        const video = document.getElementById('heroVideo');
+        if (video && video.paused) {
+          video.play().catch(function() {});
+        }
+      });
+    })();
   </script>
   
   <!-- Vehicle Carousel Script - Inline for immediate execution -->
