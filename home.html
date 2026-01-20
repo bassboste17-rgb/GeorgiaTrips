@@ -965,35 +965,45 @@
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
       }
 
-      /* მობილურზე პარალაქსის ეფექტი index.html-ის მსგავსად */
+      /* მობილურზე პარალაქსის ეფექტი გამორთულია - background-attachment: scroll */
       .section {
-        background-attachment: fixed;
+        background-attachment: scroll;
         height: auto;
         min-height: 100vh;
         padding: 4rem 0;
+        background-size: cover;
+        background-position: center center;
       }
 
       #vehicles {
         background-image: url("addhome/phone3.png");
-        background-attachment: fixed;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
       }
 
       .section:nth-of-type(3) {
         background-image: url("addhome/phone2.png");
-        background-attachment: fixed;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
       }
 
       /* უახლესი პოსტების სექცია - გაზრდილი min-height */
       .section:nth-of-type(4) {
         background-image: url('addhome/phone1.png');
-        background-attachment: fixed;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
         min-height: 140vh;
       }
 
       /* ამინდის პროგნოზის სექცია - გაზრდილი min-height */
       .section:nth-of-type(5) {
         background-image: url('addhome/phone4.png');
-        background-attachment: fixed;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center center;
         min-height: 160vh;
       }
 
@@ -2194,7 +2204,24 @@
 
     // Global functions
     window.openImageModal = openImageModal;
-    
+        // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+function removeHtmlExtensionFromURL() {
+    // შეამოწმეთ, თუ URL შეიცავს .html
+    if (window.location.pathname.endsWith('.html')) {
+        // შექმენით ახალი URL .html-ის გარეშე
+        const newPath = window.location.pathname.replace(/\.html$/, '');
+        const newURL = newPath + window.location.search + window.location.hash;
+        
+        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
+        window.history.replaceState({}, '', newURL);
+    }
+}
+
+// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
+window.addEventListener('load', removeHtmlExtensionFromURL);
+
+// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
+window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
   
   <script type="module" src="navbar.js"></script>
