@@ -14,6 +14,9 @@
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <link rel="dns-prefetch" href="https://www.gstatic.com">
   
+  <!-- Preload video for faster start -->
+  <link rel="preload" href="addhome/herovideo.mp4" as="video" type="video/mp4">
+  
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
   <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
@@ -64,22 +67,79 @@
       overflow: hidden;
     }
 
+    /* ========================================
+       iOS SAFARI VIDEO FIX - HIDE ALL CONTROLS
+       ======================================== */
+    
+    /* Hide iOS Safari native video controls */
+    .hero-video::-webkit-media-controls {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+    }
+    
+    .hero-video::-webkit-media-controls-panel {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    
+    .hero-video::-webkit-media-controls-play-button {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    
+    .hero-video::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    
+    .hero-video::-webkit-media-controls-current-time-display,
+    .hero-video::-webkit-media-controls-time-remaining-display,
+    .hero-video::-webkit-media-controls-timeline,
+    .hero-video::-webkit-media-controls-volume-slider,
+    .hero-video::-webkit-media-controls-mute-button,
+    .hero-video::-webkit-media-controls-fullscreen-button,
+    .hero-video::-webkit-media-controls-enclosure {
+      display: none !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    
+    /* Firefox */
+    .hero-video::-moz-media-controls {
+      display: none !important;
+    }
+    
+    /* Edge/IE */
+    .hero-video::-ms-media-controls {
+      display: none !important;
+    }
+
     /* Hero Video - iOS Safari optimized */
     .hero-video {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 110%;
-      min-height: 110%;
-      width: auto;
-      height: auto;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: 0;
       /* iOS Safari specific */
-      -webkit-transform: translate(-50%, -50%);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      /* Hide controls */
+      pointer-events: none;
     }
 
     .hero::before {
@@ -236,26 +296,29 @@
       font-size: 1.2rem;
     }
 
-    /* Mobile critical styles - iOS Safari optimized */
+    /* ========================================
+       MOBILE / iOS SAFARI CRITICAL STYLES
+       ======================================== */
     @media (max-width: 768px) {
       .hero {
-        padding: 14rem 1.5rem 6rem;
+        padding: 18rem 1.5rem 6rem;
         min-height: 100vh;
         min-height: -webkit-fill-available;
       }
 
+      /* iOS Safari - VIDEO MUCH BIGGER ON MOBILE */
       .hero-video {
         position: absolute;
-        top: 0;
-        left: 0;
-        transform: none;
-        -webkit-transform: none;
-        min-width: 100%;
-        min-height: 100%;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        min-width: 180%;
+        min-height: 180%;
+        width: auto;
+        height: auto;
         object-fit: cover;
-        object-position: center 40%;
+        object-position: center center;
       }
 
       .hero h1 {
@@ -283,7 +346,13 @@
 
     @media (max-width: 480px) {
       .hero {
-        padding: 12rem 1rem 4rem;
+        padding: 16rem 1rem 4rem;
+      }
+
+      /* Even bigger video on smaller phones */
+      .hero-video {
+        min-width: 220%;
+        min-height: 220%;
       }
 
       .hero h1 {
@@ -298,12 +367,12 @@
     /* iOS Safari specific - safe area support */
     @supports (padding-top: env(safe-area-inset-top)) {
       .hero {
-        padding-top: calc(14rem + env(safe-area-inset-top));
+        padding-top: calc(18rem + env(safe-area-inset-top));
       }
       
       @media (max-width: 768px) {
         .hero {
-          padding-top: calc(16rem + env(safe-area-inset-top));
+          padding-top: calc(20rem + env(safe-area-inset-top));
         }
       }
     }
@@ -318,6 +387,12 @@
     @supports (-webkit-touch-callout: none) {
       .hero {
         min-height: -webkit-fill-available;
+      }
+      
+      /* iOS Safari specific video fix */
+      .hero-video {
+        -webkit-transform: translate(-50%, -50%) translateZ(0);
+        transform: translate(-50%, -50%) translateZ(0);
       }
     }
   </style>
@@ -357,7 +432,6 @@
       padding: 6rem 0;
     }
 
-    /* მუქი გადამფარავი ფენა (Overlay), რომ ტექსტი იკითხებოდეს */
     .section::before {
       content: "";
       position: absolute;
@@ -1076,12 +1150,7 @@
     }
 
     @media (max-width: 768px) {
-      /* მობილურზე ვიდეო რჩება აქტიური */
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
-
-      /* მობილურზე პარალაქსის ეფექტი გამორთულია - background-attachment: scroll */
+      /* Mobile parallax disabled */
       .section {
         background-attachment: scroll;
         height: auto;
@@ -1105,7 +1174,6 @@
         background-position: center center;
       }
 
-      /* უახლესი პოსტების სექცია - გაზრდილი min-height */
       .section:nth-of-type(4) {
         background-image: url('addhome/phone1.png');
         background-attachment: scroll;
@@ -1114,7 +1182,6 @@
         min-height: 140vh;
       }
 
-      /* ამინდის პროგნოზის სექცია - გაზრდილი min-height */
       .section:nth-of-type(5) {
         background-image: url('addhome/phone4.png');
         background-attachment: scroll;
@@ -1274,7 +1341,6 @@
         margin-bottom: 6rem;
       }
 
-      /* უახლესი პოსტების ტექსტი ცენტრში */
       .latest-post-content {
         text-align: center;
       }
@@ -1391,13 +1457,6 @@
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
       }
-      
-      /* iOS Safari hero video fix */
-      .hero-video {
-        object-fit: cover;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
     }
 
     /* Footer placeholder */
@@ -1412,7 +1471,7 @@
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Video Background - iOS Safari optimized with autoplay -->
+    <!-- Video Background - iOS Safari optimized with autoplay, NO CONTROLS -->
     <video 
       class="hero-video" 
       id="heroVideo"
@@ -1424,6 +1483,8 @@
       x5-playsinline
       x5-video-player-type="h5"
       x5-video-player-fullscreen="true"
+      disablePictureInPicture
+      controlsList="nodownload nofullscreen noremoteplayback"
       preload="auto"
       poster="addhome/hero-poster.jpg"
     >
@@ -1685,50 +1746,86 @@
   <!-- Map loaded with defer (waits for DOM) -->
   <script defer src="map.js"></script>
 
-  <!-- iOS Safari Video Autoplay Fix - Must run immediately -->
+  <!-- iOS Safari Video Autoplay Fix - AGGRESSIVE VERSION -->
   <script>
     (function() {
+      // Detect iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      
       // Force video autoplay on all devices including iOS Safari
       function initVideoAutoplay() {
         const video = document.getElementById('heroVideo');
         if (!video) return;
         
-        // Set attributes for iOS compatibility
+        // Remove any controls attribute
+        video.removeAttribute('controls');
+        
+        // Set all required attributes for iOS compatibility
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
         video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
+        video.setAttribute('disablePictureInPicture', '');
+        video.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
+        
+        // Force muted (required for autoplay)
         video.muted = true;
+        video.defaultMuted = true;
+        video.volume = 0;
+        
+        // Disable controls via JavaScript
+        video.controls = false;
         
         // Function to attempt play
         function attemptPlay() {
+          video.muted = true; // Ensure muted
           const playPromise = video.play();
           if (playPromise !== undefined) {
             playPromise.then(function() {
-              // Autoplay started successfully
+              console.log('Video autoplay started successfully');
             }).catch(function(error) {
+              console.log('Autoplay failed, waiting for user interaction:', error);
               // Autoplay failed, try again on user interaction
-              document.addEventListener('touchstart', function onTouch() {
-                video.play();
-                document.removeEventListener('touchstart', onTouch);
-              }, { once: true, passive: true });
-              
-              document.addEventListener('click', function onClick() {
-                video.play();
-                document.removeEventListener('click', onClick);
-              }, { once: true, passive: true });
+              addUserInteractionListeners();
             });
           }
+        }
+        
+        function addUserInteractionListeners() {
+          const playOnInteraction = function() {
+            video.muted = true;
+            video.play().catch(function() {});
+            // Remove listeners after first successful play
+            document.removeEventListener('touchstart', playOnInteraction);
+            document.removeEventListener('touchend', playOnInteraction);
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('scroll', playOnInteraction);
+          };
+          
+          document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
+          document.addEventListener('touchend', playOnInteraction, { once: true, passive: true });
+          document.addEventListener('click', playOnInteraction, { once: true, passive: true });
+          document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
         }
         
         // Try to play immediately
         if (video.readyState >= 2) {
           attemptPlay();
         } else {
+          // Load video and try to play
+          video.load();
           video.addEventListener('loadeddata', attemptPlay, { once: true });
+          video.addEventListener('canplay', function() {
+            if (video.paused) {
+              attemptPlay();
+            }
+          }, { once: true });
         }
         
-        // Also try on canplay event
-        video.addEventListener('canplay', function() {
+        // Also try on canplaythrough event
+        video.addEventListener('canplaythrough', function() {
           if (video.paused) {
             attemptPlay();
           }
@@ -1737,16 +1834,32 @@
         // Visibility change handler - resume video when page becomes visible
         document.addEventListener('visibilitychange', function() {
           if (!document.hidden && video.paused) {
-            attemptPlay();
+            video.muted = true;
+            video.play().catch(function() {});
           }
         });
         
-        // For iOS Safari - try play on page show
+        // For iOS Safari - try play on page show (back/forward cache)
         window.addEventListener('pageshow', function(event) {
           if (video.paused) {
-            attemptPlay();
+            video.muted = true;
+            video.play().catch(function() {});
           }
         });
+        
+        // iOS specific: Also try on touchmove for scroll-triggered play
+        if (isIOS) {
+          let hasPlayed = false;
+          const playOnScroll = function() {
+            if (!hasPlayed && video.paused) {
+              video.muted = true;
+              video.play().then(function() {
+                hasPlayed = true;
+              }).catch(function() {});
+            }
+          };
+          window.addEventListener('scroll', playOnScroll, { passive: true });
+        }
       }
       
       // Run immediately if DOM is ready, otherwise wait
@@ -1760,6 +1873,7 @@
       window.addEventListener('load', function() {
         const video = document.getElementById('heroVideo');
         if (video && video.paused) {
+          video.muted = true;
           video.play().catch(function() {});
         }
       });

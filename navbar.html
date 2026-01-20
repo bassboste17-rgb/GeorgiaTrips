@@ -107,3 +107,101 @@
     </div>
   </div>
 </header>
+
+<script>
+// iOS Safari-ს მობილური მენიუს გაუმჯობესება
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const navbarRight = document.querySelector('.navbar-right');
+  
+  if (mobileMenuToggle && navbarRight) {
+    // Touch და Click ივენთები iOS-სთვის
+    mobileMenuToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      navbarRight.classList.toggle('active');
+      
+      // iOS Safari-ზე body scroll-ის გათიშვა მენიუს გახსნისას
+      if (navbarRight.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+      } else {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+      }
+    });
+    
+    // iOS Safari touch fix - touchend
+    mobileMenuToggle.addEventListener('touchend', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+    
+    // მენიუს დახურვა გარეთ დაკლიკებისას
+    document.addEventListener('click', function(e) {
+      if (!navbarRight.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        navbarRight.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+      }
+    });
+    
+    // Touch ივენთი iOS-სთვის
+    document.addEventListener('touchstart', function(e) {
+      if (!navbarRight.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        navbarRight.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+      }
+    }, { passive: true });
+  }
+  
+  // Dropdown მენიუს გაუმჯობესება iOS-სთვის
+  const userMenu = document.querySelector('.user-menu');
+  const dropdown = document.querySelector('.dropdown');
+  
+  if (userMenu && dropdown) {
+    userMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    // Touch ივენთი
+    userMenu.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }, { passive: false });
+    
+    document.addEventListener('click', function() {
+      if (dropdown) dropdown.style.display = 'none';
+    });
+    
+    document.addEventListener('touchstart', function(e) {
+      if (userMenu && !userMenu.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    }, { passive: true });
+  }
+});
+
+// iOS Safari viewport fix - 100vh პრობლემის გადაჭრა
+function setViewportHeight() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+setViewportHeight();
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', function() {
+  setTimeout(setViewportHeight, 100);
+});
+
+// iOS Safari smooth scroll fix
+if (CSS.supports('-webkit-overflow-scrolling', 'touch')) {
+  document.documentElement.style.cssText += '-webkit-overflow-scrolling: touch;';
+}
+</script>
