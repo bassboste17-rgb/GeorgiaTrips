@@ -4,15 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Georgia Trips - home</title>
-  <link rel="stylesheet" href="navbar.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+  
+  <!-- Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+  
+  <!-- Critical CSS Inline for faster First Contentful Paint -->
   <style>
-    /* Base Styles */
+    /* Critical Base Styles - Above the fold content */
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -31,7 +39,18 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Hero Section - New Modern Design */
+    /* Navbar placeholder to prevent layout shift */
+    #navbar {
+      min-height: 70px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(13, 13, 13, 0.95);
+    }
+
+    /* Hero Section - Critical for first view */
     .hero {
       display: flex;
       justify-content: center;
@@ -39,7 +58,7 @@
       padding: 12rem 2rem 8rem;
       min-height: 100vh;
       position: relative;
-      background: transparent;
+      background: #0d0d0d;
       overflow: hidden;
     }
 
@@ -54,26 +73,6 @@
       height: auto;
       object-fit: cover;
       z-index: 0;
-    }
-
-    /* Mobile video adjustments */
-    @media (max-width: 768px) {
-      .hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: none;
-        min-width: 100%;
-        min-height: 100%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-      
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
     }
 
     .hero::before {
@@ -222,6 +221,88 @@
       transform: translateY(-3px);
     }
 
+    /* Loading states for components */
+    .loading-posts, .loading-weather {
+      text-align: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
+    }
+
+    /* Mobile critical styles */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 10rem 1.5rem 6rem;
+        min-height: 80vh;
+      }
+
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none;
+        min-width: 100%;
+        min-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero h2 {
+        font-size: 1.4rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 8rem 1rem 4rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+
+  <!-- Non-critical CSS loaded async -->
+  <link rel="stylesheet" href="navbar.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="navbar.css"></noscript>
+  
+  <!-- Font Awesome - loaded async with preload -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+
+  <!-- Deferred non-critical styles -->
+  <style id="deferred-styles">
     /* Container */
     .container {
       width: 100%;
@@ -597,7 +678,7 @@
       box-shadow: 0 10px 30px rgba(229, 56, 59, 0.6);
     }
 
-    .loading-posts, .no-posts {
+    .no-posts {
       text-align: center;
       padding: 3rem;
       color: rgba(255, 255, 255, 0.6);
@@ -828,7 +909,7 @@
       color: #e5383b;
     }
 
-    .loading-weather, .no-weather {
+    .no-weather {
       text-align: center;
       padding: 3rem;
       color: rgba(255, 255, 255, 0.6);
@@ -967,22 +1048,6 @@
 
     @media (max-width: 768px) {
       /* მობილურზე ვიდეო რჩება აქტიური */
-      .hero {
-        padding: 10rem 1.5rem 6rem;
-        min-height: 80vh;
-      }
-
-      /* ვიდეო მობილურზე */
-      .hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-
       .hero-overlay {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
       }
@@ -1027,28 +1092,6 @@
         background-size: cover;
         background-position: center center;
         min-height: 160vh;
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero h2 {
-        font-size: 1.4rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
       }
 
       .section-title {
@@ -1252,18 +1295,6 @@
     }
 
     @media (max-width: 480px) {
-      .hero {
-        padding: 8rem 1rem 4rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero h2 {
-        font-size: 1.2rem;
-      }
-
       .container {
         padding: 0 1rem;
       }
@@ -1284,12 +1315,6 @@
       .weather-controls select {
         width: 100%;
       }
-    }
-
-    /* Smooth Scrolling */
-    html {
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
     }
 
     /* Selection Color */
@@ -1338,17 +1363,23 @@
         transform: translate3d(0, 0, 0);
       }
     }
+
+    /* Footer placeholder */
+    #footer {
+      min-height: 200px;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Navbar - Loaded early -->
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Video Background -->
-    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
-      <source src="addhome/herov.mov" type="video/mp4">
-      <source src="addhome/herov.mov" type="video/quicktime">
+    <!-- Video Background - preload="none" for faster page load -->
+    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="none" poster="addhome/hero-poster.jpg">
+      <source src="addhome/herovideo.mp4" type="video/mp4">
+      <source src="addhome/herovideo.mp4" type="video/quicktime">
     </video>
     <div class="hero-overlay"></div>
     
@@ -1388,7 +1419,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeSedan">სედანი</h3>
             <div class="vehicle-image">
-              <img src="addhome/sedan.png" alt="სედანი" loading="lazy">
+              <img src="addhome/sedan.png" alt="სედანი" loading="lazy" decoding="async">
             </div>
           </a>
         </div>
@@ -1400,7 +1431,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeJeep">ჯიპი</h3>
             <div class="vehicle-image">
-              <img src="addhome/jeep.png" alt="ჯიპი" loading="lazy">
+              <img src="addhome/jeep.png" alt="ჯიპი" loading="lazy" decoding="async">
             </div>
           </a>
         </div>
@@ -1412,7 +1443,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeMinivan">მინივენი</h3>
             <div class="vehicle-image">
-              <img src="addhome/minivan.png" alt="მინივენი" loading="lazy">
+              <img src="addhome/minivan.png" alt="მინივენი" loading="lazy" decoding="async">
             </div>
           </a>
         </div>
@@ -1424,7 +1455,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeBus">ავტობუსი</h3>
             <div class="vehicle-image">
-              <img src="addhome/bus.png" alt="ავტობუსი" loading="lazy">
+              <img src="addhome/bus.png" alt="ავტობუსი" loading="lazy" decoding="async">
             </div>
           </a>
         </div>
@@ -1443,7 +1474,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeSedan">სედანი</h3>
                   <div class="vehicle-image">
-                    <img src="addhome/sedan.png" alt="სედანი" loading="lazy">
+                    <img src="addhome/sedan.png" alt="სედანი" loading="lazy" decoding="async">
                   </div>
                 </a>
               </div>
@@ -1457,7 +1488,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeJeep">ჯიპი</h3>
                   <div class="vehicle-image">
-                    <img src="addhome/jeep.png" alt="ჯიპი" loading="lazy">
+                    <img src="addhome/jeep.png" alt="ჯიპი" loading="lazy" decoding="async">
                   </div>
                 </a>
               </div>
@@ -1471,7 +1502,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeMinivan">მინივენი</h3>
                   <div class="vehicle-image">
-                    <img src="addhome/minivan.png" alt="მინივენი" loading="lazy">
+                    <img src="addhome/minivan.png" alt="მინივენი" loading="lazy" decoding="async">
                   </div>
                 </a>
               </div>
@@ -1485,7 +1516,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeBus">ავტობუსი</h3>
                   <div class="vehicle-image">
-                    <img src="addhome/bus.png" alt="ავტობუსი" loading="lazy">
+                    <img src="addhome/bus.png" alt="ავტობუსი" loading="lazy" decoding="async">
                   </div>
                 </a>
               </div>
@@ -1522,11 +1553,11 @@
           <h2 class="section-title" data-i18n="homeChooseRegion">აირჩიე რეგიონი</h2>
           <p class="section-subtitle" data-i18n="homeMapSubtitle">გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად</p>
         </div>
-        <div class="map-container">
-          <object id="georgia-map" data="addhome/georgiaHigh.svg" type="image/svg+xml" class="svg-map">
-            თქვენი ბრაუზერი არ უჭერს მხარს SVG-ს. გთხოვთ განაახლოთ თქვენი ბრაუზერი.
-          </object>
-        </div>
+<div class="map-container">
+  <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="საქართველოს რუკა">
+    <div class="loading-posts">რუკა იტვირთება...</div>
+  </object>
+  </div>
       </div>
     </div>
   </section>
@@ -1563,7 +1594,7 @@
             <option value="შიდა ქართლი" data-i18n="regionShidaKartli">შიდა ქართლი</option>
             <option value="მცხეთა-მთიანეთი" data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</option>
             <option value="ქვემო ქართლი" data-i18n="regionKvemoKartli">ქვემო ქართლი</option>
-            <option value="თბილისი" data-i18n="regionTbilisi">თბილისი</option>
+            <option value="თბილისი" data-i18n="regionTbilisi" selected>თბილისი</option>
             <option value="კახეთი" data-i18n="regionKakheti">კახეთი</option>
           </select>
           <select id="forecast-type">
@@ -1583,7 +1614,7 @@
   <div class="image-modal" id="image-modal">
     <div class="modal-content">
       <span class="modal-close" id="modal-close">&times;</span>
-      <img id="modal-image" src="/placeholder.svg" alt="">
+      <img id="modal-image" src="" alt="">
       <div class="modal-nav">
         <div class="nav-btn prev-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></div>
         <div class="nav-btn next-btn" id="next-btn"><i class="fas fa-chevron-right"></i></div>
@@ -1594,11 +1625,33 @@
 
   <div id="footer"></div>
 
+  <!-- Load translations and auth first (non-module, faster) -->
   <script src="translations.js"></script>
   <script src="auth.js"></script>
-  <script src="map.js" defer></script>
   
-  <!-- Vehicle Carousel Script -->
+  <!-- Navbar and Footer loaded early with async -->
+  <script async src="navbar.js" type="module"></script>
+  <script async src="footer.js" type="module"></script>
+  
+  <!-- Map loaded with defer (waits for DOM) -->
+  <script defer src="map.js"></script>
+
+  <!-- Load video after page is interactive -->
+  <script>
+    // Start loading video after initial paint
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.querySelector('.hero-video');
+      if (video) {
+        // Start loading video after a small delay
+        setTimeout(() => {
+          video.preload = 'auto';
+          video.load();
+        }, 100);
+      }
+    });
+  </script>
+  
+  <!-- Vehicle Carousel Script - Inline for immediate execution -->
   <script>
     (function() {
       // Vehicle Carousel for Mobile
@@ -1747,23 +1800,17 @@
     })();
   </script>
   
+  <!-- Firebase and Main App Logic - Loaded async -->
   <script type="module">
-    // Firebase imports and configuration
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { 
-        getAuth,
-        onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import { 
-        getFirestore,
-        collection,
-        query,
-        orderBy,
-        limit,
-        onSnapshot
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    // Dynamic Firebase import for better performance
+    const loadFirebase = async () => {
+      const [{ initializeApp }, { getAuth, onAuthStateChanged }, { getFirestore, collection, query, orderBy, limit, onSnapshot }] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js")
+      ]);
 
-    const firebaseConfig = {
+      const firebaseConfig = {
         apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
         authDomain: "rentime-e201e.firebaseapp.com",
         projectId: "rentime-e201e",
@@ -1771,11 +1818,14 @@
         messagingSenderId: "420054668757",
         appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
         measurementId: "G-DGWLG9P1ZB"
-    };
+      };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      return { auth, db, collection, query, orderBy, limit, onSnapshot, onAuthStateChanged };
+    };
 
     // DOM Elements
     const latestPostContainer = document.getElementById('latest-post-container');
@@ -2042,8 +2092,8 @@
     }
 
     function formatGeorgianDate(date) {
-      const dayNames = window.languageSwitcher ? window.languageSwitcher.getDayNames() : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const monthNames = window.languageSwitcher ? window.languageSwitcher.getMonthNames() : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const dayNames = window.languageSwitcher ? window.languageSwitcher.getDayNames() : ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
+      const monthNames = window.languageSwitcher ? window.languageSwitcher.getMonthNames() : ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
       
       const day = dayNames[date.getDay()];
       const dayNumber = date.getDate();
@@ -2086,34 +2136,6 @@
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
-        });
-    }
-
-    function loadLatestPost() {
-        const postsQuery = query(
-            collection(db, "posts"), 
-            orderBy("createdAt", "desc"), 
-            limit(1)
-        );
-        
-        onSnapshot(postsQuery, (querySnapshot) => {
-            latestPostContainer.innerHTML = '';
-            
-            if (querySnapshot.empty) {
-                latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeAddFirstPost', 'პირველი პოსტის დამატება')}</div>`;
-                return;
-            }
-            
-            querySnapshot.forEach((doc) => {
-                const postData = doc.data();
-                const postId = doc.id;
-                
-                const postElement = createLatestPostElement(postData, postId);
-                latestPostContainer.appendChild(postElement);
-            });
-        }, (error) => {
-            console.error("პოსტების ჩატვირთვის შეცდომა:", error);
-            latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeFailedToLoadPosts', 'პოსტების ჩატვირთვა ვერ მოხერხდა')}</div>`;
         });
     }
 
@@ -2270,11 +2292,48 @@
       forecastTypeSelect.addEventListener('change', fetchWeatherData);
     }
 
-    // Initialize on DOM Content Loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        setupModalEvents();
-        setupWeatherEvents();
+    // Initialize everything
+    async function init() {
+      setupModalEvents();
+      setupWeatherEvents();
+      
+      // Load weather data immediately
+      fetchWeatherData();
+      
+      // Load Firebase and posts
+      try {
+        const firebase = await loadFirebase();
+        const { auth, db, collection, query, orderBy, limit, onSnapshot, onAuthStateChanged } = firebase;
         
+        function loadLatestPost() {
+          const postsQuery = query(
+            collection(db, "posts"), 
+            orderBy("createdAt", "desc"), 
+            limit(1)
+          );
+          
+          onSnapshot(postsQuery, (querySnapshot) => {
+            latestPostContainer.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+              latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeAddFirstPost', 'პირველი პოსტის დამატება')}</div>`;
+              return;
+            }
+            
+            querySnapshot.forEach((doc) => {
+              const postData = doc.data();
+              const postId = doc.id;
+              
+              const postElement = createLatestPostElement(postData, postId);
+              latestPostContainer.appendChild(postElement);
+            });
+          }, (error) => {
+            console.error("პოსტების ჩატვირთვის შეცდომა:", error);
+            latestPostContainer.innerHTML = `<div class="no-posts">${safeTranslate('homeFailedToLoadPosts', 'პოსტების ჩატვირთვა ვერ მოხერხდა')}</div>`;
+          });
+        }
+        
+        // Language change handler
         window.addEventListener('languageChanged', () => {
           if (window.initializeMap && typeof window.initializeMap === 'function') {
             window.initializeMap();
@@ -2284,29 +2343,37 @@
         });
         
         onAuthStateChanged(auth, (user) => {
-            loadLatestPost();
-            fetchWeatherData();
+          loadLatestPost();
         });
-    });
+        
+      } catch (error) {
+        console.error('Firebase ინიციალიზაციის შეცდომა:', error);
+        latestPostContainer.innerHTML = `<div class="no-posts">პოსტების ჩატვირთვა ვერ მოხერხდა</div>`;
+      }
+    }
+
+    // Start initialization when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
 
     // Global functions
     window.openImageModal = openImageModal;
     
-    // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+    // Remove .html extension from URL
     function removeHtmlExtensionFromURL() {
-        if (window.location.pathname.endsWith('.html')) {
-            const newPath = window.location.pathname.replace(/\.html$/, '');
-            const newURL = newPath + window.location.search + window.location.hash;
-            window.history.replaceState({}, '', newURL);
-        }
+      if (window.location.pathname.endsWith('.html')) {
+        const newPath = window.location.pathname.replace(/\.html$/, '');
+        const newURL = newPath + window.location.search + window.location.hash;
+        window.history.replaceState({}, '', newURL);
+      }
     }
 
     window.addEventListener('load', removeHtmlExtensionFromURL);
     window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
-  
-  <script type="module" src="navbar.js"></script>
-  <script type="module" src="footer.js"></script>
 
 </body>
 </html>
