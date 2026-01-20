@@ -1308,6 +1308,27 @@
         }, 100)
       })
     })
+<<<<<<< HEAD
+=======
+      // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+function removeHtmlExtensionFromURL() {
+    // შეამოწმეთ, თუ URL შეიცავს .html
+    if (window.location.pathname.endsWith('.html')) {
+        // შექმენით ახალი URL .html-ის გარეშე
+        const newPath = window.location.pathname.replace(/\.html$/, '');
+        const newURL = newPath + window.location.search + window.location.hash;
+        
+        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
+        window.history.replaceState({}, '', newURL);
+    }
+}
+
+// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
+window.addEventListener('load', removeHtmlExtensionFromURL);
+
+// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
+window.addEventListener('popstate', removeHtmlExtensionFromURL);
+>>>>>>> 2fb1232f22b6aa715e9a379a24ddbf89ed19e163
   </script>
   <script type="module" src="navbar.js"></script>
   <script type="module" src="footer.js"></script>
