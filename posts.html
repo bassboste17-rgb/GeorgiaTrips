@@ -201,7 +201,6 @@
             font-weight: 400;
         }
 
-        /* დავამატე რეგიონის ლინკის სტილი */
         .region-link {
             color: var(--primary-color);
             text-decoration: none;
@@ -250,7 +249,7 @@
             color: var(--primary-color);
         }
 
-        .images-container {
+        .media-container {
             margin: 18px 0;
             overflow: hidden;
             border-radius: 16px;
@@ -260,21 +259,29 @@
             box-shadow: var(--shadow-light);
         }
 
-        .images-grid {
-            display: grid;
-            gap: 3px;
+        /* Unified Media Grid (images + videos together) */
+        .media-container {
+            margin: 18px 0;
         }
 
-        .image-item {
+        .media-grid {
+            display: grid;
+            gap: 3px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .media-item {
             position: relative;
             overflow: hidden;
-            cursor: zoom-in;
+            cursor: pointer;
             aspect-ratio: 1 / 1;
             width: 100%;
             height: 100%;
+            background-color: #000;
         }
 
-        .image-item img {
+        .media-item.image-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -282,45 +289,60 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .image-item:hover img {
+        .media-item.image-item:hover img {
             transform: scale(1.08);
         }
 
-        .images-grid.single {
+        /* Single media (1 item) */
+        .media-grid.single {
             grid-template-columns: 1fr;
-            max-height: 50vh;
         }
-        .images-grid.single .image-item {
+        .media-grid.single .media-item {
             aspect-ratio: auto;
-            max-height: 50vh;
+            height: 44vh;
+            max-height: 44vh;
+        }
+        .media-grid.single .media-item.image-item img {
+            height: 44vh;
+            max-height: 44vh;
+            object-fit: contain;
+        }
+        .media-grid.single .media-item.video-grid-item video {
+            height: 44vh;
+            max-height: 44vh;
+            object-fit: contain;
         }
 
-        .images-grid.double {
+        /* Double media (2 items) */
+        .media-grid.double {
             grid-template-columns: 1fr 1fr;
             height: 40vh;
         }
-        .images-grid.double .image-item {
+        .media-grid.double .media-item {
             aspect-ratio: 1 / 1;
         }
 
-        .images-grid.triple {
+        /* Triple media (3 items) */
+        .media-grid.triple {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             height: 40vh;
         }
-        .images-grid.triple .image-item:first-child {
+        .media-grid.triple .media-item:first-child {
             grid-row: 1 / 3;
             grid-column: 1 / 2;
             aspect-ratio: auto;
         }
 
-        .images-grid.multiple {
+        /* Multiple media (4+ items) */
+        .media-grid.multiple {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             height: 40vh;
         }
 
-        .image-item.more::after {
+        /* +X remaining indicator */
+        .media-item.more::after {
             content: '+' attr(data-remaining);
             position: absolute;
             top: 0;
@@ -335,8 +357,249 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-            cursor: zoom-in;
+            cursor: pointer;
             backdrop-filter: blur(2px);
+        }
+
+        /* Video in grid */
+        .video-grid-item {
+            position: relative;
+            background-color: #000;
+        }
+
+        .video-grid-item video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        .video-grid-item .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .video-grid-item .video-play-overlay i {
+            font-size: 2.5em;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-grid-item .video-play-overlay.hidden {
+            display: none;
+        }
+
+        /* Hide play overlay when inside .more item */
+        .video-grid-item.more .video-play-overlay {
+            display: none;
+        }
+
+        .video-grid-item .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 10px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 6;
+        }
+
+        .video-grid-item:hover .video-controls {
+            opacity: 1;
+        }
+
+        .video-grid-item .video-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 0.9em;
+        }
+
+        .video-grid-item .video-progress {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .video-grid-item .video-progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+        }
+
+        .video-grid-item .video-time {
+            color: white;
+            font-size: 0.7em;
+            white-space: nowrap;
+        }
+
+        .video-grid-item .volume-control {
+            display: none;
+        }
+
+        /* Legacy Video Styles (for standalone videos) */
+        .videos-container {
+            margin: 18px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .video-item {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: #000;
+            box-shadow: var(--shadow-light);
+        }
+
+        .video-item video {
+            width: 100%;
+            max-height: 44vh;
+            display: block;
+            object-fit: contain;
+            background-color: #000;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-item:hover .video-controls {
+            opacity: 1;
+        }
+
+        .video-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .video-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .video-progress {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .video-time {
+            color: white;
+            font-size: 12px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 60px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(229, 56, 59, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 5;
+        }
+
+        .video-play-overlay:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--primary-color);
+        }
+
+        .video-play-overlay i {
+            color: white;
+            font-size: 28px;
+            margin-left: 4px;
+        }
+
+        .video-play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .post-actions {
@@ -824,12 +1087,17 @@
             align-items: center;
         }
 
-        #modal-image {
+        #modal-image,
+        #modal-video {
             max-width: 100vw;
             max-height: 100vh;
             display: block;
             object-fit: contain;
             border-radius: 8px;
+        }
+
+        #modal-video {
+            display: none;
         }
 
         .modal-close {
@@ -1107,7 +1375,6 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.96);
             z-index: 1004;
-            /* Always hide the auth overlay */
             display: none !important;
             justify-content: center;
             align-items: center;
@@ -1120,7 +1387,6 @@
         }
 
         .auth-required-overlay.show {
-            /* Keep it hidden even with show class */
             display: none !important;
         }
 
@@ -1382,7 +1648,6 @@
                 right: 90px;
             }
             
-            /* როცა ფილტრი ჩაკეცილია - ღილაკები ზემოთ მარჯვნივ */
             .floating-filter-btn.top-position {
                 bottom: auto;
                 top: 80px;
@@ -1432,8 +1697,28 @@
                 margin-left: 4px;
             }
             
-            .images-container {
+            .media-container,
+            .media-grid {
                 border-radius: 12px;
+            }
+
+            .video-controls {
+                opacity: 1;
+                padding: 8px 12px;
+            }
+
+            .video-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .volume-slider {
+                width: 40px;
+            }
+
+            .video-time {
+                font-size: 10px;
+                min-width: 60px;
             }
         }
         
@@ -1457,7 +1742,6 @@
 
 <body>
 
-    <!-- Auth overlay is now hidden with display: none !important in CSS -->
     <div class="auth-required-overlay" id="auth-required-overlay">
         <div class="auth-required-content">
             <i class="fas fa-lock"></i>
@@ -1485,6 +1769,7 @@
         <div class="modal-content">
             <span class="modal-close" id="modal-close">&times;</span>
             <img id="modal-image" src="/placeholder.svg" alt="">
+            <video id="modal-video" controls></video>
             <div class="modal-nav">
                 <span class="nav-btn" id="prev-btn">
                     <i class="fas fa-chevron-left"></i>
@@ -1604,6 +1889,7 @@
         const loadingOverlay = document.getElementById('loading-overlay');
         const imageModal = document.getElementById('image-modal');
         const modalImage = document.getElementById('modal-image');
+        const modalVideo = document.getElementById('modal-video');
         const modalClose = document.getElementById('modal-close');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -1623,8 +1909,8 @@
         const mainContainer = document.getElementById('main-container');
 
         let userData = null;
-        let currentImages = [];
-        let currentImageIndex = 0;
+        let currentMedia = []; // Changed from currentImages to currentMedia (holds both images and videos)
+        let currentMediaIndex = 0;
         let allPosts = [];
         let currentPostIndex = 0;
         let currentPostIdForShare = '';
@@ -1632,6 +1918,9 @@
         let isAuthenticated = false;
         let authRequiredShown = false;
         let authCheckComplete = false;
+        
+        // Store all media data per post for lightbox
+        let postsMediaData = {};
 
         const regionPages = {
             'afkhazeti': 'abkhazia.html',
@@ -1671,7 +1960,12 @@
         window.hideEditInput = hideEditInput;
         window.saveEditComment = saveEditComment;
         window.deleteComment = deleteComment;
-        window.toggleSearchFilter = toggleSearchFilter; // Added for the floating filter button
+        window.toggleSearchFilter = toggleSearchFilter;
+        window.toggleVideoPlay = toggleVideoPlay;
+        window.toggleVideoMute = toggleVideoMute;
+        window.toggleVideoFullscreen = toggleVideoFullscreen;
+        window.updateVideoProgress = updateVideoProgress;
+        window.seekVideo = seekVideo;
 
         document.addEventListener('DOMContentLoaded', function() {
             setupModalEvents();
@@ -1693,7 +1987,6 @@
         }
 
         function showAuthRequired() {
-            // Set view mode but don't show the overlay
             sessionStorage.setItem('viewOnlyMode', 'true');
             authRequiredShown = true;
         }
@@ -1741,8 +2034,8 @@
 
         function setupModalEvents() {
             modalClose.addEventListener('click', closeModal);
-            prevBtn.addEventListener('click', showPrevImage);
-            nextBtn.addEventListener('click', showNextImage);
+            prevBtn.addEventListener('click', showPrevMedia);
+            nextBtn.addEventListener('click', showNextMedia);
             
             imageModal.addEventListener('click', function(e) {
                 if (e.target === imageModal) {
@@ -1759,8 +2052,8 @@
             document.addEventListener('keydown', function(e) {
                 if (imageModal.style.display === 'flex') {
                     if (e.key === 'Escape') closeModal();
-                    if (e.key === 'ArrowLeft') showPrevImage();
-                    if (e.key === 'ArrowRight') showNextImage();
+                    if (e.key === 'ArrowLeft') showPrevMedia();
+                    if (e.key === 'ArrowRight') showNextMedia();
                 }
                 if (shareModal.style.display === 'flex' && e.key === 'Escape') {
                     closeShareModal();
@@ -1950,6 +2243,7 @@
                 unsubscribePosts = onSnapshot(postsQuery, (querySnapshot) => {
                     postsContainer.innerHTML = '';
                     allPosts = [];
+                    postsMediaData = {}; // Reset media data
                     
                     if (querySnapshot.empty) {
                         const noPostsText = window.languageSwitcher.translate('postsNoPostsFound');
@@ -1961,6 +2255,14 @@
                     querySnapshot.forEach((doc) => {
                         const postData = doc.data();
                         if (applyFilters(postData, doc.id)) {
+                            // Store all media for this post
+                            const images = postData.images || [];
+                            const videos = postData.videos || [];
+                            const allMedia = [];
+                            images.forEach((url) => allMedia.push({ type: 'image', url }));
+                            videos.forEach((url) => allMedia.push({ type: 'video', url }));
+                            postsMediaData[doc.id] = allMedia;
+                            
                             const postElement = createPostElement(postData, doc.id);
                             postsContainer.appendChild(postElement);
                             allPosts.push(postElement);
@@ -2153,6 +2455,94 @@
             }
         }
 
+        // Video Control Functions
+        function toggleVideoPlay(postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            const playOverlay = document.getElementById(`play-overlay-${postId}-${videoIndex}`);
+            const playBtn = document.getElementById(`play-btn-${postId}-${videoIndex}`);
+            
+            if (video.paused) {
+                video.play();
+                if (playOverlay) playOverlay.classList.add('hidden');
+                if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                video.pause();
+                if (playOverlay) playOverlay.classList.remove('hidden');
+                if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+
+        function toggleVideoMute(postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            const muteBtn = document.getElementById(`mute-btn-${postId}-${videoIndex}`);
+            const volumeSlider = document.getElementById(`volume-${postId}-${videoIndex}`);
+            
+            video.muted = !video.muted;
+            if (video.muted) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                volumeSlider.value = 0;
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                volumeSlider.value = video.volume;
+            }
+        }
+
+        function updateVideoProgress(postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            const progressBar = document.getElementById(`progress-bar-${postId}-${videoIndex}`);
+            const timeDisplay = document.getElementById(`time-${postId}-${videoIndex}`);
+            
+            const progress = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = progress + '%';
+            
+            const currentMins = Math.floor(video.currentTime / 60);
+            const currentSecs = Math.floor(video.currentTime % 60);
+            const durationMins = Math.floor(video.duration / 60) || 0;
+            const durationSecs = Math.floor(video.duration % 60) || 0;
+            
+            timeDisplay.textContent = `${currentMins}:${currentSecs.toString().padStart(2, '0')} / ${durationMins}:${durationSecs.toString().padStart(2, '0')}`;
+        }
+
+        function seekVideo(event, postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            const progressContainer = event.currentTarget;
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (event.clientX - rect.left) / rect.width;
+            video.currentTime = pos * video.duration;
+        }
+
+        function changeVolume(postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            const volumeSlider = document.getElementById(`volume-${postId}-${videoIndex}`);
+            const muteBtn = document.getElementById(`mute-btn-${postId}-${videoIndex}`);
+            
+            video.volume = volumeSlider.value;
+            video.muted = false;
+            
+            if (volumeSlider.value == 0) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        }
+        window.changeVolume = changeVolume;
+
+        function toggleVideoFullscreen(postId, videoIndex) {
+            const video = document.getElementById(`video-${postId}-${videoIndex}`);
+            
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            }
+        }
+
         function createPostElement(postData, postId) {
             const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : window.languageSwitcher.translate('postsTimeUnknown');
             
@@ -2207,27 +2597,101 @@
             const commentPlaceholder = window.languageSwitcher.translate('postsAddComment');
             const authRequiredText = window.languageSwitcher.translate('postsAuthForComment');
             
-            let imagesHTML = '';
-            if (postData.images && postData.images.length > 0) {
+            // Combine images and videos into unified media array
+            const images = postData.images || [];
+            const videos = postData.videos || [];
+            const totalMedia = images.length + videos.length;
+            
+            // Build unified media array with type info
+            const allMedia = [];
+            images.forEach((url, idx) => allMedia.push({ type: 'image', url, originalIndex: idx }));
+            videos.forEach((url, idx) => allMedia.push({ type: 'video', url, originalIndex: idx }));
+            
+            let mediaHTML = '';
+            
+            if (totalMedia > 0) {
+                // Determine grid class based on total media count
                 let gridClass = '';
-                if (postData.images.length === 1) gridClass = 'single';
-                else if (postData.images.length === 2) gridClass = 'double';
-                else if (postData.images.length === 3) gridClass = 'triple';
+                if (totalMedia === 1) gridClass = 'single';
+                else if (totalMedia === 2) gridClass = 'double';
+                else if (totalMedia === 3) gridClass = 'triple';
                 else gridClass = 'multiple';
                 
-                imagesHTML = '<div class="images-container"><div class="images-grid ' + gridClass + '">';
-                for (let i = 0; i < Math.min(postData.images.length, 4); i++) {
-                    if (i === 3 && postData.images.length > 4) {
-                        imagesHTML += '<div class="image-item more" data-remaining="' + (postData.images.length - 3) + '" onclick="openImageModal(\'' + postId + '\', ' + i + ')">' +
-                            '<img src="' + postData.images[i] + '" alt="Post image" loading="lazy">' +
-                        '</div>';
+                // Calculate remaining media beyond 4
+                const remainingMedia = totalMedia > 4 ? totalMedia - 4 : 0;
+                const mediaToShow = Math.min(totalMedia, 4);
+                
+                mediaHTML = '<div class="media-container"><div class="media-grid ' + gridClass + '">';
+                
+                for (let i = 0; i < mediaToShow; i++) {
+                    const media = allMedia[i];
+                    const isLastVisible = (i === 3 && remainingMedia > 0);
+                    
+                    if (media.type === 'image') {
+                        if (isLastVisible) {
+                            // Last visible item with +X overlay - clicking opens lightbox at this position
+                            mediaHTML += '<div class="media-item image-item more" data-remaining="' + remainingMedia + '" onclick="openImageModal(\'' + postId + '\', ' + i + ')">' +
+                                '<img src="' + media.url + '" alt="Post image" loading="lazy">' +
+                            '</div>';
+                        } else {
+                            mediaHTML += '<div class="media-item image-item" onclick="openImageModal(\'' + postId + '\', ' + i + ')">' +
+                                '<img src="' + media.url + '" alt="Post image" loading="lazy">' +
+                            '</div>';
+                        }
                     } else {
-                        imagesHTML += '<div class="image-item" onclick="openImageModal(\'' + postId + '\', ' + i + ')">' +
-                            '<img src="' + postData.images[i] + '" alt="Post image" loading="lazy">' +
-                        '</div>';
+                        // Video item in grid
+                        const vidIdx = media.originalIndex;
+                        if (isLastVisible) {
+                            // Last visible item is video with +X overlay
+                            mediaHTML += `
+                                <div class="media-item video-grid-item more" data-remaining="${remainingMedia}" onclick="openImageModal('${postId}', ${i})">
+                                    <video 
+                                        id="video-${postId}-${vidIdx}" 
+                                        src="${media.url}" 
+                                        preload="metadata"
+                                        playsinline
+                                    ></video>
+                                </div>
+                            `;
+                        } else {
+                            mediaHTML += `
+                                <div class="media-item video-grid-item">
+                                    <video 
+                                        id="video-${postId}-${vidIdx}" 
+                                        src="${media.url}" 
+                                        preload="metadata"
+                                        playsinline
+                                        ontimeupdate="updateVideoProgress('${postId}', ${vidIdx})"
+                                        onclick="toggleVideoPlay('${postId}', ${vidIdx})"
+                                    ></video>
+                                    <div class="video-play-overlay" id="play-overlay-${postId}-${vidIdx}" onclick="toggleVideoPlay('${postId}', ${vidIdx})">
+                                        <i class="fas fa-play"></i>
+                                    </div>
+                                    <div class="video-controls">
+                                        <button class="video-btn" id="play-btn-${postId}-${vidIdx}" onclick="toggleVideoPlay('${postId}', ${vidIdx})">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <div class="video-progress" onclick="seekVideo(event, '${postId}', ${vidIdx})">
+                                            <div class="video-progress-bar" id="progress-bar-${postId}-${vidIdx}"></div>
+                                        </div>
+                                        <span class="video-time" id="time-${postId}-${vidIdx}">0:00 / 0:00</span>
+                                        <div class="volume-control">
+                                            <button class="video-btn" id="mute-btn-${postId}-${vidIdx}" onclick="toggleVideoMute('${postId}', ${vidIdx})">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <input type="range" class="volume-slider" id="volume-${postId}-${vidIdx}" min="0" max="1" step="0.1" value="1" onchange="changeVolume('${postId}', ${vidIdx})">
+                                        </div>
+                                        <button class="video-btn" onclick="toggleVideoFullscreen('${postId}', ${vidIdx})">
+                                            <i class="fas fa-expand"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     }
                 }
-                imagesHTML += '</div></div>';
+                
+                mediaHTML += '</div></div>';
             }
             
             let commentsHTML = '';
@@ -2319,7 +2783,7 @@
                         locationName +
                     '</div>' +
                 '</div>' +
-                imagesHTML +
+                mediaHTML +
                 actionButtonsHTML +
                 '<div class="comments-section" id="comments-' + postId + '">' +
                     '<div class="comments-list">' +
@@ -2652,32 +3116,34 @@
             showToast("postsLinkCopied");
         }
 
-        function openImageModal(postId, imageIndex) {
-            const posts = document.querySelectorAll('.post');
-            let targetPost = null;
-            for (let post of posts) {
-                if (post.getAttribute('data-post-id') === postId) {
-                    targetPost = post;
-                    break;
-                }
-            }
-            if (!targetPost) return;
-            currentImages = [];
-            const images = targetPost.querySelectorAll('img');
-            images.forEach(img => {
-                if (!img.classList.contains('post-avatar') && !img.classList.contains('comment-avatar')) {
-                    currentImages.push(img.src);
-                }
-            });
-            if (currentImages.length === 0) return;
-            currentImageIndex = imageIndex;
-            showImageModal();
+        // Updated openImageModal to use stored media data and support videos
+        function openImageModal(postId, mediaIndex) {
+            // Get all media for this post from stored data
+            currentMedia = postsMediaData[postId] || [];
+            
+            if (currentMedia.length === 0) return;
+            
+            currentMediaIndex = mediaIndex;
+            showMediaModal();
         }
 
-        function showImageModal() {
-            if (currentImages.length === 0) return;
-            modalImage.src = currentImages[currentImageIndex];
-            imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
+        function showMediaModal() {
+            if (currentMedia.length === 0) return;
+            
+            const media = currentMedia[currentMediaIndex];
+            
+            if (media.type === 'image') {
+                modalImage.src = media.url;
+                modalImage.style.display = 'block';
+                modalVideo.style.display = 'none';
+                modalVideo.pause();
+            } else if (media.type === 'video') {
+                modalVideo.src = media.url;
+                modalVideo.style.display = 'block';
+                modalImage.style.display = 'none';
+            }
+            
+            imageCounter.textContent = (currentMediaIndex + 1) + ' / ' + currentMedia.length;
             imageModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -2685,20 +3151,22 @@
         function closeModal() {
             imageModal.style.display = 'none';
             document.body.style.overflow = '';
+            modalVideo.pause();
+            modalVideo.src = '';
         }
 
-        function showPrevImage() {
-            if (currentImages.length === 0) return;
-            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-            modalImage.src = currentImages[currentImageIndex];
-            imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
+        function showPrevMedia() {
+            if (currentMedia.length === 0) return;
+            modalVideo.pause();
+            currentMediaIndex = (currentMediaIndex - 1 + currentMedia.length) % currentMedia.length;
+            showMediaModal();
         }
 
-        function showNextImage() {
-            if (currentImages.length === 0) return;
-            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-            modalImage.src = currentImages[currentImageIndex];
-            imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
+        function showNextMedia() {
+            if (currentMedia.length === 0) return;
+            modalVideo.pause();
+            currentMediaIndex = (currentMediaIndex + 1) % currentMedia.length;
+            showMediaModal();
         }
 
         function formatDate(date) {
@@ -2730,52 +3198,12 @@
         function setupMobileFilterAutoHide() {
             if (window.innerWidth > 768) return;
             
-            let lastScrollTop = 0;
-            let scrollTimeout;
-            let isFilterVisible = true;
-            
+            // Only button click controls filters - no auto-hide on scroll
             floatingFilterBtn.addEventListener('click', function() {
-                if (isFilterVisible) {
-                    hideFilters();
-                } else {
-                    showFilters();
-                }
+                toggleSearchFilter();
             });
             
-            postsContainer.addEventListener('scroll', function() {
-                clearTimeout(scrollTimeout);
-                
-                scrollTimeout = setTimeout(() => {
-                    const scrollTop = postsContainer.scrollTop;
-                    
-                    if (scrollTop > lastScrollTop && scrollTop > 50) {
-                        if (isFilterVisible) {
-                            hideFilters();
-                        }
-                    } else if (scrollTop < lastScrollTop - 10) {
-                        if (!isFilterVisible) {
-                            showFilters();
-                        }
-                    }
-                    
-                    lastScrollTop = scrollTop;
-                }, 100);
-            });
-            
-            function hideFilters() {
-                searchFilterContainer.classList.add('hidden');
-                mainContainer.classList.add('filter-hidden');
-                floatingFilterBtn.innerHTML = '<i class="fas fa-filter"></i>';
-                isFilterVisible = false;
-            }
-            
-            function showFilters() {
-                searchFilterContainer.classList.remove('hidden');
-                mainContainer.classList.remove('filter-hidden');
-                floatingFilterBtn.innerHTML = '<i class="fas fa-times"></i>';
-                isFilterVisible = true;
-            }
-            
+            // Start with filters visible
             showFilters();
         }
 
@@ -2805,7 +3233,6 @@
         }
 
         window.addEventListener('languageChanged', () => {
-            console.log('[v0] Language changed, reloading posts...');
             if (window.languageSwitcher) {
                 window.languageSwitcher.updatePageTranslations();
             }
@@ -2814,24 +3241,17 @@
                 loadPosts();
             }
         });
-  // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
-function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
-    if (window.location.pathname.endsWith('.html')) {
-        // შექმენით ახალი URL .html-ის გარეშე
-        const newPath = window.location.pathname.replace(/\.html$/, '');
-        const newURL = newPath + window.location.search + window.location.hash;
-        
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
-        window.history.replaceState({}, '', newURL);
-    }
-}
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
-window.addEventListener('load', removeHtmlExtensionFromURL);
+        function removeHtmlExtensionFromURL() {
+            if (window.location.pathname.endsWith('.html')) {
+                const newPath = window.location.pathname.replace(/\.html$/, '');
+                const newURL = newPath + window.location.search + window.location.hash;
+                window.history.replaceState({}, '', newURL);
+            }
+        }
 
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
-window.addEventListener('popstate', removeHtmlExtensionFromURL);
+        window.addEventListener('load', removeHtmlExtensionFromURL);
+        window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
     <script src="translations.js"></script>
     
