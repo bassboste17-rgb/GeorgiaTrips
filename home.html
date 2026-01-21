@@ -2,46 +2,40 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Georgia Trips - home</title>
   
   <!-- Preconnect to external domains for faster loading -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-  <link rel="dns-prefetch" href="https://www.gstatic.com">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
   <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
   <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
   
-  <!-- Critical CSS Inline for faster First Contentful Paint -->
   <style>
-    /* Critical Base Styles - Above the fold content */
+    /* Base Styles */
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
       font-family: "BPG Glaho", sans-serif;
       background: #0d0d0d;
       color: #fff;
-      width: 100%;
       min-height: 100vh;
-      position: relative;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Navbar placeholder to prevent layout shift */
+    /* Navbar */
     #navbar {
       min-height: 70px;
       position: fixed;
@@ -50,9 +44,18 @@
       right: 0;
       z-index: 1000;
       background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(10px);
     }
 
-    /* Hero Section - Critical for first view */
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
     .hero {
       display: flex;
       justify-content: center;
@@ -60,11 +63,9 @@
       padding: 12rem 2rem 8rem;
       min-height: 100vh;
       position: relative;
-      background: transparent;
       overflow: hidden;
     }
 
-    /* Hero Video Background */
     .hero-video {
       position: absolute;
       top: 50%;
@@ -78,7 +79,6 @@
       z-index: 0;
     }
 
-    /* Hero Overlay */
     .hero-overlay {
       position: absolute;
       top: 0;
@@ -88,17 +88,6 @@
       background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.55) 100%);
       z-index: 1;
       pointer-events: none;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(46, 26, 26, 0) 0%, rgba(96, 15, 15, 0) 50%);
-      z-index: 0;
     }
 
     .hero-content {
@@ -184,27 +173,10 @@
       display: inline-flex;
       align-items: center;
       gap: 0.8rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       box-shadow: 0 10px 30px rgba(229, 56, 59, 0.4);
       position: relative;
       overflow: hidden;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
     }
 
     .btn-primary:hover {
@@ -226,7 +198,6 @@
       gap: 0.8rem;
       transition: all 0.3s ease;
       border: 2px solid rgba(255, 255, 255, 0.2);
-      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
 
@@ -236,126 +207,10 @@
       transform: translateY(-3px);
     }
 
-    /* Loading states for components */
-    .loading-posts, .loading-weather {
-      text-align: center;
-      padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
-    }
-
-    /* Mobile critical styles - Safari optimized */
-    @media (max-width: 768px) {
-      .hero {
-        padding: 14rem 1.5rem 6rem;
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-      }
-
-      .hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: none;
-        min-width: 100%;
-        min-height: 100%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-      
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero h2 {
-        font-size: 1.4rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero {
-        padding: 12rem 1rem 4rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero h2 {
-        font-size: 1.2rem;
-      }
-    }
-
-    /* iOS Safari specific - safe area support */
-    @supports (padding-top: env(safe-area-inset-top)) {
-      .hero {
-        padding-top: calc(14rem + env(safe-area-inset-top));
-      }
-      
-      @media (max-width: 768px) {
-        .hero {
-          padding-top: calc(16rem + env(safe-area-inset-top));
-        }
-      }
-    }
-
-    /* Smooth Scrolling */
-    html {
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    /* Fix for iOS Safari 100vh issue */
-    @supports (-webkit-touch-callout: none) {
-      .hero {
-        min-height: -webkit-fill-available;
-      }
-    }
-  </style>
-
-  <!-- Non-critical CSS loaded async -->
-  <link rel="stylesheet" href="navbar.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="navbar.css"></noscript>
-  
-  <!-- Font Awesome - loaded async with preload -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
-
-  <!-- Deferred non-critical styles -->
-  <style id="deferred-styles">
-    /* Container */
-    .container {
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Section Styles - Parallax Effect like index.html */
+    /* Section Styles */
     .section {
       position: relative;
       min-height: 120vh;
-      height: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -368,11 +223,13 @@
       padding: 6rem 0;
     }
 
-    /* მუქი გადამფარავი ფენა (Overlay), რომ ტექსტი იკითხებოდეს */
     .section::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.4);
       z-index: 1;
     }
@@ -382,46 +239,22 @@
       z-index: 2;
     }
 
-    /* --- SECTION BACKGROUNDS --- */
-    
-    /* Vehicles Section */
+    /* Section Backgrounds */
     #vehicles {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990425/ob04hfpvcmmvjgch1rbf.webp');
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
     }
 
-    /* Map Section */
     .section:nth-of-type(3) {
       background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/udvj6mfospzinlv2zhcu.webp");
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
     }
 
-    /* Latest Post Section */
     .section:nth-of-type(4) {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990425/uqevj9kfbfpvmj5qslqf.webp');
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
     }
 
-    /* Weather Section */
     .section:nth-of-type(5) {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/hlsewmniu6newfhjzibx.webp');
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
     }
-    
-    /* --- END SECTION BACKGROUNDS --- */
-
 
     .section-header {
       text-align: center;
@@ -436,7 +269,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: none;
     }
 
     .section-subtitle {
@@ -446,7 +278,7 @@
       margin: 0 auto;
     }
 
-    /* Vehicle Section - Modern Card Design */
+    /* Vehicle Grid - Desktop */
     .vehicle-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -459,61 +291,18 @@
       border-radius: 24px;
       padding: 2rem;
       text-align: center;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s ease;
       border: 1px solid rgba(229, 56, 59, 0.15);
-      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 
-                  0 5px 20px rgba(0, 0, 0, 0.3),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                  inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-
-    .vehicle-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(229, 56, 59, 0.08) 0%, transparent 50%, rgba(229, 56, 59, 0.03) 100%);
-      opacity: 1;
-      transition: opacity 0.4s ease;
-    }
-
-    .vehicle-card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(229, 56, 59, 0.1) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
-    .vehicle-card:hover::before {
-      opacity: 1;
-    }
-
-    .vehicle-card:hover::after {
-      opacity: 1;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
     }
 
     .vehicle-card:hover {
       transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 
-                  0 15px 30px rgba(229, 56, 59, 0.15),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                  0 0 30px rgba(229, 56, 59, 0.1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(229, 56, 59, 0.15);
       border-color: rgba(229, 56, 59, 0.4);
-      background: linear-gradient(145deg, rgba(30, 30, 40, 0.98) 0%, rgba(45, 45, 60, 0.95) 50%, rgba(35, 35, 50, 0.98) 100%);
     }
 
     .vehicle-card a {
@@ -553,7 +342,6 @@
       overflow: hidden;
     }
 
-    /* START: Vehicle Image Size Modification */
     .vehicle-image img {
       width: auto;
       max-width: 240px;
@@ -563,30 +351,20 @@
       transition: transform 0.4s ease, filter 0.4s ease;
       filter: brightness(0.95);
     }
-    /* END: Vehicle Image Size Modification */
 
     .vehicle-card:hover .vehicle-image img {
       transform: scale(1.05);
       filter: brightness(1.05);
     }
 
-    /* Mobile Vehicle Carousel - Hidden on Desktop */
+    /* Mobile Carousel - Hidden on Desktop */
     .vehicle-carousel-wrapper {
       display: none;
     }
 
-    /* Latest Post Section - New Design */
+    /* Latest Post Section */
     .latest-post-section {
-      border-radius: 0;
       padding: 4rem 2rem;
-      border: none;
-      background: transparent;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      min-height: auto;
-      height: auto;
-      position: relative;
-      z-index: 5;
       margin-top: 4rem;
       margin-bottom: 4rem;
     }
@@ -600,7 +378,6 @@
       margin: 0 auto;
       padding: 3.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      -webkit-backdrop-filter: blur(15px);
       backdrop-filter: blur(15px);
     }
 
@@ -647,13 +424,12 @@
       max-height: 500px;
       object-fit: contain;
       cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transition: transform 0.4s ease;
       display: block;
     }
 
     .latest-post-image img:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 20px rgba(229, 56, 59, 0.8);
     }
 
     .latest-post-content {
@@ -708,34 +484,24 @@
       border-radius: 12px;
       font-weight: 600;
       transition: all 0.3s ease;
-      display: inline-block;
       box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
     }
 
     .view-all-posts-btn:hover {
       background: linear-gradient(135deg, #ff4447, #e5383b);
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(229, 56, 59, 0.6);
     }
 
-    .no-posts {
+    .no-posts, .loading-posts, .loading-weather {
       text-align: center;
       padding: 3rem;
       color: rgba(255, 255, 255, 0.6);
       font-size: 1.2rem;
     }
 
-    /* Map Section - Modern Design */
+    /* Map Section */
     .map-section {
-      border-radius: 0;
       padding: 4rem 2rem;
-      border: none;
-      background: transparent;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      min-height: auto;
-      position: relative;
-      z-index: 1;
       margin-top: 4rem;
       margin-bottom: 4rem;
     }
@@ -744,15 +510,14 @@
       max-width: 800px;
       width: 100%;
       margin: 2rem auto 0;
-      position: relative;
       aspect-ratio: 4 / 3;
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       border: 2px solid rgba(255, 255, 255, 0.15);
       background: rgba(0, 0, 0, 0.548);
-      -webkit-backdrop-filter: blur(15px);
       backdrop-filter: blur(15px);
+      position: relative;
     }
 
     .svg-map {
@@ -761,7 +526,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transition: fill 0.3s ease, stroke 0.3s ease;
     }
 
     .svg-map path {
@@ -777,10 +541,6 @@
       filter: drop-shadow(0 0 10px rgba(229, 56, 59, 0.7));
     }
 
-    .svg-map path.selected {
-      fill: #c42e31 !important;
-    }
-
     .region-label {
       font-family: "BPG Glaho", sans-serif;
       font-size: 12px;
@@ -790,19 +550,13 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
     }
 
-    /* Weather Section - Modern Design */
+    /* Weather Section */
     .weather-section {
       background: rgba(0, 0, 0, 0.459);
-      -webkit-backdrop-filter: blur(50px);
       backdrop-filter: blur(50px);
       border-radius: 30px;
       padding: 4rem 2rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      min-height: auto;
-      height: auto;
-      position: relative;
-      z-index: 10;
-      overflow: visible;
       margin-top: 4rem;
       margin-bottom: 6rem;
     }
@@ -826,10 +580,7 @@
       outline: none;
       transition: all 0.3s ease;
       cursor: pointer;
-      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-      -webkit-appearance: none;
-      appearance: none;
     }
 
     .weather-controls select option {
@@ -852,33 +603,25 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
-      position: relative;
-      z-index: 10;
       max-height: 70vh;
       overflow-y: auto;
-      overflow-x: hidden;
       padding: 1rem;
       scrollbar-width: thin;
       scrollbar-color: #e5383b rgba(255, 255, 255, 0.1);
-      -webkit-overflow-scrolling: touch;
     }
-    
+
     .weather-container::-webkit-scrollbar {
       width: 8px;
     }
-    
+
     .weather-container::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
     }
-    
+
     .weather-container::-webkit-scrollbar-thumb {
       background: #e5383b;
       border-radius: 10px;
-    }
-    
-    .weather-container::-webkit-scrollbar-thumb:hover {
-      background: #c42e31;
     }
 
     .weather-card {
@@ -889,10 +632,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.15);
       transition: all 0.3s ease;
-      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
     }
 
     .weather-card:hover {
@@ -919,7 +659,6 @@
       font-weight: 800;
       margin-bottom: 0.8rem;
       color: #fff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .weather-description {
@@ -949,13 +688,6 @@
       color: #e5383b;
     }
 
-    .no-weather {
-      text-align: center;
-      padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
-    }
-
     /* Image Modal */
     .image-modal {
       display: none;
@@ -968,7 +700,6 @@
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
 
@@ -988,10 +719,8 @@
       border-radius: 12px;
       box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      border: 5px solid rgba(255, 255, 255, 0.1); 
-      outline: 5px solid rgba(229, 56, 59, 0.3);
-      outline-offset: -5px;
+      transition: opacity 0.5s ease;
+      border: 5px solid rgba(255, 255, 255, 0.1);
     }
 
     .modal-content img.loaded {
@@ -1013,7 +742,6 @@
       justify-content: center;
       align-items: center;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(229, 56, 59, 0.5);
     }
 
     .modal-close:hover {
@@ -1043,7 +771,6 @@
       font-size: 26px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(229, 56, 59, 0.5);
     }
 
     .nav-btn:hover {
@@ -1061,71 +788,104 @@
       background: rgba(229, 56, 59, 0.9);
       padding: 12px 24px;
       border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(229, 56, 59, 0.5);
     }
 
-    /* Responsive Styles */
-    @media (max-width: 1200px) {
-      .hero h1 {
-        font-size: 3.5rem;
-      }
-      
-      .vehicle-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-      }
+    /* Footer */
+    #footer {
+      min-height: 200px;
     }
 
-    @media (max-width: 992px) {
-      .hero h1 {
-        font-size: 3rem;
-      }
-      
-      .vehicle-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    /* Selection Color */
+    ::selection {
+      background-color: rgba(229, 56, 59, 0.4);
+      color: #fff;
     }
 
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(22, 33, 62, 0.8);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #e5383b, #c42e31);
+      border-radius: 6px;
+    }
+
+    /* ========== MOBILE STYLES (max-width: 768px) ========== */
     @media (max-width: 768px) {
-      /* მობილურზე პარალაქსის ეფექტი გამორთულია - background-attachment: scroll */
+      .hero {
+        padding: 10rem 1.5rem 6rem;
+        min-height: 100vh;
+      }
+
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero h2 {
+        font-size: 1.4rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Mobile sections */
       .section {
         background-attachment: scroll;
-        height: auto;
-        min-height: 100vh;
+        min-height: auto;
         padding: 4rem 0;
         background-size: cover;
-        background-position: center center;
+        background-position: center;
       }
 
       #vehicles {
         background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/qmhieg6acl7jrqbx1but.png");
         background-attachment: scroll;
-        background-size: cover;
-        background-position: center center;
       }
 
       .section:nth-of-type(3) {
         background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/he60se2ityadaepnqakb.png");
         background-attachment: scroll;
-        background-size: cover;
-        background-position: center center;
       }
 
-      /* უახლესი პოსტების სექცია - გაზრდილი min-height */
       .section:nth-of-type(4) {
         background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990598/pjnoju4j22oqcbnudose.png');
         background-attachment: scroll;
-        background-size: cover;
-        background-position: center center;
         min-height: 140vh;
       }
 
-      /* ამინდის პროგნოზის სექცია - გაზრდილი min-height */
       .section:nth-of-type(5) {
         background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990596/glbnbbnolavyycnwbgwa.png');
         background-attachment: scroll;
-        background-size: cover;
-        background-position: center center;
         min-height: 160vh;
       }
 
@@ -1133,12 +893,15 @@
         font-size: 2.2rem;
       }
 
-      /* Desktop grid hidden on mobile */
+      .container {
+        padding: 0 1rem;
+      }
+
+      /* Hide desktop grid, show carousel */
       .vehicle-grid {
         display: none;
       }
 
-      /* Mobile Carousel Visible */
       .vehicle-carousel-wrapper {
         display: block;
         position: relative;
@@ -1154,9 +917,7 @@
 
       .vehicle-carousel-track {
         display: flex;
-        transition: transform 0.5s ease-in-out;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
+        transition: transform 0.5s ease;
       }
 
       .vehicle-carousel-slide {
@@ -1167,21 +928,13 @@
       .vehicle-carousel-slide .vehicle-card {
         margin: 0;
         background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-        -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 
-                    0 5px 20px rgba(0, 0, 0, 0.3),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
         border: 1px solid rgba(229, 56, 59, 0.15);
         border-radius: 24px;
       }
 
-      .vehicle-carousel-slide .vehicle-card::before {
-        background: linear-gradient(135deg, rgba(229, 56, 59, 0.08) 0%, transparent 50%, rgba(229, 56, 59, 0.03) 100%);
-      }
-
-      /* Carousel Navigation Arrows */
+      /* Carousel Navigation */
       .carousel-nav {
         position: absolute;
         top: 50%;
@@ -1199,8 +952,6 @@
         color: white;
         width: 45px;
         height: 45px;
-        min-width: 45px;
-        min-height: 45px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -1211,14 +962,9 @@
         box-shadow: 0 4px 15px rgba(229, 56, 59, 0.5);
         pointer-events: auto;
         border: none;
-        outline: none;
-        -webkit-appearance: none;
-        appearance: none;
-        -webkit-tap-highlight-color: transparent;
       }
 
-      .carousel-arrow:hover,
-      .carousel-arrow:active {
+      .carousel-arrow:hover {
         background: rgba(229, 56, 59, 1);
         transform: scale(1.1);
       }
@@ -1228,7 +974,7 @@
         pointer-events: none;
       }
 
-      /* Carousel Dots - Safari optimized */
+      /* Carousel Dots */
       .carousel-dots {
         display: flex;
         justify-content: center;
@@ -1240,19 +986,12 @@
       .carousel-dot {
         width: 14px;
         height: 14px;
-        min-width: 14px;
-        min-height: 14px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.3);
         cursor: pointer;
         transition: all 0.3s ease;
         border: 2px solid transparent;
-        outline: none;
         padding: 0;
-        -webkit-appearance: none;
-        appearance: none;
-        -webkit-tap-highlight-color: transparent;
-        box-sizing: border-box;
       }
 
       .carousel-dot.active {
@@ -1262,51 +1001,19 @@
         box-shadow: 0 0 10px rgba(229, 56, 59, 0.6);
       }
 
-      .carousel-dot:hover,
-      .carousel-dot:active {
+      .carousel-dot:hover {
         background-color: rgba(229, 56, 59, 0.7);
-        border-color: rgba(229, 56, 59, 0.7);
       }
 
+      /* Mobile Latest Post */
       .latest-post-section {
         padding: 2rem 1rem;
-        min-height: auto;
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        position: relative;
-        z-index: 10;
         margin-top: 3rem;
         margin-bottom: 6rem;
       }
 
-      /* უახლესი პოსტების ტექსტი ცენტრში */
       .latest-post-content {
         text-align: center;
-      }
-      
-      .map-section {
-        padding: 2rem 1rem;
-        min-height: auto;
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        position: relative;
-        z-index: 10;
-        margin-top: 3rem;
-        margin-bottom: 3rem;
-      }
-      
-      .weather-section {
-        padding: 2rem 1rem;
-        min-height: auto;
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        position: relative;
-        z-index: 10;
-        margin-top: 6rem;
-        margin-bottom: 8rem;
       }
 
       .latest-post {
@@ -1324,23 +1031,22 @@
         text-align: center;
       }
 
+      /* Mobile Map */
+      .map-section {
+        padding: 2rem 1rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      /* Mobile Weather */
+      .weather-section {
+        padding: 2rem 1rem;
+        margin-top: 6rem;
+        margin-bottom: 8rem;
+      }
+
       .weather-container {
         grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 1rem;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-      }
-
-      .btn-primary, .btn-secondary {
-        padding: 1rem 2rem;
-        font-size: 1rem;
       }
 
       .weather-controls {
@@ -1352,70 +1058,46 @@
       }
     }
 
-    /* Selection Color */
-    ::selection {
-      background-color: rgba(229, 56, 59, 0.4);
-      color: #fff;
-    }
-
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(22, 33, 62, 0.8);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #e5383b, #c42e31);
-      border-radius: 6px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #ff4447, #e5383b);
-    }
-
-    /* Safari-specific fixes */
-    @supports (-webkit-touch-callout: none) {
-      /* iOS Safari specific */
-      .carousel-dot {
-        width: 16px;
-        height: 16px;
-        min-width: 16px;
-        min-height: 16px;
-      }
-      
-      .carousel-dot.active {
-        transform: scale(1.25);
-      }
-      
-      .btn-primary,
-      .btn-secondary,
-      .carousel-arrow,
-      .carousel-dot {
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
+    /* ========== SMALL MOBILE (max-width: 480px) ========== */
+    @media (max-width: 480px) {
+      .hero {
+        padding: 8rem 1rem 4rem;
       }
 
-    }
+      .hero h1 {
+        font-size: 2rem;
+      }
 
-    /* Footer placeholder */
-    #footer {
-      min-height: 200px;
+      .hero h2 {
+        font-size: 1.2rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .btn-primary, .btn-secondary {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
     }
   </style>
+
+  <!-- Navbar CSS -->
+  <link rel="stylesheet" href="navbar.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- Navbar - Loaded early -->
+  <!-- Navbar -->
   <div id="navbar"></div>
 
   <section class="hero">
     <!-- Video Background -->
-    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
       <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1768990213/rdm4wapfxomngtyfm1mb.mp4" type="video/mp4">
-      <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1768990213/rdm4wapfxomngtyfm1mb.mp4" type="video/quicktime">
     </video>
     <div class="hero-overlay"></div>
     
@@ -1455,7 +1137,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeSedan">სედანი</h3>
             <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="სედანი" loading="lazy" decoding="async">
+              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="სედანი" loading="lazy">
             </div>
           </a>
         </div>
@@ -1467,7 +1149,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeJeep">ჯიპი</h3>
             <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="ჯიპი" loading="lazy" decoding="async">
+              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="ჯიპი" loading="lazy">
             </div>
           </a>
         </div>
@@ -1479,7 +1161,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeMinivan">მინივენი</h3>
             <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="მინივენი" loading="lazy" decoding="async">
+              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="მინივენი" loading="lazy">
             </div>
           </a>
         </div>
@@ -1491,7 +1173,7 @@
             </div>
             <h3 class="vehicle-name" data-i18n="homeBus">ავტობუსი</h3>
             <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="ავტობუსი" loading="lazy" decoding="async">
+              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="ავტობუსი" loading="lazy">
             </div>
           </a>
         </div>
@@ -1510,7 +1192,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeSedan">სედანი</h3>
                   <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="სედანი" loading="lazy" decoding="async">
+                    <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="სედანი" loading="lazy">
                   </div>
                 </a>
               </div>
@@ -1524,7 +1206,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeJeep">ჯიპი</h3>
                   <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="ჯიპი" loading="lazy" decoding="async">
+                    <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="ჯიპი" loading="lazy">
                   </div>
                 </a>
               </div>
@@ -1538,7 +1220,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeMinivan">მინივენი</h3>
                   <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="მინივენი" loading="lazy" decoding="async">
+                    <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="მინივენი" loading="lazy">
                   </div>
                 </a>
               </div>
@@ -1552,7 +1234,7 @@
                   </div>
                   <h3 class="vehicle-name" data-i18n="homeBus">ავტობუსი</h3>
                   <div class="vehicle-image">
-              <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="ავტობუსი" loading="lazy" decoding="async">
+                    <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="ავტობუსი" loading="lazy">
                   </div>
                 </a>
               </div>
@@ -1581,7 +1263,6 @@
     </div>
   </section>
 
-
   <section class="section">
     <div class="container">
       <div class="map-section">
@@ -1589,11 +1270,11 @@
           <h2 class="section-title" data-i18n="homeChooseRegion">აირჩიე რეგიონი</h2>
           <p class="section-subtitle" data-i18n="homeMapSubtitle">გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად</p>
         </div>
-<div class="map-container">
-  <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="საქართველოს რუკა">
-    <div class="loading-posts">რუკა იტვირთება...</div>
-  </object>
-  </div>
+        <div class="map-container">
+          <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="საქართველოს რუკა">
+            <div class="loading-posts">რუკა იტვირთება...</div>
+          </object>
+        </div>
       </div>
     </div>
   </section>
@@ -1661,21 +1342,16 @@
 
   <div id="footer"></div>
 
-  <!-- Load translations and auth first (non-module, faster) -->
+  <!-- Scripts -->
   <script src="translations.js"></script>
   <script src="auth.js"></script>
-  
-  <!-- Navbar and Footer loaded early with async -->
-  <script async src="navbar.js" type="module"></script>
-  <script async src="footer.js" type="module"></script>
-  
-  <!-- Map loaded with defer (waits for DOM) -->
-  <script defer src="map.js"></script>
+  <script src="navbar.js" type="module"></script>
+  <script src="footer.js" type="module"></script>
+  <script src="map.js"></script>
 
-  <!-- Vehicle Carousel Script - Inline for immediate execution -->
+  <!-- Vehicle Carousel Script -->
   <script>
     (function() {
-      // Vehicle Carousel for Mobile
       const carouselTrack = document.getElementById('vehicleCarouselTrack');
       const prevBtn = document.getElementById('carouselPrev');
       const nextBtn = document.getElementById('carouselNext');
@@ -1686,33 +1362,17 @@
       let autoSlideInterval;
       
       function updateCarousel() {
-        // Update track position with hardware acceleration for Safari
         if (carouselTrack) {
-          carouselTrack.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
-          carouselTrack.style.webkitTransform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+          carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
         
-        // Update dots
         dots.forEach((dot, index) => {
-          if (index === currentSlide) {
-            dot.classList.add('active');
-          } else {
-            dot.classList.remove('active');
-          }
+          dot.classList.toggle('active', index === currentSlide);
         });
         
-        // Update arrows visibility
         if (prevBtn && nextBtn) {
-          if (currentSlide === 0) {
-            prevBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden');
-          } else if (currentSlide === totalSlides - 1) {
-            prevBtn.classList.remove('hidden');
-            nextBtn.classList.add('hidden');
-          } else {
-            prevBtn.classList.remove('hidden');
-            nextBtn.classList.remove('hidden');
-          }
+          prevBtn.classList.toggle('hidden', currentSlide === 0);
+          nextBtn.classList.toggle('hidden', currentSlide === totalSlides - 1);
         }
       }
       
@@ -1744,86 +1404,43 @@
         startAutoSlide();
       }
       
-      // Event Listeners
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          nextSlide();
-          resetAutoSlide();
-        }, { passive: false });
-      }
-      
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          prevSlide();
-          resetAutoSlide();
-        }, { passive: false });
-      }
+      if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
+      if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
       
       dots.forEach((dot, index) => {
-        dot.addEventListener('click', function(e) {
-          e.preventDefault();
-          goToSlide(index);
-        }, { passive: false });
-        
-        // Touch support for dots
-        dot.addEventListener('touchend', function(e) {
-          e.preventDefault();
-          goToSlide(index);
-        }, { passive: false });
+        dot.addEventListener('click', () => goToSlide(index));
       });
       
       // Touch/Swipe support
       let touchStartX = 0;
       let touchEndX = 0;
-      let isSwiping = false;
       
       if (carouselTrack) {
-        carouselTrack.addEventListener('touchstart', function(e) {
+        carouselTrack.addEventListener('touchstart', (e) => {
           touchStartX = e.changedTouches[0].screenX;
-          isSwiping = true;
         }, { passive: true });
         
-        carouselTrack.addEventListener('touchmove', function(e) {
-          if (!isSwiping) return;
+        carouselTrack.addEventListener('touchend', (e) => {
           touchEndX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        carouselTrack.addEventListener('touchend', function(e) {
-          if (!isSwiping) return;
-          touchEndX = e.changedTouches[0].screenX;
-          handleSwipe();
-          isSwiping = false;
-        }, { passive: true });
-      }
-      
-      function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-        
-        if (diff > swipeThreshold) {
-          if (currentSlide < totalSlides - 1) {
+          const diff = touchStartX - touchEndX;
+          
+          if (diff > 50 && currentSlide < totalSlides - 1) {
             nextSlide();
             resetAutoSlide();
-          }
-        } else if (diff < -swipeThreshold) {
-          if (currentSlide > 0) {
+          } else if (diff < -50 && currentSlide > 0) {
             prevSlide();
             resetAutoSlide();
           }
-        }
+        }, { passive: true });
       }
       
-      // Initialize
       updateCarousel();
       startAutoSlide();
     })();
   </script>
   
-  <!-- Firebase and Main App Logic - Loaded async -->
+  <!-- Firebase and Main App Logic -->
   <script type="module">
-    // Dynamic Firebase import for better performance
     const loadFirebase = async () => {
       const [{ initializeApp }, { getAuth, onAuthStateChanged }, { getFirestore, collection, query, orderBy, limit, onSnapshot }] = await Promise.all([
         import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"),
@@ -1856,7 +1473,6 @@
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const imageCounter = document.getElementById('image-counter');
-
     const regionSelect = document.getElementById('region-select');
     const forecastTypeSelect = document.getElementById('forecast-type');
     const weatherContainer = document.getElementById('weather-container');
@@ -1884,7 +1500,6 @@
       'თბილისი': { lat: 41.7151, lon: 44.8271 }
     };
 
-    // Weather Functions
     function getWeatherIconFromCode(code) {
       if (code === 0) return 'fas fa-sun';
       if (code >= 1 && code <= 3) return 'fas fa-cloud-sun';
@@ -1901,11 +1516,11 @@
       const coords = weatherData[region];
       
       if (!coords) {
-        weatherContainer.innerHTML = `<div class="no-weather" data-i18n="homeRegionNotFound">${safeTranslate('homeRegionNotFound', 'რეგიონი ვერ მოიძებნა')}</div>`;
+        weatherContainer.innerHTML = `<div class="no-weather">${safeTranslate('homeRegionNotFound', 'რეგიონი ვერ მოიძებნა')}</div>`;
         return;
       }
       
-      weatherContainer.innerHTML = `<div class="loading-weather" data-i18n="homeLoading">${safeTranslate('homeLoading', 'იტვირთება...')}</div>`;
+      weatherContainer.innerHTML = `<div class="loading-weather">${safeTranslate('homeLoading', 'იტვირთება...')}</div>`;
       
       try {
         let url = '';
@@ -1921,17 +1536,12 @@
         }
         
         const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        
         displayWeatherData(data, forecastType);
       } catch (error) {
         console.error('ამინდის მონაცემების მიღების შეცდომა:', error);
-        weatherContainer.innerHTML = `<div class="no-weather" data-i18n="homeWeatherLoadError">${safeTranslate('homeWeatherLoadError', 'ამინდის მონაცემების ჩატვირთვა ვერ მოხერხდა')}</div>`;
+        weatherContainer.innerHTML = `<div class="no-weather">${safeTranslate('homeWeatherLoadError', 'ამინდის მონაცემების ჩატვირთვა ვერ მოხერხდა')}</div>`;
       }
     }
 
@@ -2050,7 +1660,6 @@
       const icon = getWeatherIconFromCode(forecast.weather_code);
       const descriptionKey = getGeorgianWeatherDescriptionFromCode(forecast.weather_code);
       const description = safeTranslate(descriptionKey);
-      
       const avgTemp = (forecast.temp_max + forecast.temp_min) / 2;
       const windUnit = safeTranslate('windSpeedUnit', 'კმ/სთ');
 
@@ -2080,34 +1689,13 @@
 
     function getGeorgianWeatherDescriptionFromCode(code) {
       const descriptions = {
-        0: 'weatherCode0',
-        1: 'weatherCode1',
-        2: 'weatherCode2',
-        3: 'weatherCode3',
-        45: 'weatherCode45',
-        48: 'weatherCode48',
-        51: 'weatherCode51',
-        53: 'weatherCode53',
-        55: 'weatherCode55',
-        56: 'weatherCode56',
-        57: 'weatherCode57',
-        61: 'weatherCode61',
-        63: 'weatherCode63',
-        65: 'weatherCode65',
-        66: 'weatherCode66',
-        67: 'weatherCode67',
-        71: 'weatherCode71',
-        73: 'weatherCode73',
-        75: 'weatherCode75',
-        77: 'weatherCode77',
-        80: 'weatherCode80',
-        81: 'weatherCode81',
-        82: 'weatherCode82',
-        85: 'weatherCode85',
-        86: 'weatherCode86',
-        95: 'weatherCode95',
-        96: 'weatherCode96',
-        99: 'weatherCode99'
+        0: 'weatherCode0', 1: 'weatherCode1', 2: 'weatherCode2', 3: 'weatherCode3',
+        45: 'weatherCode45', 48: 'weatherCode48', 51: 'weatherCode51', 53: 'weatherCode53',
+        55: 'weatherCode55', 56: 'weatherCode56', 57: 'weatherCode57', 61: 'weatherCode61',
+        63: 'weatherCode63', 65: 'weatherCode65', 66: 'weatherCode66', 67: 'weatherCode67',
+        71: 'weatherCode71', 73: 'weatherCode73', 75: 'weatherCode75', 77: 'weatherCode77',
+        80: 'weatherCode80', 81: 'weatherCode81', 82: 'weatherCode82', 85: 'weatherCode85',
+        86: 'weatherCode86', 95: 'weatherCode95', 96: 'weatherCode96', 99: 'weatherCode99'
       };
       return descriptions[code] || 'weatherCodeUnknown';
     }
@@ -2132,99 +1720,80 @@
 
     // Latest Post Functions
     function formatDate(date) {
-        const now = new Date();
-        const diff = now - date;
-        
-        const seconds = Math.floor(diff / 1000);
-        
-        if (seconds < 60) {
-            return seconds + ' ' + safeTranslate('homeSecondsAgo', 'წამი');
-        }
-        
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) {
-            return minutes + ' ' + safeTranslate('homeMinutesAgo', 'წუთი');
-        }
-        
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) {
-            return hours + ' ' + safeTranslate('homeHoursAgo', 'საათი');
-        }
-        
-        return date.toLocaleDateString('ka-GE', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+      const now = new Date();
+      const diff = now - date;
+      const seconds = Math.floor(diff / 1000);
+      
+      if (seconds < 60) return seconds + ' ' + safeTranslate('homeSecondsAgo', 'წამი');
+      
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return minutes + ' ' + safeTranslate('homeMinutesAgo', 'წუთი');
+      
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return hours + ' ' + safeTranslate('homeHoursAgo', 'საათი');
+      
+      return date.toLocaleDateString('ka-GE', {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
     }
 
     function createLatestPostElement(postData, postId) {
-        const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : safeTranslate('homeTimeUnknown', 'დრო უცნობია');
-        
-        const regionNames = {
-            'აფხაზეთი': 'აფხაზეთი',
-            'აჭარა': 'აჭარა',
-            'გურია': 'გურია',
-            'იმერეთი': 'იმერეთი',
-            'კახეთი': 'კახეთი',
-            'ქვემო ქართლი': 'ქვემო ქართლი',
-            'მცხეთა-მთიანეთი': 'მცხეთა-მთიანეთი',
-            'რაჭა-ლეჩხუმი': 'რაჭა-ლეჩხუმი და ქვემო სვანეთი',
-            'სამცხე-ჯავახეთი': 'სამცხე-ჯავახეთი',
-            'შიდა ქართლი': 'შიდა ქართლი',
-            'სამეგრელო': 'სამეგრელო-ზემო სვანეთი',
-            'თბილისი': 'თბილისი'
-        };
-        
-        const regionName = regionNames[postData.region] || postData.region;
-        
-        let imagesHTML = '';
-        if (postData.images && postData.images.length > 0) {
-            imagesHTML = `
-                <div class="latest-post-image">
-                    <img src="${postData.images[0]}" alt="Post image" onclick="openImageModal('${postId}', 0)" loading="lazy">
-                </div>
-            `;
-        }
-        
-        const likesCount = postData.likesCount || 0;
-        const commentsCount = postData.commentsCount || 0;
-        
-        const postElement = document.createElement('div');
-        postElement.className = 'latest-post';
-        postElement.setAttribute('data-post-id', postId);
-        postElement.innerHTML = `
-            <div class="latest-post-header">
-                <img src="${postData.authorAvatar || 'https://via.placeholder.com/50?text=User'}" alt="Author" class="latest-post-avatar" loading="lazy">
-                <div>
-                    <div class="latest-post-author">${postData.authorName || safeTranslate('homeAnonymous', 'ანონიმური')}</div>
-                    <div class="latest-post-time">${postTime} · ${regionName}</div>
-                </div>
-            </div>
-            ${imagesHTML}
-            <div class="latest-post-content">
-                ${postData.content || safeTranslate('homeNoContentProvided', 'შინაარსი არ არის მოწოდებული')}
-            </div>
-            <div class="latest-post-location">
-                <i class="fas fa-map-marker-alt"></i>
-                ${postData.location || safeTranslate('homeNoLocationProvided', 'ადგილმდებარეობა არ არის მოწოდებული')}
-            </div>
-            <div class="latest-post-actions">
-                <div class="post-action">
-                    <i class="far fa-heart"></i>
-                    <span>${likesCount}</span>
-                </div>
-                <div class="post-action">
-                    <i class="far fa-comment"></i>
-                    <span>${commentsCount}</span>
-                </div>
-                <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">${safeTranslate('homeViewAllPosts', 'ყველა პოსტის ნახვა')}</a>
-            </div>
+      const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : safeTranslate('homeTimeUnknown', 'დრო უცნობია');
+      
+      const regionNames = {
+        'აფხაზეთი': 'აფხაზეთი', 'აჭარა': 'აჭარა', 'გურია': 'გურია', 'იმერეთი': 'იმერეთი',
+        'კახეთი': 'კახეთი', 'ქვემო ქართლი': 'ქვემო ქართლი', 'მცხეთა-მთიანეთი': 'მცხეთა-მთიანეთი',
+        'რაჭა-ლეჩხუმი': 'რაჭა-ლეჩხუმი და ქვემო სვანეთი', 'სამცხე-ჯავახეთი': 'სამცხე-ჯავახეთი',
+        'შიდა ქართლი': 'შიდა ქართლი', 'სამეგრელო': 'სამეგრელო-ზემო სვანეთი', 'თბილისი': 'თბილისი'
+      };
+      
+      const regionName = regionNames[postData.region] || postData.region;
+      
+      let imagesHTML = '';
+      if (postData.images && postData.images.length > 0) {
+        imagesHTML = `
+          <div class="latest-post-image">
+            <img src="${postData.images[0]}" alt="Post image" onclick="openImageModal('${postId}', 0)" loading="lazy">
+          </div>
         `;
-        
-        return postElement;
+      }
+      
+      const likesCount = postData.likesCount || 0;
+      const commentsCount = postData.commentsCount || 0;
+      
+      const postElement = document.createElement('div');
+      postElement.className = 'latest-post';
+      postElement.setAttribute('data-post-id', postId);
+      postElement.innerHTML = `
+        <div class="latest-post-header">
+          <img src="${postData.authorAvatar || 'https://via.placeholder.com/50?text=User'}" alt="Author" class="latest-post-avatar" loading="lazy">
+          <div>
+            <div class="latest-post-author">${postData.authorName || safeTranslate('homeAnonymous', 'ანონიმური')}</div>
+            <div class="latest-post-time">${postTime} · ${regionName}</div>
+          </div>
+        </div>
+        ${imagesHTML}
+        <div class="latest-post-content">
+          ${postData.content || safeTranslate('homeNoContentProvided', 'შინაარსი არ არის მოწოდებული')}
+        </div>
+        <div class="latest-post-location">
+          <i class="fas fa-map-marker-alt"></i>
+          ${postData.location || safeTranslate('homeNoLocationProvided', 'ადგილმდებარეობა არ არის მოწოდებული')}
+        </div>
+        <div class="latest-post-actions">
+          <div class="post-action">
+            <i class="far fa-heart"></i>
+            <span>${likesCount}</span>
+          </div>
+          <div class="post-action">
+            <i class="far fa-comment"></i>
+            <span>${commentsCount}</span>
+          </div>
+          <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">${safeTranslate('homeViewAllPosts', 'ყველა პოსტის ნახვა')}</a>
+        </div>
+      `;
+      
+      return postElement;
     }
 
     // Image Modal Functions
@@ -2232,80 +1801,67 @@
     let currentImageIndex = 0;
 
     function openImageModal(postId, imageIndex) {
-        const postElement = document.querySelector(`.latest-post[data-post-id="${postId}"]`);
-        if (!postElement) return;
-        
-        currentImages = [];
-        const images = postElement.querySelectorAll('.latest-post-image img');
-        images.forEach(img => {
-            currentImages.push(img.src);
-        });
-        
-        if (currentImages.length === 0) return;
-        
-        currentImageIndex = imageIndex;
-        showImageModal();
+      const postElement = document.querySelector(`.latest-post[data-post-id="${postId}"]`);
+      if (!postElement) return;
+      
+      currentImages = [];
+      const images = postElement.querySelectorAll('.latest-post-image img');
+      images.forEach(img => currentImages.push(img.src));
+      
+      if (currentImages.length === 0) return;
+      
+      currentImageIndex = imageIndex;
+      showImageModal();
     }
 
     function showImageModal() {
-        if (currentImages.length === 0) return;
+      if (currentImages.length === 0) return;
 
-        modalImage.classList.remove('loaded');
-        
-        modalImage.src = currentImages[currentImageIndex];
-
-        modalImage.onload = () => {
-             modalImage.classList.add('loaded');
-        };
-
-        if (modalImage.complete) {
-            modalImage.classList.add('loaded');
-        }
-        
-        imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
-        imageModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+      modalImage.classList.remove('loaded');
+      modalImage.src = currentImages[currentImageIndex];
+      modalImage.onload = () => modalImage.classList.add('loaded');
+      if (modalImage.complete) modalImage.classList.add('loaded');
+      
+      imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
+      imageModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-        imageModal.style.display = 'none';
-        document.body.style.overflow = '';
-        modalImage.classList.remove('loaded');
+      imageModal.style.display = 'none';
+      document.body.style.overflow = '';
+      modalImage.classList.remove('loaded');
     }
 
     function showPrevImage() {
-        if (currentImages.length === 0) return;
-        
-        currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-        showImageModal();
+      if (currentImages.length === 0) return;
+      currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+      showImageModal();
     }
 
     function showNextImage() {
-        if (currentImages.length === 0) return;
-        
-        currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-        showImageModal();
+      if (currentImages.length === 0) return;
+      currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+      showImageModal();
     }
 
-    // Event Setup Functions
+    // Event Setup
     function setupModalEvents() {
-        modalClose.addEventListener('click', closeModal);
-        prevBtn.addEventListener('click', showPrevImage);
-        nextBtn.addEventListener('click', showNextImage);
-        
-        imageModal.addEventListener('click', function(e) {
-            if (e.target === imageModal) {
-                closeModal();
-            }
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            if (imageModal.style.display === 'flex') {
-                if (e.key === 'Escape') closeModal();
-                if (e.key === 'ArrowLeft') showPrevImage();
-                if (e.key === 'ArrowRight') showNextImage();
-            }
-        });
+      modalClose.addEventListener('click', closeModal);
+      prevBtn.addEventListener('click', showPrevImage);
+      nextBtn.addEventListener('click', showNextImage);
+      
+      imageModal.addEventListener('click', (e) => {
+        if (e.target === imageModal) closeModal();
+      });
+      
+      document.addEventListener('keydown', (e) => {
+        if (imageModal.style.display === 'flex') {
+          if (e.key === 'Escape') closeModal();
+          if (e.key === 'ArrowLeft') showPrevImage();
+          if (e.key === 'ArrowRight') showNextImage();
+        }
+      });
     }
 
     function setupWeatherEvents() {
@@ -2313,25 +1869,18 @@
       forecastTypeSelect.addEventListener('change', fetchWeatherData);
     }
 
-    // Initialize everything
+    // Initialize
     async function init() {
       setupModalEvents();
       setupWeatherEvents();
-      
-      // Load weather data immediately
       fetchWeatherData();
       
-      // Load Firebase and posts
       try {
         const firebase = await loadFirebase();
         const { auth, db, collection, query, orderBy, limit, onSnapshot, onAuthStateChanged } = firebase;
         
         function loadLatestPost() {
-          const postsQuery = query(
-            collection(db, "posts"), 
-            orderBy("createdAt", "desc"), 
-            limit(1)
-          );
+          const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(1));
           
           onSnapshot(postsQuery, (querySnapshot) => {
             latestPostContainer.innerHTML = '';
@@ -2344,7 +1893,6 @@
             querySnapshot.forEach((doc) => {
               const postData = doc.data();
               const postId = doc.id;
-              
               const postElement = createLatestPostElement(postData, postId);
               latestPostContainer.appendChild(postElement);
             });
@@ -2354,7 +1902,6 @@
           });
         }
         
-        // Language change handler
         window.addEventListener('languageChanged', () => {
           if (window.initializeMap && typeof window.initializeMap === 'function') {
             window.initializeMap();
@@ -2363,9 +1910,7 @@
           loadLatestPost();
         });
         
-        onAuthStateChanged(auth, (user) => {
-          loadLatestPost();
-        });
+        onAuthStateChanged(auth, () => loadLatestPost());
         
       } catch (error) {
         console.error('Firebase ინიციალიზაციის შეცდომა:', error);
@@ -2373,27 +1918,13 @@
       }
     }
 
-    // Start initialization when DOM is ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
     }
 
-    // Global functions
     window.openImageModal = openImageModal;
-    
-    // Remove .html extension from URL
-    function removeHtmlExtensionFromURL() {
-      if (window.location.pathname.endsWith('.html')) {
-        const newPath = window.location.pathname.replace(/\.html$/, '');
-        const newURL = newPath + window.location.search + window.location.hash;
-        window.history.replaceState({}, '', newURL);
-      }
-    }
-
-    window.addEventListener('load', removeHtmlExtensionFromURL);
-    window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
 
 </body>
