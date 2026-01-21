@@ -77,6 +77,11 @@
       height: auto;
       object-fit: cover;
       z-index: 0;
+      background-color: #000;
+      background-image: url(''); /* POSTER: ჩასვი ფოტოს ლინკი აქ */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .hero-overlay {
@@ -830,6 +835,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        background-color: #000;
+        background-size: cover;
+        background-position: center;
       }
 
       .hero-overlay {
@@ -1096,7 +1104,8 @@
 
   <section class="hero">
     <!-- Video Background -->
-    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+    <!-- POSTER: ჩასვი ფოტოს ლინკი poster="" ატრიბუტში -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/qmhieg6acl7jrqbx1but.png">
       <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1768990213/rdm4wapfxomngtyfm1mb.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
