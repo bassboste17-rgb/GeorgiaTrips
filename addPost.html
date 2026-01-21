@@ -32,7 +32,6 @@
             --transition: all 0.3s ease;
         }
         
-        /* Replaced starry background with clean modern gradient */
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
             background-size: 400% 400%;
@@ -51,7 +50,6 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Add geometric grid pattern overlay */
         body::before {
             content: '';
             position: fixed;
@@ -66,6 +64,22 @@
             pointer-events: none;
             z-index: 0;
         }
+
+        /* RTL Support for Arabic */
+        [dir="rtl"] .toast-container {
+            right: auto;
+            left: 20px;
+        }
+
+        [dir="rtl"] .toast {
+            border-left: none;
+            border-right: 4px solid;
+        }
+
+        [dir="rtl"] .toast.warning { border-right-color: #f59e0b; }
+        [dir="rtl"] .toast.error { border-right-color: #ef4444; }
+        [dir="rtl"] .toast.success { border-right-color: #22c55e; }
+        [dir="rtl"] .toast.info { border-right-color: #3b82f6; }
         
         .container {
             max-width: 1200px;
@@ -77,7 +91,6 @@
             z-index: 1;
         }
         
-        /* Header Styles */
         header {
             background-color: var(--background-light);
             border-radius: 15px;
@@ -109,7 +122,6 @@
             color: var(--primary-color);
         }
         
-        /* Sidebar Styles */
         .sidebar {
             background-color: var(--background-light);
             border-radius: 15px;
@@ -170,7 +182,6 @@
             color: var(--text-secondary);
         }
         
-        /* Main Content Styles */
         .main-content {
             background-color: var(--background-light);
             border-radius: 15px;
@@ -241,24 +252,39 @@
             padding: 15px;
         }
         
-        /* Multiple Image Upload Styles */
         .upload-container {
             border: 2px dashed var(--border-color);
             border-radius: var(--border-radius);
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
             margin-bottom: 20px;
             position: relative;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .upload-container:hover {
+            border-color: var(--primary-color);
+            background: rgba(229, 56, 59, 0.05);
         }
         
         .upload-icon {
-            font-size: 40px;
+            font-size: 50px;
             color: var(--text-secondary);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .upload-icon i {
+            margin: 0 10px;
         }
         
         .upload-text {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .upload-note {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
         
         .file-input {
@@ -271,32 +297,33 @@
             cursor: pointer;
         }
         
-        .image-preview-container {
+        .media-preview-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 10px;
             margin-top: 20px;
         }
         
-        .image-preview {
+        .media-preview {
             position: relative;
             width: 120px;
             height: 120px;
             border-radius: 8px;
             overflow: hidden;
+            background: var(--background-dark);
         }
         
-        .preview-image {
+        .preview-image, .preview-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        .remove-image {
+        .remove-media {
             position: absolute;
             top: 5px;
             right: 5px;
-            background: rgba(229, 56, 59, 0.8);
+            background: rgba(229, 56, 59, 0.9);
             color: white;
             width: 24px;
             height: 24px;
@@ -306,9 +333,37 @@
             justify-content: center;
             cursor: pointer;
             font-size: 14px;
+            z-index: 2;
+            transition: transform 0.2s;
+        }
+
+        .remove-media:hover {
+            transform: scale(1.1);
+        }
+
+        .media-badge {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .media-badge.video {
+            background: rgba(229, 56, 59, 0.9);
+        }
+
+        .media-badge.image {
+            background: rgba(59, 130, 246, 0.9);
         }
         
-        /* Loading Animation Styles */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -353,7 +408,6 @@
             text-align: center;
         }
         
-        /* Success Message */
         .success-message {
             background: rgba(40, 167, 69, 0.2);
             border: 1px solid #28a745;
@@ -363,8 +417,128 @@
             margin-top: 20px;
             display: none;
         }
+
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .toast {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: right center;
+            min-width: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast.toast-hiding {
+            animation: toastSlideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes toastSlideIn {
+            0% { transform: translateX(120%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes toastSlideOut {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(120%); opacity: 0; }
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        .toast-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toast-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            border-radius: 0 0 12px 12px;
+            animation: toastProgress 4s linear forwards;
+        }
+
+        @keyframes toastProgress {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .toast.warning { border-left: 4px solid #f59e0b; }
+        .toast.warning .toast-icon { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .toast.warning .toast-progress { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.error .toast-icon { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .toast.error .toast-progress { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .toast.success { border-left: 4px solid #22c55e; }
+        .toast.success .toast-icon { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .toast.success .toast-progress { background: linear-gradient(90deg, #22c55e, #4ade80); }
+
+        .toast.info { border-left: 4px solid #3b82f6; }
+        .toast.info .toast-icon { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .toast.info .toast-progress { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         
-        /* Responsive Styles */
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -374,19 +548,40 @@
                 grid-template-columns: 1fr;
             }
             
-            .image-preview-container {
+            .media-preview-container {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
             
-            .image-preview {
+            .media-preview {
                 width: 100px;
                 height: 100px;
+            }
+
+            .upload-icon {
+                font-size: 40px;
+            }
+
+            .upload-icon i {
+                margin: 0 5px;
+            }
+
+            .toast-container {
+                top: 80px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .toast {
+                min-width: auto;
             }
         }
     </style>
 </head>
 <body>
     <div id="navbar"></div>
+
+    <div class="toast-container" id="toast-container"></div>
 
     <div class="loading-overlay" id="loading-overlay">
         <div class="loading-content">
@@ -428,18 +623,19 @@
                 </div>
                 
                 <div class="form-group">
-                    <label data-i18n="addPostPhotosLabel">ფოტოები</label>
+                    <label data-i18n="addPostMediaLabel">ფოტოები და ვიდეოები</label>
                     <div class="upload-container">
                         <div class="upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
+                            <i class="fas fa-image"></i>
+                            <i class="fas fa-video"></i>
                         </div>
-                        <div class="upload-text" data-i18n="addPostUploadText">დააჭირეთ ან გადმოათრიეთ ფოტოები ასატვირთად</div>
-                        <div class="upload-note" data-i18n="addPostUploadNote">მაქსიმუმ 10 ფოტო</div>
-                        <input type="file" id="image-upload" class="file-input" accept="image/*" multiple>
+                        <div class="upload-text" data-i18n="addPostUploadText">დააჭირეთ ან გადმოათრიეთ ფოტოები და ვიდეოები ასატვირთად</div>
+                        <div class="upload-note" data-i18n="addPostUploadNote">მაქსიმუმ 10 ფოტო და 3 ვიდეო (ვიდეო მაქს. 100MB)</div>
+                        <input type="file" id="media-upload" class="file-input" accept="image/*,video/*" multiple>
                     </div>
                     
-                    <div class="image-preview-container" id="image-preview-container">
-                        </div>
+                    <div class="media-preview-container" id="media-preview-container">
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -508,28 +704,177 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // ლოკალური თარგმანები Toast-ებისთვის და Badge-ებისთვის
+        const localTranslations = {
+            ka: {
+                toastLimitTitle: "ლიმიტი მიღწეულია",
+                toastSizeTitle: "ფაილი ძალიან დიდია",
+                toastInvalidTitle: "არასწორი ფორმატი",
+                toastWaitTitle: "გთხოვთ დაელოდოთ",
+                toastMediaRequiredTitle: "მედია საჭიროა",
+                toastSuccessTitle: "წარმატება!",
+                toastErrorTitle: "შეცდომა!",
+                toastMaxPhotos: "თქვენ შეგიძლიათ ატვირთოთ მაქსიმუმ 10 ფოტო",
+                toastMaxVideos: "თქვენ შეგიძლიათ ატვირთოთ მაქსიმუმ 3 ვიდეო",
+                toastVideoSize: "ვიდეოს ზომა არ უნდა აღემატებოდეს 100MB-ს",
+                toastInvalidFile: "გთხოვთ ატვირთოთ მხოლოდ სურათები ან ვიდეოები",
+                toastWaitMessage: "მონაცემების ჩატვირთვას",
+                toastMediaRequired: "გთხოვთ ატვირთოთ მინიმუმ ერთი ფოტო ან ვიდეო",
+                toastSuccessMessage: "პოსტი წარმატებით დაემატა!",
+                toastErrorMessage: "პოსტის დამატება ვერ მოხერხდა. სცადეთ მოგვიანებით.",
+                badgePhoto: "ფოტო",
+                badgeVideo: "ვიდეო",
+                addPostUser: "მომხმარებელი"
+            },
+            en: {
+                toastLimitTitle: "Limit Reached",
+                toastSizeTitle: "File Too Large",
+                toastInvalidTitle: "Invalid Format",
+                toastWaitTitle: "Please Wait",
+                toastMediaRequiredTitle: "Media Required",
+                toastSuccessTitle: "Success!",
+                toastErrorTitle: "Error!",
+                toastMaxPhotos: "You can upload a maximum of 10 photos",
+                toastMaxVideos: "You can upload a maximum of 3 videos",
+                toastVideoSize: "Video size must not exceed 100MB",
+                toastInvalidFile: "Please upload only images or videos",
+                toastWaitMessage: "Loading data",
+                toastMediaRequired: "Please upload at least one photo or video",
+                toastSuccessMessage: "Post added successfully!",
+                toastErrorMessage: "Failed to add post. Please try again later.",
+                badgePhoto: "Photo",
+                badgeVideo: "Video",
+                addPostUser: "User"
+            },
+            ru: {
+                toastLimitTitle: "Лимит достигнут",
+                toastSizeTitle: "Файл слишком большой",
+                toastInvalidTitle: "Неверный формат",
+                toastWaitTitle: "Пожалуйста, подождите",
+                toastMediaRequiredTitle: "Требуется медиа",
+                toastSuccessTitle: "Успех!",
+                toastErrorTitle: "Ошибка!",
+                toastMaxPhotos: "Вы можете загрузить максимум 10 фотографий",
+                toastMaxVideos: "Вы можете загрузить максимум 3 видео",
+                toastVideoSize: "Размер видео не должен превышать 100MB",
+                toastInvalidFile: "Пожалуйста, загружайте только изображения или видео",
+                toastWaitMessage: "Загрузка данных",
+                toastMediaRequired: "Пожалуйста, загрузите хотя бы одно фото или видео",
+                toastSuccessMessage: "Пост успешно добавлен!",
+                toastErrorMessage: "Не удалось добавить пост. Попробуйте позже.",
+                badgePhoto: "Фото",
+                badgeVideo: "Видео",
+                addPostUser: "Пользователь"
+            },
+            ar: {
+                toastLimitTitle: "تم الوصول للحد الأقصى",
+                toastSizeTitle: "الملف كبير جداً",
+                toastInvalidTitle: "تنسيق غير صالح",
+                toastWaitTitle: "يرجى الانتظار",
+                toastMediaRequiredTitle: "الوسائط مطلوبة",
+                toastSuccessTitle: "نجاح!",
+                toastErrorTitle: "خطأ!",
+                toastMaxPhotos: "يمكنك تحميل 10 صور كحد أقصى",
+                toastMaxVideos: "يمكنك تحميل 3 فيديوهات كحد أقصى",
+                toastVideoSize: "حجم الفيديو يجب ألا يتجاوز 100 ميجابايت",
+                toastInvalidFile: "يرجى تحميل الصور أو الفيديوهات فقط",
+                toastWaitMessage: "جاري تحميل البيانات",
+                toastMediaRequired: "يرجى تحميل صورة أو فيديو واحد على الأقل",
+                toastSuccessMessage: "تمت إضافة المنشور بنجاح!",
+                toastErrorMessage: "فشل في إضافة المنشور. يرجى المحاولة لاحقاً.",
+                badgePhoto: "صورة",
+                badgeVideo: "فيديو",
+                addPostUser: "مستخدم"
+            }
+        };
+
+        // მიმდინარე ენის მიღება
+        function getCurrentLanguage() {
+            // პირველ რიგში შევამოწმოთ გლობალური currentLanguage
+            if (typeof currentLanguage !== 'undefined' && currentLanguage) {
+                return currentLanguage;
+            }
+            // შემდეგ localStorage
+            const savedLang = localStorage.getItem('language');
+            if (savedLang && localTranslations[savedLang]) {
+                return savedLang;
+            }
+            // default
+            return 'ka';
+        }
+
+        // თარგმანის ფუნქცია
+        function t(key) {
+            const lang = getCurrentLanguage();
+            return localTranslations[lang]?.[key] || localTranslations['ka'][key] || key;
+        }
+
         const postForm = document.getElementById('post-form');
         const userAvatar = document.getElementById('user-avatar');
         const profileName = document.getElementById('profile-name');
         const profileEmail = document.getElementById('profile-email');
         const postCount = document.getElementById('post-count');
         const contentInput = document.getElementById('content');
-        const imageUpload = document.getElementById('image-upload');
-        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const mediaUpload = document.getElementById('media-upload');
+        const mediaPreviewContainer = document.getElementById('media-preview-container');
         const regionSelect = document.getElementById('region');
         const locationInput = document.getElementById('location');
         const loadingOverlay = document.getElementById('loading-overlay');
         const successMessage = document.getElementById('success-message');
+        const toastContainer = document.getElementById('toast-container');
 
-        let selectedFiles = [];
+        let selectedImages = [];
+        let selectedVideos = [];
         let userData = null;
 
-        // თარგმანის ფუნქცია - გამოიყენება alert-ებისთვის
-        function getTranslation(key, fallback) {
-            if (typeof translations !== 'undefined' && typeof currentLanguage !== 'undefined') {
-                return translations[currentLanguage]?.[key] || fallback;
+        // Toast Notification System
+        function showToast(type, titleKey, messageKey, duration = 4000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                warning: 'fa-exclamation-triangle',
+                error: 'fa-times-circle',
+                success: 'fa-check-circle',
+                info: 'fa-info-circle'
+            };
+
+            const title = t(titleKey);
+            const message = t(messageKey);
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icons[type]}"></i>
+                </div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="toast-progress"></div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            const closeBtn = toast.querySelector('.toast-close');
+            closeBtn.addEventListener('click', () => {
+                removeToast(toast);
+            });
+            
+            setTimeout(() => {
+                removeToast(toast);
+            }, duration);
+        }
+        
+        function removeToast(toast) {
+            if (toast && toast.parentElement) {
+                toast.classList.add('toast-hiding');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
             }
-            return fallback;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -552,7 +897,7 @@
                 
                 if (userDoc.exists()) {
                     const userDataFromDB = userDoc.data();
-                    profileName.textContent = userDataFromDB.name || user.displayName || getTranslation('addPostUser', 'მომხმარებელი');
+                    profileName.textContent = userDataFromDB.name || user.displayName || t('addPostUser');
                     profileEmail.textContent = userDataFromDB.email || user.email;
                     
                     if (userDataFromDB.avatar) {
@@ -568,7 +913,7 @@
                         avatar: userDataFromDB.avatar || user.photoURL || ""
                     };
                 } else {
-                    profileName.textContent = user.displayName || getTranslation('addPostUser', 'მომხმარებელი');
+                    profileName.textContent = user.displayName || t('addPostUser');
                     profileEmail.textContent = user.email;
                     
                     if (user.photoURL) {
@@ -587,58 +932,108 @@
             }
         }
 
-        imageUpload.addEventListener('change', function(e) {
+        mediaUpload.addEventListener('change', function(e) {
             const files = e.target.files;
-            
-            if (selectedFiles.length + files.length > 10) {
-                alert(getTranslation('addPostMaxPhotosAlert', 'თქვენ შეგიძლიათ ატვირთოთ მაქსიმუმ 10 ფოტო'));
-                return;
-            }
             
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 
-                if (!file.type.startsWith('image/')) {
-                    alert(getTranslation('addPostOnlyImagesAlert', 'გთხოვთ ატვირთოთ მხოლოდ სურათები'));
-                    continue;
+                if (file.type.startsWith('image/')) {
+                    if (selectedImages.length >= 10) {
+                        showToast('warning', 'toastLimitTitle', 'toastMaxPhotos');
+                        continue;
+                    }
+                    selectedImages.push(file);
+                    createMediaPreview(file, 'image');
+                    
+                } else if (file.type.startsWith('video/')) {
+                    if (selectedVideos.length >= 3) {
+                        showToast('warning', 'toastLimitTitle', 'toastMaxVideos');
+                        continue;
+                    }
+                    
+                    if (file.size > 100 * 1024 * 1024) {
+                        showToast('error', 'toastSizeTitle', 'toastVideoSize');
+                        continue;
+                    }
+                    
+                    selectedVideos.push(file);
+                    createMediaPreview(file, 'video');
+                } else {
+                    showToast('error', 'toastInvalidTitle', 'toastInvalidFile');
                 }
-                
-                selectedFiles.push(file);
-                createImagePreview(file);
             }
             
             e.target.value = '';
         });
 
-        function createImagePreview(file) {
-            const reader = new FileReader();
+        function createMediaPreview(file, type) {
+            const previewDiv = document.createElement('div');
+            previewDiv.className = 'media-preview';
             
-            reader.onload = function(e) {
-                const previewDiv = document.createElement('div');
-                previewDiv.className = 'image-preview';
+            if (type === 'image') {
+                const reader = new FileReader();
                 
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'preview-image';
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'preview-image';
+                    previewDiv.appendChild(img);
+                };
                 
-                const removeBtn = document.createElement('div');
-                removeBtn.className = 'remove-image';
-                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
-                removeBtn.addEventListener('click', function() {
-                    const index = selectedFiles.indexOf(file);
-                    if (index > -1) {
-                        selectedFiles.splice(index, 1);
-                    }
-                    
-                    previewDiv.remove();
+                reader.readAsDataURL(file);
+                
+                const badge = document.createElement('div');
+                badge.className = 'media-badge image';
+                badge.innerHTML = `<i class="fas fa-image"></i> ${t('badgePhoto')}`;
+                previewDiv.appendChild(badge);
+                
+            } else if (type === 'video') {
+                const video = document.createElement('video');
+                video.src = URL.createObjectURL(file);
+                video.className = 'preview-video';
+                video.muted = true;
+                
+                video.addEventListener('mouseenter', function() {
+                    video.play();
+                });
+                video.addEventListener('mouseleave', function() {
+                    video.pause();
+                    video.currentTime = 0;
                 });
                 
-                previewDiv.appendChild(img);
-                previewDiv.appendChild(removeBtn);
-                imagePreviewContainer.appendChild(previewDiv);
-            };
+                previewDiv.appendChild(video);
+                
+                const badge = document.createElement('div');
+                badge.className = 'media-badge video';
+                badge.innerHTML = `<i class="fas fa-play"></i> ${t('badgeVideo')}`;
+                previewDiv.appendChild(badge);
+            }
             
-            reader.readAsDataURL(file);
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'remove-media';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', function() {
+                if (type === 'image') {
+                    const index = selectedImages.indexOf(file);
+                    if (index > -1) {
+                        selectedImages.splice(index, 1);
+                    }
+                } else {
+                    const index = selectedVideos.indexOf(file);
+                    if (index > -1) {
+                        selectedVideos.splice(index, 1);
+                    }
+                    const video = previewDiv.querySelector('video');
+                    if (video) {
+                        URL.revokeObjectURL(video.src);
+                    }
+                }
+                previewDiv.remove();
+            });
+            
+            previewDiv.appendChild(removeBtn);
+            mediaPreviewContainer.appendChild(previewDiv);
         }
 
         async function uploadImagesToCloudinary(files) {
@@ -656,7 +1051,7 @@
                     });
                     
                     if (!res.ok) {
-                        throw new Error(getTranslation('addPostUploadError', 'ფოტოს ატვირთვა ვერ მოხერხდა'));
+                        throw new Error('Upload failed');
                     }
                     
                     const data = await res.json();
@@ -670,27 +1065,67 @@
             return imageUrls;
         }
 
+        async function uploadVideosToCloudinary(files) {
+            const videoUrls = [];
+            
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", UPLOAD_PRESET);
+                formData.append("resource_type", "video");
+                
+                try {
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`, {
+                        method: "POST",
+                        body: formData
+                    });
+                    
+                    if (!res.ok) {
+                        throw new Error('Upload failed');
+                    }
+                    
+                    const data = await res.json();
+                    videoUrls.push(data.secure_url);
+                } catch (error) {
+                    console.error("ვიდეოს ატვირთვის შეცდომა:", error);
+                    throw error;
+                }
+            }
+            
+            return videoUrls;
+        }
+
         postForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             if (!userData) {
-                alert(getTranslation('addPostWaitDataAlert', 'გთხოვთ დაელოდოთ, მონაცემების ჩატვირთვას'));
+                showToast('info', 'toastWaitTitle', 'toastWaitMessage');
                 return;
             }
             
-            if (selectedFiles.length === 0) {
-                alert(getTranslation('addPostMinPhotoAlert', 'გთხოვთ ატვირთოთ მინიმუმ ერთი ფოტო'));
+            if (selectedImages.length === 0 && selectedVideos.length === 0) {
+                showToast('warning', 'toastMediaRequiredTitle', 'toastMediaRequired');
                 return;
             }
             
             showLoading();
             
             try {
-                const imageUrls = await uploadImagesToCloudinary(selectedFiles);
+                let imageUrls = [];
+                let videoUrls = [];
+
+                if (selectedImages.length > 0) {
+                    imageUrls = await uploadImagesToCloudinary(selectedImages);
+                }
+
+                if (selectedVideos.length > 0) {
+                    videoUrls = await uploadVideosToCloudinary(selectedVideos);
+                }
                 
                 const postData = {
                     content: contentInput.value,
                     images: imageUrls,
+                    videos: videoUrls,
                     region: regionSelect.value,
                     location: locationInput.value,
                     authorId: userData.uid,
@@ -703,19 +1138,16 @@
                 
                 await addDoc(collection(db, "posts"), postData);
                 
-                successMessage.style.display = 'block';
+                showToast('success', 'toastSuccessTitle', 'toastSuccessMessage');
                 
                 postForm.reset();
-                selectedFiles = [];
-                imagePreviewContainer.innerHTML = '';
-                
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 5000);
+                selectedImages = [];
+                selectedVideos = [];
+                mediaPreviewContainer.innerHTML = '';
                 
             } catch (error) {
                 console.error("პოსტის დამატების შეცდომა:", error);
-                alert(getTranslation('addPostErrorAlert', 'პოსტის დამატება ვერ მოხერხდა. სცადეთ მოგვიანებით.'));
+                showToast('error', 'toastErrorTitle', 'toastErrorMessage');
             } finally {
                 hideLoading();
             }
@@ -728,24 +1160,17 @@
         function hideLoading() {
             loadingOverlay.classList.remove('active');
         }
-          // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
-function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
-    if (window.location.pathname.endsWith('.html')) {
-        // შექმენით ახალი URL .html-ის გარეშე
-        const newPath = window.location.pathname.replace(/\.html$/, '');
-        const newURL = newPath + window.location.search + window.location.hash;
-        
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
-        window.history.replaceState({}, '', newURL);
-    }
-}
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
-window.addEventListener('load', removeHtmlExtensionFromURL);
+        function removeHtmlExtensionFromURL() {
+            if (window.location.pathname.endsWith('.html')) {
+                const newPath = window.location.pathname.replace(/\.html$/, '');
+                const newURL = newPath + window.location.search + window.location.hash;
+                window.history.replaceState({}, '', newURL);
+            }
+        }
 
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
-window.addEventListener('popstate', removeHtmlExtensionFromURL);
+        window.addEventListener('load', removeHtmlExtensionFromURL);
+        window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
     <div id="footer"></div>
     <script type="module" src="navbar.js"></script>   
