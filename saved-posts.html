@@ -954,7 +954,7 @@
                     await loadUserData(user);
                     await loadSavedPosts();
                 } else {
-                    showToast('გთხოვთ შეხვიდეთ სისტემაში');
+                    showToast(languageSwitcher.translate('savedPostsPleaseLogin'));
                     setTimeout(() => {
                         window.location.href = 'login.html';
                     }, 2000);
@@ -1332,7 +1332,7 @@
 
         function sharePost(postId) {
             currentPostIdForShare = postId;
-            postUrl.value = window.location.origin + '/post.html?id=' + postId;
+            postUrl.value = window.location.origin + '/posts.html?id=' + postId;
             shareModal.style.display = 'flex';
             languageSwitcher.updateElementTranslation(shareModal.querySelector('[data-i18n="savedPostsSharePost"]'));
             languageSwitcher.updateElementTranslation(shareModal.querySelector('[data-i18n="savedPostsShareLink"]'));

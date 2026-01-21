@@ -714,6 +714,8 @@ warningPopupContinueBtn: "გასაგებია, გაგრძელე�
     bookingCalendarSaturday: "შაბ",
     bookingCalendarSunday: "კვი",
     // Auth
+    savedPostsPleaseLogin: "გთხოვთ შეხვიდეთ სისტემაში",
+    // Booking Auth Modal
     bookingAuthRequired: "საჭიროა ავტორიზაცია",
     bookingAuthMessage: "დაჯავშნის გასაკეთებლად გაიარეთ ავტორიზაცია",
     bookingAuthClose: "დახურვა",
@@ -1291,7 +1293,7 @@ warningPopupContinueBtn: "გასაგებია, გაგრძელე�
     navAddPost: "Add Post",
     navMyPosts: "My Posts",
     navLogout: "Logout",
-
+  savedPostsPleaseLogin: "Please log in",
     //Footer
     footerCompanyName: "Georgia Trips",
     footerDescription: "Car rental service throughout Georgia. Quality and reliability.",
@@ -2507,6 +2509,7 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     timeHoursAgo: "часов назад",
     timeDaysAgo: "дней назад",
     // Profile Page
+    savedPostsPleaseLogin: "Пожалуйста, войдите в систему",
     profilePageTitle: "Профиль",
     profileLoading: "Загрузка данных...",
     profileDefaultName: "Пользователь",
@@ -4010,6 +4013,7 @@ postsLinkCopied: "Ссылка скопирована",
     aboutReviewAddError: "فشلت إضافة المراجعة",
     aboutRegionOther: "أخرى",
 // Warning Popup Translations
+ savedPostsPleaseLogin: "يرجى تسجيل الدخول لعرض المنشورات المحفوظة",
 warningPopupTitle: "معلومات مهمة",
 warningPopupPricesMessage: "الأسعار متغيرة، لذا يرجى مراعاة ذلك والتحقق من الأسعار عن طريق الكتابة على WhatsApp أو Online Chat.",
 warningPopupContactMessage: "أيضاً، يرجى تحديد معلومات الاتصال بشكل صحيح عند الحجز حتى نتمكن من التواصل معك.",
