@@ -1382,21 +1382,72 @@
                 right: 90px;
             }
             
+            /* როცა ფილტრი ჩაკეცილია - ღილაკები ზემოთ მარჯვნივ */
+            .floating-filter-btn.top-position {
+                bottom: auto;
+                top: 80px;
+                right: 16px;
+                width: 44px;
+                height: 44px;
+            }
+            
+            .floating-saved-btn.top-position {
+                bottom: auto;
+                top: 80px;
+                right: 70px;
+                width: 44px;
+                height: 44px;
+            }
+            
             .post-avatar {
                 width: 40px;
                 height: 40px;
             }
             
+            .post-actions {
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                padding: 12px 0;
+                gap: 4px;
+            }
+            
             .post-action {
-                padding: 8px 12px;
+                padding: 8px 10px;
+                flex: 1;
+                justify-content: center;
+                min-width: 0;
+            }
+            
+            .post-action i {
+                font-size: 1.1em;
             }
             
             .post-action span {
-                font-size: 0.85em;
+                display: none;
+            }
+            
+            .post-action .action-count {
+                display: inline;
+                font-size: 0.8em;
+                margin-left: 4px;
             }
             
             .images-container {
                 border-radius: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .post-action {
+                padding: 8px 6px;
+            }
+            
+            .post-action i {
+                font-size: 1em;
+            }
+            
+            .post-action .action-count {
+                font-size: 0.75em;
             }
         }
     </style>
@@ -2741,12 +2792,16 @@
             searchFilterContainer.classList.remove('hidden');
             mainContainer.classList.remove('filter-hidden');
             floatingFilterBtn.innerHTML = '<i class="fas fa-times"></i>';
+            floatingFilterBtn.classList.remove('top-position');
+            floatingSavedBtn.classList.remove('top-position');
         }
         
         function hideFilters() {
             searchFilterContainer.classList.add('hidden');
             mainContainer.classList.add('filter-hidden');
             floatingFilterBtn.innerHTML = '<i class="fas fa-filter"></i>';
+            floatingFilterBtn.classList.add('top-position');
+            floatingSavedBtn.classList.add('top-position');
         }
 
         window.addEventListener('languageChanged', () => {

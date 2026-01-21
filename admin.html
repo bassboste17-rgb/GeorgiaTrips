@@ -1646,17 +1646,20 @@ input:checked + .toggle-slider:before {
             <!-- გაუმჯობესებული admin panel header ღილაკებით -->
             <div class="admin-panel-header">
                 <h1>ადმინ პანელი</h1>
-                <div class="admin-header-buttons">
-                    <a href="onlinechat.html" class="btn btn-secondary">
-                        <i class="fas fa-comments"></i> ონლაინ ჩატი
-                    </a>
-                    <button class="btn btn-secondary" data-view="adminBookings">
-                        <i class="fas fa-tasks"></i> დაჯავშნის მართვა
-                    </button>
-                    <a href="booking.html" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> უკან
-                    </a>
-                </div>
+<div class="admin-header-buttons">
+        <a href="onlinechat.html" class="btn btn-secondary">
+            <i class="fas fa-comments"></i> ონლაინ ჩატი
+        </a>
+        <button class="btn btn-secondary" data-view="adminBookings">
+            <i class="fas fa-tasks"></i> დაჯავშნის მართვა
+        </button>
+        <button class="btn btn-secondary" data-view="emails">
+            <i class="fas fa-envelope"></i> მაილები
+        </button>
+        <a href="booking.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> უკან
+        </a>
+    </div>
             </div>
             <!-- </CHANGE> -->
             
@@ -1721,6 +1724,69 @@ input:checked + .toggle-slider:before {
             </div>
 
             <div id="admin-bookings-container"></div>
+        </div>
+    </div>
+
+    <!-- Emails View -->
+    <div id="emailsView" class="view" style="display: none;">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-envelope"></i> გამოწერილი მაილები</h1>
+                <button class="btn btn-secondary" data-view="admin">
+                    <i class="fas fa-arrow-left"></i> უკან
+                </button>
+            </div>
+
+            <div class="admin-stats" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalSubscribers">0</span>
+                        <span class="stat-label">სულ გამომწერი</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="todaySubscribers">0</span>
+                        <span class="stat-label">დღეს გამოიწერა</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emails-actions" style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn" id="exportEmailsBtn">
+                    <i class="fas fa-download"></i> ექსპორტი CSV
+                </button>
+                <button class="btn btn-secondary" id="copyAllEmailsBtn">
+                    <i class="fas fa-copy"></i> ყველას კოპირება
+                </button>
+            </div>
+
+            <div class="emails-table-container" style="background: var(--light-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); overflow: hidden;">
+                <table class="emails-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: rgba(0,0,0,0.3);">
+                            <th style="padding: 1rem; text-align: left; color: var(--primary-color); font-weight: 600;">#</th>
+                            <th style="padding: 1rem; text-align: left; color: var(--primary-color); font-weight: 600;">ელ. ფოსტა</th>
+                            <th style="padding: 1rem; text-align: left; color: var(--primary-color); font-weight: 600;">თარიღი</th>
+                            <th style="padding: 1rem; text-align: center; color: var(--primary-color); font-weight: 600;">მოქმედება</th>
+                        </tr>
+                    </thead>
+                    <tbody id="emailsTableBody">
+                        <!-- Emails will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noEmailsMessage" style="display: none; text-align: center; padding: 3rem; color: #666;">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>ჯერ არცერთი მაილი არ არის გამოწერილი</p>
+            </div>
         </div>
     </div>
 
@@ -2388,6 +2454,8 @@ input:checked + .toggle-slider:before {
                     loadAdminData()
                 } else if (view === "adminBookings") {
                     loadAdminBookings()
+                } else if (view === "emails") {
+                    loadEmailSubscribers()
                 }
             }
         }
@@ -3766,6 +3834,141 @@ input:checked + .toggle-slider:before {
                 e.target.style.display = "none"
             }
         })
+
+        // ======== EMAIL SUBSCRIBERS FUNCTIONS ========
+        let allSubscribers = [];
+
+        async function loadEmailSubscribers() {
+            const tableBody = document.getElementById("emailsTableBody");
+            const noEmailsMsg = document.getElementById("noEmailsMessage");
+            const totalStat = document.getElementById("totalSubscribers");
+            const todayStat = document.getElementById("todaySubscribers");
+
+            if (!tableBody) return;
+
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;">იტვირთება...</td></tr>';
+
+            try {
+                const subscribersSnapshot = await getDocs(query(collection(db, "newsletter_subscribers"), orderBy("subscribedAt", "desc")));
+                allSubscribers = subscribersSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    subscribedAt: doc.data().subscribedAt?.toDate() || new Date()
+                }));
+
+                // Stats
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const todayCount = allSubscribers.filter(sub => sub.subscribedAt >= today).length;
+
+                totalStat.textContent = allSubscribers.length;
+                todayStat.textContent = todayCount;
+
+                if (allSubscribers.length === 0) {
+                    tableBody.innerHTML = '';
+                    noEmailsMsg.style.display = 'block';
+                    return;
+                }
+
+                noEmailsMsg.style.display = 'none';
+                tableBody.innerHTML = allSubscribers.map((sub, index) => `
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem; color: #666;">${index + 1}</td>
+                        <td style="padding: 1rem;">
+                            <a href="mailto:${sub.email}" style="color: var(--secondary-color); text-decoration: none;">
+                                ${sub.email}
+                            </a>
+                        </td>
+                        <td style="padding: 1rem; color: #999;">
+                            ${formatDate(sub.subscribedAt)}
+                        </td>
+                        <td style="padding: 1rem; text-align: center;">
+                            <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;" onclick="copyEmail('${sub.email}')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="btn" style="padding: 0.5rem 0.75rem; font-size: 0.8rem; background: var(--error-color);" onclick="deleteSubscriber('${sub.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error("Error loading subscribers:", error);
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--error-color);">შეცდომა მონაცემების ჩატვირთვისას</td></tr>';
+            }
+        }
+
+        function formatDate(date) {
+            if (!date) return '-';
+            return new Intl.DateTimeFormat('ka-GE', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }).format(date);
+        }
+
+        window.copyEmail = function(email) {
+            navigator.clipboard.writeText(email).then(() => {
+                showToast("მაილი დაკოპირდა", "success");
+            }).catch(() => {
+                showToast("კოპირება ვერ მოხერხდა", "error");
+            });
+        }
+
+        window.deleteSubscriber = async function(id) {
+            const confirmed = await showConfirm("ნამდვილად გსურთ ამ მაილის წაშლა?", "წაშლა");
+            if (!confirmed) return;
+
+            try {
+                await deleteDoc(doc(db, "newsletter_subscribers", id));
+                showToast("მაილი წაიშალა", "success");
+                loadEmailSubscribers();
+            } catch (error) {
+                console.error("Error deleting subscriber:", error);
+                showToast("წაშლა ვერ მოხერხდა", "error");
+            }
+        }
+
+        // Export emails to CSV
+        document.getElementById("exportEmailsBtn")?.addEventListener("click", () => {
+            if (allSubscribers.length === 0) {
+                showToast("არ არის მაილები ექსპორტისთვის", "warning");
+                return;
+            }
+
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Email,Date\n"
+                + allSubscribers.map(sub => `${sub.email},${formatDate(sub.subscribedAt)}`).join("\n");
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `newsletter_subscribers_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast("CSV ფაილი ჩამოიტვირთა", "success");
+        });
+
+        // Copy all emails
+        document.getElementById("copyAllEmailsBtn")?.addEventListener("click", () => {
+            if (allSubscribers.length === 0) {
+                showToast("არ არის მაილები კოპირებისთვის", "warning");
+                return;
+            }
+
+            const emails = allSubscribers.map(sub => sub.email).join(", ");
+            navigator.clipboard.writeText(emails).then(() => {
+                showToast(`${allSubscribers.length} მაილი დაკოპირდა`, "success");
+            }).catch(() => {
+                showToast("კოპირება ვერ მოხერხდა", "error");
+            });
+        });
+
           // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
 function removeHtmlExtensionFromURL() {
     // შეამოწმეთ, თუ URL შეიცავს .html
