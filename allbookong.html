@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgia Trips - მანქანები და ტურები</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --primary-light: #38bdf8;
+            --accent: #f97316;
+            --accent-dark: #ea580c;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-secondary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --border-focus: #0ea5e9;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 1.75rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.35rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Panel */
+        .panel {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .panel-title i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .panel-body {
+            padding: 2rem;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section-title i {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-label .required {
+            color: var(--error);
+            margin-left: 2px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .form-hint i {
+            font-size: 0.7rem;
+        }
+
+        /* License Plate Input */
+        .license-plate-input {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
+            border: 3px solid #ca8a04;
+            color: #1c1917;
+        }
+
+        .license-plate-input:focus {
+            border-color: #a16207;
+            box-shadow: 0 0 0 4px rgba(202, 138, 4, 0.2);
+        }
+
+        /* Photo Upload */
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: var(--bg-card);
+        }
+
+        .photo-upload-area:hover,
+        .photo-upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .photo-upload-area.uploading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .photo-upload-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .photo-upload-icon i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .photo-upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .photo-upload-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .photo-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .photo-preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .photo-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: var(--error);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .photo-preview-item:hover .photo-remove-btn {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-accent:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* List Panel */
+        .list-panel {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: none;
+        }
+
+        .list-panel.active {
+            display: block;
+        }
+
+        .list-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .list-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .list-title i {
+            color: var(--accent);
+        }
+
+        .list-count {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .list-body {
+            padding: 1.5rem;
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .empty-state-icon i {
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-text {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Item Cards */
+        .item-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .item-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .item-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-card-inner {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .item-card-image {
+            width: 120px;
+            height: 90px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .item-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-card-no-image {
+            width: 120px;
+            height: 90px;
+            border-radius: var(--radius-md);
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .item-card-no-image i {
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+
+        .item-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .item-card-tag {
+            padding: 0.25rem 0.625rem;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .item-card-tag i {
+            color: var(--primary);
+            font-size: 0.7rem;
+        }
+
+        .item-card-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .item-card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: white;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-icon.delete:hover {
+            background: var(--error);
+        }
+
+        /* Image Gallery in Card */
+        .item-card-gallery {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1rem 1rem 1rem;
+            overflow-x: auto;
+        }
+
+        .item-card-gallery img {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .toast {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: toastIn 0.3s ease;
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--error);
+        }
+
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .toast-message {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Region Checkbox Grid */
+        .region-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 0.5rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .region-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .region-checkbox-item:hover {
+            border-color: var(--primary-light);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .region-checkbox-item.selected {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .region-checkbox-item input {
+            display: none;
+        }
+
+        .region-checkbox-item .checkbox-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .region-checkbox-item.selected .checkbox-custom {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .region-checkbox-item .checkbox-custom i {
+            color: white;
+            font-size: 0.6rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .region-checkbox-item.selected .checkbox-custom i {
+            opacity: 1;
+        }
+
+        .region-checkbox-item .region-name {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Edit Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .modal-title i {
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Photo download button */
+        .photo-download-btn {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .photo-preview-item:hover .photo-download-btn {
+            opacity: 1;
+        }
+
+        .photo-download-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Card photo download */
+        .gallery-download-btn {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .item-card-image:hover .gallery-download-btn {
+            opacity: 1;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-tabs {
+                width: 100%;
+            }
+
+            .nav-tab {
+                flex: 1;
+                justify-content: center;
+                padding: 0.625rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .main-container {
+                padding: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-body {
+                padding: 1.25rem;
+            }
+
+            .item-card-inner {
+                flex-direction: column;
+            }
+
+            .item-card-image,
+            .item-card-no-image {
+                width: 100%;
+                height: 150px;
+            }
+
+            .region-checkbox-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Custom Scrollbar */
+        .list-body::-webkit-scrollbar,
+        .region-checkbox-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .list-body::-webkit-scrollbar-track,
+        .region-checkbox-grid::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        .list-body::-webkit-scrollbar-thumb,
+        .region-checkbox-grid::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .list-body::-webkit-scrollbar-thumb:hover,
+        .region-checkbox-grid::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <i class="fas fa-globe-americas"></i>
+                <span>Georgia Trips</span>
+            </a>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="cars">
+                    <i class="fas fa-car"></i>
+                    <span>მანქანები</span>
+                </button>
+                <button class="nav-tab" data-tab="tours">
+                    <i class="fas fa-route"></i>
+                    <span>ტურები</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Cars Form Panel -->
+        <div class="panel active" id="cars-form-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i class="fas fa-plus-circle"></i>
+                    მანქანის დამატება
+                </h2>
+            </div>
+            <div class="panel-body">
+                <form id="car-form">
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-info-circle"></i>
+                            ძირითადი ინფორმაცია
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">სახელი <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="car-name" placeholder="მაგ: Toyota Camry" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">აღწერა</label>
+                            <textarea class="form-textarea" id="car-description" placeholder="მანქანის დეტალური აღწერა..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">სახელმწიფო ნომერი <span class="required">*</span></label>
+                            <input type="text" class="form-input license-plate-input" id="car-plate" placeholder="HH-111-BB" required>
+                            <p class="form-hint"><i class="fas fa-asterisk"></i> მითითეთ მანქანის ნომერი</p>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-sliders-h"></i>
+                            დეტალები
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">რეგიონი (რეგიონები) <span class="required">*</span></label>
+                            <div class="region-checkbox-grid" id="car-regions-grid"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">ტიპი <span class="required">*</span></label>
+                                <select class="form-select" id="car-type" required>
+                                    <option value="">აირჩიეთ ტიპი</option>
+                                    <option value="სედანი">სედანი</option>
+                                    <option value="ჯიპი">ჯიპი</option>
+                                    <option value="მინივენი">მინივენი</option>
+                                    <option value="კუპე">კუპე</option>
+                                    <option value="ჰეჩბექი">ჰეჩბექი</option>
+                                    <option value="უნივერსალი">უნივერსალი</option>
+                                    <option value="პიკაპი">პიკაპი</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ფასი (დღიური) <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="car-price" placeholder="100" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">წელი <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="car-year" placeholder="2024" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">კარების რაოდენობა <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="car-doors" placeholder="4" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">ადგილების რაოდენობა <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="car-seats" placeholder="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">საწვავის ტიპი <span class="required">*</span></label>
+                                <select class="form-select" id="car-fuel" required>
+                                    <option value="">აირჩიეთ</option>
+                                    <option value="ბენზინი">ბენზინი</option>
+                                    <option value="დიზელი">დიზელი</option>
+                                    <option value="ჰიბრიდი">ჰიბრიდი</option>
+                                    <option value="ელექტრო">ელექტრო</option>
+                                    <option value="გაზი">გაზი</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">ტრანსმისია <span class="required">*</span></label>
+                                <select class="form-select" id="car-transmission" required>
+                                    <option value="">აირჩიეთ</option>
+                                    <option value="ავტომატური">ავტომატური</option>
+                                    <option value="მექანიკური">მექანიკური</option>
+                                    <option value="ტიპტრონიკი">ტიპტრონიკი</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ფერი</label>
+                                <input type="text" class="form-input" id="car-color" placeholder="შავი">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photos -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-images"></i>
+                            ფოტოები
+                        </h3>
+                        <div class="photo-upload-area" id="car-photo-upload">
+                            <div class="photo-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p class="photo-upload-text">დააწკაპუნეთ ან ჩააგდეთ ფოტოები</p>
+                            <p class="photo-upload-hint">PNG, JPG, WEBP (მაქს. 15MB)</p>
+                            <input type="file" id="car-photos" accept="image/*" multiple hidden>
+                        </div>
+                        <div class="photo-preview-grid" id="car-photo-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" id="car-submit-btn">
+                        <i class="fas fa-plus"></i>
+                        მანქანის დამატება
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cars List Panel -->
+        <div class="list-panel active" id="cars-list-panel">
+            <div class="list-header">
+                <h2 class="list-title">
+                    <i class="fas fa-list"></i>
+                    დამატებული მანქანები
+                </h2>
+                <span class="list-count" id="cars-count">0</span>
+            </div>
+            <div class="list-body" id="cars-list">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <p class="empty-state-text">იტვირთება...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tours Form Panel -->
+        <div class="panel" id="tours-form-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i class="fas fa-plus-circle"></i>
+                    ტურის დამატება
+                </h2>
+            </div>
+            <div class="panel-body">
+                <form id="tour-form">
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-info-circle"></i>
+                            ძირითადი ინფორმაცია
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">სახელი <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="tour-name" placeholder="მაგ: კახეთის ტური" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">აღწერა</label>
+                            <textarea class="form-textarea" id="tour-description" placeholder="ტურის დეტალური აღწერა..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">მარშრუტი</label>
+                            <input type="text" class="form-input" id="tour-route" placeholder="ნომერი (მაგ: 111)">
+                            <p class="form-hint"><i class="fas fa-asterisk"></i> მითითეთ ტურის ნომერი (სურვილისამებრ)</p>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-sliders-h"></i>
+                            დეტალები
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">რეგიონი (რეგიონები) <span class="required">*</span></label>
+                            <div class="region-checkbox-grid" id="tour-regions-grid"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">ტიპი <span class="required">*</span></label>
+                                <select class="form-select" id="tour-type" required>
+                                    <option value="">აირჩიეთ ტიპი</option>
+                                    <option value="კულტურული">კულტურული</option>
+                                    <option value="სათავგადასავლო">სათავგადასავლო</option>
+                                    <option value="ღვინის ტური">ღვინის ტური</option>
+                                    <option value="მთის ტური">მთის ტური</option>
+                                    <option value="საზღვაო">საზღვაო</option>
+                                    <option value="ისტორიული">ისტორიული</option>
+                                    <option value="გასტრონომიული">გასტრონომიული</option>
+                                    <option value="რელიგიური">რელიგიური</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ფასი (დღიური) <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="tour-price" placeholder="200" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">ხანგრძლივობა <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="tour-duration" placeholder="მაგ: 3 დღე" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">მაქსიმალური რაოდენობა <span class="required">*</span></label>
+                                <input type="number" class="form-input" id="tour-max-people" placeholder="10" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photos -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-images"></i>
+                            ფოტოები
+                        </h3>
+                        <div class="photo-upload-area" id="tour-photo-upload">
+                            <div class="photo-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p class="photo-upload-text">დააწკაპუნეთ ან ჩააგდეთ ფოტოები</p>
+                            <p class="photo-upload-hint">PNG, JPG, WEBP (მაქს. 15MB)</p>
+                            <input type="file" id="tour-photos" accept="image/*" multiple hidden>
+                        </div>
+                        <div class="photo-preview-grid" id="tour-photo-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-accent btn-block" id="tour-submit-btn">
+                        <i class="fas fa-plus"></i>
+                        ტურის დამატება
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tours List Panel -->
+        <div class="list-panel" id="tours-list-panel">
+            <div class="list-header">
+                <h2 class="list-title">
+                    <i class="fas fa-list"></i>
+                    დამატებული ტურები
+                </h2>
+                <span class="list-count" id="tours-count">0</span>
+            </div>
+            <div class="list-body" id="tours-list">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <p class="empty-state-text">იტვირთება...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Edit Car Modal -->
+    <div class="modal-overlay" id="edit-car-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-edit"></i> მანქანის რედაქტირება</h3>
+                <button class="modal-close" onclick="closeEditCarModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-car-form">
+                    <input type="hidden" id="edit-car-id">
+                    <div class="form-group">
+                        <label class="form-label">სახელი <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="edit-car-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">აღწერა</label>
+                        <textarea class="form-textarea" id="edit-car-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">სახელმწიფო ნომერი <span class="required">*</span></label>
+                        <input type="text" class="form-input license-plate-input" id="edit-car-plate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">რეგიონი (რეგიონები) <span class="required">*</span></label>
+                        <div class="region-checkbox-grid" id="edit-car-regions-grid"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ტიპი <span class="required">*</span></label>
+                            <select class="form-select" id="edit-car-type" required>
+                                <option value="სედანი">სედანი</option>
+                                <option value="ჯიპი">ჯიპი</option>
+                                <option value="მინივენი">მინივენი</option>
+                                <option value="კუპე">კუპე</option>
+                                <option value="ჰეჩბექი">ჰეჩბექი</option>
+                                <option value="უნივერსალი">უნივერსალი</option>
+                                <option value="პიკაპი">პიკაპი</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ფასი (დღიური) <span class="required">*</span></label>
+                            <input type="number" class="form-input" id="edit-car-price" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">წელი <span class="required">*</span></label>
+                            <input type="number" class="form-input" id="edit-car-year" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ადგილები <span class="required">*</span></label>
+                            <input type="number" class="form-input" id="edit-car-seats" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeEditCarModal()">გაუქმება</button>
+                <button type="button" class="btn btn-primary" onclick="saveEditCar()" id="save-car-btn">შენახვა</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Tour Modal -->
+    <div class="modal-overlay" id="edit-tour-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-edit"></i> ტურის რედაქტირება</h3>
+                <button class="modal-close" onclick="closeEditTourModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-tour-form">
+                    <input type="hidden" id="edit-tour-id">
+                    <div class="form-group">
+                        <label class="form-label">სახელი <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="edit-tour-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">აღწერა</label>
+                        <textarea class="form-textarea" id="edit-tour-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">მარშრუტი</label>
+                        <input type="text" class="form-input" id="edit-tour-route">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">რეგიონი (რეგიონები) <span class="required">*</span></label>
+                        <div class="region-checkbox-grid" id="edit-tour-regions-grid"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ტიპი <span class="required">*</span></label>
+                            <select class="form-select" id="edit-tour-type" required>
+                                <option value="კულტურული">კულტურული</option>
+                                <option value="სათავგადასავლო">სათავგადასავლო</option>
+                                <option value="ღვინის ტური">ღვინის ტური</option>
+                                <option value="მთის ტური">მთის ტური</option>
+                                <option value="საზღვაო">საზღვაო</option>
+                                <option value="ისტორიული">ისტორიული</option>
+                                <option value="გასტრონომიული">გასტრონომიული</option>
+                                <option value="რელიგიური">რელიგიური</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ფასი <span class="required">*</span></label>
+                            <input type="number" class="form-input" id="edit-tour-price" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ხანგრძლივობა <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="edit-tour-duration" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">მაქს. რაოდენობა <span class="required">*</span></label>
+                            <input type="number" class="form-input" id="edit-tour-max-people" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeEditTourModal()">გაუქმება</button>
+                <button type="button" class="btn btn-accent" onclick="saveEditTour()" id="save-tour-btn">შენახვა</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZmJ8eOEk01BVWNmxiigwPDwybjfWp6qU",
+            authDomain: "menu-ec51b.firebaseapp.com",
+            projectId: "menu-ec51b",
+            storageBucket: "menu-ec51b.firebasestorage.app",
+            messagingSenderId: "730852635180",
+            appId: "1:730852635180:web:a70774068e8668c7e55789",
+            measurementId: "G-3BFSSFL502"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Cloudinary configuration
+        const CLOUDINARY_CLOUD_NAME = 'dmxmlw0ln';
+        const CLOUDINARY_UPLOAD_PRESET = 'rentime';
+
+// All Georgian regions
+  const ALL_REGIONS = [
+  'თბილისი',
+  'კახეთი',
+  'იმერეთი',
+  'სამეგრელო',
+  'რაჭა-ლეჩხუმი',
+  'გურია',
+  'აჭარა',
+  'სამცხე-ჯავახეთი',
+  'შიდა ქართლი',
+  'მცხეთა-მთიანეთი',
+  'ქვემო ქართლი',
+  'აფხაზეთი'
+  ];
+
+        // Data storage
+        let cars = [];
+        let tours = [];
+        let carPhotoUrls = [];
+        let tourPhotoUrls = [];
+
+        // Make functions globally available
+        window.editCar = editCar;
+        window.editTour = editTour;
+        window.deleteCar = deleteCar;
+        window.deleteTour = deleteTour;
+        window.closeEditCarModal = closeEditCarModal;
+        window.closeEditTourModal = closeEditTourModal;
+        window.saveEditCar = saveEditCar;
+        window.saveEditTour = saveEditTour;
+        window.downloadImage = downloadImage;
+
+        // Generate region checkboxes HTML
+        function generateRegionCheckboxes(gridId) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = ALL_REGIONS.map(region => `
+                <label class="region-checkbox-item" data-value="${region}">
+                    <input type="checkbox" value="${region}">
+                    <span class="checkbox-custom"><i class="fas fa-check"></i></span>
+                    <span class="region-name">${region}</span>
+                </label>
+            `).join('');
+            setupRegionCheckboxes(gridId);
+        }
+
+        // Initialize all region grids
+        generateRegionCheckboxes('car-regions-grid');
+        generateRegionCheckboxes('tour-regions-grid');
+        generateRegionCheckboxes('edit-car-regions-grid');
+        generateRegionCheckboxes('edit-tour-regions-grid');
+
+        // Tab switching
+        const navTabs = document.querySelectorAll('.nav-tab');
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                document.querySelectorAll('.panel, .list-panel').forEach(p => p.classList.remove('active'));
+
+                if (tabName === 'cars') {
+                    document.getElementById('cars-form-panel').classList.add('active');
+                    document.getElementById('cars-list-panel').classList.add('active');
+                } else {
+                    document.getElementById('tours-form-panel').classList.add('active');
+                    document.getElementById('tours-list-panel').classList.add('active');
+                }
+            });
+        });
+
+        // Region checkbox functionality
+        function setupRegionCheckboxes(gridId) {
+            const grid = document.getElementById(gridId);
+            const items = grid.querySelectorAll('.region-checkbox-item');
+            
+            items.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    item.classList.toggle('selected');
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    checkbox.checked = item.classList.contains('selected');
+                });
+            });
+        }
+
+        function getSelectedRegions(gridId) {
+            const grid = document.getElementById(gridId);
+            const selectedItems = grid.querySelectorAll('.region-checkbox-item.selected');
+            return Array.from(selectedItems).map(item => item.dataset.value);
+        }
+
+        function setSelectedRegions(gridId, regions) {
+            const grid = document.getElementById(gridId);
+            const items = grid.querySelectorAll('.region-checkbox-item');
+            items.forEach(item => {
+                const value = item.dataset.value;
+                if (regions && regions.includes(value)) {
+                    item.classList.add('selected');
+                    item.querySelector('input').checked = true;
+                } else {
+                    item.classList.remove('selected');
+                    item.querySelector('input').checked = false;
+                }
+            });
+        }
+
+        function clearRegionCheckboxes(gridId) {
+            const grid = document.getElementById(gridId);
+            const items = grid.querySelectorAll('.region-checkbox-item');
+            items.forEach(item => {
+                item.classList.remove('selected');
+                item.querySelector('input').checked = false;
+            });
+        }
+
+        // Upload to Cloudinary
+        async function uploadToCloudinary(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
+            try {
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.secure_url) {
+                    return data.secure_url;
+                }
+                throw new Error(data.error?.message || 'Upload failed');
+            } catch (error) {
+                console.error('Cloudinary upload error:', error);
+                throw error;
+            }
+        }
+
+        // Photo upload functionality
+        function setupPhotoUpload(uploadAreaId, inputId, previewId, photosArray) {
+            const uploadArea = document.getElementById(uploadAreaId);
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+
+            uploadArea.addEventListener('click', () => input.click());
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files, previewId, photosArray, uploadArea);
+            });
+
+            input.addEventListener('change', (e) => {
+                handleFiles(e.target.files, previewId, photosArray, uploadArea);
+            });
+        }
+
+        async function handleFiles(files, previewId, photosArray, uploadArea) {
+            const preview = document.getElementById(previewId);
+            const maxSize = 15 * 1024 * 1024;
+            
+            uploadArea.classList.add('uploading');
+
+            for (const file of Array.from(files)) {
+                if (file.size > maxSize) {
+                    showToast('ფაილი ძალიან დიდია (მაქს. 15MB)', true);
+                    continue;
+                }
+                if (file.type.startsWith('image/')) {
+                    try {
+                        showToast('ფოტო იტვირთება...');
+                        const cloudinaryUrl = await uploadToCloudinary(file);
+                        photosArray.push(cloudinaryUrl);
+                        
+                        const item = document.createElement('div');
+                        item.className = 'photo-preview-item';
+                        item.innerHTML = `
+                            <img src="${cloudinaryUrl}" alt="Preview">
+                            <button type="button" class="photo-remove-btn" onclick="this.parentElement.remove(); ${previewId === 'car-photo-preview' ? 'carPhotoUrls' : 'tourPhotoUrls'}.splice(${photosArray.length - 1}, 1);">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button type="button" class="photo-download-btn" onclick="downloadImage('${cloudinaryUrl}')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        `;
+                        preview.appendChild(item);
+                        showToast('ფოტო აიტვირთა!');
+                    } catch (error) {
+                        showToast('ფოტოს ატვირთვა ვერ მოხერხდა', true);
+                    }
+                }
+            }
+            
+            uploadArea.classList.remove('uploading');
+        }
+
+        function downloadImage(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'photo_' + Date.now() + '.jpg';
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize uploads
+        setupPhotoUpload('car-photo-upload', 'car-photos', 'car-photo-preview', carPhotoUrls);
+        setupPhotoUpload('tour-photo-upload', 'tour-photos', 'tour-photo-preview', tourPhotoUrls);
+
+        // Toast notification
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i>
+                </div>
+                <span class="toast-message">${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Load data from Firebase
+        async function loadCars() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'cars'));
+                cars = [];
+                querySnapshot.forEach((doc) => {
+                    cars.push({ id: doc.id, ...doc.data() });
+                });
+                renderCarsList();
+            } catch (error) {
+                console.error('Error loading cars:', error);
+                showToast('მანქანების ჩატვირთვა ვერ მოხერხდა', true);
+            }
+        }
+
+        async function loadTours() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'tours'));
+                tours = [];
+                querySnapshot.forEach((doc) => {
+                    tours.push({ id: doc.id, ...doc.data() });
+                });
+                renderToursList();
+            } catch (error) {
+                console.error('Error loading tours:', error);
+                showToast('ტურების ჩატვირთვა ვერ მოხერხდა', true);
+            }
+        }
+
+        // Render cars list
+        function renderCarsList() {
+            const list = document.getElementById('cars-list');
+            const count = document.getElementById('cars-count');
+            count.textContent = cars.length;
+
+            if (cars.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <p class="empty-state-text">ჯერ არ არის დამატებული მანქანები</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = cars.map((car) => `
+                <div class="item-card">
+                    <div class="item-card-inner">
+                        ${car.photos && car.photos.length > 0 
+                            ? `<div class="item-card-image">
+                                <img src="${car.photos[0]}" alt="${car.name}">
+                                <button class="gallery-download-btn" onclick="downloadImage('${car.photos[0]}')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                               </div>`
+                            : `<div class="item-card-no-image"><i class="fas fa-car"></i></div>`
+                        }
+                        <div class="item-card-content">
+                            <h3 class="item-card-title">${car.name}</h3>
+                            <div class="item-card-meta">
+                                <span class="item-card-tag"><i class="fas fa-id-card"></i> ${car.plate}</span>
+                                <span class="item-card-tag"><i class="fas fa-car-side"></i> ${car.type}</span>
+                                <span class="item-card-tag"><i class="fas fa-calendar"></i> ${car.year}</span>
+                                <span class="item-card-tag"><i class="fas fa-users"></i> ${car.seats} ადგილი</span>
+                            </div>
+                            <div class="item-card-price">${car.price} ₾/დღე</div>
+                            <div class="item-card-actions">
+                                <button class="btn-icon" onclick="editCar('${car.id}')" title="რედაქტირება">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete" onclick="deleteCar('${car.id}')" title="წაშლა">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    ${car.photos && car.photos.length > 1 ? `
+                        <div class="item-card-gallery">
+                            ${car.photos.slice(1).map(photo => `
+                                <img src="${photo}" alt="Photo" onclick="downloadImage('${photo}')">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Render tours list
+        function renderToursList() {
+            const list = document.getElementById('tours-list');
+            const count = document.getElementById('tours-count');
+            count.textContent = tours.length;
+
+            if (tours.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <p class="empty-state-text">ჯერ არ არის დამატებული ტურები</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = tours.map((tour) => `
+                <div class="item-card">
+                    <div class="item-card-inner">
+                        ${tour.photos && tour.photos.length > 0 
+                            ? `<div class="item-card-image">
+                                <img src="${tour.photos[0]}" alt="${tour.name}">
+                                <button class="gallery-download-btn" onclick="downloadImage('${tour.photos[0]}')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                               </div>`
+                            : `<div class="item-card-no-image"><i class="fas fa-route"></i></div>`
+                        }
+                        <div class="item-card-content">
+                            <h3 class="item-card-title">${tour.name}</h3>
+                            <div class="item-card-meta">
+                                <span class="item-card-tag"><i class="fas fa-map-marker-alt"></i> ${tour.regions ? tour.regions.join(', ') : ''}</span>
+                                <span class="item-card-tag"><i class="fas fa-tag"></i> ${tour.type}</span>
+                                <span class="item-card-tag"><i class="fas fa-clock"></i> ${tour.duration}</span>
+                                <span class="item-card-tag"><i class="fas fa-users"></i> მაქს. ${tour.maxPeople}</span>
+                            </div>
+                            <div class="item-card-price">${tour.price} ₾</div>
+                            <div class="item-card-actions">
+                                <button class="btn-icon" onclick="editTour('${tour.id}')" title="რედაქტირება">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon delete" onclick="deleteTour('${tour.id}')" title="წაშლა">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    ${tour.photos && tour.photos.length > 1 ? `
+                        <div class="item-card-gallery">
+                            ${tour.photos.slice(1).map(photo => `
+                                <img src="${photo}" alt="Photo" onclick="downloadImage('${photo}')">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Car form submission
+        document.getElementById('car-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const selectedRegions = getSelectedRegions('car-regions-grid');
+            if (selectedRegions.length === 0) {
+                showToast('გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი', true);
+                return;
+            }
+
+            const submitBtn = document.getElementById('car-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> იტვირთება...';
+
+            try {
+                const car = {
+                    name: document.getElementById('car-name').value,
+                    description: document.getElementById('car-description').value,
+                    plate: document.getElementById('car-plate').value,
+                    regions: selectedRegions,
+                    type: document.getElementById('car-type').value,
+                    price: document.getElementById('car-price').value,
+                    year: document.getElementById('car-year').value,
+                    doors: document.getElementById('car-doors').value,
+                    seats: document.getElementById('car-seats').value,
+                    fuel: document.getElementById('car-fuel').value,
+                    transmission: document.getElementById('car-transmission').value,
+                    color: document.getElementById('car-color').value,
+                    photos: [...carPhotoUrls],
+                    createdAt: new Date().toISOString()
+                };
+
+                await addDoc(collection(db, 'cars'), car);
+                
+                // Reset form
+                e.target.reset();
+                carPhotoUrls.length = 0;
+                document.getElementById('car-photo-preview').innerHTML = '';
+                clearRegionCheckboxes('car-regions-grid');
+
+                showToast('მანქანა წარმატებით დაემატა!');
+                loadCars();
+            } catch (error) {
+                console.error('Error adding car:', error);
+                showToast('მანქანის დამატება ვერ მოხერხდა', true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-plus"></i> მანქანის დამატება';
+            }
+        });
+
+        // Tour form submission
+        document.getElementById('tour-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const selectedRegions = getSelectedRegions('tour-regions-grid');
+            if (selectedRegions.length === 0) {
+                showToast('გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი', true);
+                return;
+            }
+
+            const submitBtn = document.getElementById('tour-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> იტვირთება...';
+
+            try {
+                const tour = {
+                    name: document.getElementById('tour-name').value,
+                    description: document.getElementById('tour-description').value,
+                    route: document.getElementById('tour-route').value,
+                    regions: selectedRegions,
+                    type: document.getElementById('tour-type').value,
+                    price: document.getElementById('tour-price').value,
+                    duration: document.getElementById('tour-duration').value,
+                    maxPeople: document.getElementById('tour-max-people').value,
+                    photos: [...tourPhotoUrls],
+                    createdAt: new Date().toISOString()
+                };
+
+                await addDoc(collection(db, 'tours'), tour);
+                
+                // Reset form
+                e.target.reset();
+                tourPhotoUrls.length = 0;
+                document.getElementById('tour-photo-preview').innerHTML = '';
+                clearRegionCheckboxes('tour-regions-grid');
+
+                showToast('ტური წარმატებით დაემატა!');
+                loadTours();
+            } catch (error) {
+                console.error('Error adding tour:', error);
+                showToast('ტურის დამატება ვერ მოხერხდა', true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-plus"></i> ტურის დამატება';
+            }
+        });
+
+        // Delete functions
+        async function deleteCar(id) {
+            if (confirm('ნამდვილად გსურთ წაშლა?')) {
+                try {
+                    await deleteDoc(doc(db, 'cars', id));
+                    showToast('მანქანა წაიშალა');
+                    loadCars();
+                } catch (error) {
+                    console.error('Error deleting car:', error);
+                    showToast('წაშლა ვერ მოხერხდა', true);
+                }
+            }
+        }
+
+        async function deleteTour(id) {
+            if (confirm('ნამდვილად გსურთ წაშლა?')) {
+                try {
+                    await deleteDoc(doc(db, 'tours', id));
+                    showToast('ტური წაიშალა');
+                    loadTours();
+                } catch (error) {
+                    console.error('Error deleting tour:', error);
+                    showToast('წაშლა ვერ მოხერხდა', true);
+                }
+            }
+        }
+
+        // Edit Car functions
+        function editCar(id) {
+            const car = cars.find(c => c.id === id);
+            if (!car) return;
+
+            document.getElementById('edit-car-id').value = id;
+            document.getElementById('edit-car-name').value = car.name;
+            document.getElementById('edit-car-description').value = car.description || '';
+            document.getElementById('edit-car-plate').value = car.plate;
+            document.getElementById('edit-car-type').value = car.type;
+            document.getElementById('edit-car-price').value = car.price;
+            document.getElementById('edit-car-year').value = car.year;
+            document.getElementById('edit-car-seats').value = car.seats;
+            setSelectedRegions('edit-car-regions-grid', car.regions);
+            
+            document.getElementById('edit-car-modal').classList.add('active');
+        }
+
+        function closeEditCarModal() {
+            document.getElementById('edit-car-modal').classList.remove('active');
+            clearRegionCheckboxes('edit-car-regions-grid');
+        }
+
+        async function saveEditCar() {
+            const id = document.getElementById('edit-car-id').value;
+            const selectedRegions = getSelectedRegions('edit-car-regions-grid');
+            
+            if (selectedRegions.length === 0) {
+                showToast('გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი', true);
+                return;
+            }
+
+            const saveBtn = document.getElementById('save-car-btn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                const car = cars.find(c => c.id === id);
+                await updateDoc(doc(db, 'cars', id), {
+                    name: document.getElementById('edit-car-name').value,
+                    description: document.getElementById('edit-car-description').value,
+                    plate: document.getElementById('edit-car-plate').value,
+                    regions: selectedRegions,
+                    type: document.getElementById('edit-car-type').value,
+                    price: document.getElementById('edit-car-price').value,
+                    year: document.getElementById('edit-car-year').value,
+                    seats: document.getElementById('edit-car-seats').value
+                });
+
+                closeEditCarModal();
+                showToast('მანქანა განახლდა!');
+                loadCars();
+            } catch (error) {
+                console.error('Error updating car:', error);
+                showToast('განახლება ვერ მოხერხდა', true);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'შენახვა';
+            }
+        }
+
+        // Edit Tour functions
+        function editTour(id) {
+            const tour = tours.find(t => t.id === id);
+            if (!tour) return;
+
+            document.getElementById('edit-tour-id').value = id;
+            document.getElementById('edit-tour-name').value = tour.name;
+            document.getElementById('edit-tour-description').value = tour.description || '';
+            document.getElementById('edit-tour-route').value = tour.route || '';
+            document.getElementById('edit-tour-type').value = tour.type;
+            document.getElementById('edit-tour-price').value = tour.price;
+            document.getElementById('edit-tour-duration').value = tour.duration;
+            document.getElementById('edit-tour-max-people').value = tour.maxPeople;
+            setSelectedRegions('edit-tour-regions-grid', tour.regions);
+            
+            document.getElementById('edit-tour-modal').classList.add('active');
+        }
+
+        function closeEditTourModal() {
+            document.getElementById('edit-tour-modal').classList.remove('active');
+            clearRegionCheckboxes('edit-tour-regions-grid');
+        }
+
+        async function saveEditTour() {
+            const id = document.getElementById('edit-tour-id').value;
+            const selectedRegions = getSelectedRegions('edit-tour-regions-grid');
+            
+            if (selectedRegions.length === 0) {
+                showToast('გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი', true);
+                return;
+            }
+
+            const saveBtn = document.getElementById('save-tour-btn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                await updateDoc(doc(db, 'tours', id), {
+                    name: document.getElementById('edit-tour-name').value,
+                    description: document.getElementById('edit-tour-description').value,
+                    route: document.getElementById('edit-tour-route').value,
+                    regions: selectedRegions,
+                    type: document.getElementById('edit-tour-type').value,
+                    price: document.getElementById('edit-tour-price').value,
+                    duration: document.getElementById('edit-tour-duration').value,
+                    maxPeople: document.getElementById('edit-tour-max-people').value
+                });
+
+                closeEditTourModal();
+                showToast('ტური განახლდა!');
+                loadTours();
+            } catch (error) {
+                console.error('Error updating tour:', error);
+                showToast('განახლება ვერ მოხერხდა', true);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'შენახვა';
+            }
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Initialize - load data from Firebase
+        loadCars();
+        loadTours();
+    </script>
+</body>
+</html>
