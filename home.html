@@ -60,52 +60,26 @@
       padding: 12rem 2rem 8rem;
       min-height: 100vh;
       position: relative;
-      background: #0d0d0d;
+      background: transparent;
       overflow: hidden;
     }
 
-    /* Hero Slideshow Container - Safari optimized */
-    .hero-slideshow-container {
+    /* Hero Video Background */
+    .hero-video {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    /* Hero Slideshow Images */
-    .hero-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      will-change: opacity;
-    }
-
-    .hero-slide.active {
-      opacity: 1;
-    }
-
-    .hero-slide img {
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 110%;
+      min-height: 110%;
+      width: auto;
+      height: auto;
       object-fit: cover;
-      object-position: center;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
+      z-index: 0;
     }
 
-    /* Slideshow Dark Overlay */
-    .hero-slideshow-overlay {
+    /* Hero Overlay */
+    .hero-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -278,8 +252,21 @@
         min-height: -webkit-fill-available;
       }
 
-      .hero-slide img {
-        object-position: center 40%;
+      .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: none;
+        min-width: 100%;
+        min-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+      
+      .hero-overlay {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
       }
 
       .hero h1 {
@@ -1411,11 +1398,6 @@
         transform: translate3d(0, 0, 0);
       }
 
-      /* Safari slideshow optimization */
-      .hero-slide {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
     }
 
     /* Footer placeholder */
@@ -1430,36 +1412,12 @@
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Slideshow Background Container - Replaces Video for faster loading -->
-    <div class="hero-slideshow-container">
-      <!-- Slide 1 -->
-      <div class="hero-slide active">
-        <img src="addhome/hero1.jpg" alt="Georgia landscape 1" loading="eager" fetchpriority="high">
-      </div>
-      <!-- Slide 2 -->
-      <div class="hero-slide">
-        <img src="addhome/hero2.jpg" alt="Georgia landscape 2" loading="lazy">
-      </div>
-      <!-- Slide 3 -->
-      <div class="hero-slide">
-        <img src="addhome/hero3.jpg" alt="Georgia landscape 3" loading="lazy">
-      </div>
-      <!-- Slide 4 -->
-      <div class="hero-slide">
-        <img src="addhome/hero4.jpg" alt="Georgia landscape 4" loading="lazy">
-      </div>
-      <!-- Slide 5 -->
-      <div class="hero-slide">
-        <img src="addhome/hero5.jpg" alt="Georgia landscape 5" loading="lazy">
-      </div>
-      <!-- Slide 6 -->
-      <div class="hero-slide">
-        <img src="addhome/hero6.jpg" alt="Georgia landscape 6" loading="lazy">
-      </div>
-      
-      <!-- Dark Overlay -->
-      <div class="hero-slideshow-overlay"></div>
-    </div>
+    <!-- Video Background -->
+    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+      <source src="addhome/herovideo.mp4" type="video/mp4">
+      <source src="addhome/herovideo.mp4" type="video/quicktime">
+    </video>
+    <div class="hero-overlay"></div>
     
     <div class="hero-content">
       <div class="hero-badge" data-i18n="heroBadge">
@@ -1714,69 +1672,6 @@
   <!-- Map loaded with defer (waits for DOM) -->
   <script defer src="map.js"></script>
 
-  <!-- Hero Slideshow Script - Lightweight and Safari optimized -->
-  <script>
-    (function() {
-      // Hero Slideshow - Fast and Safari compatible
-      const slides = document.querySelectorAll('.hero-slide');
-      let currentSlide = 0;
-      const totalSlides = slides.length;
-      let slideshowInterval;
-      const intervalTime = 5000; // 5 seconds per slide
-
-      function showSlide(index) {
-        // Wrap around
-        if (index >= totalSlides) index = 0;
-        if (index < 0) index = totalSlides - 1;
-        
-        currentSlide = index;
-
-        // Update slides
-        slides.forEach((slide, i) => {
-          if (i === currentSlide) {
-            slide.classList.add('active');
-          } else {
-            slide.classList.remove('active');
-          }
-        });
-      }
-
-      function nextSlide() {
-        showSlide(currentSlide + 1);
-      }
-
-      function startSlideshow() {
-        slideshowInterval = setInterval(nextSlide, intervalTime);
-      }
-
-      // Handle visibility change (pause when tab not visible)
-      document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-          clearInterval(slideshowInterval);
-        } else {
-          startSlideshow();
-        }
-      });
-
-      // Preload next image for smooth transitions
-      function preloadNextImage() {
-        const nextIndex = (currentSlide + 1) % totalSlides;
-        const nextImg = slides[nextIndex].querySelector('img');
-        if (nextImg && !nextImg.complete) {
-          const img = new Image();
-          img.src = nextImg.src;
-        }
-      }
-
-      // Preload on interval
-      setInterval(preloadNextImage, 3000);
-
-      // Initialize
-      showSlide(0);
-      startSlideshow();
-    })();
-  </script>
-  
   <!-- Vehicle Carousel Script - Inline for immediate execution -->
   <script>
     (function() {
