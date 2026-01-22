@@ -83,17 +83,21 @@
             flex-direction: column;
         }
 
-        .search-filter-container {
-            display: flex;
-            gap: 8px;
-            padding: 10px 12px;
-            background: linear-gradient(180deg, var(--card-background) 0%, rgba(26, 26, 26, 0.95) 100%);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border-radius: 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            flex-wrap: wrap;
-            flex-shrink: 0;
+.search-filter-container {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, var(--card-background) 0%, rgba(26, 26, 26, 0.95) 100%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.filter-group {
+  display: contents;
             transition: var(--transition);
             border-bottom: 1px solid var(--border-color);
         }
@@ -1633,10 +1637,10 @@
             .search-filter-container {
                 flex-direction: column;
                 align-items: stretch;
-                padding: 12px 12px 10px 12px;
+                padding: 16px 12px 14px 12px;
                 gap: 10px;
                 position: fixed;
-                top: calc(50px + var(--safe-area-inset-top));
+                top: calc(76px + var(--safe-area-inset-top));
                 left: 0;
                 right: 0;
                 z-index: 99;
@@ -1649,6 +1653,15 @@
             .search-box {
                 width: 100%;
                 min-height: 40px;
+                order: 1;
+                margin-top: 6px;
+            }
+            
+            .filter-group {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                order: 0;
             }
             
             .search-filter-container.hidden {
@@ -1657,7 +1670,7 @@
                 pointer-events: none;
             }
             
-            .search-input, .filter-select {
+            .search-input {
                 padding: 10px 10px 10px 34px;
                 font-size: 0.95em;
                 border-radius: 20px;
@@ -1665,18 +1678,18 @@
                 min-height: 42px;
             }
             
+            .filter-select {
+                padding: 6px 24px 6px 10px;
+                font-size: 0.8em;
+                border-radius: 16px;
+                height: 32px;
+                min-height: 32px;
+                flex: 1;
+            }
+            
             .search-icon {
                 left: 12px;
                 font-size: 0.85em;
-            }
-            
-            .filter-select {
-                width: 100%;
-                margin-top: 0;
-                padding-left: 12px;
-                padding-right: 32px;
-                background-size: 10px;
-                background-position: right 12px center;
             }
             
             .floating-filter-btn {
@@ -2160,30 +2173,32 @@
     <div class="container" id="main-container">
         <main class="main-content">
             <div class="search-filter-container" id="search-filter-container">
+                <div class="filter-group">
+                    <select class="filter-select" id="region-filter">
+                        <option value="all" data-i18n="postsAllRegions">ყველა რეგიონი</option>
+                        <option value="tbilisi" data-i18n="postsRegionTbilisi">თბილისი</option>
+                        <option value="afkhazeti" data-i18n="postsRegionAfkhazeti">აფხაზეთი</option>
+                        <option value="achara" data-i18n="postsRegionAchara">აჭარა</option>
+                        <option value="guria" data-i18n="postsRegionGuria">გურია</option>
+                        <option value="imereti" data-i18n="postsRegionImereti">იმერეთი</option>
+                        <option value="kakheti" data-i18n="postsRegionKakheti">კახეთი</option>
+                        <option value="kvemo-kartli" data-i18n="postsRegionKvemoKartli">ქვემო ქართლი</option>
+                        <option value="mtsketa-mtianeti" data-i18n="postsRegionMtskhetaMtianeti">მცხეთა-მთიანეთი</option>
+                        <option value="racha-lechkhumi" data-i18n="postsRegionRachaLechkhumi">რაჭა-ლეჩხუმი</option>
+                        <option value="samtskhe-javakheti" data-i18n="postsRegionSamtskheJavakheti">სამცხე-ჯავახეთი</option>
+                        <option value="shida-kartli" data-i18n="postsRegionShidaKartli">შიდა ქართლი</option>
+                        <option value="samegrelo-svaneti" data-i18n="postsRegionSamegreloSvaneti">სამეგრელო-ზემო სვანეთი</option>
+                    </select>
+                    <select class="filter-select" id="sort-filter">
+                        <option value="newest" data-i18n="postsNewest">უახლესი</option>
+                        <option value="oldest" data-i18n="postsOldest">ძველი</option>
+                        <option value="most-liked" data-i18n="postsMostLiked">ყველაზე მოწონებული</option>
+                    </select>
+                </div>
                 <div class="search-box">
                     <input type="text" class="search-input" id="search-input" data-i18n="postsSearch" placeholder="ძებნა...">
                     <i class="fas fa-search search-icon"></i>
                 </div>
-                <select class="filter-select" id="region-filter">
-                    <option value="all" data-i18n="postsAllRegions">ყველა რეგიონი</option>
-                    <option value="tbilisi" data-i18n="postsRegionTbilisi">თბილისი</option>
-                    <option value="afkhazeti" data-i18n="postsRegionAfkhazeti">აფხაზეთი</option>
-                    <option value="achara" data-i18n="postsRegionAchara">აჭარა</option>
-                    <option value="guria" data-i18n="postsRegionGuria">გურია</option>
-                    <option value="imereti" data-i18n="postsRegionImereti">იმერეთი</option>
-                    <option value="kakheti" data-i18n="postsRegionKakheti">კახეთი</option>
-                    <option value="kvemo-kartli" data-i18n="postsRegionKvemoKartli">ქვემო ქართლი</option>
-                    <option value="mtsketa-mtianeti" data-i18n="postsRegionMtskhetaMtianeti">მცხეთა-მთიანეთი</option>
-                    <option value="racha-lechkhumi" data-i18n="postsRegionRachaLechkhumi">რაჭა-ლეჩხუმი</option>
-                    <option value="samtskhe-javakheti" data-i18n="postsRegionSamtskheJavakheti">სამცხე-ჯავახეთი</option>
-                    <option value="shida-kartli" data-i18n="postsRegionShidaKartli">შიდა ქართლი</option>
-                    <option value="samegrelo-svaneti" data-i18n="postsRegionSamegreloSvaneti">სამეგრელო-ზემო სვანეთი</option>
-                </select>
-                <select class="filter-select" id="sort-filter">
-                    <option value="newest" data-i18n="postsNewest">უახლესი</option>
-                    <option value="oldest" data-i18n="postsOldest">ძველი</option>
-                    <option value="most-liked" data-i18n="postsMostLiked">ყველაზე მოწონებული</option>
-                </select>
             </div>
             
             <div class="posts-container" id="posts-container">
