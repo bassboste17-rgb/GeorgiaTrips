@@ -583,8 +583,8 @@
             display: flex;
             justify-content: space-around;
             padding: 16px 0;
-            border-top: 1px solid var(--border-color);
-            margin-top: 18px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 18px;
             flex-shrink: 0;
             gap: 8px;
         }
@@ -1657,11 +1657,11 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 12px 0;
-  gap: 16px;
+  gap: 20px;
   }
   
   .post-action {
-  padding: 10px 16px;
+  padding: 12px 18px;
   flex: 0 0 auto;
   justify-content: center;
   min-width: auto;
@@ -1741,11 +1741,11 @@
         
 @media (max-width: 400px) {
   .post-actions {
-  gap: 12px;
+  gap: 16px;
   }
   
   .post-action {
-  padding: 10px 14px;
+  padding: 12px 16px;
   }
             
             .post-action i {
@@ -2782,8 +2782,8 @@
                 '<div class="post-content">' +
                     '<p>' + postData.content + '</p>' +
                 '</div>' +
-                mediaHTML +
                 actionButtonsHTML +
+                mediaHTML +
                 '<div class="comments-section" id="comments-' + postId + '">' +
                     '<div class="comments-list">' +
                         commentsHTML +
