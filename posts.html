@@ -226,29 +226,6 @@
             color: var(--text-color);
         }
 
-        .post-location {
-            font-size: 0.9em;
-            color: var(--text-muted);
-            opacity: 1;
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            background-color: rgba(229, 56, 59, 0.08);
-            border-radius: 20px;
-            width: fit-content;
-            transition: var(--transition);
-        }
-        
-        .post-location:hover {
-            background-color: rgba(229, 56, 59, 0.12);
-        }
-        
-        .post-location i {
-            margin-right: 6px;
-            color: var(--primary-color);
-        }
-
         .media-container {
             margin: 18px 0;
             overflow: hidden;
@@ -1676,22 +1653,22 @@
                 height: 40px;
             }
             
-            .post-actions {
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                padding: 12px 0;
-                gap: 4px;
-            }
-            
-            .post-action {
-                padding: 8px 10px;
-                flex: 1;
-                justify-content: center;
-                min-width: 0;
-            }
+.post-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 12px 0;
+  gap: 16px;
+  }
+  
+  .post-action {
+  padding: 10px 16px;
+  flex: 0 0 auto;
+  justify-content: center;
+  min-width: auto;
+  }
             
             .post-action i {
-                font-size: 1.1em;
+                font-size: 1.15em;
             }
             
             .post-action span {
@@ -1700,7 +1677,7 @@
             
             .post-action .action-count {
                 display: inline;
-                font-size: 0.8em;
+                font-size: 0.85em;
                 margin-left: 4px;
             }
             
@@ -1762,17 +1739,21 @@
             }
         }
         
-        @media (max-width: 400px) {
-            .post-action {
-                padding: 8px 6px;
-            }
+@media (max-width: 400px) {
+  .post-actions {
+  gap: 12px;
+  }
+  
+  .post-action {
+  padding: 10px 14px;
+  }
             
             .post-action i {
-                font-size: 1em;
+                font-size: 1.1em;
             }
             
             .post-action .action-count {
-                font-size: 0.75em;
+                font-size: 0.8em;
             }
         }
     </style>
@@ -1949,7 +1930,7 @@
         const mainContainer = document.getElementById('main-container');
 
         let userData = null;
-        let currentMedia = []; // Changed from currentImages to currentMedia (holds both images and videos)
+        let currentMedia = [];
         let currentMediaIndex = 0;
         let allPosts = [];
         let currentPostIndex = 0;
@@ -1959,7 +1940,6 @@
         let authRequiredShown = false;
         let authCheckComplete = false;
         
-        // Store all media data per post for lightbox
         let postsMediaData = {};
 
         const regionPages = {
@@ -2283,7 +2263,7 @@
                 unsubscribePosts = onSnapshot(postsQuery, (querySnapshot) => {
                     postsContainer.innerHTML = '';
                     allPosts = [];
-                    postsMediaData = {}; // Reset media data
+                    postsMediaData = {};
                     
                     if (querySnapshot.empty) {
                         const noPostsText = window.languageSwitcher.translate('postsNoPostsFound');
@@ -2295,7 +2275,6 @@
                     querySnapshot.forEach((doc) => {
                         const postData = doc.data();
                         if (applyFilters(postData, doc.id)) {
-                            // Store all media for this post
                             const images = postData.images || [];
                             const videos = postData.videos || [];
                             const allMedia = [];
@@ -2586,21 +2565,6 @@
         function createPostElement(postData, postId) {
             const postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : window.languageSwitcher.translate('postsTimeUnknown');
             
-            const locationNames = {
-                'თბილისი': window.languageSwitcher.translate('postsRegionTbilisi'),
-                'აფხაზეთი': window.languageSwitcher.translate('postsRegionAfkhazeti'),
-                'აჭარა': window.languageSwitcher.translate('postsRegionAchara'),
-                'გურია': window.languageSwitcher.translate('postsRegionGuria'),
-                'იმერეთი': window.languageSwitcher.translate('postsRegionImereti'),
-                'კახეთი': window.languageSwitcher.translate('postsRegionKakheti'),
-                'ქვემო ქართლი': window.languageSwitcher.translate('postsRegionKvemoKartli'),
-                'მცხეთა-მთიანეთი': window.languageSwitcher.translate('postsRegionMtskhetaMtianeti'),
-                'რაჭა-ლეჩხუმი': window.languageSwitcher.translate('postsRegionRachaLechkhumi'),
-                'სამცხე-ჯავახეთი': window.languageSwitcher.translate('postsRegionSamtskheJavakheti'),
-                'შიდა ქართლი': window.languageSwitcher.translate('postsRegionShidaKartli'),
-                'სამეგრელო-ზემო სვანეთი': window.languageSwitcher.translate('postsRegionSamegreloSvaneti')
-            };
-
             const regionNames = {
                 'afkhazeti': window.languageSwitcher.translate('postsRegionAfkhazeti'),
                 'achara': window.languageSwitcher.translate('postsRegionAchara'),
@@ -2617,7 +2581,6 @@
             };
             
             const regionName = regionNames[postData.region] || postData.region;
-            const locationName = locationNames[postData.location] || postData.location;
             
             const regionPage = regionPages[postData.region] || '';
             const regionLinkHTML = regionPage 
@@ -2818,10 +2781,6 @@
                 '</div>' +
                 '<div class="post-content">' +
                     '<p>' + postData.content + '</p>' +
-                    '<div class="post-location">' +
-                        '<i class="fas fa-map-marker-alt"></i>' +
-                        locationName +
-                    '</div>' +
                 '</div>' +
                 mediaHTML +
                 actionButtonsHTML +
