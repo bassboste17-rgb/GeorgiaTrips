@@ -255,7 +255,7 @@
             border-radius: 12px;
             background-color: #000;
             flex-shrink: 0;
-            max-height: 35vh;
+            max-height: 52vh;
             box-shadow: var(--shadow-light);
         }
 
@@ -294,24 +294,24 @@
         }
         .media-grid.single .media-item {
             aspect-ratio: auto;
-            height: 35vh;
-            max-height: 35vh;
+            height: 50vh;
+            max-height: 50vh;
         }
         .media-grid.single .media-item.image-item img {
-            height: 35vh;
-            max-height: 35vh;
+            height: 50vh;
+            max-height: 50vh;
             object-fit: contain;
         }
         .media-grid.single .media-item.video-grid-item video {
-            height: 35vh;
-            max-height: 35vh;
+            height: 50vh;
+            max-height: 50vh;
             object-fit: contain;
         }
 
         /* Double media (2 items) */
         .media-grid.double {
             grid-template-columns: 1fr 1fr;
-            height: 30vh;
+            height: 42vh;
         }
         .media-grid.double .media-item {
             aspect-ratio: 1 / 1;
@@ -321,7 +321,7 @@
         .media-grid.triple {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            height: 30vh;
+            height: 42vh;
         }
         .media-grid.triple .media-item:first-child {
             grid-row: 1 / 3;
@@ -333,7 +333,7 @@
         .media-grid.multiple {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            height: 30vh;
+            height: 42vh;
         }
 
         /* +X remaining indicator */
@@ -603,9 +603,90 @@
             justify-content: space-around;
             padding: 10px 0;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 10px;
+            margin-bottom: 0;
             flex-shrink: 0;
             gap: 4px;
+        }
+
+        /* Comment Preview Section */
+        .comment-preview {
+            padding: 10px 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comment-preview:hover {
+            background: var(--hover-color);
+        }
+
+        .comment-preview-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comment-preview-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .comment-preview-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .comment-preview-author {
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .comment-preview-body {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .view-all-comments {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.75em;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Post Engagement Stats */
+        .post-engagement {
+            padding: 8px 15px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .engagement-stats {
+            display: flex;
+            justify-content: flex-start;
+            gap: 16px;
+        }
+
+        .engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75em;
+            color: var(--text-muted);
+        }
+
+        .engagement-stat i {
+            font-size: 0.9em;
         }
 
         .post-action {
@@ -630,6 +711,11 @@
 
         .post-action span {
             font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .post-action span.action-text {
+            font-size: 0.75em;
             font-weight: 500;
         }
 
@@ -1691,24 +1777,63 @@
             }
             
             .post-action {
-                padding: 8px 14px;
+                padding: 6px 8px;
                 flex: 0 0 auto;
                 justify-content: center;
                 min-width: auto;
+                gap: 2px;
             }
             
             .post-action i {
-                font-size: 1em;
+                font-size: 0.85em;
             }
             
-            .post-action span {
-                display: none;
+            .post-action span.action-text {
+                display: inline;
+                font-size: 0.65em;
             }
             
             .post-action .action-count {
                 display: inline;
-                font-size: 0.75em;
-                margin-left: 3px;
+                font-size: 0.65em;
+                margin-left: 2px;
+            }
+
+            /* Comment Preview Mobile */
+            .comment-preview {
+                padding: 8px 12px;
+                margin: 8px 10px;
+            }
+
+            .comment-preview-avatar {
+                width: 24px;
+                height: 24px;
+            }
+
+            .comment-preview-author {
+                font-size: 0.7em;
+            }
+
+            .comment-preview-body {
+                font-size: 0.65em;
+            }
+
+            .view-all-comments {
+                font-size: 0.65em;
+            }
+
+            /* Engagement Mobile */
+            .post-engagement {
+                padding: 6px 10px 10px;
+            }
+
+            .engagement-stats {
+                gap: 12px;
+            }
+
+            .engagement-stat {
+                font-size: 0.65em;
+                gap: 4px;
             }
             
             .media-container,
@@ -1770,21 +1895,21 @@
 
             /* Safari specific fixes */
             .media-grid.single .media-item {
-                height: 32vh;
-                max-height: 32vh;
+                height: 45vh;
+                max-height: 45vh;
             }
             .media-grid.single .media-item.image-item img {
-                height: 32vh;
-                max-height: 32vh;
+                height: 45vh;
+                max-height: 45vh;
             }
             .media-grid.single .media-item.video-grid-item video {
-                height: 32vh;
-                max-height: 32vh;
+                height: 45vh;
+                max-height: 45vh;
             }
             .media-grid.double,
             .media-grid.triple,
             .media-grid.multiple {
-                height: 28vh;
+                height: 38vh;
             }
         }
         
@@ -1795,21 +1920,65 @@
             }
             
             .post-actions {
-                gap: 10px;
+                gap: 6px;
             }
             
             .post-action {
-                padding: 8px 12px;
+                padding: 5px 6px;
+                gap: 2px;
             }
             
             .post-action i {
-                font-size: 0.95em;
+                font-size: 0.8em;
+            }
+            
+            .post-action span.action-text {
+                display: inline;
+                font-size: 0.55em;
             }
             
             .post-action .action-count {
-                font-size: 0.7em;
+                font-size: 0.55em;
             }
 
+            /* Comment Preview Small Phones */
+            .comment-preview {
+                padding: 6px 8px;
+                margin: 6px 8px;
+            }
+
+            .comment-preview-avatar {
+                width: 20px;
+                height: 20px;
+            }
+
+            .comment-preview-author {
+                font-size: 0.6em;
+            }
+
+            .comment-preview-body {
+                font-size: 0.55em;
+            }
+
+            .view-all-comments {
+                font-size: 0.55em;
+                margin-top: 5px;
+            }
+
+            /* Engagement Small Phones */
+            .post-engagement {
+                padding: 5px 8px 8px;
+            }
+
+            .engagement-stats {
+                gap: 8px;
+            }
+
+            .engagement-stat {
+                font-size: 0.55em;
+                gap: 3px;
+            }
+            
             .post {
                 padding: 10px 8px;
             }
@@ -1824,9 +1993,18 @@
                 height: 24px;
             }
 
-            .media-grid.single .media-item {
-                height: 28vh;
-                max-height: 28vh;
+.media-grid.single .media-item {
+                height: 40vh;
+                max-height: 40vh;
+            }
+            .media-grid.single .media-item.image-item img {
+                height: 40vh;
+                max-height: 40vh;
+            }
+            .media-grid.double,
+            .media-grid.triple,
+            .media-grid.multiple {
+                height: 35vh;
             }
             .media-grid.single .media-item.image-item img {
                 height: 28vh;
@@ -1847,17 +2025,17 @@
             }
             
             .media-grid.single .media-item {
-                height: 25vh;
-                max-height: 25vh;
+                height: 38vh;
+                max-height: 38vh;
             }
             .media-grid.single .media-item.image-item img {
-                height: 25vh;
-                max-height: 25vh;
+                height: 38vh;
+                max-height: 38vh;
             }
             .media-grid.double,
             .media-grid.triple,
             .media-grid.multiple {
-                height: 22vh;
+                height: 32vh;
             }
             
             .comments-section {
@@ -2759,28 +2937,48 @@
                 });
             }
             
+            // Preview of latest comment below actions
+            let commentPreviewHTML = '';
+            if (postData.comments && postData.comments.length > 0) {
+                const latestComment = postData.comments[postData.comments.length - 1];
+                const viewAllText = safeTranslate('postsViewAllComments') || 'ყველა კომენტარის ნახვა';
+                commentPreviewHTML = 
+                    '<div class="comment-preview" onclick="toggleComments(\'' + postId + '\')">' +
+                        '<div class="comment-preview-content">' +
+                            '<img src="' + (latestComment.authorAvatar || 'https://via.placeholder.com/28') + '" alt="' + latestComment.authorName + '" class="comment-preview-avatar">' +
+                            '<div class="comment-preview-text">' +
+                                '<span class="comment-preview-author">' + latestComment.authorName + '</span>' +
+                                '<span class="comment-preview-body">' + (latestComment.text.length > 50 ? latestComment.text.substring(0, 50) + '...' : latestComment.text) + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                        (commentsCount > 1 ? '<span class="view-all-comments">' + viewAllText + ' (' + commentsCount + ')</span>' : '') +
+                    '</div>';
+            }
+            
+
+            
             let actionButtonsHTML = '';
             if (isAuthenticated) {
                 actionButtonsHTML = 
                     '<div class="post-actions">' +
                         '<div class="post-action ' + (hasLiked ? 'active' : '') + '" onclick="likePost(\'' + postId + '\')">' +
                             '<i class="' + (hasLiked ? 'fas' : 'far') + ' fa-heart"></i>' +
-                            '<span>' + likeText + '</span>' +
+                            '<span class="action-text">' + likeText + '</span>' +
                             (likesCount > 0 ? '<span class="action-count">' + likesCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action" onclick="toggleComments(\'' + postId + '\')">' +
                             '<i class="far fa-comment"></i>' +
-                            '<span>' + commentText + '</span>' +
+                            '<span class="action-text">' + commentText + '</span>' +
                             (commentsCount > 0 ? '<span class="action-count">' + commentsCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action ' + (hasSaved ? 'active' : '') + '" onclick="savePost(\'' + postId + '\')">' +
                             '<i class="' + (hasSaved ? 'fas' : 'far') + ' fa-bookmark"></i>' +
-                            '<span>' + saveText + '</span>' +
+                            '<span class="action-text">' + saveText + '</span>' +
                             (savesCount > 0 ? '<span class="action-count">' + savesCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action" onclick="sharePost(\'' + postId + '\')">' +
                             '<i class="fas fa-share-alt"></i>' +
-                            '<span>' + shareText + '</span>' +
+                            '<span class="action-text">' + shareText + '</span>' +
                         '</div>' +
                     '</div>';
             } else {
@@ -2788,22 +2986,22 @@
                     '<div class="post-actions">' +
                         '<div class="post-action locked" onclick="showAuthRequired()">' +
                             '<i class="far fa-heart"></i>' +
-                            '<span>' + likeText + '</span>' +
+                            '<span class="action-text">' + likeText + '</span>' +
                             (likesCount > 0 ? '<span class="action-count">' + likesCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action locked" onclick="showAuthRequired()">' +
                             '<i class="far fa-comment"></i>' +
-                            '<span>' + commentText + '</span>' +
+                            '<span class="action-text">' + commentText + '</span>' +
                             (commentsCount > 0 ? '<span class="action-count">' + commentsCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action locked" onclick="showAuthRequired()">' +
                             '<i class="far fa-bookmark"></i>' +
-                            '<span>' + saveText + '</span>' +
+                            '<span class="action-text">' + saveText + '</span>' +
                             (savesCount > 0 ? '<span class="action-count">' + savesCount + '</span>' : '') +
                         '</div>' +
                         '<div class="post-action" onclick="sharePost(\'' + postId + '\')">' +
                             '<i class="fas fa-share-alt"></i>' +
-                            '<span>' + shareText + '</span>' +
+                            '<span class="action-text">' + shareText + '</span>' +
                         '</div>' +
                     '</div>';
             }
@@ -2837,8 +3035,9 @@
                 '<div class="post-content">' +
                     '<p>' + postData.content + '</p>' +
                 '</div>' +
-                actionButtonsHTML +
                 mediaHTML +
+                actionButtonsHTML +
+                commentPreviewHTML +
                 '<div class="comments-section" id="comments-' + postId + '">' +
                     '<div class="comments-list">' +
                         commentsHTML +
@@ -3375,6 +3574,9 @@
 
         window.addEventListener('load', removeHtmlExtensionFromURL);
     </script>
-      <script type="module" src="navbar.js"></script>
+      <div id="footer"></div>
+    <script type="module" src="navbar.js"></script>
+    <script src="footer.js"></script>
+    <script src="translations.js"></script>
 </body>
 </html>
