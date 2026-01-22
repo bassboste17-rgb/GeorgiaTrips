@@ -62,7 +62,29 @@
       overflow: hidden;
     }
 
-    .hero-video {
+    /* ========== BACKGROUND PHOTO (სანამ ვიდეო ჩაიტვირთება) ========== */
+    /* Desktop Background Photo */
+    .hero-background-desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      /* კომპიუტერის BACKGROUND ფოტო - ჩასვი შენი URL აქ */
+      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074554/lfpbxtoj33ch8tdeeaoz.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Mobile Background Photo - დამალული desktop-ზე */
+    .hero-background-mobile {
+      display: none;
+    }
+
+    /* Desktop Video */
+    .hero-video-desktop {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -72,12 +94,18 @@
       width: auto;
       height: auto;
       object-fit: cover;
-      z-index: 0;
-      background-color: #000;
-      background-image: url(''); /* POSTER: ჩასვი ფოტოს ლინკი აქ */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .hero-video-desktop.loaded {
+      opacity: 1;
+    }
+
+    /* Mobile Video - დამალული desktop-ზე */
+    .hero-video-mobile {
+      display: none;
     }
 
     .hero-overlay {
@@ -87,7 +115,7 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.55) 100%);
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
     }
 
@@ -95,7 +123,7 @@
       text-align: center;
       max-width: 900px;
       position: relative;
-      z-index: 2;
+      z-index: 3;
       animation: fadeInUp 1s ease-out;
     }
 
@@ -823,17 +851,48 @@
         min-height: 100vh;
       }
 
-      .hero-video {
+      /* Desktop background დამალული მობილურზე */
+      .hero-background-desktop {
+        display: none;
+      }
+
+      /* Mobile Background Photo - ჩანს მხოლოდ მობილურზე */
+      .hero-background-mobile {
+        display: block;
         position: absolute;
         top: 0;
         left: 0;
-        transform: none;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        /* მობილურის BACKGROUND ფოტო - ჩასვი შენი URL აქ */
+        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074277/p7hgrnwegcbzx96dpda6.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      /* Desktop ვიდეო დამალული მობილურზე */
+      .hero-video-desktop {
+        display: none;
+      }
+
+      /* Mobile ვიდეო ჩანს მხოლოდ მობილურზე */
+      .hero-video-mobile {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        background-color: #000;
-        background-size: cover;
-        background-position: center;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+      }
+
+      .hero-video-mobile.loaded {
+        opacity: 1;
       }
 
       .hero-overlay {
@@ -1099,11 +1158,24 @@
   <div id="navbar"></div>
 
   <section class="hero">
-    <!-- Video Background -->
-    <!-- POSTER: ჩასვი ფოტოს ლინკი poster="" ატრიბუტში -->
-    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/qmhieg6acl7jrqbx1but.png">
-      <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1768990213/rdm4wapfxomngtyfm1mb.mp4" type="video/mp4">
+    <!-- Desktop Background Photo (ჩანს სანამ ვიდეო ჩაიტვირთება) -->
+    <div class="hero-background-desktop"></div>
+    
+    <!-- Mobile Background Photo (ჩანს სანამ ვიდეო ჩაიტვირთება) -->
+    <div class="hero-background-mobile"></div>
+    
+    <!-- Desktop Video Background -->
+    <video class="hero-video-desktop" id="heroVideoDesktop" autoplay muted loop playsinline preload="auto">
+      <!-- კომპიუტერის ვიდეო -->
+      <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1769077521/omtj3yzbp5ou6364kwre.mp4" type="video/mp4">
     </video>
+    
+    <!-- Mobile Video Background -->
+    <video class="hero-video-mobile" id="heroVideoMobile" autoplay muted loop playsinline preload="auto">
+      <!-- მობილურის ვიდეო -->
+      <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1769074294/amagaktrz5jkkmli1c0m.mov" type="video/mp4">
+    </video>
+    
     <div class="hero-overlay"></div>
     
     <div class="hero-content">
@@ -1353,6 +1425,39 @@
   <script src="navbar.js" type="module"></script>
   <script src="footer.js" type="module"></script>
   <script src="map.js"></script>
+
+  <!-- Video Load Detection Script -->
+  <script>
+    (function() {
+      // Desktop Video
+      const heroVideoDesktop = document.getElementById('heroVideoDesktop');
+      if (heroVideoDesktop) {
+        heroVideoDesktop.addEventListener('canplaythrough', function() {
+          heroVideoDesktop.classList.add('loaded');
+        });
+        if (heroVideoDesktop.readyState >= 4) {
+          heroVideoDesktop.classList.add('loaded');
+        }
+        setTimeout(function() {
+          heroVideoDesktop.classList.add('loaded');
+        }, 3000);
+      }
+
+      // Mobile Video
+      const heroVideoMobile = document.getElementById('heroVideoMobile');
+      if (heroVideoMobile) {
+        heroVideoMobile.addEventListener('canplaythrough', function() {
+          heroVideoMobile.classList.add('loaded');
+        });
+        if (heroVideoMobile.readyState >= 4) {
+          heroVideoMobile.classList.add('loaded');
+        }
+        setTimeout(function() {
+          heroVideoMobile.classList.add('loaded');
+        }, 3000);
+      }
+    })();
+  </script>
 
   <!-- Vehicle Carousel Script -->
   <script>
@@ -1930,24 +2035,18 @@
     }
 
     window.openImageModal = openImageModal;
-      // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
-function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
-    if (window.location.pathname.endsWith('.html')) {
-        // შექმენით ახალი URL .html-ის გარეშე
+    
+    // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+    function removeHtmlExtensionFromURL() {
+      if (window.location.pathname.endsWith('.html')) {
         const newPath = window.location.pathname.replace(/\.html$/, '');
         const newURL = newPath + window.location.search + window.location.hash;
-        
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
         window.history.replaceState({}, '', newURL);
+      }
     }
-}
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
-window.addEventListener('load', removeHtmlExtensionFromURL);
-
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
-window.addEventListener('popstate', removeHtmlExtensionFromURL);
+    window.addEventListener('load', removeHtmlExtensionFromURL);
+    window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
 
 </body>
