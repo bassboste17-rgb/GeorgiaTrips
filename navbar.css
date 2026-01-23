@@ -31,7 +31,6 @@ body {
 
 /* Footer */
 footer {
-  padding: 8rem 1rem;
   text-align: center;
   /* Safe area padding */
   padding-bottom: calc(8rem + env(safe-area-inset-bottom));

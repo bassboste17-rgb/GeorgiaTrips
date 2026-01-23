@@ -27,7 +27,7 @@ aboutMetaDescription: "Georgia Trips - საქართველოს წა�
         toastMediaRequired: "გთხოვთ ატვირთოთ მინიმუმ ერთი ფოტო ან ვიდეო",
         toastSuccessMessage: "პოსტი წარმატებით დაემატა!",
         toastErrorMessage: "პოსტის დამატება ვერ მოხერხდა. სცადეთ მოგვიანებით.",
-        
+        footerRights: "ყველა უფლება დაცულია.",
         // Media Badges
         badgePhoto: "ფოტო",
         badgeVideo: "ვიდეო",
@@ -1669,6 +1669,7 @@ aboutMetaDescription: "Georgia Trips - Leading travel agency in Georgia. Profess
     officeHeading: "Our Office",
     officeAddress: "Batumi, 161 Bagrationi Street",
     // Map Regions
+    footerRights: "All rights reserved.",
     toastWarningTitle: "Warning",
     regionAbkhazia: "Abkhazia",
     regionAdjara: "Adjara",
@@ -2572,6 +2573,7 @@ profileAvatarSaved: "Avatar saved successfully!",
       "Декабрь",
     ],
     windSpeedUnit: "км/ч",
+    footerRights: "Все права защищены.",
     // Profile1 page translations
     userProfileLoading: "Загрузка...",
     userProfileBack: "Назад",
@@ -4939,6 +4941,7 @@ officeAddress: "باتومي، شارع باغراتيوني 161",
     kvemoKartliNoDescription: "الوصف غير محدد",
     kvemoKartliPriceLabel: "السعر",
     kvemoKartliBookingButton: "حجز",
+
     // Abkhazia page translations - Arabic
     // About page SEO
 aboutMetaTitle: "من نحن | Georgia Trips - النقل في جورجيا",
@@ -5070,7 +5073,7 @@ aboutMetaDescription: "Georgia Trips - وكالة السفر الرائدة في
     weatherRegionShidaKartli: "شيدا كارتلي",
     weatherRegionSamegreloSvaneti: "سامغريلو-زيمو سفانيتي",
     weatherRegionTbilisi: "تبليسي",
-
+footerRights: "جميع الحقوق محفوظا",
     // Add Post page translations
     addPostTitle: "رحلات جورجيا - إضافة منشور",
     addPostLoading: "جارٍ تحميل المنشور...",
