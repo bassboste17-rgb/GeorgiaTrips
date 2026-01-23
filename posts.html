@@ -5,12 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Georgia Trips - posts</title>
+    
+    <!-- SEO Optimized Title -->
+    <title>Georgia Trips Posts | Travel Stories & Photos from Videos Georgia</title>
+    
+    <!-- Meta Description -->
+    <meta name="description" content="Explore travel posts, photos and stories from Georgia. Discover hidden gems in Tbilisi, Batumi, Svaneti, Kakheti and more. Share your Georgian adventure with our community." />
+    
+    <!-- Meta Keywords -->
+    <meta name="keywords" content="Georgia travel posts, Tbilisi photos, Batumi travel stories, Svaneti pictures, Georgia tourism, travel blog Georgia, Georgia adventures, Georgian landscapes" />
+    
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.georgiatrips.ge/posts" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.georgiatrips.ge/posts" />
+    <meta property="og:title" content="Georgia Trips Posts | Travel Stories & Photos" />
+    <meta property="og:description" content="Explore travel posts, photos and stories from Georgia. Discover Tbilisi, Batumi, Svaneti, Kakheti and more." />
+    <meta property="og:image" content="https://www.georgiatrips.ge/addhome/logo12.png" />
+    <meta property="og:site_name" content="Georgia Trips" />
+    <meta property="og:locale" content="ka_GE" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Georgia Trips Posts | Travel Stories & Photos" />
+    <meta name="twitter:description" content="Explore travel posts, photos and stories from Georgia." />
+    <meta name="twitter:image" content="https://www.georgiatrips.ge/addhome/logo12.png" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Georgia Trips - Travel Posts",
+        "description": "Collection of travel posts, photos and stories from travelers exploring Georgia",
+        "url": "https://www.georgiatrips.ge/posts",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Georgia Trips",
+            "url": "https://www.georgiatrips.ge"
+        },
+        "about": {
+            "@type": "Place",
+            "name": "Georgia",
+            "description": "Country in the Caucasus region"
+        }
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
   <style>
         :root {
             --primary-color: #e5383b;
@@ -2172,6 +2223,47 @@
     
     <div class="container" id="main-container">
         <main class="main-content">
+            <!-- SEO Header Section - Collapsible, remembers user preference -->
+            <header class="seo-header" id="seo-header" style="display: none; padding: 10px 15px; background: var(--card-background); border-bottom: 1px solid var(--border-color); position: relative;">
+                <button onclick="dismissSeoHeader()" style="position: absolute; top: 8px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 16px;" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h1 data-i18n="postsPageTitle" style="font-size: 1em; font-weight: 600; color: var(--text-color); margin: 0 25px 4px 0;">
+                    Travel Posts & Photos from Georgia
+                </h1>
+                <p data-i18n="postsPageDescription" style="font-size: 0.8em; color: var(--text-muted); line-height: 1.4; margin: 0; padding-right: 20px;">
+                    Discover amazing travel stories, photos and adventures from all regions of Georgia. From the vibrant streets of Tbilisi to the stunning mountains of Svaneti, the beautiful beaches of Batumi to the ancient wine region of Kakheti. Explore posts shared by travelers and locals, find hidden gems, get travel tips and inspiration for your Georgian adventure. Share your own journey and connect with the travel community.
+                </p>
+            </header>
+            
+            <!-- Hidden SEO content for search engines (always visible to crawlers, hidden from users) -->
+            <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+                <h1>Travel Posts & Photos from Georgia - Georgia Trips</h1>
+                <p>Discover amazing travel stories, photos and adventures from all regions of Georgia. From the vibrant streets of Tbilisi to the stunning mountains of Svaneti, the beautiful beaches of Batumi to the ancient wine region of Kakheti. Explore posts shared by travelers and locals, find hidden gems, get travel tips and inspiration for your Georgian adventure.</p>
+            </div>
+            
+            <script>
+                // Check if user has dismissed the SEO header before
+                function initSeoHeader() {
+                    const dismissed = localStorage.getItem('seoHeaderDismissed');
+                    const header = document.getElementById('seo-header');
+                    if (!dismissed && header) {
+                        header.style.display = 'block';
+                    }
+                }
+                
+                function dismissSeoHeader() {
+                    const header = document.getElementById('seo-header');
+                    if (header) {
+                        header.style.display = 'none';
+                        localStorage.setItem('seoHeaderDismissed', 'true');
+                    }
+                }
+                
+                // Initialize on page load
+                document.addEventListener('DOMContentLoaded', initSeoHeader);
+            </script>
+            
             <div class="search-filter-container" id="search-filter-container">
                 <div class="filter-group">
                     <select class="filter-select" id="region-filter">

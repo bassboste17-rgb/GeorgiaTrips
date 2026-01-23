@@ -6,12 +6,71 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-<title>Georgia Trips - booking</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Georgia Trips - დაჯავშნეთ მანქანები და ტურები საქართველოში. მარტივი და სწრაფი ონლაინ დაჯავშნის პლატფორმა საუკეთესო ფასებით.">
+    <meta name="keywords" content="საქართველო, ტურები, მანქანის დაჯავშნა, მოგზაურობა, Georgia Trips, ტურისტული სერვისები">
+    <meta name="author" content="Georgia Trips">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.georgiatrips.ge/booking.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Georgia Trips - მანქანების და ტურების დაჯავშნა">
+    <meta property="og:description" content="დაჯავშნეთ მანქანები და ტურები საქართველოში მარტივად და სწრაფად. საუკეთესო ფასები და პროფესიონალური სერვისი.">
+    <meta property="og:image" content="https://www.georgiatrips.ge/addhome/logo12.png">
+    <meta property="og:url" content="https://www.georgiatrips.ge/booking.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Georgia Trips">
+    <meta property="og:locale" content="ka_GE">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Georgia Trips - მანქანების და ტურების დაჯავშნა">
+    <meta name="twitter:description" content="დაჯავშნეთ მანქანები და ტურები საქართველოში მარტივად და სწრაფად.">
+    <meta name="twitter:image" content="https://www.georgiatrips.ge/addhome/logo12.png">
+    
+    <title>Georgia Trips Booking | Booking cars and tours in Georgia</title>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "Georgia Trips",
+        "description": "დაჯავშნეთ მანქანები და ტურები საქართველოში მარტივად და სწრაფად",
+        "url": "https://www.georgiatrips.ge",
+        "logo": "https://www.georgiatrips.ge/addhome/logo12.png",
+        "image": "https://www.georgiatrips.ge/addhome/logo12.png",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "GE",
+            "addressLocality": "საქართველო"
+        },
+        "priceRange": "$$",
+        "serviceType": ["Car Rental", "Tours", "Travel Services"],
+        "areaServed": {
+            "@type": "Country",
+            "name": "საქართველო"
+        },
+        "potentialAction": {
+            "@type": "ReserveAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.georgiatrips.ge/booking.html"
+            },
+            "result": {
+                "@type": "Reservation",
+                "name": "მანქანის ან ტურის დაჯავშნა"
+            }
+        }
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-<link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-<link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
     <style>
 :root {
   --primary-color: #dc3545;
@@ -75,7 +134,8 @@ body {
   gap: 1rem;
 }
 
-.header h1 {
+.header h1,
+.header h2 {
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
@@ -4176,7 +4236,7 @@ textarea.input {
     <div id="bookingView" class="view" style="display: none;">
         <div class="container">
             <div class="header">
-                <h1 data-i18n="bookingCardBook">დაჯავშნა</h1>
+                <h2 data-i18n="bookingCardBook">დაჯავშნა</h2>
                 <button class="btn btn-secondary" data-view="home">
                     <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">უკან</span>
                 </button>
@@ -4302,7 +4362,7 @@ textarea.input {
     <div id="myBookingsView" class="view" style="display: none;">
         <div class="container">
             <div class="header">
-                <h1 data-i18n="bookingCardMyBookings">ჩემი დაჯავშნები</h1>
+                <h2 data-i18n="bookingCardMyBookings">ჩემი დაჯავშნები</h2>
                 <button class="btn btn-secondary" data-view="home">
                     <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">უკან</span>
                 </button>
@@ -4315,7 +4375,7 @@ textarea.input {
         <div class="container">
             <div class="header">
                 <div class="header-title">
-                    <h1 data-i18n="bookingNotificationsTitle">შეტყობინებები</h1>
+                    <h2 data-i18n="bookingNotificationsTitle">შეტყობინებები</h2>
                     <button class="btn btn-secondary" data-view="home">
                         <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">უკან</span>
                     </button>
@@ -5600,16 +5660,53 @@ function loadBookingData() {
   loadCarsAndTours()
   setupBookingFilters()
   setupBookingTabs()
+  setupItemsContainerEvents() // Event delegation for better performance
 }
 
-async function loadCarsAndTours() {
+// Cache flag to prevent redundant loads
+let dataLoaded = false;
+
+async function loadCarsAndTours(forceReload = false) {
+  // Skip if already loaded and not forcing reload
+  if (dataLoaded && !forceReload && allCars.length > 0 && allTours.length > 0) {
+    updateTypeFilter()
+    displayItems()
+    return
+  }
+
   try {
-    const carsSnapshot = await getDocs(collection(db, "cars"))
-    allCars = carsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+    // Load cars and tours in parallel for faster loading
+    const [carsSnapshot, toursSnapshot] = await Promise.all([
+      getDocs(collection(db, "cars")),
+      getDocs(collection(db, "tours"))
+    ])
 
-    const toursSnapshot = await getDocs(collection(db, "tours"))
-    allTours = toursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+    // Process data efficiently
+    allCars = carsSnapshot.docs.map((doc) => {
+      const data = doc.data()
+      return { 
+        id: doc.id, 
+        ...data, 
+        createdAt: data.createdAt?.toDate() || null,
+        // Pre-compute lowercase for faster search
+        _searchName: data.name?.toLowerCase() || '',
+        _searchDesc: data.description?.toLowerCase() || ''
+      }
+    })
 
+    allTours = toursSnapshot.docs.map((doc) => {
+      const data = doc.data()
+      return { 
+        id: doc.id, 
+        ...data, 
+        createdAt: data.createdAt?.toDate() || null,
+        // Pre-compute lowercase for faster search
+        _searchName: data.name?.toLowerCase() || '',
+        _searchDesc: data.description?.toLowerCase() || ''
+      }
+    })
+
+    dataLoaded = true
     updateTypeFilter()
     displayItems()
   } catch (error) {
@@ -5637,9 +5734,22 @@ function setupBookingFilters() {
   const sortBy = document.getElementById("sortBy")
   const minPrice = document.getElementById("minPrice")
   const maxPrice = document.getElementById("maxPrice")
-  ;[searchInput, typeFilter, sortBy, minPrice, maxPrice].forEach((el) => { // Removed regionFilterButton from this list
-    if (el) el.addEventListener("change", filterItems) // Use filterItems
-    if (el) el.addEventListener("input", filterItems) // Use filterItems
+  
+  // Create debounced version for text inputs (150ms delay)
+  const debouncedFilter = debounce(filterItems, 150)
+  
+  // Use debounced filter for search input (typing)
+  if (searchInput) {
+    searchInput.addEventListener("input", debouncedFilter)
+  }
+  
+  // Use debounced filter for price inputs
+  if (minPrice) minPrice.addEventListener("input", debouncedFilter)
+  if (maxPrice) maxPrice.addEventListener("input", debouncedFilter)
+  
+  // Immediate filter for dropdowns (change event)
+  ;[typeFilter, sortBy].forEach((el) => {
+    if (el) el.addEventListener("change", filterItems)
   })
 
   if (regionFilterButton) {
@@ -5748,6 +5858,19 @@ function updateTypeFilter() {
   }
 }
 
+// Debounce helper for search optimization
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
 // Function to handle all filtering logic
 function filterItems() {
   const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
@@ -5770,7 +5893,7 @@ function filterItems() {
 
   if (searchTerm) {
     filtered = filtered.filter(
-      (item) => (item.name?.toLowerCase().includes(searchTerm) || item.description?.toLowerCase().includes(searchTerm)),
+      (item) => (item._searchName?.includes(searchTerm) || item._searchDesc?.includes(searchTerm)),
     )
   }
 
@@ -5831,12 +5954,16 @@ function filterItems() {
 }
 
 
+// Store current items for event delegation lookup
+let currentDisplayedItems = [];
+
 function displayItems(itemsToDisplay) { // Accept filtered items as argument
   const container = document.getElementById("itemsContainer")
   if (!container) return
 
   // Use the provided itemsToDisplay if available, otherwise fetch and filter
   const items = itemsToDisplay || (currentTab === "cars" ? allCars : allTours)
+  currentDisplayedItems = items; // Store for event delegation
 
   if (items.length === 0) {
     const notFoundText = window.languageSwitcher?.translate("bookingNotFound") || "მონაცემები არ მოიძებნა";
@@ -5844,36 +5971,52 @@ function displayItems(itemsToDisplay) { // Accept filtered items as argument
     return
   }
 
-  container.innerHTML = items.map((item) => createItemCard(item, currentTab)).join("")
+  // Use DocumentFragment for faster DOM manipulation
+  const fragment = document.createDocumentFragment();
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = items.map((item) => createItemCard(item, currentTab)).join("");
+  
+  while (tempDiv.firstChild) {
+    fragment.appendChild(tempDiv.firstChild);
+  }
+  
+  container.innerHTML = '';
+  container.appendChild(fragment);
+}
 
-  container.querySelectorAll(".card-clickable").forEach((card) => {
-    card.addEventListener("click", (e) => {
-      if (e.target.closest(".book-btn")) return
-      if (e.target.closest(".popularity-btn")) return
-
-      const itemId = card.dataset.id
-      const item = items.find((i) => i.id === itemId)
-      
-      openDetailModal(item, currentTab)
-    })
-  })
-
-  container.querySelectorAll(".book-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation()
-      const itemId = btn.dataset.id
-      const item = items.find((i) => i.id === itemId)
-      openBookingModal(item, currentTab)
-    })
-  })
-
-  container.querySelectorAll(".popularity-btn").forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      e.stopPropagation()
-      const itemId = btn.dataset.id
-      await toggleLike(itemId, currentTab)
-    })
-  })
+// Event delegation - set up once instead of per-item
+function setupItemsContainerEvents() {
+  const container = document.getElementById("itemsContainer");
+  if (!container || container.dataset.eventsAttached) return;
+  
+  container.dataset.eventsAttached = 'true';
+  
+  container.addEventListener("click", (e) => {
+    const card = e.target.closest(".card-clickable");
+    const bookBtn = e.target.closest(".book-btn");
+    const popularityBtn = e.target.closest(".popularity-btn");
+    
+    if (bookBtn) {
+      e.stopPropagation();
+      const itemId = bookBtn.dataset.id;
+      const item = currentDisplayedItems.find((i) => i.id === itemId);
+      if (item) openBookingModal(item, currentTab);
+      return;
+    }
+    
+    if (popularityBtn) {
+      e.stopPropagation();
+      const itemId = popularityBtn.dataset.id;
+      toggleLike(itemId, currentTab);
+      return;
+    }
+    
+    if (card) {
+      const itemId = card.dataset.id;
+      const item = currentDisplayedItems.find((i) => i.id === itemId);
+      if (item) openDetailModal(item, currentTab);
+    }
+  });
 }
 
 async function toggleLike(itemId, type) {

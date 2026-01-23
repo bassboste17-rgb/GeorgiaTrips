@@ -3,6 +3,11 @@
 const translations = {
   ka: {
     // Login page translations - ka (ქართული)
+    // Contact page SEO
+contactMetaTitle: "კონტაქტი | Georgia Trips - დაგვიკავშირდით",
+contactMetaDescription: "დაგვიკავშირდით Georgia Trips-ს. ტელეფონი: +995 599 18 69 27. ოფისი: ბათუმი, ბაგრატიონის 161. 24/7 მხარდაჭერა.",
+officeHeading: "ჩვენი ოფისი",
+officeAddress: "ბათუმი, ბაგრატიონის ქუჩა 161",
     toastLimitTitle: "ლიმიტი მიღწეულია",
         toastSizeTitle: "ფაილი ძალიან დიდია",
         toastInvalidTitle: "არასწორი ფორმატი",
@@ -10,7 +15,9 @@ const translations = {
         toastMediaRequiredTitle: "მედია საჭიროა",
         toastSuccessTitle: "წარმატება!",
         toastErrorTitle: "შეცდომა!",
-        
+        // About page SEO
+aboutMetaTitle: "ჩვენს შესახებ | Georgia Trips - ტრანსპორტი საქართველოში",
+aboutMetaDescription: "Georgia Trips - საქართველოს წამყვანი ტურისტული სააგენტო. პროფესიონალი მძღოლები, უსაფრთხო ტრანსპორტი, 24/7 მხარდაჭერა.",
         // Toast Messages
         toastMaxPhotos: "თქვენ შეგიძლიათ ატვირთოთ მაქსიმუმ 10 ფოტო",
         toastMaxVideos: "თქვენ შეგიძლიათ ატვირთოთ მაქსიმუმ 3 ვიდეო",
@@ -226,10 +233,10 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
     footerNewsletterText: "გამოიწერეთ ჩვენი სიახლეები სპეციალური შეთავაზებებისთვის",
     footerEmailPlaceholder: "თქვენი ელ. ფოსტა",
 
-    // Home Page
-    homeWelcome: "მოგესალმებით GeorgiaTrips-ში",
-    homeSubtitle: "ავტომობილის მომსახურება მთელ საქართველოში",
-    homeDescription: "იქირავე ავტომობილი მარტივად და სწრაფად",
+    // Home Page - SEO Optimized
+    homeWelcome: "ავტომობილი და ტურები საქართველოში",
+    homeSubtitle: "გაქირავება | ტრანსფერი | ტურები 24/7",
+    homeDescription: "იქირავე ავტომობილი ან დაჯავშნე ტური საქართველოს ნებისმიერ კუთხეში. თბილისი, ბათუმი, ქუთაისი, სვანეთი, კახეთი და სხვა.",
     homeBookNow: "დაჯავშნე ახლავე",
     homeSedan: "• სედანი",
     homeJeep: "• ჯიპი",
@@ -292,14 +299,16 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
     myPostsHoursAgo: "საათის წინ",
     myPostsToastFillFields: "გთხოვთ შეავსოთ ყველა ველი",
     myPostsToastUpdateSuccess: "პოსტი წარმატებით განახლდა",
-    myPostsToastUpdateError: "შეცდომა პოსტის განახლებისას",
+    myPostsToastUpdateError: "შეცდომა პოსტის განახლებისა��",
     myPostsToastDeleteSuccess: "პოსტი წარმატებით წაიშალა",
     myPostsToastDeleteError: "შეცდომა პოსტის წაშლისას",
 
-    // Posts page
-    postsTitle: "პოსტები - Rentime",
-    postsSearch: "ძიება...",
-    postsAllRegions: "ყველა რეგიონი",
+// Posts page - SEO Optimized
+  postsTitle: "პოსტები - Rentime",
+  postsPageTitle: "მოგზაურობის პოსტები და ფოტოები საქართველოდან",
+  postsPageDescription: "აღმოაჩინე საოცარი მოგზაურობის ისტორიები, ფოტოები და თავგადასავლები საქართველოს ყველა რეგიონიდან. თბილისის ქუჩებიდან სვანეთის მთებამდე, ბათუმის სანაპიროებიდან კახეთის ღვინის რეგიონამდე. იპოვე ფარული ადგილები, მიიღე მოგზაურობის რჩევები და გააზიარე შენი თავგადასავალი.",
+  postsSearch: "ძიება...",
+  postsAllRegions: "ყველა რეგიონი",
     postsRegionTbilisi: "თბილისი",
     postsRegionAfkhazeti: "აფხაზეთი",
     postsRegionAchara: "აჭარა",
@@ -1374,10 +1383,10 @@ profileSaveAvatar: 'ავატარის შენახვა',
     monthOctober: "October",
     monthNovember: "November",
     monthDecember: "December",
-    // Home Page
-    homeWelcome: "Welcome to GeorgiaTrips",
-    homeSubtitle: "Car Service Throughout Georgia",
-    homeDescription: "Rent a car easily and quickly",
+// Home Page - SEO Optimized
+  homeWelcome: "Car Rental & Tours in Georgia",
+  homeSubtitle: "Rent a Car | Transfer | Tours 24/7",
+  homeDescription: "Rent a car or book a tour to any destination in Georgia. Tbilisi, Batumi, Kutaisi, Svaneti, Kakheti and more.",
     homeBookNow: "Book Now",
     homeSedan: "• Sedan",
     homeJeep: "• Jeep",
@@ -1447,10 +1456,12 @@ profileSaveAvatar: 'ავატარის შენახვა',
 newsletterAlreadySubscribed: 'This email is already subscribed!',
 newsletterError: 'Error! Please try again later.',
 newsletterEnterEmail: 'Please enter your email',
-    // Posts page
-    postsTitle: "Posts - Rentime",
-    postsSearch: "Search...",
-    postsAllRegions: "All Regions",
+// Posts page - SEO Optimized
+  postsTitle: "Posts - Rentime",
+  postsPageTitle: "Travel Posts & Photos from Georgia",
+  postsPageDescription: "Discover amazing travel stories, photos and adventures from all regions of Georgia. From Tbilisi streets to Svaneti mountains, Batumi beaches to Kakheti wine region. Find hidden gems, get travel tips and share your Georgian adventure.",
+  postsSearch: "Search...",
+  postsAllRegions: "All Regions",
     postsRegionTbilisi: "Tbilisi",
     postsRegionAfkhazeti: "Abkhazia",
     postsRegionAchara: "Adjara",
@@ -1628,7 +1639,9 @@ warningPopupContinueBtn: "Understood, Continue",
     authMissingEmail: "Please provide an email",
     authAccountExistsDifferent: "This email is already used with a different method",
     authDefaultError: "An error occurred. Please try again later",
-
+// About page SEO
+aboutMetaTitle: "About Us | Georgia Trips - Transport in Georgia",
+aboutMetaDescription: "Georgia Trips - Leading travel agency in Georgia. Professional drivers, safe transport, 24/7 support for tours and transfers.",
     // Contact page
     contactTitle: "Contact | Rent",
     contactHeading: "Contact",
@@ -2286,6 +2299,11 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     kvemoKartliPriceLabel: "Price",
     kvemoKartliBookingButton: "Book",
     // Abkhazia page translations - English
+    // Contact page SEO
+contactMetaTitle: "Contact | Georgia Trips - Get in Touch",
+contactMetaDescription: "Contact Georgia Trips. Phone: +995 599 18 69 27. Office: Batumi, Bagrationi St. 161. 24/7 support for tours and travel.",
+officeHeading: "Our Office",
+officeAddress: "Batumi, Bagrationi Street 161",
     abkhaziaTitle: "Abkhazia",
     abkhaziaSubtitle: "Sea and Mountains",
     abkhaziaBookTransport: "Book Transport",
@@ -2739,10 +2757,10 @@ profileSaveAvatar: 'Сохранить аватар',
     footerNewsletterText: "Подпишитесь на нашу рассылку для специальных предложений",
     footerEmailPlaceholder: "Ваш email",
 
-    // Home Page
-    homeWelcome: "Добро пожаловать в GeorgiaTrips",
-    homeSubtitle: "Автомобильный сервис по всей Грузии",
-    homeDescription: "Арендуйте автомобиль легко и быстро",
+// Home Page - SEO Optimized
+  homeWelcome: "Аренда авто и туры по Грузии",
+  homeSubtitle: "Прокат | Трансфер | Туры 24/7",
+  homeDescription: "Арендуйте авто или закажите тур в любую точку Грузии. Тбилиси, Батуми, Кутаиси, Сванетия, Кахетия и другие.",
     homeBookNow: "Забронировать",
     homeSedan: "• Седан",
     homeJeep: "• Джип",
@@ -2809,10 +2827,12 @@ profileSaveAvatar: 'Сохранить аватар',
     myPostsToastDeleteSuccess: "Пост успешно удален",
     myPostsToastDeleteError: "Ошибка удаления поста",
     toastWarningTitle: "Предупреждение",
-    // Posts page
-    postsTitle: "Посты - Rentime",
-    postsSearch: "Поиск...",
-    postsAllRegions: "Все регионы",
+// Posts page - SEO Optimized
+  postsTitle: "Посты - Rentime",
+  postsPageTitle: "Посты и фото путешествий по Грузии",
+  postsPageDescription: "Откройте для себя удивительные истории путешествий, фотографии и приключения из всех регионов Грузии. От улиц Тбилиси до гор Сванетии, от пляжей Батуми до винного региона Кахетии. Найдите скрытые места, получите советы и поделитесь своим приключением.",
+  postsSearch: "Поиск...",
+  postsAllRegions: "Все регионы",
     postsRegionTbilisi: "Тбилиси",
     postsRegionAfkhazeti: "Абхазия",
     postsRegionAchara: "Аджара",
@@ -2975,7 +2995,9 @@ warningPopupContinueBtn: "Понятно, продолжить",
     // Hero section additions
     heroBadge: "Лучшая транспортировка",
     homeLearnMore: "Узнать больше",
-
+    // About page SEO
+aboutMetaTitle: "О нас | Georgia Trips - Транспорт в Грузии",
+aboutMetaDescription: "Georgia Trips - Ведущее туристическое агентство в Грузии. Профессиональные водители, безопасный транспорт, поддержка 24/7.",
     // Vehicles section additions
     homeVehiclesTitle: "Наш транспорт",
     homeVehiclesSubtitle: "Выберите подходящий транспорт и начните путешествие сегодня",
@@ -3255,6 +3277,11 @@ warningPopupContinueBtn: "Понятно, продолжить",
     tourTypeNature: "Природа",
     tourTypeAdventure: "Приключение",
     // Booking modal
+    // Contact page SEO
+contactMetaTitle: "Контакты | Georgia Trips - Свяжитесь с нами",
+contactMetaDescription: "Свяжитесь с Georgia Trips. Телефон: +995 599 18 69 27. Офис: Батуми, ул. Багратиони 161. Поддержка 24/7.",
+officeHeading: "Наш офис",
+officeAddress: "Батуми, улица Багратиони 161",
     bookingModalTitle: "Бронирование",
     bookingStartTime: "Время начала",
     bookingEndTime: "Время окончания",
@@ -3981,10 +4008,10 @@ profileAvatarSaved: "تم حفظ الصورة الرمزية بنجاح!",
     footerNewsletterText: "اشترك في نشرتنا الإخبارية للحصول على عروض خاصة",
     footerEmailPlaceholder: "بريدك الإلكتروني",
 
-    // Home Page
-    homeWelcome: "مرحباً بكم في GeorgiaTrips",
-    homeSubtitle: "خدمة السيارات في جميع أنحاء جورجيا",
-    homeDescription: "استأجر سيارة بسهولة وسرعة",
+// Home Page - SEO Optimized
+  homeWelcome: "تأجير السيارات والجولات في جورجيا",
+  homeSubtitle: "تأجير | نقل | جولات 24/7",
+  homeDescription: "استأجر سيارة أو احجز جولة إلى أي وجهة في جورجيا. تبليسي، باتومي، كوتايسي، سفانيتي، كاخيتي والمزيد.",
     homeBookNow: "احجز الآن",
     homeSedan: "• سيدان",
     homeJeep: "• جيب",
@@ -4052,10 +4079,12 @@ profileAvatarSaved: "تم حفظ الصورة الرمزية بنجاح!",
     myPostsToastDeleteSuccess: "تم حذف المنشور بنجاح",
     myPostsToastDeleteError: "خطأ في حذف المنشور",
 
-    // Posts page
-    postsTitle: "المنشورات - Rentime",
-    postsSearch: "بحث...",
-    postsAllRegions: "جميع المناطق",
+// Posts page - SEO Optimized
+  postsTitle: "المنشورات - Rentime",
+  postsPageTitle: "منشورات وصور السفر من جورجيا",
+  postsPageDescription: "اكتشف قصص السفر المذهلة والصور والمغامرات من جميع مناطق جورجيا. من شوارع تبليسي إلى جبال سفانيتي، من شواطئ باتومي إلى منطقة النبيذ كاخيتي. اعثر على الأماكن المخفية واحصل على نصائح السفر وشارك مغامرتك.",
+  postsSearch: "بحث...",
+  postsAllRegions: "جميع المناطق",
     postsRegionTbilisi: "تبليسي",
     postsRegionAfkhazeti: "أبخازيا",
     postsRegionAchara: "أجاريا",
@@ -4629,6 +4658,11 @@ profileSaveAvatar: 'حفظ الصورة الرمزية',
         badgePhoto: "صورة",
         badgeVideo: "فيديو",
         
+        // Contact page SEO
+contactMetaTitle: "اتصل بنا | Georgia Trips - تواصل معنا",
+contactMetaDescription: "تواصل مع Georgia Trips. الهاتف: +995 599 18 69 27. المكتب: باتومي، شارع باغراتيوني 161. دعم 24/7.",
+officeHeading: "مكتبنا",
+officeAddress: "باتومي، شارع باغراتيوني 161",
         // Page Content
         addPostTitle: "رحلات جورجيا - إضافة منشور",
         addPostUser: "مستخدم",
@@ -4906,6 +4940,9 @@ profileSaveAvatar: 'حفظ الصورة الرمزية',
     kvemoKartliPriceLabel: "السعر",
     kvemoKartliBookingButton: "حجز",
     // Abkhazia page translations - Arabic
+    // About page SEO
+aboutMetaTitle: "من نحن | Georgia Trips - النقل في جورجيا",
+aboutMetaDescription: "Georgia Trips - وكالة السفر الرائدة في جورجيا. سائقون محترفون، نقل آمن، دعم 24/7 للجولات والتحويلات.",
     abkhaziaTitle: "أبخازيا",
     abkhaziaSubtitle: "البحر والجبال",
     abkhaziaBookTransport: "حجز النقل",

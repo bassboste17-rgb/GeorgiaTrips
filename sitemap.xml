@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- მთავარი გვერდი / Home -->
+    <url>
+        <loc>https://www.georgiatrips.ge/home.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/home.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/home.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/home.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/home.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.georgiatrips.ge/home.html"/>
+    </url>
+    
+    <!-- ჩვენს შესახებ / About -->
+    <url>
+        <loc>https://www.georgiatrips.ge/about.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/about.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/about.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/about.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/about.html"/>
+    </url>
+    
+    <!-- დაჯავშნა / Booking -->
+    <url>
+        <loc>https://www.georgiatrips.ge/booking.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/booking.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/booking.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/booking.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/booking.html"/>
+    </url>
+    
+    <!-- კონტაქტი / Contact -->
+    <url>
+        <loc>https://www.georgiatrips.ge/contact.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/contact.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/contact.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/contact.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/contact.html"/>
+    </url>
+    
+    <!-- პოსტები / Posts -->
+    <url>
+        <loc>https://www.georgiatrips.ge/posts.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/posts.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/posts.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/posts.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/posts.html"/>
+    </url>
+    
+    <!-- ==================== რეგიონები / Regions ==================== -->
+    
+    <!-- აფხაზეთი / Abkhazia -->
+    <url>
+        <loc>https://www.georgiatrips.ge/abkhazia.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/abkhazia.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/abkhazia.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/abkhazia.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/abkhazia.html"/>
+    </url>
+    
+    <!-- აჭარა / Adjara -->
+    <url>
+        <loc>https://www.georgiatrips.ge/ajara.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/ajara.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/ajara.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/ajara.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/ajara.html"/>
+    </url>
+    
+    <!-- გურია / Guria -->
+    <url>
+        <loc>https://www.georgiatrips.ge/guria.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/guria.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/guria.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/guria.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/guria.html"/>
+    </url>
+    
+    <!-- იმერეთი / Imereti -->
+    <url>
+        <loc>https://www.georgiatrips.ge/imereti.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/imereti.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/imereti.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/imereti.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/imereti.html"/>
+    </url>
+    
+    <!-- კახეთი / Kakheti -->
+    <url>
+        <loc>https://www.georgiatrips.ge/kakheti.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/kakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/kakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/kakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/kakheti.html"/>
+    </url>
+    
+    <!-- ქვემო ქართლი / Kvemo Kartli -->
+    <url>
+        <loc>https://www.georgiatrips.ge/kvemo-kartli.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/kvemo-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/kvemo-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/kvemo-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/kvemo-kartli.html"/>
+    </url>
+    
+    <!-- მცხეთა-მთიანეთი / Mtskheta-Mtianeti -->
+    <url>
+        <loc>https://www.georgiatrips.ge/mtkheta-mtianeti.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/mtkheta-mtianeti.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/mtkheta-mtianeti.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/mtkheta-mtianeti.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/mtkheta-mtianeti.html"/>
+    </url>
+    
+    <!-- რაჭა-ლეჩხუმი / Racha-Lechkhumi -->
+    <url>
+        <loc>https://www.georgiatrips.ge/racha-lechkhumi.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/racha-lechkhumi.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/racha-lechkhumi.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/racha-lechkhumi.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/racha-lechkhumi.html"/>
+    </url>
+    
+    <!-- სამცხე-ჯავახეთი / Samtskhe-Javakheti -->
+    <url>
+        <loc>https://www.georgiatrips.ge/samtskhe-javakheti.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/samtskhe-javakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/samtskhe-javakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/samtskhe-javakheti.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/samtskhe-javakheti.html"/>
+    </url>
+    
+    <!-- შიდა ქართლი / Shida Kartli -->
+    <url>
+        <loc>https://www.georgiatrips.ge/shida-kartli.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/shida-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/shida-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/shida-kartli.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/shida-kartli.html"/>
+    </url>
+    
+    <!-- სამეგრელო-ზემო სვანეთი / Samegrelo-Zemo Svaneti -->
+    <url>
+        <loc>https://www.georgiatrips.ge/samegrelo-zemo-svaneti.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/samegrelo-zemo-svaneti.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/samegrelo-zemo-svaneti.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/samegrelo-zemo-svaneti.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/samegrelo-zemo-svaneti.html"/>
+    </url>
+    
+    <!-- თბილისი / Tbilisi -->
+    <url>
+        <loc>https://www.georgiatrips.ge/tbilisi.html</loc>
+        <lastmod>2026-01-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/tbilisi.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/tbilisi.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/tbilisi.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/tbilisi.html"/>
+    </url>
+    
+</urlset>
