@@ -39,6 +39,7 @@ fetch("navbar.html")
 
     toggle?.addEventListener("click", () => {
       navbarRight.classList.toggle("active")
+      toggle.classList.toggle("active")
     })
 
     const authLink = document.getElementById("auth-link")

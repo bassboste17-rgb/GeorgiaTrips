@@ -1315,3 +1315,7 @@ body {
     max-height: calc(var(--vh, 1vh) * 100 - 50px);
   }
 }
+.logo-img {
+  height: 50px;
+  width: auto;
+}
