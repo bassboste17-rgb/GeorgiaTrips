@@ -460,7 +460,7 @@
 
     /* Weather Section Background - Desktop */
     #weather-section {
-      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/hlsewmniu6newfhjzibx.webp');
+      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769242822/lgxknkilcmzenwlakixl.png');
     }
 
     .section-header {
@@ -486,7 +486,7 @@
     }
 
     /* ========================================
-       3D CARS CAROUSEL - ROTATING EFFECT (Same as Tours)
+       3D CARS CAROUSEL - ROTATING EFFECT
        ======================================== */
     .cars-carousel-wrapper {
       display: block;
@@ -494,6 +494,7 @@
       margin-top: 2rem;
       padding: 2rem 0;
       perspective: 1200px;
+      overflow: hidden;
     }
 
     .cars-carousel {
@@ -503,6 +504,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: visible;
     }
 
     .cars-carousel-track {
@@ -890,7 +892,7 @@
     }
 
     /* ========================================
-       3D TOURS CAROUSEL - ROTATING EFFECT
+       3D TOURS CAROUSEL - ROTATING EFFECT (Same as Cars)
        ======================================== */
     .tours-carousel-wrapper {
       display: block;
@@ -898,6 +900,7 @@
       margin-top: 2rem;
       padding: 2rem 0;
       perspective: 1200px;
+      overflow: hidden;
     }
 
     .tours-carousel {
@@ -907,6 +910,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: visible;
     }
 
     .tours-carousel-track {
@@ -1595,41 +1599,53 @@
       }
 
       /* Cars Mobile - 3D Carousel */
+      .cars-carousel-wrapper {
+        overflow: hidden;
+        padding: 1rem 0;
+      }
+
       .cars-carousel {
         height: 480px;
+        overflow: visible;
       }
 
       .cars-carousel-track .car-card {
-        width: 280px;
+        width: 260px;
       }
 
       .cars-carousel-arrow {
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
       }
 
       .cars-carousel-nav {
-        padding: 0 10px;
+        padding: 0 5px;
       }
 
       /* Tours Mobile - 3D Carousel */
+      .tours-carousel-wrapper {
+        overflow: hidden;
+        padding: 1rem 0;
+      }
+
       .tours-carousel {
         height: 480px;
+        overflow: visible;
       }
 
       .tours-carousel-track .tour-card {
-        width: 280px;
+        width: 260px;
       }
 
       .tours-carousel-arrow {
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
       }
 
       .tours-carousel-nav {
-        padding: 0 10px;
+        padding: 0 5px;
       }
 
       /* Mobile Latest Post */
@@ -1726,91 +1742,6 @@
         width: 260px;
       }
     }
-
-    /* Skeleton Loading Animation */
-    @keyframes skeleton-pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.6; }
-    }
-
-    .skeleton-card {
-      background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(229, 56, 59, 0.15);
-      width: 340px;
-      flex-shrink: 0;
-    }
-
-    .skeleton-image {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(90deg, rgba(50, 50, 60, 0.8) 25%, rgba(70, 70, 80, 0.8) 50%, rgba(50, 50, 60, 0.8) 75%);
-      background-size: 200% 100%;
-      animation: skeleton-pulse 1.5s ease-in-out infinite;
-    }
-
-    .skeleton-content {
-      padding: 1.5rem;
-    }
-
-    .skeleton-title {
-      height: 24px;
-      width: 70%;
-      background: rgba(60, 60, 70, 0.6);
-      border-radius: 4px;
-      margin-bottom: 0.75rem;
-      animation: skeleton-pulse 1.5s ease-in-out infinite;
-    }
-
-    .skeleton-text {
-      height: 16px;
-      width: 100%;
-      background: rgba(60, 60, 70, 0.4);
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
-      animation: skeleton-pulse 1.5s ease-in-out infinite;
-    }
-
-    .skeleton-text:last-child {
-      width: 60%;
-    }
-
-    .skeleton-details {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .skeleton-detail {
-      height: 14px;
-      width: 60px;
-      background: rgba(60, 60, 70, 0.4);
-      border-radius: 4px;
-      animation: skeleton-pulse 1.5s ease-in-out infinite;
-    }
-
-    .skeleton-button {
-      height: 44px;
-      width: 100%;
-      background: rgba(229, 56, 59, 0.3);
-      border-radius: 10px;
-      margin-top: 1rem;
-      animation: skeleton-pulse 1.5s ease-in-out infinite;
-    }
-
-    @media (max-width: 768px) {
-      .skeleton-card {
-        width: 280px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .skeleton-card {
-        width: 260px;
-      }
-    }
   </style>
 
   <!-- Navbar CSS -->
@@ -1877,21 +1808,7 @@
         <div class="cars-carousel-wrapper" id="carsCarouselWrapper">
           <div class="cars-carousel">
             <div class="cars-carousel-track" id="carsCarouselTrack">
-              <!-- Skeleton Loading Cards -->
-              <div class="skeleton-card">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-content">
-                  <div class="skeleton-title"></div>
-                  <div class="skeleton-text"></div>
-                  <div class="skeleton-text"></div>
-                  <div class="skeleton-details">
-                    <div class="skeleton-detail"></div>
-                    <div class="skeleton-detail"></div>
-                    <div class="skeleton-detail"></div>
-                  </div>
-                  <div class="skeleton-button"></div>
-                </div>
-              </div>
+              <div class="loading-cars" data-i18n="homeLoading">Loading...</div>
             </div>
             
             <!-- Navigation Arrows -->
@@ -1923,21 +1840,7 @@
         <div class="tours-carousel-wrapper" id="toursCarouselWrapper">
           <div class="tours-carousel">
             <div class="tours-carousel-track" id="toursCarouselTrack">
-              <!-- Skeleton Loading Cards -->
-              <div class="skeleton-card">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-content">
-                  <div class="skeleton-title"></div>
-                  <div class="skeleton-text"></div>
-                  <div class="skeleton-text"></div>
-                  <div class="skeleton-details">
-                    <div class="skeleton-detail"></div>
-                    <div class="skeleton-detail"></div>
-                    <div class="skeleton-detail"></div>
-                  </div>
-                  <div class="skeleton-button"></div>
-                </div>
-              </div>
+              <div class="loading-tours" data-i18n="homeLoading">Loading...</div>
             </div>
             
             <!-- Navigation Arrows -->
@@ -2219,57 +2122,8 @@
     var autoRotateCarInterval = null;
     var isMobile = window.innerWidth <= 768;
 
-    // Cache Configuration
-    var CACHE_KEY_CARS = 'georgiaTrips_cars_cache';
-    var CACHE_KEY_TOURS = 'georgiaTrips_tours_cache';
-    var CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
-
-    // Cache Helper Functions
-    function getFromCache(key) {
-      try {
-        var cached = localStorage.getItem(key);
-        if (!cached) return null;
-        
-        var data = JSON.parse(cached);
-        var now = Date.now();
-        
-        // Check if cache is expired
-        if (now - data.timestamp > CACHE_DURATION) {
-          localStorage.removeItem(key);
-          return null;
-        }
-        
-        return data.items;
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function saveToCache(key, items) {
-      try {
-        var data = {
-          timestamp: Date.now(),
-          items: items
-        };
-        localStorage.setItem(key, JSON.stringify(data));
-      } catch (e) {
-        // localStorage might be full or disabled
-        console.warn('Cache save failed:', e);
-      }
-    }
-
-    // Load Cars from Firebase (with caching)
+    // Load Cars from Firebase
     async function loadCars(firebase) {
-      // Try cache first for instant loading
-      var cachedCars = getFromCache(CACHE_KEY_CARS);
-      if (cachedCars && cachedCars.length > 0) {
-        allCars = cachedCars;
-        setup3DCarsCarousel(allCars);
-        // Refresh cache in background
-        refreshCarsInBackground(firebase);
-        return;
-      }
-
       var db = firebase.db;
       var collection = firebase.collection;
       var getDocs = firebase.getDocs;
@@ -2285,8 +2139,6 @@
           }
         });
 
-        // Save to cache
-        saveToCache(CACHE_KEY_CARS, allCars);
         setup3DCarsCarousel(allCars);
       } catch (error) {
         console.error("Cars loading error:", error);
@@ -2294,39 +2146,8 @@
       }
     }
 
-    // Background refresh for cars
-    async function refreshCarsInBackground(firebase) {
-      try {
-        var db = firebase.db;
-        var collection = firebase.collection;
-        var getDocs = firebase.getDocs;
-        var carsRef = collection(db, "cars");
-        var snapshot = await getDocs(carsRef);
-        
-        var freshCars = [];
-        snapshot.forEach(function(doc) {
-          if (freshCars.length < MAX_ITEMS) {
-            freshCars.push({ id: doc.id, ...doc.data() });
-          }
-        });
-        saveToCache(CACHE_KEY_CARS, freshCars);
-      } catch (e) {
-        // Silent fail for background refresh
-      }
-    }
-
-    // Load Tours from Firebase (with caching)
+    // Load Tours from Firebase
     async function loadTours(firebase) {
-      // Try cache first for instant loading
-      var cachedTours = getFromCache(CACHE_KEY_TOURS);
-      if (cachedTours && cachedTours.length > 0) {
-        allTours = cachedTours;
-        setup3DToursCarousel(allTours);
-        // Refresh cache in background
-        refreshToursInBackground(firebase);
-        return;
-      }
-
       var db = firebase.db;
       var collection = firebase.collection;
       var query = firebase.query;
@@ -2345,35 +2166,10 @@
           }
         });
 
-        // Save to cache
-        saveToCache(CACHE_KEY_TOURS, allTours);
         setup3DToursCarousel(allTours);
       } catch (error) {
         console.error("Tours loading error:", error);
         toursCarouselTrack.innerHTML = '<div class="no-tours-message" data-i18n="homeToursLoadError">' + safeTranslate('homeToursLoadError', 'Failed to load tours') + '</div>';
-      }
-    }
-
-    // Background refresh for tours
-    async function refreshToursInBackground(firebase) {
-      try {
-        var db = firebase.db;
-        var collection = firebase.collection;
-        var query = firebase.query;
-        var orderBy = firebase.orderBy;
-        var getDocs = firebase.getDocs;
-        var toursQuery = query(collection(db, "tours"), orderBy("createdAt", "desc"));
-        var snapshot = await getDocs(toursQuery);
-        
-        var freshTours = [];
-        snapshot.forEach(function(doc) {
-          if (freshTours.length < MAX_ITEMS) {
-            freshTours.push({ id: doc.id, ...doc.data() });
-          }
-        });
-        saveToCache(CACHE_KEY_TOURS, freshTours);
-      } catch (e) {
-        // Silent fail for background refresh
       }
     }
 
@@ -2626,12 +2422,12 @@
           var translateX, translateZ, rotateY, opacity, scale, zIndex;
           
           if (isMobileView) {
-            // Mobile: Tighter spacing
-            translateX = offset * 200;
-            translateZ = -absOffset * 120;
-            rotateY = offset * -25;
-            scale = 1 - absOffset * 0.15;
-            opacity = 1 - absOffset * 0.35;
+            // Mobile: Much tighter spacing to prevent overflow
+            translateX = offset * 100;
+            translateZ = -absOffset * 80;
+            rotateY = offset * -15;
+            scale = 1 - absOffset * 0.2;
+            opacity = 1 - absOffset * 0.5;
             zIndex = 100 - absOffset * 10;
           } else {
             // Desktop: More dramatic 3D effect
@@ -2644,12 +2440,15 @@
           }
           
           // Clamp values
-          scale = Math.max(0.6, scale);
-          opacity = Math.max(0.3, opacity);
+          scale = Math.max(0.5, scale);
+          opacity = Math.max(0.2, opacity);
           zIndex = Math.max(1, zIndex);
           
-          // Hide cards that are too far
-          if (absOffset > 3) {
+          // Hide cards that are too far - hide earlier on mobile
+          if (isMobileView && absOffset > 1) {
+            opacity = 0;
+            zIndex = 0;
+          } else if (absOffset > 3) {
             opacity = 0;
             zIndex = 0;
           }
@@ -2840,7 +2639,7 @@
     }
 
     // ========================================
-    // 3D TOURS CAROUSEL LOGIC - ROTATING EFFECT
+    // 3D TOURS CAROUSEL LOGIC - ROTATING EFFECT (Same as Cars)
     // ========================================
     function setup3DToursCarousel(tours) {
       if (tours.length === 0) {
@@ -2884,12 +2683,12 @@
           var translateX, translateZ, rotateY, opacity, scale, zIndex;
           
           if (isMobileView) {
-            // Mobile: Tighter spacing
-            translateX = offset * 200;
-            translateZ = -absOffset * 120;
-            rotateY = offset * -25;
-            scale = 1 - absOffset * 0.15;
-            opacity = 1 - absOffset * 0.35;
+            // Mobile: Much tighter spacing to prevent overflow
+            translateX = offset * 100;
+            translateZ = -absOffset * 80;
+            rotateY = offset * -15;
+            scale = 1 - absOffset * 0.2;
+            opacity = 1 - absOffset * 0.5;
             zIndex = 100 - absOffset * 10;
           } else {
             // Desktop: More dramatic 3D effect
@@ -2902,12 +2701,15 @@
           }
           
           // Clamp values
-          scale = Math.max(0.6, scale);
-          opacity = Math.max(0.3, opacity);
+          scale = Math.max(0.5, scale);
+          opacity = Math.max(0.2, opacity);
           zIndex = Math.max(1, zIndex);
           
-          // Hide cards that are too far
-          if (absOffset > 3) {
+          // Hide cards that are too far - hide earlier on mobile
+          if (isMobileView && absOffset > 1) {
+            opacity = 0;
+            zIndex = 0;
+          } else if (absOffset > 3) {
             opacity = 0;
             zIndex = 0;
           }
@@ -3411,13 +3213,9 @@
       try {
         var firebase = await loadFirebase();
         
-        // Load cars and tours in parallel for faster loading
-        Promise.all([
-          loadCars(firebase),
-          loadTours(firebase)
-        ]).catch(function(err) {
-          console.error("Parallel loading error:", err);
-        });
+        // Load cars and tours
+        loadCars(firebase);
+        loadTours(firebase);
         
         // Load latest post
         var db = firebase.db;
