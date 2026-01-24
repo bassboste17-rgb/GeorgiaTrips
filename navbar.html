@@ -1,11 +1,14 @@
 <header class="navbar" id="navbar">
-  <!-- Logo with image and text -->
+  <!-- Logo - Clean Elegant Design -->
   <a href="home.html" class="logo-link">
     <div class="logo-container">
-      <img src="addhome/logo12.png" alt="Georgia Trips Logo" class="logo-image">
+      <div class="logo-icon">
+        <img src="addhome/logo12.png" alt="Georgia Trips Logo" class="logo-img">
+        <div class="logo-ring"></div>
+      </div>
       <div class="logo-text">
-        <span class="logo-text-georgia">Georgia</span>
-        <span class="logo-text-trips">Trips</span>
+        <span class="text-main">Georgia</span>
+        <span class="text-accent">Trips</span>
       </div>
     </div>
   </a>
@@ -40,41 +43,186 @@
 </header>
 
 <style>
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-image {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.logo-text-georgia {
-  color: #ffffff;
-  font-family: Arial, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.logo-text-trips {
-  color: #e5383b;
-  font-family: Arial, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.logo-link {
-  text-decoration: none;
-}
+  /* ========================================
+     MINIMALIST PREMIUM LOGO
+     ======================================== */
+  
+  .logo-link {
+    text-decoration: none;
+    display: inline-flex;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  
+  /* Logo Icon with Animated Ring */
+  .logo-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo-img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 8px rgba(229, 56, 59, 0.3));
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .logo-ring {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border: 2px solid transparent;
+    border-top-color: #e5383b;
+    border-right-color: #e5383b;
+    border-radius: 50%;
+    animation: ringRotate 3s linear infinite;
+    opacity: 0.6;
+  }
+  
+  @keyframes ringRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .logo-link:hover .logo-img {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .logo-link:hover .logo-ring {
+    opacity: 1;
+    border-top-color: #ff6b6b;
+    border-right-color: #ff6b6b;
+    animation-duration: 1.5s;
+  }
+  
+  /* Text Styling */
+  .logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    position: relative;
+  }
+  
+  .text-main {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+  }
+  
+  .text-accent {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e5383b;
+    letter-spacing: -0.5px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .text-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #e5383b, #ff8585);
+    transition: width 0.3s ease;
+  }
+  
+  .logo-link:hover .text-accent::after {
+    width: 100%;
+  }
+  
+  .logo-link:hover .text-main {
+    color: #f0f0f0;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  
+  .logo-link:hover .text-accent {
+    color: #ff6b6b;
+    text-shadow: 0 0 25px rgba(229, 56, 59, 0.5);
+  }
+  
+  /* Tablet */
+  @media (max-width: 768px) {
+    .logo-container {
+      gap: 10px;
+    }
+    
+    .logo-img {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .logo-ring {
+      width: 44px;
+      height: 44px;
+    }
+    
+    .text-main,
+    .text-accent {
+      font-size: 18px;
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 480px) {
+    .logo-container {
+      gap: 8px;
+    }
+    
+    .logo-img {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .logo-ring {
+      width: 40px;
+      height: 40px;
+      border-width: 1.5px;
+    }
+    
+    .text-main,
+    .text-accent {
+      font-size: 15px;
+    }
+  }
+  
+  /* Very Small Mobile */
+  @media (max-width: 360px) {
+    .logo-container {
+      gap: 6px;
+    }
+    
+    .logo-img {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .logo-ring {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .text-main,
+    .text-accent {
+      font-size: 13px;
+    }
+  }
 </style>
 
 <script>
@@ -84,13 +232,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const navbarRight = document.querySelector('.navbar-right');
   
   if (mobileMenuToggle && navbarRight) {
-    // Touch და Click ივენთები iOS-სთვის
     mobileMenuToggle.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       navbarRight.classList.toggle('active');
       
-      // iOS Safari-ზე body scroll-ის გათიშვა მენიუს გახსნისას
       if (navbarRight.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
@@ -102,12 +248,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // iOS Safari touch fix - touchend
     mobileMenuToggle.addEventListener('touchend', function(e) {
       e.preventDefault();
     }, { passive: false });
     
-    // მენიუს დახურვა გარეთ დაკლიკებისას
     document.addEventListener('click', function(e) {
       if (!navbarRight.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
         navbarRight.classList.remove('active');
@@ -117,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Touch ივენთი iOS-სთვის
     document.addEventListener('touchstart', function(e) {
       if (!navbarRight.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
         navbarRight.classList.remove('active');
@@ -128,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
   }
   
-  // Dropdown მენიუს გაუმჯობესება iOS-სთვის
   const userMenu = document.querySelector('.user-menu');
   const dropdown = document.querySelector('.dropdown');
   
@@ -138,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
       dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     });
     
-    // Touch ივენთი
     userMenu.addEventListener('touchend', function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -157,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// iOS Safari viewport fix - 100vh პრობლემის გადაჭრა
 function setViewportHeight() {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -169,7 +309,6 @@ window.addEventListener('orientationchange', function() {
   setTimeout(setViewportHeight, 100);
 });
 
-// iOS Safari smooth scroll fix
 if (CSS.supports('-webkit-overflow-scrolling', 'touch')) {
   document.documentElement.style.cssText += '-webkit-overflow-scrolling: touch;';
 }

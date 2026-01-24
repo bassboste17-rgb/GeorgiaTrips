@@ -15,6 +15,7 @@ officeAddress: "ბათუმი, ბაგრატიონის ქუჩ�
         toastMediaRequiredTitle: "მედია საჭიროა",
         toastSuccessTitle: "წარმატება!",
         toastErrorTitle: "შეცდომა!",
+        homeNoPosts: "პოსტები არ მოიძებნა",
         // About page SEO
 aboutMetaTitle: "ჩვენს შესახებ | Georgia Trips - ტრანსპორტი საქართველოში",
 aboutMetaDescription: "Georgia Trips - საქართველოს წამყვანი ტურისტული სააგენტო. პროფესიონალი მძღოლები, უსაფრთხო ტრანსპორტი, 24/7 მხარდაჭერა.",
@@ -206,6 +207,29 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
     // Map section additions
     homeMapSubtitle: "გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად",
 
+    // Tours section - Home Page
+    homeToursTitle: "ჩვენი ტურები",
+    homeToursSubtitle: "აღმოაჩინე საქართველო ჩვენი უნიკალური ტურებით",
+    homeNoTours: "ტურები არ არის ხელმისაწვდომი",
+    homeToursLoadError: "ტურების ჩატვირთვა ვერ მოხერხდა",
+    homeTourBadge: "ტური",
+    homeToursCapacity: "ადამიანი",
+    homeToursPerTour: "ტური",
+    homeToursBook: "დაჯავშნა",
+    homeNoDescription: "აღწერა არ არის მითითებული",
+
+    // Cars section - Home Page
+    homeCarsTitle: "ჩვენი ავტომობილები",
+    homeCarsSubtitle: "აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე",
+    homeNoCars: "მანქანები არ არის ხელმისაწვდომი",
+    homeCarsLoadError: "მანქანების ჩატვირთვა ვერ მოხერხდა",
+    homeCarBadge: "ავტომობილი",
+    homeSeats: "ადგილი",
+    homeDoors: "კარი",
+    homePerDay: "დღეში",
+    homeCarsBook: "დაჯავშნა",
+    homeWithDriver: "მძღოლით",
+
     // Weather section additions
     homeWeatherSubtitle: "დაგეგმე შენი მოგზაურობა ამინდის პროგნოზის მიხედვით",
     //Navbar
@@ -302,7 +326,9 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
     myPostsToastUpdateError: "შეცდომა პოსტის განახლებისა��",
     myPostsToastDeleteSuccess: "პოსტი წარმატებით წაიშალა",
     myPostsToastDeleteError: "შეცდომა პოსტის წაშლისას",
-
+    postsTravelAlertTitle: "მოგზაურობის პოსტები და ფოტოები საქართველოდან",
+postsTravelAlertDescription: "აღმოაჩინე საოცარი მოგზაურობის ისტორიები, ფოტოები, ვიდეოები და თავგადასავლები საქართველოს ყველა რეგიონიდან. თბილისის ქუჩებიდან სვანეთის მთებამდე, ბათუმის სანაპიროებიდან კახეთის ღვინის რეგიონამდე. იპოვე ფარული ადგილები, მიიღე მოგზაურობის რჩევები და გააზიარე შენი თავგადასავალი.",
+postsTravelAlertButton: "გასაგებია",
 // Posts page - SEO Optimized
   postsTitle: "პოსტები - Rentime",
   postsPageTitle: "მოგზაურობის პოსტები და ფოტოები საქართველოდან",
@@ -311,6 +337,7 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
   postsAllRegions: "ყველა რეგიონი",
     postsRegionTbilisi: "თბილისი",
     postsRegionAfkhazeti: "აფხაზეთი",
+     postsRegionAbkhazia: "აფხაზეთი",
     postsRegionAchara: "აჭარა",
     postsRegionGuria: "გურია",
     postsRegionImereti: "იმერეთი",
@@ -367,7 +394,7 @@ newsletterEnterEmail: "გთხოვთ შეიყვანოთ ელ. �
     postsMinutesAgo: "წუთის წინ",
     postsHoursAgo: "საათის წინ",
     postsUserIdNotFound: "მომხმარებლის ID არ მოიძებნა",
-
+    bookingNotFound: "დაჯავშნა არ მოიძებნა",
     // About page
     aboutTitle: "ჩვენს შესახებ | ტრანსპორტი საქართველოში",
     aboutHeroTitle: "ჩვენს შესახებ",
@@ -591,7 +618,7 @@ profileAvatarSaved: "ავატარი წარმატებით შე
     rachaLechkhumiBookingButton: "დაჯავშნა",
     rachaLechkhumiToursLoadError: "ტურების ჩატვირთვისას მოხდა შეცდომა",
     rachaLechkhumiTransportLoadError: "ტრანსპორტის ჩატვირთვისას მოხდა შეცდომა",
-
+    carNotFound: "მანქანა არ მოიძებნა",
     // Weather descriptions
     weatherSunny: "მზიანი",
     weatherPartlyCloudy: "ნაწილობრივ ღრუბლიანი",
@@ -1334,11 +1361,34 @@ profileSaveAvatar: 'ავატარის შენახვა',
     homeVehiclesTitle: "Our Vehicles",
     homeVehiclesSubtitle: "Choose your preferred transport and start your journey today",
 
-    // Map section additions
-    homeMapSubtitle: "Explore every corner of Georgia with us",
+// Map section additions
+  homeMapSubtitle: "Explore every corner of Georgia with us",
 
-    // Weather section additions
-    homeWeatherSubtitle: "Plan your trip according to the weather forecast",
+  // Tours section - Home Page
+  homeToursTitle: "Our Tours",
+  homeToursSubtitle: "Discover Georgia with our unique tours",
+  homeNoTours: "No tours available",
+  homeToursLoadError: "Failed to load tours",
+  homeTourBadge: "Tour",
+  homeToursCapacity: "people",
+  homeToursPerTour: "tour",
+  homeToursBook: "Book",
+  homeNoDescription: "No description provided",
+
+  // Cars section - Home Page
+  homeCarsTitle: "Our Cars",
+  homeCarsSubtitle: "Choose your preferred transport and start your journey today",
+  homeNoCars: "No cars available",
+  homeCarsLoadError: "Failed to load cars",
+  homeCarBadge: "Car",
+  homeSeats: "seats",
+  homeDoors: "doors",
+  homePerDay: "per day",
+  homeCarsBook: "Book",
+  homeWithDriver: "With Driver",
+  
+  // Weather section additions
+  homeWeatherSubtitle: "Plan your trip according to the weather forecast",
     // Time ago translations
     timeSecondsAgo: "seconds ago",
     timeMinutesAgo: "minutes ago",
@@ -1521,6 +1571,7 @@ newsletterEnterEmail: 'Please enter your email',
     postsHoursAgo: "hours ago",
     postsUserIdNotFound: "User ID not found",
 // Warning Popup Translations
+ homeNoPosts: "No posts available",
 warningPopupTitle: "Important Information",
 warningPopupPricesMessage: "Prices are variable, so please consider and verify prices by writing on WhatsApp or Online Chat.",
 warningPopupContactMessage: "Also, please provide correct contact information when booking so we can reach you.",
@@ -1592,6 +1643,7 @@ warningPopupContinueBtn: "Understood, Continue",
     aboutReviewAddError: "Failed to add review",
     aboutRegionOther: "Other",
     // Login page translations - en (English)
+    bookingNotFound: "Booking not found",
     welcome: "Welcome",
     signInOrRegister: "Sign in or register to your account",
     signIn: "Sign In",
@@ -1798,6 +1850,9 @@ postsCopyLink: "Copy Link",
 postsCopy: "Copy",
 postsLinkCopiedMessage: "Link copied to clipboard!",
     // Weather descriptions
+    postsTravelAlertTitle: "Travel Posts and Photos from Georgia",
+postsTravelAlertDescription: "Discover amazing travel stories, photos, videos and adventures from all regions of Georgia. From the streets of Tbilisi to the mountains of Svaneti, from the beaches of Batumi to the wine region of Kakheti. Find hidden places, get travel tips and share your adventure.",
+postsTravelAlertButton: "Got it",
     weatherSunny: "Sunny",
     weatherPartlyCloudy: "Partly Cloudy",
     weatherClear: "Clear",
@@ -1878,7 +1933,7 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     weatherCode96: "Thunderstorm with hail",
     weatherCode99: "Thunderstorm with heavy hail",
     weatherCodeUnknown: "Unknown weather",
-
+    carNotFound: "Car not found",
     // toast container title translations
     toastSuccess: "Success",
     toastError: "Error",
@@ -1889,13 +1944,12 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
       "Please note that the prices displayed are variable and may change based on the selected dates, duration, and availability. Make sure to review the final price before confirming your booking.",
     bookingCheckPricesMessage:
       "Always check the prices for your specific dates and requirements, as they may differ from the base prices shown.",
-    bookingContactInfo: "საკონტაქტო ინფორმაცია",
-    bookingContactMessage:
-      "ასევე, გთხოვთ დაჯავშნისას სწორად მიუთითოთ საკონტაქტო ინფორმაცია, რომ შევძლოთ თქვენთან დაკავშირება.",
+    bookingContactInfo: "Contact Information",
+    bookingContactMessage: "Please provide accurate contact information when making a booking so we can reach you if needed.",
     bookingWhatsAppCommunication: "WhatsApp",
     bookingChatCommunication: "Online Chat",
-    bookingUnderstood: "გასაგებია",
-    bookingContinue: "გაგრძელება",
+    bookingUnderstood: "Understood, Continue",
+    bookingContinue: "Continue",
     // Booking page - NEW TRANSLATIONS
     bookingTitle: "Booking - TravelPro",
     bookingWelcome: "Welcome to the booking platform",
@@ -1958,7 +2012,7 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     tourDetailTransmission: "Transmission",
     tourDetailYear: "Year",
     tourDetailColor: "Color",
-    tourTypeSightseeing: "Sightseeing",
+    tourTypeSightseeing: "Adventure",
     tourTypeCultural: "Cultural",
     tourTypeNature: "Nature",
     tourTypeAdventure: "Adventure",
@@ -2075,7 +2129,7 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     colorLightBlue: "Light Blue",
     colorDarkBlue: "Dark Blue",
     colorBordeaux: "Bordeaux",
-    typeSightseeing: "Sightseeing",
+    typeSightseeing: "Adventure",
     typeCultural: "Cultural",
     typeNature: "Nature",
     typeAdventure: "Adventure",
@@ -2267,6 +2321,7 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     mtkhetaMtianetiPriceLabel: "Price",
     mtkhetaMtianetiBookingButton: "Book",
     // Kvemo Kartli page translations - English
+    postsRegionAbkhazia: "Abkhazia",
     kvemoKartliTitle: "Kvemo Kartli",
     kvemoKartliSubtitle: "Multiethnic and Cultural",
     kvemoKartliBookTransport: "Book Transport",
@@ -2299,6 +2354,9 @@ postsLinkCopiedMessage: "Link copied to clipboard!",
     kvemoKartliNoDescription: "No description provided",
     kvemoKartliPriceLabel: "Price",
     kvemoKartliBookingButton: "Book",
+    regionSvaneti: "Svaneti",
+    regionAbkhazia: "Abkhazia",
+    regionRachaLechkhumi: "Racha-Lechkhumi",
     // Abkhazia page translations - English
     // Contact page SEO
 contactMetaTitle: "Contact | Georgia Trips - Get in Touch",
@@ -2620,6 +2678,7 @@ profileSaveAvatar: 'Сохранить аватар',
     enterPasswordToLink: "Введите пароль для связывания:",
     accountsLinkedSuccess: "Аккаунты успешно связаны!",
     // Validation messages
+     homeNoPosts: "Объявления не найдены",
     validationEmailRequired: "Пожалуйста, введите эл. почту",
     validationEmailInvalid: "Пожалуйста, введите корректный адрес эл. почты",
     validationEmailAlreadyInUse: "Эта эл. почта уже используется",
@@ -2702,6 +2761,7 @@ profileSaveAvatar: 'Сохранить аватар',
     addPostMinPhotoAlert: "Пожалуйста, загрузите хотя бы одно фото",
     addPostErrorAlert: "Не удалось добавить пост. Попробуйте позже.",
     // Russian (ru)
+        bookingNotFound: "Бронирование не найдено",
     tbilisiTitle: "Тбилиси",
     tbilisiSubtitle: "Столица, история и современная культура",
     tbilisiBookTransport: "Забронировать транспорт",
@@ -3007,8 +3067,31 @@ aboutMetaDescription: "Georgia Trips - Ведущее туристическое
     // Map section additions
     homeMapSubtitle: "Исследуйте каждый уголок Грузии вместе с нами",
 
-    // Weather section additions
-    homeWeatherSubtitle: "Планируйте поездку согласно прогнозу погоды",
+    // Tours section - Home Page
+    homeToursTitle: "Наши туры",
+    homeToursSubtitle: "Откройте для себя Грузию с нашими уникальными турами",
+    homeNoTours: "Нет доступных туров",
+    homeToursLoadError: "Не удалось загрузить туры",
+    homeTourBadge: "Тур",
+    homeToursCapacity: "человек",
+    homeToursPerTour: "тур",
+    homeToursBook: "Забронировать",
+homeNoDescription: "Описание не указано",
+
+  // Cars section - Home Page
+  homeCarsTitle: "Наши автомобили",
+  homeCarsSubtitle: "Выберите предпочитаемый транспорт и начните путешествие сегодня",
+  homeNoCars: "Автомобили недоступны",
+  homeCarsLoadError: "Не удалось загрузить автомобили",
+  homeCarBadge: "Авто",
+  homeSeats: "мест",
+  homeDoors: "двери",
+  homePerDay: "в день",
+  homeCarsBook: "Забронировать",
+  homeWithDriver: "С водителем",
+  
+  // Weather section additions
+  homeWeatherSubtitle: "Планируйте поездку согласно прогнозу погоды",
     // Map Regions
     regionAbkhazia: "Абхазия",
     regionAdjara: "Аджара",
@@ -3194,6 +3277,7 @@ aboutMetaDescription: "Georgia Trips - Ведущее туристическое
     weatherCode99: "Гроза с сильным градом",
     weatherCodeUnknown: "Неизвестная погода",
     // Months
+    carNotFound: "Автомобиль не найден",
     monthJanuary: "Январь",
     monthFebruary: "Февраль",
     monthMarch: "Март",
@@ -3274,7 +3358,7 @@ aboutMetaDescription: "Georgia Trips - Ведущее туристическое
     tourDetailTransmission: "Коробка передач",
     tourDetailYear: "Год",
     tourDetailColor: "Цвет",
-    tourTypeSightseeing: "Обзорная",
+    tourTypeSightseeing: "Приключение",
     tourTypeCultural: "Культурная",
     tourTypeNature: "Природа",
     tourTypeAdventure: "Приключение",
@@ -3396,7 +3480,7 @@ officeAddress: "Батуми, улица Багратиони 161",
     colorLightBlue: "Светло-синий",
     colorDarkBlue: "Темно-синий",
     colorBordeaux: "Бордовый",
-    typeSightseeing: "Обзорная",
+    typeSightseeing: "Приключение",
     typeCultural: "Культурная",
     typeNature: "Природа",
     typeAdventure: "Приключение",
@@ -3521,6 +3605,9 @@ officeAddress: "Батуми, улица Багратиони 161",
     imeretiPriceLabel: "Цена",
     imeretiBookingButton: "Забронировать",
     // Kakheti page translations - Russian
+    postsTravelAlertTitle: "Посты и фотографии путешествий из Грузии",
+postsTravelAlertDescription: "Откройте для себя удивительные истории путешествий, фотографии, видео и приключения из всех регионов Грузии. От улиц Тбилиси до гор Сванетии, от пляжей Батуми до винного региона Кахетии. Найдите скрытые места, получите советы по путешествиям и поделитесь своим приключением.",
+postsTravelAlertButton: "Понятно",
     postsFacebook: "Фейсбук",
 postsTwitter: "Твиттер",
 postsCopyLink: "Копировать ссылку",
@@ -3983,6 +4070,29 @@ profileAvatarSaved: "تم حفظ الصورة الرمزية بنجاح!",
     // Map section additions
     homeMapSubtitle: "استكشف كل ركن من جورجيا معنا",
 
+    // Tours section - Home Page
+    homeToursTitle: "جولاتنا",
+    homeToursSubtitle: "اكتشف جورجيا من خلال جولاتنا الفريدة",
+    homeNoTours: "لا توجد جولات متاحة",
+    homeToursLoadError: "فشل تحميل الجولات",
+    homeTourBadge: "جولة",
+    homeToursCapacity: "شخص",
+    homeToursPerTour: "جولة",
+    homeToursBook: "حجز",
+    homeNoDescription: "الوصف غير محدد",
+
+    // Cars section - Home Page
+    homeCarsTitle: "سياراتنا",
+    homeCarsSubtitle: "اختر وسيلة النقل المفضلة لديك وابدأ رحلتك اليوم",
+    homeNoCars: "لا توجد سيارات متاحة",
+    homeCarsLoadError: "فشل تحميل السيارات",
+    homeCarBadge: "سيارة",
+    homeSeats: "مقعد",
+    homeDoors: "باب",
+    homePerDay: "في اليوم",
+    homeCarsBook: "حجز",
+    homeWithDriver: "مع سائق",
+        bookingNotFound: "لم يتم العثور على الحجز",
     // Weather section additions
     homeWeatherSubtitle: "خطط لرحلتك وفقاً لتوقعات الطقس",
     //Navbar
@@ -4080,6 +4190,7 @@ profileAvatarSaved: "تم حفظ الصورة الرمزية بنجاح!",
     myPostsToastUpdateError: "خطأ في تحديث المنشور",
     myPostsToastDeleteSuccess: "تم حذف المنشور بنجاح",
     myPostsToastDeleteError: "خطأ في حذف المنشور",
+    carNotFound: "لم يتم العثور على السيارة",
 
 // Posts page - SEO Optimized
   postsTitle: "المنشورات - Rentime",
@@ -4584,6 +4695,9 @@ profileSaveAvatar: 'حفظ الصورة الرمزية',
     bookingNotificationRequestSentMsg:
       'تم إرسال طلب الحجز الخاص بك لـ "{itemName}" ({startDate} - {endDate}) إلى المسؤول. في انتظار التأكيد. ستتلقى إشعاراً بمجرد أن يراجع المسؤول طلبك.',
     // My Bookings
+    postsTravelAlertTitle: "منشورات وصور سفر من جورجيا",
+postsTravelAlertDescription: "اكتشف جمال جورجيا من خلال منشورات وصور السفر التي يشاركها مجتمعنا. استلهم رحلتك القادمة من تجارب الآخرين.",
+postsTravelAlertButton: "استكشف المنشورات",
     bookingMyBookingsEmpty: "ليس لديك حجوزات",
     bookingMyBookingsLoginRequired: "يرجى تسجيل الدخول لعرض الحجوزات",
     bookingMyBookingsLoading: "جارٍ التحميل",
@@ -4700,6 +4814,7 @@ officeAddress: "باتومي، شارع باغراتيوني 161",
     savedPostsError: "حدث خطأ",
     savedPostsLinkCopied: "تم نسخ الرابط",
     // Ajara page - Arabic
+     homeNoPosts: "لا توجد منشورات بعد. كن أول من يشارك تجربته!",
     ajaraTitle: "أجاريا",
     ajaraSubtitle: "البحر والجبال والثقافة الفريدة",
     ajaraBookTransport: "حجز النقل",

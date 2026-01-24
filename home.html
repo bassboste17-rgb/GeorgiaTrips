@@ -450,6 +450,16 @@
     }
 
     .section:nth-of-type(5) {
+      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769242821/duevi4wposl5ueza6brx.png');
+    }
+
+    /* Tours Section Background */
+    #tours-section {
+      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/udvj6mfospzinlv2zhcu.webp');
+    }
+
+    /* Weather Section Background - Desktop */
+    #weather-section {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/hlsewmniu6newfhjzibx.webp');
     }
 
@@ -475,88 +485,530 @@
       margin: 0 auto;
     }
 
-    /* Vehicle Grid - Desktop */
-    .vehicle-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2.5rem;
-      margin-top: 3rem;
+    /* ========================================
+       3D CARS CAROUSEL - ROTATING EFFECT (Same as Tours)
+       ======================================== */
+    .cars-carousel-wrapper {
+      display: block;
+      position: relative;
+      margin-top: 2rem;
+      padding: 2rem 0;
+      perspective: 1200px;
     }
 
-    .vehicle-card {
+    .cars-carousel {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cars-carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .cars-carousel-track .car-card {
+      position: absolute;
+      width: 340px;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+
+    .car-card {
       background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-      border-radius: 24px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.4s ease;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       border: 1px solid rgba(229, 56, 59, 0.15);
       backdrop-filter: blur(20px);
-      position: relative;
-      overflow: hidden;
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      width: 340px;
+      flex-shrink: 0;
     }
 
-    .vehicle-card:hover {
-      transform: translateY(-10px) scale(1.02);
+    .car-card:hover {
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(229, 56, 59, 0.15);
       border-color: rgba(229, 56, 59, 0.4);
     }
 
-    .vehicle-card a {
-      text-decoration: none;
-      display: block;
+    .car-card-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .vehicle-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1.5rem;
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #fff;
-      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.3);
+    .car-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       transition: transform 0.4s ease;
     }
 
-    .vehicle-card:hover .vehicle-icon {
-      transform: scale(1.1) rotate(5deg);
+    .car-card:hover .car-card-image img {
+      transform: scale(1.1);
     }
 
-    .vehicle-name {
-      font-size: 1.5rem;
+    .car-card-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .car-card-content {
+      padding: 1.5rem;
+    }
+
+    .car-card-title {
+      font-size: 1.3rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.5rem;
     }
 
-    .vehicle-image {
-      margin-top: 1.5rem;
-      border-radius: 12px;
+    .car-card-description {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    .vehicle-image img {
-      width: auto;
-      max-width: 240px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      transition: transform 0.4s ease, filter 0.4s ease;
-      filter: brightness(0.95);
+    .car-card-details {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
 
-    .vehicle-card:hover .vehicle-image img {
+    .car-card-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .car-card-detail i {
+      color: #e5383b;
+    }
+
+    .car-card-detail.with-driver {
+      color: #22c55e;
+    }
+
+    .car-card-detail.with-driver i {
+      color: #22c55e;
+    }
+
+    .car-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .car-card-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #e5383b;
+    }
+
+    .car-card-price span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .car-card-btn {
+      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .car-card-btn:hover {
+      background: linear-gradient(135deg, #ff4447 0%, #e5383b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
+    }
+
+    /* Navigation Arrows for Cars */
+    .cars-carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .cars-carousel-arrow {
+      background: rgba(229, 56, 59, 0.9);
+      color: white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(229, 56, 59, 0.5);
+      pointer-events: auto;
+      border: none;
+    }
+
+    .cars-carousel-arrow:hover {
+      background: rgba(229, 56, 59, 1);
+      transform: scale(1.15);
+      box-shadow: 0 6px 25px rgba(229, 56, 59, 0.6);
+    }
+
+    .cars-carousel-arrow:active {
       transform: scale(1.05);
-      filter: brightness(1.05);
     }
 
-    /* Mobile Carousel - Hidden on Desktop */
-    .vehicle-carousel-wrapper {
+    /* Carousel Dots/Indicators for Cars */
+    .cars-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 2rem;
+      padding: 15px 0;
+    }
+
+    .cars-carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .cars-carousel-dot.active {
+      background: #e5383b;
+      border-color: #e5383b;
+      transform: scale(1.3);
+      box-shadow: 0 0 15px rgba(229, 56, 59, 0.6);
+    }
+
+    .cars-carousel-dot:hover {
+      background: rgba(229, 56, 59, 0.7);
+    }
+
+    .no-cars-message {
+      text-align: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
+    }
+
+    .loading-cars {
+      text-align: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
+    }
+
+    /* Tours Section Styles */
+    .tours-section {
+      padding: 4rem 2rem;
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Tours Grid - Hidden, use carousel instead */
+    .tours-grid {
       display: none;
+    }
+
+    .tour-card {
+      background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid rgba(229, 56, 59, 0.15);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      width: 340px;
+      flex-shrink: 0;
+    }
+
+    .tour-card:hover {
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(229, 56, 59, 0.15);
+      border-color: rgba(229, 56, 59, 0.4);
+    }
+
+    .tour-card-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tour-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .tour-card:hover .tour-card-image img {
+      transform: scale(1.1);
+    }
+
+    .tour-card-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
+      color: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .tour-card-content {
+      padding: 1.5rem;
+    }
+
+    .tour-card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .tour-card-description {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tour-card-details {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .tour-card-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tour-card-detail i {
+      color: #e5383b;
+    }
+
+    .tour-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tour-card-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #e5383b;
+    }
+
+    .tour-card-price span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tour-card-btn {
+      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tour-card-btn:hover {
+      background: linear-gradient(135deg, #ff4447 0%, #e5383b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
+    }
+
+    /* ========================================
+       3D TOURS CAROUSEL - ROTATING EFFECT
+       ======================================== */
+    .tours-carousel-wrapper {
+      display: block;
+      position: relative;
+      margin-top: 2rem;
+      padding: 2rem 0;
+      perspective: 1200px;
+    }
+
+    .tours-carousel {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tours-carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .tours-carousel-track .tour-card {
+      position: absolute;
+      width: 340px;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+
+    /* Navigation Arrows */
+    .tours-carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .tours-carousel-arrow {
+      background: rgba(229, 56, 59, 0.9);
+      color: white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(229, 56, 59, 0.5);
+      pointer-events: auto;
+      border: none;
+    }
+
+    .tours-carousel-arrow:hover {
+      background: rgba(229, 56, 59, 1);
+      transform: scale(1.15);
+      box-shadow: 0 6px 25px rgba(229, 56, 59, 0.6);
+    }
+
+    .tours-carousel-arrow:active {
+      transform: scale(1.05);
+    }
+
+    /* Carousel Dots/Indicators */
+    .tours-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 2rem;
+      padding: 15px 0;
+    }
+
+    .tours-carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .tours-carousel-dot.active {
+      background: #e5383b;
+      border-color: #e5383b;
+      transform: scale(1.3);
+      box-shadow: 0 0 15px rgba(229, 56, 59, 0.6);
+    }
+
+    .tours-carousel-dot:hover {
+      background: rgba(229, 56, 59, 0.7);
+    }
+
+    .no-tours-message {
+      text-align: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
+    }
+
+    .loading-tours {
+      text-align: center;
+      padding: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
     }
 
     /* Latest Post Section */
@@ -1098,25 +1550,40 @@
       }
 
       #vehicles {
-        background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/qmhieg6acl7jrqbx1but.png");
+        background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273793/zowf0sj6uz75gcxcw3is.png");
         background-attachment: scroll;
       }
 
       .section:nth-of-type(3) {
-        background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990597/he60se2ityadaepnqakb.png");
+        background-image: url("https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273794/pcyfqyrsylk9hopukodk.png");
         background-attachment: scroll;
       }
 
       .section:nth-of-type(4) {
-        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990598/pjnoju4j22oqcbnudose.png');
+        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273793/lu61wchecuxpdcq92ggx.png');
         background-attachment: scroll;
         min-height: 140vh;
       }
 
       .section:nth-of-type(5) {
-        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990596/glbnbbnolavyycnwbgwa.png');
+        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273795/smxxpzr1y2ly20bnmm68.png');
         background-attachment: scroll;
         min-height: 160vh;
+      }
+
+      /* Tours Section Mobile */
+      #tours-section {
+        background-attachment: scroll;
+        min-height: auto;
+        padding: 4rem 0;
+      }
+
+      /* Weather Section Mobile */
+      #weather-section {
+        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273794/iy78ajng6usdt55susnq.png');
+        background-attachment: scroll;
+        min-height: auto;
+        padding: 4rem 0;
       }
 
       .section-title {
@@ -1127,112 +1594,42 @@
         padding: 0 1rem;
       }
 
-      /* Hide desktop grid, show carousel */
-      .vehicle-grid {
-        display: none;
+      /* Cars Mobile - 3D Carousel */
+      .cars-carousel {
+        height: 480px;
       }
 
-      .vehicle-carousel-wrapper {
-        display: block;
-        position: relative;
-        margin-top: 2rem;
-        padding: 0 1rem;
+      .cars-carousel-track .car-card {
+        width: 280px;
       }
 
-      .vehicle-carousel {
-        position: relative;
-        overflow: hidden;
-        border-radius: 20px;
-      }
-
-      .vehicle-carousel-track {
-        display: flex;
-        transition: transform 0.5s ease;
-      }
-
-      .vehicle-carousel-slide {
-        min-width: 100%;
-        flex-shrink: 0;
-      }
-
-      .vehicle-carousel-slide .vehicle-card {
-        margin: 0;
-        background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(229, 56, 59, 0.15);
-        border-radius: 24px;
-      }
-
-      /* Carousel Navigation */
-      .carousel-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 10px;
-        pointer-events: none;
-        z-index: 10;
-      }
-
-      .carousel-arrow {
-        background: rgba(229, 56, 59, 0.9);
-        color: white;
+      .cars-carousel-arrow {
         width: 45px;
         height: 45px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(229, 56, 59, 0.5);
-        pointer-events: auto;
-        border: none;
+        font-size: 18px;
       }
 
-      .carousel-arrow:hover {
-        background: rgba(229, 56, 59, 1);
-        transform: scale(1.1);
+      .cars-carousel-nav {
+        padding: 0 10px;
       }
 
-      .carousel-arrow.hidden {
-        opacity: 0;
-        pointer-events: none;
+      /* Tours Mobile - 3D Carousel */
+      .tours-carousel {
+        height: 480px;
       }
 
-      /* Carousel Dots */
-      .carousel-dots {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 1.5rem;
-        padding: 10px 0;
+      .tours-carousel-track .tour-card {
+        width: 280px;
       }
 
-      .carousel-dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        padding: 0;
+      .tours-carousel-arrow {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
       }
 
-      .carousel-dot.active {
-        background-color: #e5383b;
-        border-color: #e5383b;
-        transform: scale(1.3);
-        box-shadow: 0 0 10px rgba(229, 56, 59, 0.6);
-      }
-
-      .carousel-dot:hover {
-        background-color: rgba(229, 56, 59, 0.7);
+      .tours-carousel-nav {
+        padding: 0 10px;
       }
 
       /* Mobile Latest Post */
@@ -1310,6 +1707,109 @@
         padding: 1rem 2rem;
         font-size: 1rem;
       }
+
+      /* Small mobile - Cars 3D Carousel */
+      .cars-carousel {
+        height: 460px;
+      }
+
+      .cars-carousel-track .car-card {
+        width: 260px;
+      }
+
+      /* Small mobile - Tours 3D Carousel */
+      .tours-carousel {
+        height: 460px;
+      }
+
+      .tours-carousel-track .tour-card {
+        width: 260px;
+      }
+    }
+
+    /* Skeleton Loading Animation */
+    @keyframes skeleton-pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.6; }
+    }
+
+    .skeleton-card {
+      background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(229, 56, 59, 0.15);
+      width: 340px;
+      flex-shrink: 0;
+    }
+
+    .skeleton-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(90deg, rgba(50, 50, 60, 0.8) 25%, rgba(70, 70, 80, 0.8) 50%, rgba(50, 50, 60, 0.8) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-content {
+      padding: 1.5rem;
+    }
+
+    .skeleton-title {
+      height: 24px;
+      width: 70%;
+      background: rgba(60, 60, 70, 0.6);
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-text {
+      height: 16px;
+      width: 100%;
+      background: rgba(60, 60, 70, 0.4);
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-text:last-child {
+      width: 60%;
+    }
+
+    .skeleton-details {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .skeleton-detail {
+      height: 14px;
+      width: 60px;
+      background: rgba(60, 60, 70, 0.4);
+      border-radius: 4px;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-button {
+      height: 44px;
+      width: 100%;
+      background: rgba(229, 56, 59, 0.3);
+      border-radius: 10px;
+      margin-top: 1rem;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .skeleton-card {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .skeleton-card {
+        width: 260px;
+      }
     }
   </style>
 
@@ -1365,144 +1865,94 @@
       </div>
     </section>
 
+    <!-- Cars Section - Dynamic from Firebase -->
     <section class="section" id="vehicles" aria-labelledby="vehicles-title">
       <div class="container">
         <header class="section-header">
-          <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">Our Vehicles for Rent</h2>
-          <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">Choose your preferred transport and start your journey today</p>
+          <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">ჩვენი ავტომობილები</h2>
+          <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე</p>
         </header>
         
-        <!-- Desktop Grid -->
-        <div class="vehicle-grid">
-          <article class="vehicle-card">
-            <a href="booking.html" aria-label="Book a sedan">
-              <div class="vehicle-icon">
-                <i class="fas fa-car" aria-hidden="true"></i>
-              </div>
-              <h3 class="vehicle-name" data-i18n="homeSedan">Sedan</h3>
-              <div class="vehicle-image">
-                <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="Sedan rental in Georgia" loading="lazy" width="240" height="auto">
-              </div>
-            </a>
-          </article>
-          
-          <article class="vehicle-card">
-            <a href="booking.html" aria-label="Book a jeep">
-              <div class="vehicle-icon">
-                <i class="fas fa-truck-pickup" aria-hidden="true"></i>
-              </div>
-              <h3 class="vehicle-name" data-i18n="homeJeep">Jeep</h3>
-              <div class="vehicle-image">
-                <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="Jeep rental in Georgia" loading="lazy" width="240" height="auto">
-              </div>
-            </a>
-          </article>
-          
-          <article class="vehicle-card">
-            <a href="booking.html" aria-label="Book a minivan">
-              <div class="vehicle-icon">
-                <i class="fas fa-shuttle-van" aria-hidden="true"></i>
-              </div>
-              <h3 class="vehicle-name" data-i18n="homeMinivan">Minivan</h3>
-              <div class="vehicle-image">
-                <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="Minivan rental in Georgia" loading="lazy" width="240" height="auto">
-              </div>
-            </a>
-          </article>
-          
-          <article class="vehicle-card">
-            <a href="booking.html" aria-label="Book a bus">
-              <div class="vehicle-icon">
-                <i class="fas fa-bus" aria-hidden="true"></i>
-              </div>
-              <h3 class="vehicle-name" data-i18n="homeBus">Bus</h3>
-              <div class="vehicle-image">
-                <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="Bus rental in Georgia" loading="lazy" width="240" height="auto">
-              </div>
-            </a>
-          </article>
-        </div>
-
-        <!-- Mobile Carousel -->
-        <div class="vehicle-carousel-wrapper">
-          <div class="vehicle-carousel">
-            <div class="vehicle-carousel-track" id="vehicleCarouselTrack">
-              <!-- Slide 1: Sedan -->
-              <div class="vehicle-carousel-slide">
-                <article class="vehicle-card">
-                  <a href="booking.html" aria-label="Book a sedan">
-                    <div class="vehicle-icon">
-                      <i class="fas fa-car" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="vehicle-name" data-i18n="homeSedan">Sedan</h3>
-                    <div class="vehicle-image">
-                      <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990658/bdkvhrlc4w54kwmpsdmw.png" alt="Sedan rental in Georgia" loading="lazy" width="240" height="auto">
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Slide 2: Jeep -->
-              <div class="vehicle-carousel-slide">
-                <article class="vehicle-card">
-                  <a href="booking.html" aria-label="Book a jeep">
-                    <div class="vehicle-icon">
-                      <i class="fas fa-truck-pickup" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="vehicle-name" data-i18n="homeJeep">Jeep</h3>
-                    <div class="vehicle-image">
-                      <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990656/bdwggeqci1konc18rxv4.png" alt="Jeep rental in Georgia" loading="lazy" width="240" height="auto">
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Slide 3: Minivan -->
-              <div class="vehicle-carousel-slide">
-                <article class="vehicle-card">
-                  <a href="booking.html" aria-label="Book a minivan">
-                    <div class="vehicle-icon">
-                      <i class="fas fa-shuttle-van" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="vehicle-name" data-i18n="homeMinivan">Minivan</h3>
-                    <div class="vehicle-image">
-                      <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990657/rcq9p1243paqrnvglnba.png" alt="Minivan rental in Georgia" loading="lazy" width="240" height="auto">
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Slide 4: Bus -->
-              <div class="vehicle-carousel-slide">
-                <article class="vehicle-card">
-                  <a href="booking.html" aria-label="Book a bus">
-                    <div class="vehicle-icon">
-                      <i class="fas fa-bus" aria-hidden="true"></i>
-                    </div>
-                    <h3 class="vehicle-name" data-i18n="homeBus">Bus</h3>
-                    <div class="vehicle-image">
-                      <img src="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990655/ccqfr2f6mjfthzmfqts0.png" alt="Bus rental in Georgia" loading="lazy" width="240" height="auto">
-                    </div>
-                  </a>
-                </article>
+        <!-- 3D Cars Carousel -->
+        <div class="cars-carousel-wrapper" id="carsCarouselWrapper">
+          <div class="cars-carousel">
+            <div class="cars-carousel-track" id="carsCarouselTrack">
+              <!-- Skeleton Loading Cards -->
+              <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-content">
+                  <div class="skeleton-title"></div>
+                  <div class="skeleton-text"></div>
+                  <div class="skeleton-text"></div>
+                  <div class="skeleton-details">
+                    <div class="skeleton-detail"></div>
+                    <div class="skeleton-detail"></div>
+                    <div class="skeleton-detail"></div>
+                  </div>
+                  <div class="skeleton-button"></div>
+                </div>
               </div>
             </div>
             
             <!-- Navigation Arrows -->
-            <div class="carousel-nav">
-              <button class="carousel-arrow carousel-prev hidden" id="carouselPrev" type="button" aria-label="Previous slide">
+            <div class="cars-carousel-nav">
+              <button class="cars-carousel-arrow" id="carCarouselPrev" type="button" aria-label="Previous car">
                 <i class="fas fa-chevron-left" aria-hidden="true"></i>
               </button>
-              <button class="carousel-arrow carousel-next" id="carouselNext" type="button" aria-label="Next slide">
+              <button class="cars-carousel-arrow" id="carCarouselNext" type="button" aria-label="Next car">
                 <i class="fas fa-chevron-right" aria-hidden="true"></i>
               </button>
             </div>
           </div>
           
-          <!-- Dots -->
-          <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Slide navigation">
-            <button class="carousel-dot active" data-index="0" type="button" role="tab" aria-label="Slide 1 - Sedan" aria-selected="true"></button>
-            <button class="carousel-dot" data-index="1" type="button" role="tab" aria-label="Slide 2 - Jeep" aria-selected="false"></button>
-            <button class="carousel-dot" data-index="2" type="button" role="tab" aria-label="Slide 3 - Minivan" aria-selected="false"></button>
-            <button class="carousel-dot" data-index="3" type="button" role="tab" aria-label="Slide 4 - Bus" aria-selected="false"></button>
+          <!-- Carousel Dots -->
+          <div class="cars-carousel-dots" id="carsCarouselDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section class="section" id="tours-section" aria-labelledby="tours-title">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title" id="tours-title" data-i18n="homeToursTitle">ჩვენი ტურები</h2>
+          <p class="section-subtitle" data-i18n="homeToursSubtitle">აღმოაჩინე საქართველო ჩვენი უნიკალური ტურებით</p>
+        </header>
+        
+        <!-- 3D Tours Carousel -->
+        <div class="tours-carousel-wrapper" id="toursCarouselWrapper">
+          <div class="tours-carousel">
+            <div class="tours-carousel-track" id="toursCarouselTrack">
+              <!-- Skeleton Loading Cards -->
+              <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-content">
+                  <div class="skeleton-title"></div>
+                  <div class="skeleton-text"></div>
+                  <div class="skeleton-text"></div>
+                  <div class="skeleton-details">
+                    <div class="skeleton-detail"></div>
+                    <div class="skeleton-detail"></div>
+                    <div class="skeleton-detail"></div>
+                  </div>
+                  <div class="skeleton-button"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Navigation Arrows -->
+            <div class="tours-carousel-nav">
+              <button class="tours-carousel-arrow" id="tourCarouselPrev" type="button" aria-label="Previous tour">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+              <button class="tours-carousel-arrow" id="tourCarouselNext" type="button" aria-label="Next tour">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
+          
+          <!-- Carousel Dots -->
+          <div class="tours-carousel-dots" id="toursCarouselDots"></div>
         </div>
       </div>
     </section>
@@ -1536,7 +1986,7 @@
       </div>
     </section>
     
-    <section class="section" aria-labelledby="weather-title">
+    <section class="section" id="weather-section" aria-labelledby="weather-title">
       <div class="container">
         <div class="weather-section">
           <header class="section-header">
@@ -1705,105 +2155,14 @@
           heroVideoMobile.play().catch(function() {});
         }
         document.removeEventListener('touchstart', enableVideoPlayback);
-      }, { once: true });
-    })();
-  </script>
-
-  <!-- Vehicle Carousel Script -->
-  <script>
-    (function() {
-      var carouselTrack = document.getElementById('vehicleCarouselTrack');
-      var prevBtn = document.getElementById('carouselPrev');
-      var nextBtn = document.getElementById('carouselNext');
-      var dots = document.querySelectorAll('.carousel-dot');
-      
-      var currentSlide = 0;
-      var totalSlides = 4;
-      var autoSlideInterval;
-      
-      function updateCarousel() {
-        if (carouselTrack) {
-          carouselTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
-        }
-        
-        dots.forEach(function(dot, index) {
-          dot.classList.toggle('active', index === currentSlide);
-          dot.setAttribute('aria-selected', index === currentSlide ? 'true' : 'false');
-        });
-        
-        if (prevBtn && nextBtn) {
-          prevBtn.classList.toggle('hidden', currentSlide === 0);
-          nextBtn.classList.toggle('hidden', currentSlide === totalSlides - 1);
-        }
-      }
-      
-      function goToSlide(index) {
-        currentSlide = index;
-        updateCarousel();
-        resetAutoSlide();
-      }
-      
-      function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateCarousel();
-      }
-      
-      function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateCarousel();
-      }
-      
-      function startAutoSlide() {
-        autoSlideInterval = setInterval(function() {
-          currentSlide = (currentSlide + 1) % totalSlides;
-          updateCarousel();
-        }, 10000);
-      }
-      
-      function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
-        startAutoSlide();
-      }
-      
-      if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); resetAutoSlide(); });
-      if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); resetAutoSlide(); });
-      
-      dots.forEach(function(dot, index) {
-        dot.addEventListener('click', function() { goToSlide(index); });
-      });
-      
-      // Touch/Swipe support
-      var touchStartX = 0;
-      var touchEndX = 0;
-      
-      if (carouselTrack) {
-        carouselTrack.addEventListener('touchstart', function(e) {
-          touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        carouselTrack.addEventListener('touchend', function(e) {
-          touchEndX = e.changedTouches[0].screenX;
-          var diff = touchStartX - touchEndX;
-          
-          if (diff > 50 && currentSlide < totalSlides - 1) {
-            nextSlide();
-            resetAutoSlide();
-          } else if (diff < -50 && currentSlide > 0) {
-            prevSlide();
-            resetAutoSlide();
-          }
-        }, { passive: true });
-      }
-      
-      updateCarousel();
-      startAutoSlide();
+      }, { once: true, passive: true });
     })();
   </script>
   
   <!-- Firebase and Main App Logic -->
   <script type="module">
     var loadFirebase = async function() {
-      var [{ initializeApp }, { getAuth, onAuthStateChanged }, { getFirestore, collection, query, orderBy, limit, onSnapshot }] = await Promise.all([
+      var [{ initializeApp }, { getAuth, onAuthStateChanged }, { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs }] = await Promise.all([
         import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"),
         import("https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"),
         import("https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js")
@@ -1823,7 +2182,7 @@
       var auth = getAuth(app);
       var db = getFirestore(app);
 
-      return { auth: auth, db: db, collection: collection, query: query, orderBy: orderBy, limit: limit, onSnapshot: onSnapshot, onAuthStateChanged: onAuthStateChanged };
+      return { auth: auth, db: db, collection: collection, query: query, orderBy: orderBy, limit: limit, onSnapshot: onSnapshot, onAuthStateChanged: onAuthStateChanged, getDocs: getDocs, limitFn: limit };
     };
 
     // DOM Elements
@@ -1837,6 +2196,10 @@
     var regionSelect = document.getElementById('region-select');
     var forecastTypeSelect = document.getElementById('forecast-type');
     var weatherContainer = document.getElementById('weather-container');
+    var toursCarouselTrack = document.getElementById('toursCarouselTrack');
+    var toursCarouselDots = document.getElementById('toursCarouselDots');
+    var carsCarouselTrack = document.getElementById('carsCarouselTrack');
+    var carsCarouselDots = document.getElementById('carsCarouselDots');
 
     function safeTranslate(key, fallback) {
       fallback = fallback || '';
@@ -1844,6 +2207,825 @@
         return window.languageSwitcher.translate(key);
       }
       return fallback || key;
+    }
+
+    // Tours Variables
+    var allTours = [];
+    var allCars = [];
+    var MAX_ITEMS = 10;
+    var currentTourIndex = 0;
+    var currentCarIndex = 0;
+    var autoRotateTourInterval = null;
+    var autoRotateCarInterval = null;
+    var isMobile = window.innerWidth <= 768;
+
+    // Cache Configuration
+    var CACHE_KEY_CARS = 'georgiaTrips_cars_cache';
+    var CACHE_KEY_TOURS = 'georgiaTrips_tours_cache';
+    var CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
+
+    // Cache Helper Functions
+    function getFromCache(key) {
+      try {
+        var cached = localStorage.getItem(key);
+        if (!cached) return null;
+        
+        var data = JSON.parse(cached);
+        var now = Date.now();
+        
+        // Check if cache is expired
+        if (now - data.timestamp > CACHE_DURATION) {
+          localStorage.removeItem(key);
+          return null;
+        }
+        
+        return data.items;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveToCache(key, items) {
+      try {
+        var data = {
+          timestamp: Date.now(),
+          items: items
+        };
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {
+        // localStorage might be full or disabled
+        console.warn('Cache save failed:', e);
+      }
+    }
+
+    // Load Cars from Firebase (with caching)
+    async function loadCars(firebase) {
+      // Try cache first for instant loading
+      var cachedCars = getFromCache(CACHE_KEY_CARS);
+      if (cachedCars && cachedCars.length > 0) {
+        allCars = cachedCars;
+        setup3DCarsCarousel(allCars);
+        // Refresh cache in background
+        refreshCarsInBackground(firebase);
+        return;
+      }
+
+      var db = firebase.db;
+      var collection = firebase.collection;
+      var getDocs = firebase.getDocs;
+
+      try {
+        var carsRef = collection(db, "cars");
+        var snapshot = await getDocs(carsRef);
+        
+        allCars = [];
+        snapshot.forEach(function(doc) {
+          if (allCars.length < MAX_ITEMS) {
+            allCars.push({ id: doc.id, ...doc.data() });
+          }
+        });
+
+        // Save to cache
+        saveToCache(CACHE_KEY_CARS, allCars);
+        setup3DCarsCarousel(allCars);
+      } catch (error) {
+        console.error("Cars loading error:", error);
+        carsCarouselTrack.innerHTML = '<div class="no-cars-message" data-i18n="homeCarsLoadError">' + safeTranslate('homeCarsLoadError', 'Failed to load cars') + '</div>';
+      }
+    }
+
+    // Background refresh for cars
+    async function refreshCarsInBackground(firebase) {
+      try {
+        var db = firebase.db;
+        var collection = firebase.collection;
+        var getDocs = firebase.getDocs;
+        var carsRef = collection(db, "cars");
+        var snapshot = await getDocs(carsRef);
+        
+        var freshCars = [];
+        snapshot.forEach(function(doc) {
+          if (freshCars.length < MAX_ITEMS) {
+            freshCars.push({ id: doc.id, ...doc.data() });
+          }
+        });
+        saveToCache(CACHE_KEY_CARS, freshCars);
+      } catch (e) {
+        // Silent fail for background refresh
+      }
+    }
+
+    // Load Tours from Firebase (with caching)
+    async function loadTours(firebase) {
+      // Try cache first for instant loading
+      var cachedTours = getFromCache(CACHE_KEY_TOURS);
+      if (cachedTours && cachedTours.length > 0) {
+        allTours = cachedTours;
+        setup3DToursCarousel(allTours);
+        // Refresh cache in background
+        refreshToursInBackground(firebase);
+        return;
+      }
+
+      var db = firebase.db;
+      var collection = firebase.collection;
+      var query = firebase.query;
+      var orderBy = firebase.orderBy;
+      var getDocs = firebase.getDocs;
+      var limitFn = firebase.limit;
+
+      try {
+        var toursQuery = query(collection(db, "tours"), orderBy("createdAt", "desc"));
+        var snapshot = await getDocs(toursQuery);
+        
+        allTours = [];
+        snapshot.forEach(function(doc) {
+          if (allTours.length < MAX_ITEMS) {
+            allTours.push({ id: doc.id, ...doc.data() });
+          }
+        });
+
+        // Save to cache
+        saveToCache(CACHE_KEY_TOURS, allTours);
+        setup3DToursCarousel(allTours);
+      } catch (error) {
+        console.error("Tours loading error:", error);
+        toursCarouselTrack.innerHTML = '<div class="no-tours-message" data-i18n="homeToursLoadError">' + safeTranslate('homeToursLoadError', 'Failed to load tours') + '</div>';
+      }
+    }
+
+    // Background refresh for tours
+    async function refreshToursInBackground(firebase) {
+      try {
+        var db = firebase.db;
+        var collection = firebase.collection;
+        var query = firebase.query;
+        var orderBy = firebase.orderBy;
+        var getDocs = firebase.getDocs;
+        var toursQuery = query(collection(db, "tours"), orderBy("createdAt", "desc"));
+        var snapshot = await getDocs(toursQuery);
+        
+        var freshTours = [];
+        snapshot.forEach(function(doc) {
+          if (freshTours.length < MAX_ITEMS) {
+            freshTours.push({ id: doc.id, ...doc.data() });
+          }
+        });
+        saveToCache(CACHE_KEY_TOURS, freshTours);
+      } catch (e) {
+        // Silent fail for background refresh
+      }
+    }
+
+    function getTranslatedRegion(regionKey) {
+           var regionTranslationMap = {
+        'tbilisi': 'regionTbilisi',
+        'kakheti': 'regionKakheti',
+        'imereti': 'regionImereti',
+        'adjara': 'regionAdjara',
+        'guria': 'regionGuria',
+        'samegrelo': 'regionSamegrelo',
+        'svaneti': 'regionSvaneti',
+        'racha': 'regionRacha',
+        'mtskheta-mtianeti': 'regionMtskhetaMtianeti',
+        'kvemo-kartli': 'regionKvemoKartli',
+        'shida-kartli': 'regionShidaKartli',
+        'samtskhe-javakheti': 'regionSamtskheJavakheti',
+        'abkhazia': 'regionAbkhazia',
+        'all': 'bookingAllRegions',
+        'თბილისი': 'regionTbilisi',
+        'ბათუმი': 'regionBatumi',
+        'ქუთაისი': 'regionKutaisi',
+        'რუსთავი': 'regionRustavi',
+        'გორი': 'regionGori',
+        'ზუგდიდი': 'regionZugdidi',
+        'თელავი': 'regionTelavi',
+        'ფოთი': 'regionPoti',
+        'ახალციხე': 'regionAkhaltsikhe',
+        'ხაშური': 'regionKhashuri',
+        'სენაკი': 'regionSenaki',
+        'აჭარა': 'regionAdjara',
+        'გურია': 'regionGuria',
+        'იმერეთი': 'regionImereti',
+        'კახეთი': 'regionKakheti',
+        'ქვემო ქართლი': 'regionKvemoKartli',
+        'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
+        'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
+        'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
+        'შიდა ქართლი': 'regionShidaKartli',
+        'სამეგრელო-ზემო სვანეთი': 'regionSamegrelo',
+        'სვანეთი': 'regionSvaneti',
+        'რაჭა': 'regionRacha',
+        'აფხაზეთი': 'regionAbkhazia',
+        'სამეგრელო': 'regionSamegrelo'
+      };
+      
+      if (!regionKey) return '-';
+      
+      var key = regionKey.trim();
+      var keyLower = key.toLowerCase();
+      
+      if (regionTranslationMap[key]) {
+        return safeTranslate(regionTranslationMap[key], key);
+      }
+      
+      if (regionTranslationMap[keyLower]) {
+        return safeTranslate(regionTranslationMap[keyLower], key);
+      }
+      
+      return key;
+    }
+
+    function getTranslatedType(typeValue) {
+      var typeTranslationMap = {
+        'კულტურული': 'tourTypeCultural',
+        'სათავგადასავლო': 'tourTypeSightseeing',
+        'გასტრონომიული': 'tourTypeGastronomic',
+        'ისტორიული': 'tourTypeHistorical',
+        'ბუნება': 'tourTypeNature',
+        'cultural': 'tourTypeCultural',
+        'sightseeing': 'tourTypeSightseeing',
+        'gastronomic': 'tourTypeGastronomic',
+        'historical': 'tourTypeHistorical',
+        'nature': 'tourTypeNature',
+        'adventure': 'tourTypeSightseeing'
+      };
+
+      if (!typeValue) return '-';
+      
+      var key = typeValue.trim();
+      var keyLower = key.toLowerCase();
+      
+      if (typeTranslationMap[key]) {
+        return safeTranslate(typeTranslationMap[key], key);
+      }
+      
+      if (typeTranslationMap[keyLower]) {
+        return safeTranslate(typeTranslationMap[keyLower], key);
+      }
+      
+      return key;
+    }
+
+    function getCurrentLang() {
+      if (window.languageSwitcher && typeof window.languageSwitcher.getCurrentLanguage === 'function') {
+        return window.languageSwitcher.getCurrentLanguage();
+      }
+      return 'ka';
+    }
+
+    function getTranslatedDuration(item) {
+      var lang = getCurrentLang();
+      
+      if (lang !== 'ka' && item.durationTranslations && item.durationTranslations[lang]) {
+        return item.durationTranslations[lang];
+      }
+      
+      return item.duration || '-';
+    }
+
+    function getTranslatedName(item) {
+      var lang = getCurrentLang();
+      
+      if (lang !== 'ka' && item.nameTranslations && item.nameTranslations[lang]) {
+        return item.nameTranslations[lang];
+      }
+      
+      return item.name || safeTranslate('homeNoDescription', 'No name');
+    }
+
+    function getTranslatedDescription(item) {
+      var lang = getCurrentLang();
+      
+      if (lang !== 'ka' && item.descriptionTranslations && item.descriptionTranslations[lang]) {
+        return item.descriptionTranslations[lang];
+      }
+      
+      return item.description || safeTranslate('homeNoDescription', 'No description');
+    }
+
+    // ========================================
+    // CAR CARD CREATION
+    // ========================================
+    function createCarCard(car) {
+      var imageUrl = car.images && car.images.length > 0 ? car.images[0] : 'https://via.placeholder.com/400x200?text=Car';
+      
+      var name = getTranslatedName(car);
+      var description = getTranslatedDescription(car);
+      var seats = car.seats || '-';
+      var doors = car.doors || '-';
+      var price = car.pricePerDay || 0;
+      var withDriver = car.withDriver || false;
+      
+      var regions = '-';
+      if (car.regions && car.regions.length > 0) {
+        if (car.regions.includes('all')) {
+          regions = safeTranslate('bookingAllRegions', 'All Regions');
+        } else {
+          regions = car.regions.slice(0, 2).map(function(r) {
+            return getTranslatedRegion(r);
+          }).join(', ');
+          if (car.regions.length > 2) {
+            regions += '...';
+          }
+        }
+      } else if (car.region) {
+        regions = getTranslatedRegion(car.region);
+      }
+
+      var carDataStr = encodeURIComponent(JSON.stringify({
+        id: car.id,
+        name: car.name,
+        description: car.description,
+        seats: car.seats,
+        doors: car.doors,
+        price: car.pricePerDay,
+        regions: car.regions,
+        images: car.images,
+        withDriver: car.withDriver
+      }));
+
+      var withDriverHtml = withDriver 
+        ? '<span class="car-card-detail with-driver"><i class="fas fa-user-tie"></i> ' + safeTranslate('bookingWithDriver', 'With Driver') + '</span>'
+        : '';
+
+      return '<article class="car-card" data-car-id="' + car.id + '" data-car-info="' + carDataStr + '">' +
+        '<div class="car-card-image">' +
+          '<img src="' + imageUrl + '" alt="' + name + '" loading="lazy">' +
+          '<span class="car-card-badge" data-i18n="homeCarBadge">' + safeTranslate('homeCarBadge', 'Car') + '</span>' +
+        '</div>' +
+        '<div class="car-card-content">' +
+          '<h3 class="car-card-title">' + name + '</h3>' +
+          '<p class="car-card-description">' + description + '</p>' +
+          '<div class="car-card-details">' +
+            '<span class="car-card-detail"><i class="fas fa-map-marker-alt"></i> ' + regions + '</span>' +
+            '<span class="car-card-detail"><i class="fas fa-users"></i> ' + seats + ' ' + safeTranslate('homeSeats', 'seats') + '</span>' +
+            '<span class="car-card-detail"><i class="fas fa-door-closed"></i> ' + doors + ' ' + safeTranslate('homeDoors', 'doors') + '</span>' +
+            withDriverHtml +
+          '</div>' +
+          '<div class="car-card-footer">' +
+            '<span class="car-card-price">' + price + '₾ <span>/' + safeTranslate('homePerDay', 'day') + '</span></span>' +
+            '<button class="car-card-btn" data-car-id="' + car.id + '" data-car-info="' + carDataStr + '">' +
+              '<i class="fas fa-calendar-check"></i> ' + safeTranslate('homeToursBook', 'Book') +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+    }
+
+    function navigateToCarBooking(carId, carInfo) {
+      var url = 'booking.html?car=' + carId;
+      if (carInfo) {
+        url += '&carData=' + carInfo;
+      }
+      window.location.href = url;
+    }
+
+    // ========================================
+    // 3D CARS CAROUSEL LOGIC
+    // ========================================
+    function setup3DCarsCarousel(cars) {
+      if (cars.length === 0) {
+        carsCarouselTrack.innerHTML = '<div class="no-cars-message">' + safeTranslate('homeNoCars', 'No cars available') + '</div>';
+        return;
+      }
+
+      // Create car cards
+      var cardsHtml = cars.map(function(car) {
+        return createCarCard(car);
+      }).join('');
+
+      carsCarouselTrack.innerHTML = cardsHtml;
+
+      // Create dots
+      var dotsHtml = '';
+      for (var i = 0; i < cars.length; i++) {
+        dotsHtml += '<button class="cars-carousel-dot' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" type="button" aria-label="Car ' + (i + 1) + '"></button>';
+      }
+      carsCarouselDots.innerHTML = dotsHtml;
+
+      // Get all cards and apply initial positions
+      var cards = carsCarouselTrack.querySelectorAll('.car-card');
+      currentCarIndex = 0;
+
+      // Update carousel positions
+      function update3DCarousel() {
+        var totalCards = cards.length;
+        var isMobileView = window.innerWidth <= 768;
+        
+        cards.forEach(function(card, index) {
+          var offset = index - currentCarIndex;
+          
+          // Handle wrapping for infinite feel
+          if (offset > totalCards / 2) offset -= totalCards;
+          if (offset < -totalCards / 2) offset += totalCards;
+          
+          var absOffset = Math.abs(offset);
+          
+          // Calculate transform values based on position
+          var translateX, translateZ, rotateY, opacity, scale, zIndex;
+          
+          if (isMobileView) {
+            // Mobile: Tighter spacing
+            translateX = offset * 200;
+            translateZ = -absOffset * 120;
+            rotateY = offset * -25;
+            scale = 1 - absOffset * 0.15;
+            opacity = 1 - absOffset * 0.35;
+            zIndex = 100 - absOffset * 10;
+          } else {
+            // Desktop: More dramatic 3D effect
+            translateX = offset * 320;
+            translateZ = -absOffset * 180;
+            rotateY = offset * -20;
+            scale = 1 - absOffset * 0.12;
+            opacity = 1 - absOffset * 0.3;
+            zIndex = 100 - absOffset * 10;
+          }
+          
+          // Clamp values
+          scale = Math.max(0.6, scale);
+          opacity = Math.max(0.3, opacity);
+          zIndex = Math.max(1, zIndex);
+          
+          // Hide cards that are too far
+          if (absOffset > 3) {
+            opacity = 0;
+            zIndex = 0;
+          }
+          
+          card.style.transform = 'translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg) scale(' + scale + ')';
+          card.style.opacity = opacity;
+          card.style.zIndex = Math.round(zIndex);
+          card.style.pointerEvents = absOffset === 0 ? 'auto' : 'none';
+        });
+
+        // Update dots
+        var dots = carsCarouselDots.querySelectorAll('.cars-carousel-dot');
+        dots.forEach(function(dot, index) {
+          dot.classList.toggle('active', index === currentCarIndex);
+        });
+      }
+
+      // Navigate functions
+      function goToCar(index) {
+        var totalCards = cards.length;
+        currentCarIndex = ((index % totalCards) + totalCards) % totalCards;
+        update3DCarousel();
+        resetAutoRotate();
+      }
+
+      function nextCar() {
+        goToCar(currentCarIndex + 1);
+      }
+
+      function prevCar() {
+        goToCar(currentCarIndex - 1);
+      }
+
+      // Auto-rotate
+      function startAutoRotate() {
+        autoRotateCarInterval = setInterval(function() {
+          nextCar();
+        }, 5000);
+      }
+
+      function resetAutoRotate() {
+        if (autoRotateCarInterval) {
+          clearInterval(autoRotateCarInterval);
+        }
+        startAutoRotate();
+      }
+
+      // Event listeners for arrows
+      var carPrevBtn = document.getElementById('carCarouselPrev');
+      var carNextBtn = document.getElementById('carCarouselNext');
+
+      if (carNextBtn) {
+        carNextBtn.addEventListener('click', function() {
+          nextCar();
+        });
+      }
+
+      if (carPrevBtn) {
+        carPrevBtn.addEventListener('click', function() {
+          prevCar();
+        });
+      }
+
+      // Dot click events
+      carsCarouselDots.querySelectorAll('.cars-carousel-dot').forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var index = parseInt(this.getAttribute('data-index'));
+          goToCar(index);
+        });
+      });
+
+      // Touch/Swipe support for carousel
+      var touchStartX = 0;
+      var touchEndX = 0;
+
+      carsCarouselTrack.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      carsCarouselTrack.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        
+        if (diff > 50) {
+          nextCar();
+        } else if (diff < -50) {
+          prevCar();
+        }
+      }, { passive: true });
+
+      // Click handlers for booking
+      carsCarouselTrack.querySelectorAll('.car-card-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navigateToCarBooking(btn.dataset.carId, btn.dataset.carInfo);
+        });
+      });
+
+      cards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          var cardIndex = Array.from(cards).indexOf(card);
+          if (cardIndex === currentCarIndex) {
+            navigateToCarBooking(card.dataset.carId, card.dataset.carInfo);
+          } else {
+            goToCar(cardIndex);
+          }
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        isMobile = window.innerWidth <= 768;
+        update3DCarousel();
+      });
+
+      // Initial update
+      update3DCarousel();
+      startAutoRotate();
+    }
+
+    // ========================================
+    // TOUR CARD CREATION
+    // ========================================
+    function createTourCard(tour) {
+      var imageUrl = tour.images && tour.images.length > 0 ? tour.images[0] : 'https://via.placeholder.com/400x200?text=Tour';
+      
+      var name = getTranslatedName(tour);
+      var description = getTranslatedDescription(tour);
+      var duration = getTranslatedDuration(tour);
+      var tourType = getTranslatedType(tour.type);
+      var capacity = tour.capacity || '-';
+      var price = tour.pricePerDay || 0;
+      
+      var regions = '-';
+      if (tour.regions && tour.regions.length > 0) {
+        if (tour.regions.includes('all')) {
+          regions = safeTranslate('bookingAllRegions', 'All Regions');
+        } else {
+          regions = tour.regions.map(function(r) {
+            return getTranslatedRegion(r);
+          }).join(', ');
+        }
+      } else if (tour.region) {
+        regions = getTranslatedRegion(tour.region);
+      }
+
+      var tourDataStr = encodeURIComponent(JSON.stringify({
+        id: tour.id,
+        name: tour.name,
+        description: tour.description,
+        duration: tour.duration,
+        capacity: tour.capacity,
+        price: tour.pricePerDay,
+        regions: tour.regions,
+        images: tour.images
+      }));
+
+      return '<article class="tour-card" data-tour-id="' + tour.id + '" data-tour-info="' + tourDataStr + '">' +
+        '<div class="tour-card-image">' +
+          '<img src="' + imageUrl + '" alt="' + name + '" loading="lazy">' +
+          '<span class="tour-card-badge" data-i18n="homeTourBadge">' + safeTranslate('homeTourBadge', 'Tour') + '</span>' +
+        '</div>' +
+        '<div class="tour-card-content">' +
+          '<h3 class="tour-card-title">' + name + '</h3>' +
+          '<p class="tour-card-description">' + description + '</p>' +
+          '<div class="tour-card-details">' +
+            '<span class="tour-card-detail"><i class="fas fa-map-marker-alt"></i> ' + regions + '</span>' +
+            (tourType !== '-' ? '<span class="tour-card-detail"><i class="fas fa-hiking"></i> ' + tourType + '</span>' : '') +
+            '<span class="tour-card-detail"><i class="fas fa-clock"></i> ' + duration + '</span>' +
+            '<span class="tour-card-detail"><i class="fas fa-users"></i> ' + capacity + ' ' + safeTranslate('homeToursCapacity', 'people') + '</span>' +
+          '</div>' +
+          '<div class="tour-card-footer">' +
+            '<span class="tour-card-price">' + price + '₾ <span>/' + safeTranslate('homeToursPerTour', 'tour') + '</span></span>' +
+            '<button class="tour-card-btn" data-tour-id="' + tour.id + '" data-tour-info="' + tourDataStr + '">' +
+              '<i class="fas fa-calendar-check"></i> ' + safeTranslate('homeToursBook', 'Book') +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+    }
+
+    function navigateToBooking(tourId, tourInfo) {
+      var url = 'booking.html?tour=' + tourId;
+      if (tourInfo) {
+        url += '&tourData=' + tourInfo;
+      }
+      window.location.href = url;
+    }
+
+    // ========================================
+    // 3D TOURS CAROUSEL LOGIC - ROTATING EFFECT
+    // ========================================
+    function setup3DToursCarousel(tours) {
+      if (tours.length === 0) {
+        toursCarouselTrack.innerHTML = '<div class="no-tours-message">' + safeTranslate('homeNoTours', 'No tours available') + '</div>';
+        return;
+      }
+
+      // Create tour cards
+      var cardsHtml = tours.map(function(tour) {
+        return createTourCard(tour);
+      }).join('');
+
+      toursCarouselTrack.innerHTML = cardsHtml;
+
+      // Create dots
+      var dotsHtml = '';
+      for (var i = 0; i < tours.length; i++) {
+        dotsHtml += '<button class="tours-carousel-dot' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" type="button" aria-label="Tour ' + (i + 1) + '"></button>';
+      }
+      toursCarouselDots.innerHTML = dotsHtml;
+
+      // Get all cards and apply initial positions
+      var cards = toursCarouselTrack.querySelectorAll('.tour-card');
+      currentTourIndex = 0;
+
+      // Update carousel positions
+      function update3DCarousel() {
+        var totalCards = cards.length;
+        var isMobileView = window.innerWidth <= 768;
+        
+        cards.forEach(function(card, index) {
+          var offset = index - currentTourIndex;
+          
+          // Handle wrapping for infinite feel
+          if (offset > totalCards / 2) offset -= totalCards;
+          if (offset < -totalCards / 2) offset += totalCards;
+          
+          var absOffset = Math.abs(offset);
+          
+          // Calculate transform values based on position
+          var translateX, translateZ, rotateY, opacity, scale, zIndex;
+          
+          if (isMobileView) {
+            // Mobile: Tighter spacing
+            translateX = offset * 200;
+            translateZ = -absOffset * 120;
+            rotateY = offset * -25;
+            scale = 1 - absOffset * 0.15;
+            opacity = 1 - absOffset * 0.35;
+            zIndex = 100 - absOffset * 10;
+          } else {
+            // Desktop: More dramatic 3D effect
+            translateX = offset * 320;
+            translateZ = -absOffset * 180;
+            rotateY = offset * -20;
+            scale = 1 - absOffset * 0.12;
+            opacity = 1 - absOffset * 0.3;
+            zIndex = 100 - absOffset * 10;
+          }
+          
+          // Clamp values
+          scale = Math.max(0.6, scale);
+          opacity = Math.max(0.3, opacity);
+          zIndex = Math.max(1, zIndex);
+          
+          // Hide cards that are too far
+          if (absOffset > 3) {
+            opacity = 0;
+            zIndex = 0;
+          }
+          
+          card.style.transform = 'translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg) scale(' + scale + ')';
+          card.style.opacity = opacity;
+          card.style.zIndex = Math.round(zIndex);
+          card.style.pointerEvents = absOffset === 0 ? 'auto' : 'none';
+        });
+
+        // Update dots
+        var dots = toursCarouselDots.querySelectorAll('.tours-carousel-dot');
+        dots.forEach(function(dot, index) {
+          dot.classList.toggle('active', index === currentTourIndex);
+        });
+      }
+
+      // Navigate functions
+      function goToTour(index) {
+        var totalCards = cards.length;
+        currentTourIndex = ((index % totalCards) + totalCards) % totalCards;
+        update3DCarousel();
+        resetAutoRotate();
+      }
+
+      function nextTour() {
+        goToTour(currentTourIndex + 1);
+      }
+
+      function prevTour() {
+        goToTour(currentTourIndex - 1);
+      }
+
+      // Auto-rotate
+      function startAutoRotate() {
+        autoRotateTourInterval = setInterval(function() {
+          nextTour();
+        }, 5000);
+      }
+
+      function resetAutoRotate() {
+        if (autoRotateTourInterval) {
+          clearInterval(autoRotateTourInterval);
+        }
+        startAutoRotate();
+      }
+
+      // Event listeners for arrows
+      var tourPrevBtn = document.getElementById('tourCarouselPrev');
+      var tourNextBtn = document.getElementById('tourCarouselNext');
+
+      if (tourNextBtn) {
+        tourNextBtn.addEventListener('click', function() {
+          nextTour();
+        });
+      }
+
+      if (tourPrevBtn) {
+        tourPrevBtn.addEventListener('click', function() {
+          prevTour();
+        });
+      }
+
+      // Dot click events
+      toursCarouselDots.querySelectorAll('.tours-carousel-dot').forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var index = parseInt(this.getAttribute('data-index'));
+          goToTour(index);
+        });
+      });
+
+      // Touch/Swipe support for carousel
+      var touchStartX = 0;
+      var touchEndX = 0;
+
+      toursCarouselTrack.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      toursCarouselTrack.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        
+        if (diff > 50) {
+          nextTour();
+        } else if (diff < -50) {
+          prevTour();
+        }
+      }, { passive: true });
+
+      // Click handlers for booking
+      toursCarouselTrack.querySelectorAll('.tour-card-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navigateToBooking(btn.dataset.tourId, btn.dataset.tourInfo);
+        });
+      });
+
+      cards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          var cardIndex = Array.from(cards).indexOf(card);
+          if (cardIndex === currentTourIndex) {
+            navigateToBooking(card.dataset.tourId, card.dataset.tourInfo);
+          } else {
+            goToTour(cardIndex);
+          }
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        isMobile = window.innerWidth <= 768;
+        update3DCarousel();
+      });
+
+      // Initial update
+      update3DCarousel();
+      startAutoRotate();
     }
 
     // Weather Data
@@ -1952,7 +3134,6 @@
       
       var date = new Date();
       var dateString = formatGeorgianDate(date);
-      var timeString = formatGeorgianTime(date);
       var icon = getWeatherIconFromCode(data.current.weather_code);
       var descriptionKey = getGeorgianWeatherDescriptionFromCode(data.current.weather_code);
       var description = safeTranslate(descriptionKey);
@@ -2136,21 +3317,12 @@
         </header>\
         ' + imagesHTML + '\
         <div class="latest-post-content">\
-          ' + (postData.content || safeTranslate('homeNoContentProvided', 'No content provided')) + '\
+          ' + (postData.content || safeTranslate('homeNoContent', 'No content')) + '\
         </div>\
-        <div class="latest-post-location">\
-          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>\
-          ' + (postData.location || safeTranslate('homeNoLocationProvided', 'No location provided')) + '\
-        </div>\
+        ' + (postData.location ? '<div class="latest-post-location"><i class="fas fa-map-marker-alt"></i>' + postData.location + '</div>' : '') + '\
         <footer class="latest-post-actions">\
-          <div class="post-action">\
-            <i class="far fa-heart" aria-hidden="true"></i>\
-            <span>' + likesCount + '</span>\
-          </div>\
-          <div class="post-action">\
-            <i class="far fa-comment" aria-hidden="true"></i>\
-            <span>' + commentsCount + '</span>\
-          </div>\
+          <div class="post-action"><i class="fas fa-heart"></i> ' + likesCount + '</div>\
+          <div class="post-action"><i class="fas fa-comment"></i> ' + commentsCount + '</div>\
           <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">' + safeTranslate('homeViewAllPosts', 'View All Posts') + '</a>\
         </footer>\
       ';
@@ -2158,156 +3330,138 @@
       return postElement;
     }
 
-    // Image Modal Functions
-    var currentImages = [];
+    // Image Modal
+    var currentPostImages = [];
     var currentImageIndex = 0;
 
-    function openImageModal(postId, imageIndex) {
-      var postElement = document.querySelector('.latest-post[data-post-id="' + postId + '"]');
+    window.openImageModal = function(postId, index) {
+      var postElement = document.querySelector('[data-post-id="' + postId + '"]');
       if (!postElement) return;
       
-      currentImages = [];
       var images = postElement.querySelectorAll('.latest-post-image img');
-      images.forEach(function(img) { currentImages.push(img.src); });
+      currentPostImages = Array.from(images).map(function(img) { return img.src; });
+      currentImageIndex = index;
       
-      if (currentImages.length === 0) return;
+      if (currentPostImages.length > 0) {
+        showImage();
+        imageModal.style.display = 'flex';
+      }
+    };
+
+    function showImage() {
+      if (currentPostImages.length === 0) return;
       
-      currentImageIndex = imageIndex;
-      showImageModal();
-    }
-
-    function showImageModal() {
-      if (currentImages.length === 0) return;
-
       modalImage.classList.remove('loaded');
-      modalImage.src = currentImages[currentImageIndex];
-      modalImage.alt = 'Georgia Trips - Travel photo ' + (currentImageIndex + 1);
-      modalImage.onload = function() { modalImage.classList.add('loaded'); };
-      if (modalImage.complete) modalImage.classList.add('loaded');
+      modalImage.src = currentPostImages[currentImageIndex];
+      modalImage.onload = function() {
+        modalImage.classList.add('loaded');
+      };
       
-      imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentImages.length;
-      imageModal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      imageModal.style.display = 'none';
-      document.body.style.overflow = '';
-      modalImage.classList.remove('loaded');
-    }
-
-    function showPrevImage() {
-      if (currentImages.length === 0) return;
-      currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-      showImageModal();
-    }
-
-    function showNextImage() {
-      if (currentImages.length === 0) return;
-      currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-      showImageModal();
-    }
-
-    // Event Setup
-    function setupModalEvents() {
-      modalClose.addEventListener('click', closeModal);
-      prevBtn.addEventListener('click', showPrevImage);
-      nextBtn.addEventListener('click', showNextImage);
+      imageCounter.textContent = (currentImageIndex + 1) + ' / ' + currentPostImages.length;
       
-      imageModal.addEventListener('click', function(e) {
-        if (e.target === imageModal) closeModal();
+      prevBtn.style.display = currentPostImages.length > 1 ? 'flex' : 'none';
+      nextBtn.style.display = currentPostImages.length > 1 ? 'flex' : 'none';
+    }
+
+    if (modalClose) {
+      modalClose.addEventListener('click', function() {
+        imageModal.style.display = 'none';
       });
-      
-      document.addEventListener('keydown', function(e) {
-        if (imageModal.style.display === 'flex') {
-          if (e.key === 'Escape') closeModal();
-          if (e.key === 'ArrowLeft') showPrevImage();
-          if (e.key === 'ArrowRight') showNextImage();
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        currentImageIndex = (currentImageIndex - 1 + currentPostImages.length) % currentPostImages.length;
+        showImage();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        currentImageIndex = (currentImageIndex + 1) % currentPostImages.length;
+        showImage();
+      });
+    }
+
+    if (imageModal) {
+      imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal) {
+          imageModal.style.display = 'none';
         }
       });
     }
 
-    function setupWeatherEvents() {
-      regionSelect.addEventListener('change', fetchWeatherData);
-      forecastTypeSelect.addEventListener('change', fetchWeatherData);
-    }
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (imageModal && imageModal.style.display === 'flex') {
+        if (e.key === 'Escape') {
+          imageModal.style.display = 'none';
+        } else if (e.key === 'ArrowLeft') {
+          currentImageIndex = (currentImageIndex - 1 + currentPostImages.length) % currentPostImages.length;
+          showImage();
+        } else if (e.key === 'ArrowRight') {
+          currentImageIndex = (currentImageIndex + 1) % currentPostImages.length;
+          showImage();
+        }
+      }
+    });
 
     // Initialize
     async function init() {
-      setupModalEvents();
-      setupWeatherEvents();
-      fetchWeatherData();
-      
       try {
         var firebase = await loadFirebase();
-        var auth = firebase.auth;
+        
+        // Load cars and tours in parallel for faster loading
+        Promise.all([
+          loadCars(firebase),
+          loadTours(firebase)
+        ]).catch(function(err) {
+          console.error("Parallel loading error:", err);
+        });
+        
+        // Load latest post
         var db = firebase.db;
         var collection = firebase.collection;
         var query = firebase.query;
         var orderBy = firebase.orderBy;
-        var limit = firebase.limit;
-        var onSnapshot = firebase.onSnapshot;
-        var onAuthStateChanged = firebase.onAuthStateChanged;
+        var limitFn = firebase.limitFn;
+        var getDocs = firebase.getDocs;
+
+        var postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"), limitFn(1));
+        var postsSnapshot = await getDocs(postsQuery);
         
-        function loadLatestPost() {
-          var postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(1));
-          
-          onSnapshot(postsQuery, function(querySnapshot) {
-            latestPostContainer.innerHTML = '';
-            
-            if (querySnapshot.empty) {
-              latestPostContainer.innerHTML = '<div class="no-posts">' + safeTranslate('homeAddFirstPost', 'Add first post') + '</div>';
-              return;
-            }
-            
-            querySnapshot.forEach(function(doc) {
-              var postData = doc.data();
-              var postId = doc.id;
-              var postElement = createLatestPostElement(postData, postId);
-              latestPostContainer.appendChild(postElement);
-            });
-          }, function(error) {
-            console.error("Post loading error:", error);
-            latestPostContainer.innerHTML = '<div class="no-posts">' + safeTranslate('homeFailedToLoadPosts', 'Failed to load posts') + '</div>';
-          });
+        if (!postsSnapshot.empty) {
+          var doc = postsSnapshot.docs[0];
+          var postElement = createLatestPostElement(doc.data(), doc.id);
+          latestPostContainer.innerHTML = '';
+          latestPostContainer.appendChild(postElement);
+        } else {
+          latestPostContainer.innerHTML = '<div class="no-posts" data-i18n="homeNoPosts">' + safeTranslate('homeNoPosts', 'No posts yet') + '</div>';
         }
+
+        // Load weather
+        fetchWeatherData();
         
-        window.addEventListener('languageChanged', function() {
-          if (window.initializeMap && typeof window.initializeMap === 'function') {
-            window.initializeMap();
-          }
-          fetchWeatherData();
-          loadLatestPost();
-        });
-        
-        onAuthStateChanged(auth, function() { loadLatestPost(); });
-        
+        // Weather event listeners
+        if (regionSelect) {
+          regionSelect.addEventListener('change', fetchWeatherData);
+        }
+        if (forecastTypeSelect) {
+          forecastTypeSelect.addEventListener('change', fetchWeatherData);
+        }
+
       } catch (error) {
-        console.error('Firebase initialization error:', error);
-        latestPostContainer.innerHTML = '<div class="no-posts">Failed to load posts</div>';
+        console.error("Initialization error:", error);
+        latestPostContainer.innerHTML = '<div class="no-posts">' + safeTranslate('homeLoadError', 'Failed to load content') + '</div>';
       }
     }
 
+    // Wait for DOM and translations to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
     }
-
-    window.openImageModal = openImageModal;
-    
-    // Remove .html extension from URL
-    function removeHtmlExtensionFromURL() {
-      if (window.location.pathname.endsWith('.html')) {
-        var newPath = window.location.pathname.replace(/\.html$/, '');
-        var newURL = newPath + window.location.search + window.location.hash;
-        window.history.replaceState({}, '', newURL);
-      }
-    }
-
-    window.addEventListener('load', removeHtmlExtensionFromURL);
-    window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
-
 </body>
 </html>

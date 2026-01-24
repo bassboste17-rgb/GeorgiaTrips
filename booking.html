@@ -6242,6 +6242,8 @@ window.bookFromDetail = () => {
 
 window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
+  // Re-enable body scroll when closing modal
+  if (window.setBodyScroll) window.setBodyScroll(true);
 }
 
 function closeDetailModal() {
@@ -6990,7 +6992,10 @@ function getRegionTranslationKey(regionValue) {
     'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
     'შიდა ქართლი': 'regionShidaKartli',
     'სამეგრელო-ზემო სვანეთი': 'regionSamegrelo',
-    'თბილისი': 'regionTbilisi'
+    'სამეგრელო': 'regionSamegrelo',
+    'თბილისი': 'regionTbilisi',
+    'სვანეთი': 'regionSvaneti',
+    'რაჭა': 'regionRacha'
   };
   return regionMap[regionValue] || `region${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
 }
