@@ -360,6 +360,11 @@
             background: #333;
         }
         
+        .social-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
         .google-btn {
             /* Google button specific styles */
         }
@@ -369,7 +374,7 @@
             border-color: var(--facebook-color);
         }
         
-        .facebook-btn:hover {
+        .facebook-btn:hover:not(:disabled) {
             background: var(--facebook-hover);
         }
         
@@ -857,6 +862,7 @@
             'auth/account-exists-with-different-credential': 'authAccountExistsDifferent',
             'auth/popup-closed-by-user': 'authPopupClosed',
             'auth/cancelled-popup-request': 'authPopupCancelled',
+            'auth/popup-blocked': 'authPopupBlocked',
             'default': 'authDefaultError'
         };
 
@@ -864,6 +870,7 @@
         let tempSocialCredential = null;
         let tempSocialUser = null;
         let currentProvider = null; // 'google' or 'facebook'
+        let isSocialSignInProgress = false; // Flag to prevent double clicks
 
         // Star animation generation
         function generateStars(count) {
@@ -1291,6 +1298,14 @@
         // 🔵 GOOGLE SIGN-IN
         // ===================================
         document.getElementById("googleSignIn").addEventListener("click", async () => {
+            if (isSocialSignInProgress) return;
+            isSocialSignInProgress = true;
+            
+            const googleBtn = document.getElementById("googleSignIn");
+            const facebookBtn = document.getElementById("facebookSignIn");
+            googleBtn.disabled = true;
+            facebookBtn.disabled = true;
+            
             showLoading();
             const provider = new GoogleAuthProvider();
             currentProvider = 'google';
@@ -1302,10 +1317,13 @@
                 let displayName = user.displayName;
                 
                 if (!displayName || displayName.trim() === '') {
-                    tempSocialCredential = result.credential;
+                    tempSocialCredential = GoogleAuthProvider.credentialFromResult(result);
                     tempSocialUser = user;
                     hideLoading();
                     nameModal.style.display = 'flex';
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                    isSocialSignInProgress = false;
                     return;
                 }
                 
@@ -1313,6 +1331,10 @@
                 
             } catch (error) {
                 await handleSocialSignInError(error, 'google');
+            } finally {
+                googleBtn.disabled = false;
+                facebookBtn.disabled = false;
+                isSocialSignInProgress = false;
             }
         });
 
@@ -1320,6 +1342,14 @@
         // 🔵 FACEBOOK SIGN-IN
         // ===================================
         document.getElementById("facebookSignIn").addEventListener("click", async () => {
+            if (isSocialSignInProgress) return;
+            isSocialSignInProgress = true;
+            
+            const googleBtn = document.getElementById("googleSignIn");
+            const facebookBtn = document.getElementById("facebookSignIn");
+            googleBtn.disabled = true;
+            facebookBtn.disabled = true;
+            
             showLoading();
             const provider = new FacebookAuthProvider();
             // დამატებითი scopes რომ მივიღოთ ელ. ფოსტა და სახელი
@@ -1328,23 +1358,40 @@
             currentProvider = 'facebook';
 
             try {
+                console.log("[Facebook] Starting sign in with popup...");
                 const result = await signInWithPopup(auth, provider);
+                console.log("[Facebook] Popup result received:", result);
+                
                 const user = result.user;
+                console.log("[Facebook] User:", user);
                 
                 let displayName = user.displayName;
                 
                 if (!displayName || displayName.trim() === '') {
+                    console.log("[Facebook] No display name, showing modal...");
+                    // Get the credential from result for later use if needed
                     tempSocialCredential = FacebookAuthProvider.credentialFromResult(result);
                     tempSocialUser = user;
                     hideLoading();
                     nameModal.style.display = 'flex';
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                    isSocialSignInProgress = false;
                     return;
                 }
                 
+                console.log("[Facebook] Calling handleSocialSignInSuccess...");
                 await handleSocialSignInSuccess(user, displayName, 'facebook');
                 
             } catch (error) {
+                console.error("[Facebook] Error:", error);
+                console.error("[Facebook] Error code:", error.code);
+                console.error("[Facebook] Error message:", error.message);
                 await handleSocialSignInError(error, 'facebook');
+            } finally {
+                googleBtn.disabled = false;
+                facebookBtn.disabled = false;
+                isSocialSignInProgress = false;
             }
         });
 
@@ -1353,9 +1400,12 @@
         // ===================================
         async function handleSocialSignInSuccess(user, displayName, provider) {
             try {
+                console.log(`[${provider}] handleSocialSignInSuccess called for user:`, user.uid);
                 const userDoc = await getDoc(doc(db, "users", user.uid));
+                console.log(`[${provider}] User doc exists:`, userDoc.exists());
                 
                 if (!userDoc.exists()) {
+                    console.log(`[${provider}] Creating new user document...`);
                     await setDoc(doc(db, "users", user.uid), {
                         uid: user.uid,
                         email: user.email,
@@ -1365,6 +1415,7 @@
                         emailVerified: user.emailVerified,
                         provider: provider
                     });
+                    console.log(`[${provider}] User document created`);
                 }
                 
                 hideLoading();
@@ -1372,11 +1423,12 @@
                     window.languageSwitcher.translate('loginSuccess') : 
                     'წარმატებით შეხვედით სისტემაში!';
                 showMessage(successMsg, "success");
+                console.log(`[${provider}] Redirecting to home.html...`);
                 setTimeout(() => {
                     window.location.href = "home.html";
                 }, 1500);
             } catch (error) {
-                console.error("Error saving user data:", error);
+                console.error(`[${provider}] Error saving user data:`, error);
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('authDefaultError') : 
@@ -1387,10 +1439,20 @@
 
         async function handleSocialSignInError(error, provider) {
             console.error(`${provider} Sign-In error:`, error);
+            console.error(`${provider} Error code:`, error.code);
             
             if (error.code === 'auth/account-exists-with-different-credential') {
                 try {
-                    const email = error.customData.email;
+                    const email = error.customData?.email;
+                    if (!email) {
+                        hideLoading();
+                        const errorMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('authDefaultError') : 
+                            'დაფიქსირდა შეცდომა';
+                        showMessage(errorMsg, "error");
+                        return;
+                    }
+                    
                     const signInMethods = await fetchSignInMethodsForEmail(auth, email);
                     
                     hideLoading();
@@ -1463,6 +1525,16 @@
             if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
                 hideLoading();
                 return; // Silent return, user cancelled
+            }
+            
+            // Handle popup blocked
+            if (error.code === 'auth/popup-blocked') {
+                hideLoading();
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('authPopupBlocked') : 
+                    'Popup დაიბლოკა. გთხოვთ გათიშოთ popup blocker და სცადოთ თავიდან.';
+                showMessage(errorMsg, "error");
+                return;
             }
             
             hideLoading();
