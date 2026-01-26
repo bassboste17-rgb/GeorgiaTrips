@@ -807,9 +807,7 @@
             signOut,
             fetchSignInMethodsForEmail,
             linkWithCredential,
-            EmailAuthProvider,
-            browserLocalPersistence,
-            setPersistence
+            EmailAuthProvider
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { 
             getFirestore, 
@@ -836,49 +834,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
-        // ===================================
-        // 🔧 მობილური მოწყობილობის დეტექცია
-        // ===================================
-        function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                   (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
-        }
-
-        // ===================================
-        // 🔧 შეამოწმეთ არის თუ არა in-app ბრაუზერი (Facebook, Instagram და ა.შ.)
-        // ===================================
-        function isInAppBrowser() {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            // Facebook in-app browser
-            if (ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1) return true;
-            // Instagram in-app browser
-            if (ua.indexOf('Instagram') > -1) return true;
-            // Twitter in-app browser
-            if (ua.indexOf('Twitter') > -1) return true;
-            // LinkedIn in-app browser
-            if (ua.indexOf('LinkedInApp') > -1) return true;
-            // Generic WebView detection
-            if (ua.indexOf('wv') > -1) return true;
-            return false;
-        }
-
-        // ===================================
-        // 🔧 დავაყენოთ persistence localStorage-ზე მობილურისთვის
-        // ===================================
-        async function initializeAuth() {
-            try {
-                // მობილურ მოწყობილობებზე გამოვიყენოთ localStorage persistence
-                // ეს გადაჭრის sessionStorage-თან დაკავშირებულ პრობლემებს
-                await setPersistence(auth, browserLocalPersistence);
-                console.log("[Auth] Persistence set to browserLocalPersistence");
-            } catch (error) {
-                console.error("[Auth] Error setting persistence:", error);
-            }
-        }
-
-        // დაუყოვნებლივ გამოვიძახოთ
-        initializeAuth();
         
         const messageBox = document.getElementById("message");
         const loadingOverlay = document.getElementById("loadingOverlay");
@@ -911,7 +866,7 @@
             'auth/cancelled-popup-request': 'authPopupCancelled',
             'auth/popup-blocked': 'authPopupBlocked',
             'auth/web-storage-unsupported': 'authWebStorageUnsupported',
-            'auth/missing-initial-state': 'authMissingInitialState',
+            'auth/internal-error': 'authInternalError',
             'default': 'authDefaultError'
         };
 
@@ -920,6 +875,79 @@
         let tempSocialUser = null;
         let currentProvider = null; // 'google' or 'facebook'
         let isSocialSignInProgress = false; // Flag to prevent double clicks
+
+        // ===================================
+        // 📱 მობილური მოწყობილობის აღმოჩენა
+        // ===================================
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                   (window.innerWidth <= 768);
+        }
+
+        // შემოწმება არის თუ არა in-app browser (Facebook, Instagram, etc.)
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1) || 
+                   (ua.indexOf('Instagram') > -1) || (ua.indexOf('Line') > -1) ||
+                   (ua.indexOf('Twitter') > -1) || (ua.indexOf('TikTok') > -1);
+        }
+
+        // ===================================
+        // 🔄 REDIRECT RESULT HANDLER
+        // გვერდის ჩატვირთვისას შეამოწმეთ redirect შედეგი
+        // ===================================
+        async function checkRedirectResult() {
+            try {
+                showLoading();
+                console.log("[Redirect] Checking for redirect result...");
+                
+                const result = await getRedirectResult(auth);
+                
+                if (result && result.user) {
+                    console.log("[Redirect] Got result, user:", result.user.uid);
+                    const user = result.user;
+                    
+                    // განსაზღვრე პროვაიდერი
+                    let provider = 'google';
+                    if (result.providerId === 'facebook.com' || 
+                        user.providerData.some(p => p.providerId === 'facebook.com')) {
+                        provider = 'facebook';
+                    }
+                    currentProvider = provider;
+                    
+                    let displayName = user.displayName;
+                    
+                    if (!displayName || displayName.trim() === '') {
+                        console.log("[Redirect] No display name, showing modal...");
+                        tempSocialUser = user;
+                        hideLoading();
+                        nameModal.style.display = 'flex';
+                        return;
+                    }
+                    
+                    await handleSocialSignInSuccess(user, displayName, provider);
+                } else {
+                    console.log("[Redirect] No redirect result found");
+                    hideLoading();
+                }
+            } catch (error) {
+                console.error("[Redirect] Error:", error);
+                hideLoading();
+                
+                // თუ შეცდომა არის "missing initial state", აჩვენე მეგობრული შეტყობინება
+                if (error.message && error.message.includes('missing initial state')) {
+                    const errorMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('authSessionError') : 
+                        'სესიის შეცდომა. გთხოვთ სცადოთ თავიდან ან გამოიყენოთ სხვა ბრაუზერი.';
+                    showMessage(errorMsg, "error");
+                } else if (error.code) {
+                    await handleSocialSignInError(error, 'redirect');
+                }
+            }
+        }
+
+        // გვერდის ჩატვირთვისას შეამოწმე redirect შედეგი
+        checkRedirectResult();
 
         // Star animation generation
         function generateStars(count) {
@@ -1344,58 +1372,6 @@
         });
 
         // ===================================
-        // 🔵 სოციალური ავტორიზაციის ფუნქცია (popup ან redirect)
-        // ===================================
-        async function socialSignIn(provider, providerName) {
-            const useMobile = isMobileDevice() || isInAppBrowser();
-            
-            console.log(`[${providerName}] Starting sign in...`);
-            console.log(`[${providerName}] Is mobile device: ${isMobileDevice()}`);
-            console.log(`[${providerName}] Is in-app browser: ${isInAppBrowser()}`);
-            console.log(`[${providerName}] Using ${useMobile ? 'redirect' : 'popup'} method`);
-
-            if (useMobile) {
-                // მობილურზე ან in-app ბრაუზერში გამოვიყენოთ redirect
-                try {
-                    // შევინახოთ provider-ის ინფორმაცია redirect-ის შემდეგ გამოსაყენებლად
-                    localStorage.setItem('pendingAuthProvider', providerName);
-                    console.log(`[${providerName}] Initiating redirect...`);
-                    await signInWithRedirect(auth, provider);
-                    // ეს ხაზი არ მიიღწევა, რადგან redirect მოხდება
-                } catch (error) {
-                    console.error(`[${providerName}] Redirect error:`, error);
-                    localStorage.removeItem('pendingAuthProvider');
-                    throw error;
-                }
-            } else {
-                // დესკტოპზე გამოვიყენოთ popup
-                try {
-                    console.log(`[${providerName}] Opening popup...`);
-                    const result = await signInWithPopup(auth, provider);
-                    console.log(`[${providerName}] Popup result:`, result);
-                    return result;
-                } catch (error) {
-                    console.error(`[${providerName}] Popup error:`, error);
-                    
-                    // თუ popup დაიბლოკა ან სხვა პრობლემაა, სცადეთ redirect
-                    if (error.code === 'auth/popup-blocked' || 
-                        error.code === 'auth/popup-closed-by-user' ||
-                        error.code === 'auth/cancelled-popup-request') {
-                        
-                        // მხოლოდ popup-blocked-ის შემთხვევაში სცადეთ redirect
-                        if (error.code === 'auth/popup-blocked') {
-                            console.log(`[${providerName}] Popup blocked, trying redirect...`);
-                            localStorage.setItem('pendingAuthProvider', providerName);
-                            await signInWithRedirect(auth, provider);
-                            return null;
-                        }
-                    }
-                    throw error;
-                }
-            }
-        }
-
-        // ===================================
         // 🔵 GOOGLE SIGN-IN
         // ===================================
         document.getElementById("googleSignIn").addEventListener("click", async () => {
@@ -1412,14 +1388,20 @@
             currentProvider = 'google';
 
             try {
-                const result = await socialSignIn(provider, 'google');
-                
-                // თუ result არის null, მაშინ redirect მოხდა
-                if (!result) {
+                // მობილურზე გამოიყენე Redirect, დესკტოპზე - Popup
+                if (isMobileDevice() || isInAppBrowser()) {
+                    console.log("[Google] Using redirect for mobile/in-app browser");
+                    // Redirect-ის დროს localStorage-ში შეინახე პროვაიდერი
+                    localStorage.setItem('pendingAuthProvider', 'google');
+                    await signInWithRedirect(auth, provider);
+                    // redirect-ის შემდეგ კოდი აქ აღარ შესრულდება
                     return;
                 }
                 
+                console.log("[Google] Using popup for desktop");
+                const result = await signInWithPopup(auth, provider);
                 const user = result.user;
+                
                 let displayName = user.displayName;
                 
                 if (!displayName || displayName.trim() === '') {
@@ -1464,16 +1446,26 @@
             currentProvider = 'facebook';
 
             try {
-                console.log("[Facebook] Starting sign in...");
-                const result = await socialSignIn(provider, 'facebook');
-                
-                // თუ result არის null, მაშინ redirect მოხდა
-                if (!result) {
-                    console.log("[Facebook] Redirect initiated, waiting for return...");
+                // 📱 მობილურზე ან in-app browser-ში გამოიყენე Redirect
+                if (isMobileDevice() || isInAppBrowser()) {
+                    console.log("[Facebook] Using redirect for mobile/in-app browser");
+                    console.log("[Facebook] Is mobile:", isMobileDevice());
+                    console.log("[Facebook] Is in-app browser:", isInAppBrowser());
+                    
+                    // Redirect-ის დროს localStorage-ში შეინახე პროვაიდერი
+                    localStorage.setItem('pendingAuthProvider', 'facebook');
+                    
+                    // signInWithRedirect გამოიყენე popup-ის ნაცვლად
+                    await signInWithRedirect(auth, provider);
+                    // redirect-ის შემდეგ კოდი აქ აღარ შესრულდება
                     return;
                 }
                 
-                console.log("[Facebook] Result received:", result);
+                console.log("[Facebook] Using popup for desktop");
+                console.log("[Facebook] Starting sign in with popup...");
+                const result = await signInWithPopup(auth, provider);
+                console.log("[Facebook] Popup result received:", result);
+                
                 const user = result.user;
                 console.log("[Facebook] User:", user);
                 
@@ -1481,6 +1473,7 @@
                 
                 if (!displayName || displayName.trim() === '') {
                     console.log("[Facebook] No display name, showing modal...");
+                    // Get the credential from result for later use if needed
                     tempSocialCredential = FacebookAuthProvider.credentialFromResult(result);
                     tempSocialUser = user;
                     hideLoading();
@@ -1505,70 +1498,6 @@
                 isSocialSignInProgress = false;
             }
         });
-
-        // ===================================
-        // 🔵 REDIRECT RESULT HANDLER
-        // გვერდის ჩატვირთვისას შევამოწმოთ redirect-ის შედეგი
-        // ===================================
-        async function handleRedirectResult() {
-            try {
-                console.log("[Redirect] Checking for redirect result...");
-                showLoading();
-                
-                const result = await getRedirectResult(auth);
-                
-                if (result) {
-                    console.log("[Redirect] Got result:", result);
-                    const user = result.user;
-                    const pendingProvider = localStorage.getItem('pendingAuthProvider') || 'social';
-                    localStorage.removeItem('pendingAuthProvider');
-                    
-                    let displayName = user.displayName;
-                    
-                    if (!displayName || displayName.trim() === '') {
-                        console.log("[Redirect] No display name, showing modal...");
-                        if (pendingProvider === 'google') {
-                            tempSocialCredential = GoogleAuthProvider.credentialFromResult(result);
-                        } else {
-                            tempSocialCredential = FacebookAuthProvider.credentialFromResult(result);
-                        }
-                        tempSocialUser = user;
-                        currentProvider = pendingProvider;
-                        hideLoading();
-                        nameModal.style.display = 'flex';
-                        return;
-                    }
-                    
-                    console.log("[Redirect] Processing successful sign in...");
-                    await handleSocialSignInSuccess(user, displayName, pendingProvider);
-                } else {
-                    console.log("[Redirect] No redirect result found");
-                    hideLoading();
-                    // წაშალეთ pending provider თუ არ არის შედეგი
-                    localStorage.removeItem('pendingAuthProvider');
-                }
-            } catch (error) {
-                console.error("[Redirect] Error handling redirect result:", error);
-                localStorage.removeItem('pendingAuthProvider');
-                hideLoading();
-                
-                // თუ ეს არის "missing initial state" შეცდომა
-                if (error.code === 'auth/missing-initial-state' || 
-                    error.message.includes('missing initial state')) {
-                    console.log("[Redirect] Missing initial state error - this can happen in certain browser environments");
-                    const errorMsg = window.languageSwitcher ? 
-                        window.languageSwitcher.translate('authMissingInitialState') : 
-                        'სესიის მონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გამოიყენოთ სხვა ბრაუზერი.';
-                    showMessage(errorMsg, "error");
-                    return;
-                }
-                
-                await handleSocialSignInError(error, 'redirect');
-            }
-        }
-
-        // გვერდის ჩატვირთვისას შევამოწმოთ redirect შედეგი
-        handleRedirectResult();
 
         // ===================================
         // სოციალური შესვლის საერთო ფუნქციები
@@ -1733,17 +1662,6 @@
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('authPopupBlocked') : 
                     'Popup დაიბლოკა. გთხოვთ გათიშოთ popup blocker და სცადოთ თავიდან.';
-                showMessage(errorMsg, "error");
-                return;
-            }
-
-            // Handle missing initial state (mobile/in-app browser issue)
-            if (error.code === 'auth/missing-initial-state' || 
-                (error.message && error.message.includes('missing initial state'))) {
-                hideLoading();
-                const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate('authMissingInitialState') : 
-                    'სესიის მონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
                 showMessage(errorMsg, "error");
                 return;
             }
