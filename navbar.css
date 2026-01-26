@@ -496,7 +496,9 @@ footer {
   opacity: 0.7;
 }
 
-/* Languages Section */
+/* ============================================
+   Languages Section - აქტიური ენის დიზაინი
+   ============================================ */
 .languages {
   display: -webkit-box;
   display: -webkit-flex;
@@ -508,32 +510,51 @@ footer {
 }
 
 .languages button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--primary-color);
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
   color: var(--text-color);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   -webkit-border-radius: 20px;
   border-radius: 20px;
   cursor: pointer;
   -webkit-transition: var(--transition);
   transition: var(--transition);
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
   /* iOS button fix */
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
 
+.languages button .flag-icon {
+  width: 24px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+  -webkit-transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
 .languages button:hover {
-  background: var(--primary-color);
-  color: white;
-  -webkit-transform: translateY(-1px);
-  transform: translateY(-1px);
-  -webkit-box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
-  box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
+  background: rgba(229, 56, 59, 0.1);
+  border-color: var(--primary-color);
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  -webkit-box-shadow: 0 4px 15px rgba(229, 56, 59, 0.2);
+  box-shadow: 0 4px 15px rgba(229, 56, 59, 0.2);
+}
+
+.languages button:hover .flag-icon {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .languages button:active {
@@ -541,10 +562,53 @@ footer {
   transform: translateY(0);
 }
 
+/* აქტიური ენის ღილაკის სტილი */
 .languages button.active {
-  background: var(--primary-color);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
   border-color: transparent;
+  -webkit-box-shadow: 0 4px 20px rgba(229, 56, 59, 0.4), 0 0 0 3px rgba(229, 56, 59, 0.2);
+  box-shadow: 0 4px 20px rgba(229, 56, 59, 0.4), 0 0 0 3px rgba(229, 56, 59, 0.2);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.languages button.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, var(--primary-color), #ff6b6b, var(--primary-color));
+  border-radius: 22px;
+  z-index: -1;
+  -webkit-animation: activeGlow 2s ease-in-out infinite;
+  animation: activeGlow 2s ease-in-out infinite;
+}
+
+.languages button.active .flag-icon {
+  -webkit-filter: brightness(1.1) contrast(1.05);
+  filter: brightness(1.1) contrast(1.05);
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@-webkit-keyframes activeGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes activeGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* Notification Bell Styles */
@@ -935,112 +999,32 @@ footer {
 .auth-link:hover {
   background-color: var(--primary-color);
   color: white;
-  -webkit-box-shadow: 0 0 15px rgba(229, 56, 59, 0.4);
-  box-shadow: 0 0 15px rgba(229, 56, 59, 0.4);
-  -webkit-transform: translateY(-1px);
-  transform: translateY(-1px);
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  -webkit-box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
+  box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
 }
 
-.auth-link:active {
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
-  opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-  .auth-button-wrapper {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.5rem 0;
-    border-bottom: none !important;
-  }
-
-  .auth-link {
-    width: 100%;
-    padding: 0.6rem 0;
-    max-width: 200px;
-    /* Larger touch target */
-    min-height: 44px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-  }
-
-  .nav-menu ul li {
-    margin: 0;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #333;
-    text-align: center;
-  }
-
-  .auth-button-wrapper,
-  .auth-button-wrapper li {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
-  }
-}
-
-/* ============================================
-   User Menu Styles with iOS fixes
-   ============================================ */
+/* User Menu Styles */
 .user-menu {
   position: relative;
-  display: inline-block;
   cursor: pointer;
-  /* iOS touch fix */
-  -webkit-tap-highlight-color: transparent;
 }
 
 .user-name {
-  font-weight: 600;
-  color: white;
-  padding: 8px 16px;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primary-color);
   -webkit-border-radius: 25px;
   border-radius: 25px;
-  background: #bb2b2e;
-  border: 1px solid #e5383b;
   -webkit-transition: var(--transition);
   transition: var(--transition);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.95rem;
-  /* iOS button fix */
-  -webkit-appearance: none;
-  appearance: none;
-  -webkit-tap-highlight-color: transparent;
-  /* Touch target */
-  min-height: 44px;
 }
 
 .user-name:hover {
-  background: #850f11;
-}
-
-.user-name:active {
-  opacity: 0.9;
-}
-
-.user-name::after {
-  content: "\25BC";
-  font-size: 0.7rem;
-  margin-left: 4px;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .dropdown {
@@ -1048,273 +1032,37 @@ footer {
   position: absolute;
   top: 100%;
   right: 0;
-  background: var(--light-bg);
-  -webkit-border-radius: var(--border-radius);
-  border-radius: var(--border-radius);
-  min-width: 200px;
-  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  padding: 8px 0;
-  margin-top: 8px;
+  background-color: var(--dark-bg);
   border: 1px solid #333;
-  text-align: left;
-  -webkit-animation: fadeIn 0.2s ease;
-  animation: fadeIn 0.2s ease;
-}
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-    -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-.dropdown::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  right: 15px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid var(--light-bg);
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  min-width: 150px;
+  -webkit-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  margin-top: 0.5rem;
 }
 
 .dropdown a {
   display: block;
-  padding: 12px 20px;
+  padding: 0.75rem 1rem;
   color: var(--text-color);
   text-decoration: none;
-  font-size: 0.9rem;
   -webkit-transition: var(--transition);
   transition: var(--transition);
-  position: relative;
-  /* Touch target */
-  min-height: 44px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
 }
 
 .dropdown a:hover {
+  background-color: var(--light-bg);
   color: var(--primary-color);
-  background: rgba(255, 255, 255, 0.05);
 }
 
-.dropdown a:active {
-  opacity: 0.7;
+.dropdown a:first-child {
+  -webkit-border-radius: 8px 8px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
-.dropdown a:hover::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 3px;
-  background: var(--primary-color);
-}
-
-#logout-btn {
-  color: #ff6b6b !important;
-  border-top: 1px solid #333;
-  margin-top: 5px;
-  padding-top: 15px !important;
-}
-
-#logout-btn:hover {
-  color: #ff5252 !important;
-}
-
-/* Mobile user menu */
-@media (max-width: 768px) {
-  .user-menu {
-    width: 100%;
-    text-align: center;
-    margin: 0.5rem 0;
-  }
-
-  .user-name {
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-  }
-
-  .dropdown {
-    position: static;
-    width: 100%;
-    margin-top: 0.5rem;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: none;
-    background: #1a1a1a;
-  }
-
-  .dropdown::before {
-    display: none;
-  }
-}
-
-/* ============================================
-   Region pages and hero sections
-   ============================================ */
-.region-hero {
-  margin-top: 0 !important;
-  padding-top: 2rem;
-}
-
-section:first-of-type,
-.hero-section,
-.region-hero,
-.posts-hero {
-  margin-top: 0;
-}
-
-/* ============================================
-   Full page layout with iOS fixes
-   ============================================ */
-html,
-body {
-  height: 100%;
-  height: -webkit-fill-available;
-  margin: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-}
-
-.content {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  padding: 20px;
-}
-
-/* Site footer */
-.site-footer {
-  background: #111;
-  color: #fff;
-  padding: 20px 0;
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
-}
-
-.footer-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-around;
-  justify-content: space-around;
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.footer-column {
-  max-width: 300px;
-}
-
-.footer-social a {
-  margin: 0 8px;
-  color: #fff;
-  /* Touch target */
-  display: inline-block;
-  min-width: 44px;
-  min-height: 44px;
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: inline-flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-}
-
-/* ============================================
-   iOS Safari specific fixes
-   ============================================ */
-@supports (-webkit-touch-callout: none) {
-  /* iOS only styles */
-  .navbar {
-    /* Fix for iOS position fixed issues */
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-  
-  .navbar-right {
-    /* Prevent iOS rubber band scrolling issues */
-    overscroll-behavior: contain;
-    -webkit-overscroll-behavior: contain;
-  }
-  
-  /* Fix for iOS button styling */
-  button,
-  .auth-link,
-  .languages button {
-    -webkit-appearance: none;
-    border-radius: 0;
-  }
-  
-  .languages button {
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
-  }
-  
-  .auth-link {
-    -webkit-border-radius: 25px;
-    border-radius: 25px;
-  }
-}
-
-/* Landscape mode adjustments for iOS */
-@media (max-height: 500px) and (orientation: landscape) {
-  .navbar {
-    height: auto;
-    min-height: 50px;
-    padding: 0.5rem 1rem;
-  }
-  
-  .logo-svg {
-    width: 120px;
-    height: 45px;
-  }
-  
-  .navbar-right {
-    max-height: calc(100vh - 50px);
-    max-height: calc(var(--vh, 1vh) * 100 - 50px);
-  }
-}
-.logo-img {
-  height: 50px;
-  width: auto;
+.dropdown a:last-child {
+  -webkit-border-radius: 0 0 8px 8px;
+  border-radius: 0 0 8px 8px;
 }

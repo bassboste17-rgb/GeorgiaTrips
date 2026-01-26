@@ -44,32 +44,34 @@ fetch("navbar.html")
     const authLink = document.getElementById("auth-link")
     const notificationBell = document.getElementById("notificationBell")
 
+    // აქტიური ენის ღილაკის განახლების ფუნქცია
     function updateActiveLanguageButton() {
-      const currentLang = localStorage.getItem("language") || "ka"
+      // Default ენა არის 'en' (ინგლისური)
+      const currentLang = localStorage.getItem("language") || "en"
       const langButtons = document.querySelectorAll(".languages button")
 
       langButtons.forEach((btn) => {
         btn.classList.remove("active")
-        const onclickAttr = btn.getAttribute("onclick")
-        if (onclickAttr) {
-          const match = onclickAttr.match(/'(\w+)'/)
-          if (match) {
-            const btnLang = match[1]
-            if (btnLang === currentLang) {
-              btn.classList.add("active")
-            }
-          }
+        const btnLang = btn.getAttribute("data-lang")
+        if (btnLang === currentLang) {
+          btn.classList.add("active")
         }
       })
     }
 
     function changeLanguageAndReload(lang) {
-      // ენის შეცვლა
+      // ენის შეცვლა localStorage-ში
+      localStorage.setItem("language", lang)
+      
+      // ენის შეცვლა languageSwitcher-ით
       if (window.languageSwitcher && typeof window.languageSwitcher.setLanguage === "function") {
         window.languageSwitcher.setLanguage(lang)
       }
 
-      // 2 წამის შემდეგ გვერდის გადატვირთვა
+      // აქტიური ღილაკის განახლება
+      updateActiveLanguageButton()
+
+      // გვერდის გადატვირთვა
       setTimeout(() => {
         window.location.reload()
       }, 20)
@@ -85,17 +87,12 @@ fetch("navbar.html")
         btn.removeAttribute("onclick")
 
         btn.addEventListener("click", function () {
-          const langMatch = this.textContent.trim().toLowerCase()
-          let lang = "ka"
-          if (langMatch === "en") lang = "en"
-          else if (langMatch === "ru") lang = "ru"
-          else if (langMatch === "ar") lang = "ar"
-          else if (langMatch === "ka") lang = "ka"
-
+          const lang = this.getAttribute("data-lang") || "en"
           changeLanguageAndReload(lang)
         })
       })
     }
+
     // Update navbar translations when language changes
     function updateNavbarTranslations() {
       if (typeof window.languageSwitcher !== "undefined") {
@@ -134,9 +131,19 @@ fetch("navbar.html")
     // Listen for language changes
     window.addEventListener("languageChanged", updateNavbarTranslations)
 
-    setTimeout(() => {
+    // პირველად ჩატვირთვისას შეამოწმე და დააყენე default ენა (ინგლისური)
+    function initializeDefaultLanguage() {
+      const savedLang = localStorage.getItem("language")
+      if (!savedLang) {
+        // თუ ენა არ არის შენახული, დააყენე ინგლისური
+        localStorage.setItem("language", "en")
+      }
       updateActiveLanguageButton()
       setupLanguageButtons()
+    }
+
+    setTimeout(() => {
+      initializeDefaultLanguage()
     }, 100)
 
     // შეტყობინებების listener ფუნქცია navbar-ისთვის
@@ -169,7 +176,7 @@ fetch("navbar.html")
     onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
         // მომხმარებელი ავტორიზირებულია და email დადასტურებულია
-        const username = user.displayName || localStorage.getItem("username") || "მომხმარებელი"
+        const username = user.displayName || localStorage.getItem("username") || "User"
 
         // განახლება localStorage-ში სინქრონიზაციისთვის
         localStorage.setItem("username", username)
@@ -188,10 +195,10 @@ fetch("navbar.html")
           <div class="user-menu">
             <span class="user-name">${username}</span>
             <div class="dropdown">
-              <a href="profile.html" data-i18n="navMyProfile">${window.languageSwitcher?.translate("navMyProfile") || "ჩემი პროფილი"}</a>
-              <a href="addPost.html" data-i18n="navAddPost">${window.languageSwitcher?.translate("navAddPost") || "პოსტის დამატება"}</a>
-              <a href="myposts.html" data-i18n="navMyPosts">${window.languageSwitcher?.translate("navMyPosts") || "ჩემი პოსტები"}</a>
-              <a href="#" id="logout-btn" data-i18n="navLogout">${window.languageSwitcher?.translate("navLogout") || "გასვლა"}</a>
+              <a href="profile.html" data-i18n="navMyProfile">${window.languageSwitcher?.translate("navMyProfile") || "My Profile"}</a>
+              <a href="addPost.html" data-i18n="navAddPost">${window.languageSwitcher?.translate("navAddPost") || "Add Post"}</a>
+              <a href="myposts.html" data-i18n="navMyPosts">${window.languageSwitcher?.translate("navMyPosts") || "My Posts"}</a>
+              <a href="#" id="logout-btn" data-i18n="navLogout">${window.languageSwitcher?.translate("navLogout") || "Logout"}</a>
             </div>
           </div>
         `
@@ -225,8 +232,8 @@ fetch("navbar.html")
             // გადამისამართება login გვერდზე
             window.location.href = "login.html"
           } catch (error) {
-            console.error("გასვლის შეცდომა:", error)
-            alert("გასვლისას დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.")
+            console.error("Logout error:", error)
+            alert("An error occurred while logging out. Please try again.")
           }
         })
 
@@ -247,7 +254,7 @@ fetch("navbar.html")
           notificationBell.classList.remove("show")
         }
 
-        authLink.innerHTML = `<a href="login.html" class="auth-link" data-i18n="navAuth">${window.languageSwitcher?.translate("navAuth") || "ავტორიზაცია"}</a>`
+        authLink.innerHTML = `<a href="login.html" class="auth-link" data-i18n="navAuth">${window.languageSwitcher?.translate("navAuth") || "Login"}</a>`
       }
 
       // Apply translations after auth state is set

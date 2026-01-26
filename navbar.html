@@ -13,26 +13,41 @@
     </div>
   </a>
   <link rel="stylesheet" href="navbar.css">
-  <button class="mobile-menu-toggle" aria-label="მენიუ">
+  <button class="mobile-menu-toggle" aria-label="Menu">
     <i class="fas fa-bars"></i>
   </button>
 
   <div class="navbar-right">
     <nav class="nav-menu">
       <ul>
-        <li><a href="home.html" data-i18n="navHome">მთავარი</a></li>
-        <li><a href="posts.html" data-i18n="navPosts">პოსტები</a></li>
-        <li><a href="about.html" data-i18n="navAbout">ჩვენს შესახებ</a></li>
-        <li><a href="contact.html" data-i18n="navContact">კონტაქტი</a></li>
-        <li><a href="booking.html" data-i18n="navBooking">დაჯავშნა</a></li>
+        <li><a href="home.html" data-i18n="navHome">Home</a></li>
+        <li><a href="posts.html" data-i18n="navPosts">Posts</a></li>
+        <li><a href="about.html" data-i18n="navAbout">About Us</a></li>
+        <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+        <li><a href="booking.html" data-i18n="navBooking">Booking</a></li>
       </ul>
     </nav>
 
     <div class="languages">
-      <button onclick="window.languageSwitcher.setLanguage('ka')" class="active">KA</button>
-      <button onclick="window.languageSwitcher.setLanguage('en')">EN</button>
-      <button onclick="window.languageSwitcher.setLanguage('ru')">RU</button>
-      <button onclick="window.languageSwitcher.setLanguage('ar')">AR</button>
+      <button onclick="window.languageSwitcher.setLanguage('ka')" data-lang="ka" title="ქართული">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/960px-Flag_of_Georgia.svg.png?20231228212034" alt="ქართული" class="flag-icon">
+      </button>
+      <button onclick="window.languageSwitcher.setLanguage('en')" data-lang="en" title="English" class="active">
+        <img src="addhome/flag-en.svg" alt="English" class="flag-icon">
+      </button>
+      <button onclick="window.languageSwitcher.setLanguage('ru')" data-lang="ru" title="Русский">
+        <img src="addhome/flag-ru.svg" alt="Русский" class="flag-icon">
+      </button>
+      <button onclick="window.languageSwitcher.setLanguage('ar')" data-lang="ar" title="العربية">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Arabic-Language-Flag.svg/3840px-Arabic-Language-Flag.svg.png" alt="العربية" class="flag-icon">
+      </button>
+    </div>
+
+    <div class="notification-bell" id="notificationBell">
+      <a href="notifications.html" class="bell-icon">
+        <i class="fas fa-bell"></i>
+        <span class="navbar-notif-badge" id="navbarNotifBadge" style="display: none;">0</span>
+      </a>
     </div>
 
     <div class="auth-button-wrapper">

@@ -31,6 +31,10 @@
             --border-radius: 8px;
             --transition: all 0.3s ease;
             
+            /* Facebook color */
+            --facebook-color: #1877F2;
+            --facebook-hover: #166fe5;
+            
             /* Star animation variables */
             --starFieldWidth: 2560;
             --starFieldHeight: 2560;
@@ -336,9 +340,9 @@
             right: 0;
         }
         
-        .google-btn {
+        .social-btn {
             width: calc(100% - 50px);
-            margin: 0 25px 25px;
+            margin: 0 25px 15px;
             padding: 12px;
             background: var(--background-dark);
             color: var(--text-primary);
@@ -352,10 +356,27 @@
             transition: var(--transition);
         }
         
-        .google-btn:hover {
+        .social-btn:hover {
             background: #333;
         }
         
+        .google-btn {
+            /* Google button specific styles */
+        }
+        
+        .facebook-btn {
+            background: var(--facebook-color);
+            border-color: var(--facebook-color);
+        }
+        
+        .facebook-btn:hover {
+            background: var(--facebook-hover);
+        }
+        
+        .social-buttons-container {
+            margin-bottom: 25px;
+        }
+
         #message {
             text-align: center;
             margin: 0 25px 25px;
@@ -627,12 +648,12 @@
     
     <!-- დამატებული main tag auth-container-ის შესაფუთად -->
     <main>
-        <!-- Name Input Modal for Google Sign-in -->
+        <!-- Name Input Modal for Social Sign-in -->
         <div class="modal-overlay" id="nameModal">
             <div class="name-modal">
                 <h3 data-i18n="pleaseEnterName">გთხოვთ მიუთითოთ თქვენი სახელი</h3>
-                <p data-i18n="googleNameNotFound">Google-ის ანგარიშიდან ვერ მოიძებნა თქვენი სახელი. გთხოვთ მიუთითოთ ის ხელით.</p>
-                <input type="text" id="googleUserName" placeholder="სახელი" required data-i18n-placeholder="name">
+                <p data-i18n="socialNameNotFound">სოციალური ქსელის ანგარიშიდან ვერ მოიძებნა თქვენი სახელი. გთხოვთ მიუთითოთ ის ხელით.</p>
+                <input type="text" id="socialUserName" placeholder="სახელი" required data-i18n-placeholder="name">
                 <div class="name-modal-buttons">
                     <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმება</button>
                     <button class="primary" id="submitName" data-i18n="save">შენახვა</button>
@@ -734,9 +755,16 @@
 
             <p class="divider" data-i18n="or">ან</p>
 
-            <button id="googleSignIn" class="google-btn">
-                <i class="fab fa-google"></i> <span data-i18n="signInWithGoogle">Google-ით შესვლა</span>
-            </button>
+            <!-- Social Login Buttons -->
+            <div class="social-buttons-container">
+                <button id="googleSignIn" class="social-btn google-btn">
+                    <i class="fab fa-google"></i> <span data-i18n="signInWithGoogle">Google-ით შესვლა</span>
+                </button>
+                
+                <button id="facebookSignIn" class="social-btn facebook-btn">
+                    <i class="fab fa-facebook-f"></i> <span data-i18n="signInWithFacebook">Facebook-ით შესვლა</span>
+                </button>
+            </div>
 
             <p id="message"></p>
             
@@ -767,6 +795,7 @@
             sendPasswordResetEmail,
             signInWithPopup,
             GoogleAuthProvider,
+            FacebookAuthProvider,
             updateProfile,
             signOut,
             fetchSignInMethodsForEmail,
@@ -781,6 +810,10 @@
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
+        // ===================================
+        // ⚠️ Firebase კონფიგურაცია
+        // ჩაანაცვლეთ თქვენი Firebase პროექტის მონაცემებით
+        // ===================================
         const firebaseConfig = {
             apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
             authDomain: "rentime-e201e.firebaseapp.com",
@@ -822,12 +855,15 @@
             'auth/too-many-requests': 'authTooManyRequests',
             'auth/missing-email': 'authMissingEmail',
             'auth/account-exists-with-different-credential': 'authAccountExistsDifferent',
+            'auth/popup-closed-by-user': 'authPopupClosed',
+            'auth/cancelled-popup-request': 'authPopupCancelled',
             'default': 'authDefaultError'
         };
 
-        // Variables to store Google user data
-        let tempGoogleCredential = null;
-        let tempGoogleUser = null;
+        // Variables to store social user data
+        let tempSocialCredential = null;
+        let tempSocialUser = null;
+        let currentProvider = null; // 'google' or 'facebook'
 
         // Star animation generation
         function generateStars(count) {
@@ -1163,7 +1199,8 @@
                     displayName: username,
                     photoURL: user.photoURL || '',
                     createdAt: serverTimestamp(),
-                    emailVerified: false
+                    emailVerified: false,
+                    provider: 'email'
                 });
 
                 // Configure action code settings
@@ -1250,9 +1287,13 @@
             }
         });
 
+        // ===================================
+        // 🔵 GOOGLE SIGN-IN
+        // ===================================
         document.getElementById("googleSignIn").addEventListener("click", async () => {
             showLoading();
             const provider = new GoogleAuthProvider();
+            currentProvider = 'google';
 
             try {
                 const result = await signInWithPopup(auth, provider);
@@ -1261,13 +1302,57 @@
                 let displayName = user.displayName;
                 
                 if (!displayName || displayName.trim() === '') {
-                    tempGoogleCredential = result.credential;
-                    tempGoogleUser = user;
+                    tempSocialCredential = result.credential;
+                    tempSocialUser = user;
                     hideLoading();
                     nameModal.style.display = 'flex';
                     return;
                 }
                 
+                await handleSocialSignInSuccess(user, displayName, 'google');
+                
+            } catch (error) {
+                await handleSocialSignInError(error, 'google');
+            }
+        });
+
+        // ===================================
+        // 🔵 FACEBOOK SIGN-IN
+        // ===================================
+        document.getElementById("facebookSignIn").addEventListener("click", async () => {
+            showLoading();
+            const provider = new FacebookAuthProvider();
+            // დამატებითი scopes რომ მივიღოთ ელ. ფოსტა და სახელი
+            provider.addScope('email');
+            provider.addScope('public_profile');
+            currentProvider = 'facebook';
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                let displayName = user.displayName;
+                
+                if (!displayName || displayName.trim() === '') {
+                    tempSocialCredential = FacebookAuthProvider.credentialFromResult(result);
+                    tempSocialUser = user;
+                    hideLoading();
+                    nameModal.style.display = 'flex';
+                    return;
+                }
+                
+                await handleSocialSignInSuccess(user, displayName, 'facebook');
+                
+            } catch (error) {
+                await handleSocialSignInError(error, 'facebook');
+            }
+        });
+
+        // ===================================
+        // სოციალური შესვლის საერთო ფუნქციები
+        // ===================================
+        async function handleSocialSignInSuccess(user, displayName, provider) {
+            try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 
                 if (!userDoc.exists()) {
@@ -1277,10 +1362,12 @@
                         displayName: displayName,
                         photoURL: user.photoURL || '',
                         createdAt: serverTimestamp(),
-                        emailVerified: user.emailVerified
+                        emailVerified: user.emailVerified,
+                        provider: provider
                     });
                 }
                 
+                hideLoading();
                 const successMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('loginSuccess') : 
                     'წარმატებით შეხვედით სისტემაში!';
@@ -1289,83 +1376,107 @@
                     window.location.href = "home.html";
                 }, 1500);
             } catch (error) {
-                console.error("Google Sign-In error:", error);
-                
-                if (error.code === 'auth/account-exists-with-different-credential') {
-                    try {
-                        const email = error.customData.email;
-                        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-                        
-                        hideLoading();
-                        accountLinkInfo.style.display = 'block';
-                        const linkMsg = window.languageSwitcher ? 
-                            window.languageSwitcher.translate('accountLinkMessage') : 
-                            `ანგარიში ელ. ფოსტით ${email} უკვე არსებობს. გსურთ დაუკავშიროთ Google ანგარიში?`;
-                        accountLinkMessage.textContent = linkMsg;
-                        
-                        tempGoogleCredential = GoogleAuthProvider.credentialFromError(error);
-                        
-                        document.getElementById('linkAccount').onclick = async () => {
-                            try {
-                                showLoading();
-                                const password = prompt(window.languageSwitcher ? 
-                                    window.languageSwitcher.translate('enterPasswordToLink') : 
-                                    'შეიყვანეთ თქვენი პაროლი დასაკავშირებლად:');
-                                
-                                if (!password) {
-                                    hideLoading();
-                                    return;
-                                }
-                                
-                                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                                await linkWithCredential(userCredential.user, tempGoogleCredential);
-                                
-                                const successMsg = window.languageSwitcher ? 
-                                    window.languageSwitcher.translate('accountsLinkedSuccess') : 
-                                    'ანგარიშები წარმატებით დაკავშირდა!';
-                                showMessage(successMsg, "success");
-                                accountLinkInfo.style.display = 'none';
-                                
-                                setTimeout(() => {
-                                    window.location.href = "home.html";
-                                }, 1500);
-                            } catch (linkError) {
-                                console.error("Account linking error:", linkError);
-                                const errorMsg = window.languageSwitcher ? 
-                                    window.languageSwitcher.translate(errorMessages[linkError.code] || errorMessages['default']) : 
-                                    linkError.message;
-                                showMessage(errorMsg, "error");
-                                hideLoading();
-                            }
-                        };
-                        
-                        document.getElementById('cancelLink').onclick = () => {
-                            accountLinkInfo.style.display = 'none';
-                            tempGoogleCredential = null;
-                        };
-                        
-                        return;
-                    } catch (fetchError) {
-                        console.error("Error fetching sign-in methods:", fetchError);
-                        hideLoading();
-                        const errorMsg = window.languageSwitcher ? 
-                            window.languageSwitcher.translate('authDefaultError') : 
-                            'დაფიქსირდა შეცდომა';
-                        showMessage(errorMsg, "error");
-                        return;
-                    }
-                }
-                
+                console.error("Error saving user data:", error);
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
-                    error.message;
+                    window.languageSwitcher.translate('authDefaultError') : 
+                    'დაფიქსირდა შეცდომა';
                 showMessage(errorMsg, "error");
             }
-        });
+        }
 
+        async function handleSocialSignInError(error, provider) {
+            console.error(`${provider} Sign-In error:`, error);
+            
+            if (error.code === 'auth/account-exists-with-different-credential') {
+                try {
+                    const email = error.customData.email;
+                    const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+                    
+                    hideLoading();
+                    accountLinkInfo.style.display = 'block';
+                    
+                    const providerName = provider === 'google' ? 'Google' : 'Facebook';
+                    const linkMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('accountLinkMessage') : 
+                        `ანგარიში ელ. ფოსტით ${email} უკვე არსებობს. გსურთ დაუკავშიროთ ${providerName} ანგარიში?`;
+                    accountLinkMessage.textContent = linkMsg;
+                    
+                    if (provider === 'google') {
+                        tempSocialCredential = GoogleAuthProvider.credentialFromError(error);
+                    } else {
+                        tempSocialCredential = FacebookAuthProvider.credentialFromError(error);
+                    }
+                    
+                    document.getElementById('linkAccount').onclick = async () => {
+                        try {
+                            showLoading();
+                            const password = prompt(window.languageSwitcher ? 
+                                window.languageSwitcher.translate('enterPasswordToLink') : 
+                                'შეიყვანეთ თქვენი პაროლი დასაკავშირებლად:');
+                            
+                            if (!password) {
+                                hideLoading();
+                                return;
+                            }
+                            
+                            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                            await linkWithCredential(userCredential.user, tempSocialCredential);
+                            
+                            const successMsg = window.languageSwitcher ? 
+                                window.languageSwitcher.translate('accountsLinkedSuccess') : 
+                                'ანგარიშები წარმატებით დაკავშირდა!';
+                            showMessage(successMsg, "success");
+                            accountLinkInfo.style.display = 'none';
+                            
+                            setTimeout(() => {
+                                window.location.href = "home.html";
+                            }, 1500);
+                        } catch (linkError) {
+                            console.error("Account linking error:", linkError);
+                            const errorMsg = window.languageSwitcher ? 
+                                window.languageSwitcher.translate(errorMessages[linkError.code] || errorMessages['default']) : 
+                                linkError.message;
+                            showMessage(errorMsg, "error");
+                            hideLoading();
+                        }
+                    };
+                    
+                    document.getElementById('cancelLink').onclick = () => {
+                        accountLinkInfo.style.display = 'none';
+                        tempSocialCredential = null;
+                    };
+                    
+                    return;
+                } catch (fetchError) {
+                    console.error("Error fetching sign-in methods:", fetchError);
+                    hideLoading();
+                    const errorMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('authDefaultError') : 
+                        'დაფიქსირდა შეცდომა';
+                    showMessage(errorMsg, "error");
+                    return;
+                }
+            }
+            
+            // Handle popup closed by user
+            if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+                hideLoading();
+                return; // Silent return, user cancelled
+            }
+            
+            hideLoading();
+            const errorMsg = window.languageSwitcher ? 
+                window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                error.message;
+            showMessage(errorMsg, "error");
+        }
+
+        // ===================================
+        // სახელის მოდალის დამუშავება
+        // ===================================
         document.getElementById('submitName').addEventListener('click', async () => {
-            const userName = document.getElementById('googleUserName').value.trim();
+            const userName = document.getElementById('socialUserName').value.trim();
             
             if (!userName) {
                 const errorMsg = window.languageSwitcher ? 
@@ -1379,17 +1490,18 @@
                 showLoading();
                 nameModal.style.display = 'none';
                 
-                await updateProfile(tempGoogleUser, {
+                await updateProfile(tempSocialUser, {
                     displayName: userName
                 });
                 
-                await setDoc(doc(db, "users", tempGoogleUser.uid), {
-                    uid: tempGoogleUser.uid,
-                    email: tempGoogleUser.email,
+                await setDoc(doc(db, "users", tempSocialUser.uid), {
+                    uid: tempSocialUser.uid,
+                    email: tempSocialUser.email,
                     displayName: userName,
-                    photoURL: tempGoogleUser.photoURL || '',
+                    photoURL: tempSocialUser.photoURL || '',
                     createdAt: serverTimestamp(),
-                    emailVerified: tempGoogleUser.emailVerified
+                    emailVerified: tempSocialUser.emailVerified,
+                    provider: currentProvider
                 });
                 
                 const successMsg = window.languageSwitcher ? 
@@ -1412,10 +1524,11 @@
 
         document.getElementById('cancelName').addEventListener('click', async () => {
             nameModal.style.display = 'none';
-            if (tempGoogleUser) {
+            if (tempSocialUser) {
                 await signOut(auth);
-                tempGoogleUser = null;
-                tempGoogleCredential = null;
+                tempSocialUser = null;
+                tempSocialCredential = null;
+                currentProvider = null;
             }
         });
 
