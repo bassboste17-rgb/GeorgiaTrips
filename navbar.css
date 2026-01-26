@@ -507,6 +507,8 @@ footer {
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+  /* დროშების ზომის შეზღუდვა */
+  flex-shrink: 0;
 }
 
 .languages button {
@@ -531,6 +533,10 @@ footer {
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
+  /* ფიქსირებული ზომა */
+  width: 44px;
+  height: 36px;
+  flex-shrink: 0;
 }
 
 .languages button .flag-icon {
@@ -541,6 +547,10 @@ footer {
   display: block;
   -webkit-transition: transform 0.3s ease;
   transition: transform 0.3s ease;
+  /* ფიქსირებული ზომა */
+  max-width: 24px;
+  max-height: 18px;
+  flex-shrink: 0;
 }
 
 .languages button:hover {
@@ -570,6 +580,9 @@ footer {
   box-shadow: 0 4px 20px rgba(229, 56, 59, 0.4), 0 0 0 3px rgba(229, 56, 59, 0.2);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+  /* ზომა არ შეიცვალოს scale-ით */
+  width: 44px;
+  height: 36px;
 }
 
 .languages button.active::before {
@@ -591,6 +604,9 @@ footer {
   filter: brightness(1.1) contrast(1.05);
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* ზომა იგივე დარჩეს */
+  width: 24px;
+  height: 18px;
 }
 
 @-webkit-keyframes activeGlow {
@@ -858,6 +874,8 @@ footer {
     /* Larger touch target */
     min-width: 44px;
     min-height: 44px;
+    width: 44px;
+    height: 44px;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -958,6 +976,8 @@ footer {
     /* Keep touch target size */
     min-width: 40px;
     min-height: 40px;
+    width: 40px;
+    height: 40px;
   }
 
   /* Small mobile car adjustments */
@@ -972,6 +992,7 @@ footer {
    ============================================ */
 .auth-button-wrapper {
   margin-left: 1rem;
+  flex-shrink: 0;
 }
 
 .auth-link {
@@ -1009,8 +1030,10 @@ footer {
 .user-menu {
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
+/* სახელის სტილები - Facebook-ის გრძელი სახელებისთვის */
 .user-name {
   color: var(--text-color);
   font-weight: 500;
@@ -1020,6 +1043,13 @@ footer {
   border-radius: 25px;
   -webkit-transition: var(--transition);
   transition: var(--transition);
+  /* გრძელი სახელების შეზღუდვა */
+  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .user-name:hover {
@@ -1065,4 +1095,35 @@ footer {
 .dropdown a:last-child {
   -webkit-border-radius: 0 0 8px 8px;
   border-radius: 0 0 8px 8px;
+}
+
+/* Mobile user menu */
+@media (max-width: 768px) {
+  .user-name {
+    max-width: 120px;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .auth-button-wrapper {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    padding: 0.5rem 0;
+  }
+  
+  .user-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .dropdown {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 0.5rem;
+    width: 100%;
+    max-width: 200px;
+  }
 }

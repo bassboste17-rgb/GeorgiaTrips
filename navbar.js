@@ -23,6 +23,24 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getFirestore(app)
 
+// ფუნქცია სახელის ფორმატირებისთვის (Facebook-ის გრძელი სახელებისთვის)
+function formatDisplayName(name, maxLength = 15) {
+  if (!name) return "User";
+  
+  // თუ სახელი უკვე მოკლეა, დააბრუნე როგორც არის
+  if (name.length <= maxLength) return name;
+  
+  // თუ სახელი შეიცავს space-ს, აიღე მხოლოდ პირველი სახელი
+  const firstName = name.split(' ')[0];
+  
+  // თუ პირველი სახელიც გრძელია, შეამოკლე
+  if (firstName.length > maxLength) {
+    return firstName.substring(0, maxLength - 2) + '..';
+  }
+  
+  return firstName;
+}
+
 // Load navbar
 fetch("navbar.html")
   .then((response) => response.text())
@@ -176,11 +194,14 @@ fetch("navbar.html")
     onAuthStateChanged(auth, (user) => {
       if (user && user.emailVerified) {
         // მომხმარებელი ავტორიზირებულია და email დადასტურებულია
-        const username = user.displayName || localStorage.getItem("username") || "User"
-
-        // განახლება localStorage-ში სინქრონიზაციისთვის
-        localStorage.setItem("username", username)
-        localStorage.setItem("userEmail", user.email)
+        const rawUsername = user.displayName || localStorage.getItem("username") || "User"
+        
+        // ფორმატირებული სახელი navbar-ისთვის (მოკლე ვერსია)
+        const displayUsername = formatDisplayName(rawUsername)
+        
+        // სრული სახელი შევინახოთ localStorage-ში
+        localStorage.setItem("username", rawUsername)
+        localStorage.setItem("userEmail", user.email || "")
 
         // აჩვენე notification bell როცა მომხმარებელი ავტორიზირებულია
         if (notificationBell) {
@@ -193,7 +214,7 @@ fetch("navbar.html")
         // dropdown მენიუს HTML
         authLink.innerHTML = `
           <div class="user-menu">
-            <span class="user-name">${username}</span>
+            <span class="user-name" title="${rawUsername}">${displayUsername}</span>
             <div class="dropdown">
               <a href="profile.html" data-i18n="navMyProfile">${window.languageSwitcher?.translate("navMyProfile") || "My Profile"}</a>
               <a href="addPost.html" data-i18n="navAddPost">${window.languageSwitcher?.translate("navAddPost") || "Add Post"}</a>
