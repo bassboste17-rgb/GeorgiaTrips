@@ -1142,6 +1142,7 @@ profileAvatarSaved: "ავატარი წარმატებით შე
 profileUploadImage: 'ატვირთეთ საკუთარი სურათი',
 profileSaveAvatar: 'ავატარის შენახვა',
     // Abkhazia page translations - Georgian
+    signInWithFacebook: "Facebook-ით შესვლა",
     abkhaziaTitle: "აფხაზეთი",
     abkhaziaSubtitle: "ზღვა და მთები",
     abkhaziaBookTransport: "ტრანსპორტის დაჯავშნა",
@@ -2500,6 +2501,7 @@ officeAddress: "Batumi, Bagrationi Street 161",
     samtskheJavakhetiToursLoadError: "Error loading tours",
     samtskheJavakhetiTransportLoadError: "Error loading transport",
     // Shida Kartli page translations - English
+    signInWithFacebook: "Sign in with Facebook",
     shidaKartliTitle: "Shida Kartli",
     shidaKartliSubtitle: "History, Culture and Natural Beauty",
     shidaKartliBookTransport: "Book Transport",
@@ -3506,6 +3508,7 @@ officeAddress: "Батуми, улица Багратиони 161",
     savedPostsPostUnsaved: "Пост удален из сохраненных",
     savedPostsError: "Произошла ошибка",
     savedPostsLinkCopied: "Ссылка скопирована",
+    signInWithFacebook: "Войти через Facebook",
     // Ajara page - Russian
     ajaraTitle: "Аджария",
     ajaraSubtitle: "Море, горы и уникальная культура",
@@ -4598,7 +4601,7 @@ warningPopupOnlineChat: "online chat",
     bookingDuration: "المدة",
     bookingCapacity: "المقاعد",
     bookingLikeBtn: "إعجاب",
-
+    signInWithFacebook:"تسجيل facebook الدخول مع",
     // Detail modal
     bookingDetailRegion: "المنطقة",
     bookingDetailType: "النوع",

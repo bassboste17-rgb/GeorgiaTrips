@@ -1401,6 +1401,21 @@
         async function handleSocialSignInSuccess(user, displayName, provider) {
             try {
                 console.log(`[${provider}] handleSocialSignInSuccess called for user:`, user.uid);
+                console.log(`[${provider}] Display name to save:`, displayName);
+                
+                // ყოველთვის განაახლე Firebase Auth პროფილი displayName-ით
+                // ეს აუცილებელია რომ navbar-ში სწორად გამოჩნდეს სახელი
+                if (displayName && displayName.trim() !== '') {
+                    console.log(`[${provider}] Updating Firebase Auth profile with displayName...`);
+                    await updateProfile(user, {
+                        displayName: displayName
+                    });
+                    console.log(`[${provider}] Firebase Auth profile updated`);
+                    
+                    // ასევე შეინახე localStorage-ში backup-ისთვის
+                    localStorage.setItem("username", displayName);
+                }
+                
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 console.log(`[${provider}] User doc exists:`, userDoc.exists());
                 
@@ -1416,6 +1431,16 @@
                         provider: provider
                     });
                     console.log(`[${provider}] User document created`);
+                } else {
+                    // თუ დოკუმენტი უკვე არსებობს, მაინც განაახლე displayName თუ ცარიელია
+                    const existingData = userDoc.data();
+                    if (!existingData.displayName || existingData.displayName.trim() === '') {
+                        console.log(`[${provider}] Updating existing user document with displayName...`);
+                        await setDoc(doc(db, "users", user.uid), {
+                            ...existingData,
+                            displayName: displayName
+                        }, { merge: true });
+                    }
                 }
                 
                 hideLoading();
