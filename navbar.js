@@ -41,15 +41,27 @@ function formatDisplayName(name, maxLength = 15) {
   return firstName;
 }
 
+// ფუნქცია შესამოწმებლად არის თუ არა მომხმარებელი social provider-ით შესული
+function isSocialProvider(user) {
+  if (!user || !user.providerData || user.providerData.length === 0) {
+    return false;
+  }
+  const socialProviders = ['google.com', 'facebook.com', 'twitter.com', 'github.com'];
+  return user.providerData.some(provider => socialProviders.includes(provider.providerId));
+}
+
 // Load navbar
 fetch("navbar.html")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("navbar").innerHTML = data
 
-    const translationsScript = document.createElement("script")
-    translationsScript.src = "translations.js"
-    document.head.appendChild(translationsScript)
+    // შევამოწმოთ translations.js უკვე ჩატვირთულია თუ არა
+    if (typeof window.translations === 'undefined' && typeof window.languageSwitcher === 'undefined') {
+      const translationsScript = document.createElement("script")
+      translationsScript.src = "translations.js"
+      document.head.appendChild(translationsScript)
+    }
 
     // Mobile menu toggle
     const toggle = document.querySelector(".mobile-menu-toggle")
@@ -192,8 +204,12 @@ fetch("navbar.html")
     }
 
     onAuthStateChanged(auth, (user) => {
-      if (user && user.emailVerified) {
-        // მომხმარებელი ავტორიზირებულია და email დადასტურებულია
+      // გასწორება: Facebook/Google-ით შესულ მომხმარებლებს არ მოვთხოვოთ emailVerified
+      // emailVerified მოვთხოვოთ მხოლოდ email/password-ით რეგისტრირებულებს
+      const isValidUser = user && (user.emailVerified || isSocialProvider(user));
+      
+      if (isValidUser) {
+        // მომხმარებელი ავტორიზირებულია
         const rawUsername = user.displayName || localStorage.getItem("username") || "User"
         
         // ფორმატირებული სახელი navbar-ისთვის (მოკლე ვერსია)
