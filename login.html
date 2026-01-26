@@ -1,203 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Firebase Auth Combo Test</title>
+  <meta charset="UTF-8" />
+  <title>Facebook Login Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Facebook JS SDK -->
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous"
-  src="https://connect.facebook.net/en_US/sdk.js"></script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, FacebookAuthProvider, signInWithPopup, signInWithCredential, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-  // ---------------------------
-  // Firebase Config
-  // ---------------------------
-  const firebaseConfig = {
-    apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
-    authDomain: "rentime-e201e.firebaseapp.com",
-    projectId: "rentime-e201e",
-    storageBucket: "rentime-e201e.firebasestorage.app",
-    messagingSenderId: "420054668757",
-    appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
-    measurementId: "G-DGWLG9P1ZB"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // ---------------------------
-  // Facebook JS SDK init
-  // ---------------------------
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1118509420324444', // შენი Facebook App ID
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v17.0'
-    });
-  };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const fbButton = document.getElementById("facebook-login");
-    const phoneButton = document.getElementById("phone-login");
-    const loginResult = document.getElementById("login-result");
-    const nameInput = document.getElementById("name-input");
-
-    // ---------------------------
-    // Facebook Login
-    // ---------------------------
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      fbButton.addEventListener("click", () => {
-        FB.login(function(response) {
-          if (response.authResponse) {
-            const accessToken = response.authResponse.accessToken;
-            const credential = FacebookAuthProvider.credential(accessToken);
-
-            signInWithCredential(auth, credential)
-              .then(result => showUser(result.user))
-              .catch(err => showError(err));
-          } else {
-            alert('User cancelled login or did not authorize.');
-          }
-        }, {scope: 'email,public_profile'});
-      });
-    } else {
-      fbButton.addEventListener("click", () => {
-        const provider = new FacebookAuthProvider();
-        signInWithPopup(auth, provider)
-          .then(result => showUser(result.user))
-          .catch(err => showError(err));
-      });
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1877f2, #0f3d91);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
     }
 
-    // ---------------------------
-    // Phone Auth
-    // ---------------------------
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
-        { size: "invisible" },
-        auth
-      );
-      window.recaptchaVerifier.render();
+    .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
-    phoneButton.addEventListener("click", () => {
-      const phoneNumber = document.getElementById("phone-number").value;
-      const name = nameInput.value.trim();
-      if (!phoneNumber) return alert("Enter a valid phone number");
-      if (!name) return alert("Enter your name");
-
-      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-        .then(confirmationResult => {
-          const code = prompt("Enter the verification code sent to your phone:");
-          return confirmationResult.confirm(code);
-        })
-        .then(result => showUser(result.user, name))
-        .catch(err => showError(err));
-    });
-
-    // ---------------------------
-    // Helper functions
-    // ---------------------------
-    function showUser(user, name = null) {
-      console.log("Logged in user:", user);
-      loginResult.innerHTML = `
-        <p>✅ Welcome, ${name || user.displayName || user.phoneNumber}</p>
-        <p>Email: ${user.email || 'Not provided'}</p>
-        ${user.photoURL ? `<img src="${user.photoURL}" width="100" />` : ''}
-      `;
+    h1 {
+      margin-bottom: 20px;
     }
 
-    function showError(err) {
-      console.error(err);
-      loginResult.innerHTML = `<p style="color:red">Login failed: ${err.message}</p>`;
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #1877f2;
+      color: white;
     }
-  });
-</script>
 
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #1e3c72, #2a5298);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-  }
+    button:hover {
+      background: #145dbf;
+    }
 
-  h1 {
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 5px #000;
-  }
-
-  input, button {
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    margin: 5px;
-  }
-
-  button#facebook-login {
-    background-color: #4267B2;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  button#facebook-login:hover {
-    background-color: #365899;
-  }
-
-  button#phone-login {
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  button#phone-login:hover {
-    background-color: #1e7e34;
-  }
-
-  #login-result {
-    margin-top: 20px;
-    text-align: center;
-    background-color: rgba(0,0,0,0.2);
-    padding: 15px;
-    border-radius: 10px;
-  }
-
-  img {
-    margin-top: 10px;
-    border-radius: 50%;
-  }
-</style>
+    .status {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Firebase Auth Test</h1>
 
-  <!-- Name input -->
-  <input type="text" id="name-input" placeholder="Enter your name">
+  <div class="card">
+    <h1>Facebook Login</h1>
+    <button onclick="facebookLogin()">Login with Facebook</button>
+    <div class="status" id="status"></div>
+  </div>
 
-  <!-- Facebook Login -->
-  <button id="facebook-login">Login with Facebook</button>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getAuth,
+      FacebookAuthProvider,
+      signInWithRedirect,
+      getRedirectResult
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-  <hr style="width:80%; border-color: rgba(255,255,255,0.3)">
+    // 🔥 შენი Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
+      authDomain: "rentime-e201e.firebaseapp.com",
+      projectId: "rentime-e201e",
+      appId: "1:420054668757:web:0accf1d8b9d621fd94195c"
+    };
 
-  <!-- Phone Login -->
-  <input type="text" id="phone-number" placeholder="+9955XXXXXXXX">
-  <button id="phone-login">Login with Phone</button>
-  <div id="recaptcha-container"></div>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  <div id="login-result"></div>
+    const provider = new FacebookAuthProvider();
+    provider.addScope("public_profile");
+    provider.addScope("email");
+
+    // 👇 ღილაკზე დაჭერა
+    window.facebookLogin = function () {
+      document.getElementById("status").innerText = "Redirecting to Facebook...";
+      signInWithRedirect(auth, provider);
+    };
+
+    // 👇 redirect-ის შემდეგ შედეგი
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          document.getElementById("status").innerText =
+            "Welcome, " + result.user.displayName;
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        document.getElementById("status").innerText =
+          "Login failed: " + error.message;
+      });
+  </script>
+
 </body>
 </html>
