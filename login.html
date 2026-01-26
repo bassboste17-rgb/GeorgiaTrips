@@ -1,109 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Firebase Facebook Login Test</title>
-  <script type="module">
-    // Import Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+<meta charset="UTF-8">
+<title>Firebase Auth Combo Test</title>
+
+<script type="module">
+  // Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, FacebookAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  // ---------------------------
+  // Firebase Config
+  // ---------------------------
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
+    authDomain: "rentime-e201e.firebaseapp.com",
+    projectId: "rentime-e201e",
+    storageBucket: "rentime-e201e.firebasestorage.app",
+    messagingSenderId: "420054668757",
+    appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
+    measurementId: "G-DGWLG9P1ZB"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // ---------------------------
+  // Wait for DOM
+  // ---------------------------
+  document.addEventListener("DOMContentLoaded", () => {
+    const fbButton = document.getElementById("facebook-login");
+    const phoneButton = document.getElementById("phone-login");
+    const loginResult = document.getElementById("login-result");
 
     // ---------------------------
-    // Firebase Config
+    // Facebook Login
     // ---------------------------
-    const firebaseConfig = {
-      apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
-      authDomain: "rentime-e201e.firebaseapp.com",
-      projectId: "rentime-e201e",
-      storageBucket: "rentime-e201e.firebasestorage.app",
-      messagingSenderId: "420054668757",
-      appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
-      measurementId: "G-DGWLG9P1ZB"
-    };
+    fbButton.addEventListener("click", () => {
+      const provider = new FacebookAuthProvider();
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // ---------------------------
-    // Wait for DOM
-    // ---------------------------
-    document.addEventListener("DOMContentLoaded", () => {
-      const fbButton = document.getElementById("facebook-login");
-      const loginResult = document.getElementById("login-result");
-
-      fbButton.addEventListener("click", () => {
-        const provider = new FacebookAuthProvider();
-
+      if (isMobile) {
+        // Redirect for mobile
+        signInWithRedirect(auth, provider);
+      } else {
+        // Popup for desktop
         signInWithPopup(auth, provider)
-          .then((result) => {
-            const user = result.user;
-            console.log("Logged in user:", user);
-            loginResult.innerHTML = `
-              <p>✅ Welcome, ${user.displayName}</p>
-              <p>Email: ${user.email || 'Not provided'}</p>
-              <img src="${user.photoURL || ''}" alt="Profile photo" width="100">
-            `;
-          })
-          .catch((error) => {
-            console.error(error);
-            loginResult.innerHTML = `<p style="color:red">Login failed: ${error.message}</p>`;
-          });
-      });
+          .then(result => showUser(result.user))
+          .catch(err => showError(err));
+      }
     });
-  </script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
+    // Handle Redirect Result (mobile)
+    getRedirectResult(auth)
+      .then(result => {
+        if (result && result.user) showUser(result.user);
+      })
+      .catch(err => showError(err));
+
+    // ---------------------------
+    // Phone Auth
+    // ---------------------------
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        { size: "invisible" },
+        auth
+      );
+      window.recaptchaVerifier.render();
     }
 
-    h1 {
-      margin-bottom: 40px;
-      text-shadow: 1px 1px 5px #000;
+    phoneButton.addEventListener("click", () => {
+      const phoneNumber = document.getElementById("phone-number").value;
+      if (!phoneNumber) return alert("Enter a valid phone number");
+
+      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+        .then(confirmationResult => {
+          const code = prompt("Enter the verification code sent to your phone:");
+          return confirmationResult.confirm(code);
+        })
+        .then(result => {
+          showUser(result.user);
+        })
+        .catch(err => showError(err));
+    });
+
+    // ---------------------------
+    // Helper functions
+    // ---------------------------
+    function showUser(user) {
+      console.log("Logged in user:", user);
+      loginResult.innerHTML = `
+        <p>✅ Welcome, ${user.displayName || user.phoneNumber}</p>
+        <p>Email: ${user.email || 'Not provided'}</p>
+        ${user.photoURL ? `<img src="${user.photoURL}" width="100" />` : ''}
+      `;
     }
 
-    button {
-      background-color: #4267B2;
-      color: white;
-      border: none;
-      padding: 15px 25px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-bottom: 20px;
+    function showError(err) {
+      console.error(err);
+      loginResult.innerHTML = `<p style="color:red">Login failed: ${err.message}</p>`;
     }
+  });
+</script>
 
-    button:hover {
-      background-color: #365899;
-    }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+  }
 
-    #login-result {
-      margin-top: 20px;
-      text-align: center;
-      background-color: rgba(0,0,0,0.2);
-      padding: 15px;
-      border-radius: 10px;
-    }
+  h1 {
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 5px #000;
+  }
 
-    img {
-      margin-top: 10px;
-      border-radius: 50%;
-    }
-  </style>
+  input, button {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    margin: 5px;
+  }
+
+  button {
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button#facebook-login {
+    background-color: #4267B2;
+    color: #fff;
+  }
+
+  button#facebook-login:hover {
+    background-color: #365899;
+  }
+
+  button#phone-login {
+    background-color: #28a745;
+    color: #fff;
+  }
+
+  button#phone-login:hover {
+    background-color: #1e7e34;
+  }
+
+  #login-result {
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  img {
+    margin-top: 10px;
+    border-radius: 50%;
+  }
+</style>
 </head>
 <body>
-  <h1>Facebook Login Test</h1>
+  <h1>Firebase Auth Test</h1>
+
+  <!-- Facebook Login -->
   <button id="facebook-login">Login with Facebook</button>
+
+  <hr style="width:80%; border-color: rgba(255,255,255,0.3)">
+
+  <!-- Phone Login -->
+  <input type="text" id="phone-number" placeholder="+9955XXXXXXXX">
+  <button id="phone-login">Login with Phone</button>
+  <div id="recaptcha-container"></div>
 
   <div id="login-result"></div>
 </body>
