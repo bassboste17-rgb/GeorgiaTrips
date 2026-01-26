@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Firebase Facebook + Phone Auth Test</title>
+  <title>Firebase Facebook Login Test</title>
   <script type="module">
     // Import Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, FacebookAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+    // ---------------------------
     // Firebase Config
+    // ---------------------------
     const firebaseConfig = {
       apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
       authDomain: "rentime-e201e.firebaseapp.com",
@@ -26,66 +28,78 @@
     // ---------------------------
     // Facebook Login
     // ---------------------------
-    const fbButton = document.getElementById("facebook-login");
-    fbButton.addEventListener("click", () => {
+    function facebookLogin() {
       const provider = new FacebookAuthProvider();
-      provider.setCustomParameters({ auth_type: 'reauthenticate' }); // optional
 
       signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
-          alert(`Facebook Login Success!\nName: ${user.displayName}\nEmail: ${user.email}`);
+          console.log("Logged in user:", user);
+          document.getElementById("login-result").innerHTML = `
+            <p>✅ Welcome, ${user.displayName}</p>
+            <p>Email: ${user.email || 'Not provided'}</p>
+            <img src="${user.photoURL || ''}" alt="Profile photo" width="100">
+          `;
         })
         .catch((error) => {
           console.error(error);
-          alert(`Facebook Login Error: ${error.message}`);
+          document.getElementById("login-result").innerHTML = `<p style="color:red">Login failed: ${error.message}</p>`;
         });
-    });
-
-    // ---------------------------
-    // Phone Auth
-    // ---------------------------
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      { size: "invisible" },
-      auth
-    );
-
-    const phoneButton = document.getElementById("phone-login");
-    phoneButton.addEventListener("click", () => {
-      const phoneNumber = document.getElementById("phone-number").value;
-      const appVerifier = window.recaptchaVerifier;
-
-      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-          const code = prompt("Enter the verification code sent to your phone:");
-          return confirmationResult.confirm(code);
-        })
-        .then((result) => {
-          alert(`Phone Login Success! User UID: ${result.user.uid}`);
-        })
-        .catch((error) => {
-          console.error(error);
-          alert(`Phone Login Error: ${error.message}`);
-        });
-    });
-
+    }
   </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    button {
+      background-color: #4267B2;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #365899;
+    }
+
+    #login-result {
+      margin-top: 20px;
+      text-align: center;
+      background-color: rgba(0,0,0,0.2);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    img {
+      margin-top: 10px;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
-  <h1>Firebase Auth Test</h1>
+  <h1>Facebook Login Test</h1>
+  <button onclick="facebookLogin()">Login with Facebook</button>
 
-  <!-- Facebook Login -->
-  <button id="facebook-login">Login with Facebook</button>
-
-  <hr>
-
-  <!-- Phone Login -->
-  <input type="text" id="phone-number" placeholder="+9955XXXXXXXX">
-  <button id="phone-login">Login with Phone</button>
-  <div id="recaptcha-container"></div>
-
-  <p>Check the console for errors or success messages.</p>
+  <div id="login-result"></div>
 </body>
 </html>
