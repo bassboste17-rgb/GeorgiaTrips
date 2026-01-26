@@ -52,8 +52,8 @@
   <meta name="twitter:image:alt" content="Georgia Trips - Car Rental Service" />
   
   <!-- Theme Color -->
-  <meta name="theme-color" content="#e5383b" />
-  <meta name="msapplication-TileColor" content="#e5383b" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="msapplication-TileColor" content="#0a0a0a" />
   
   <!-- Geo Tags -->
   <meta name="geo.region" content="GE" />
@@ -181,8 +181,40 @@
   }
   </script>
   
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
-    /* Base Styles */
+    /* ========================================
+       NEW PREMIUM DESIGN - DARK ELEGANT THEME
+       ======================================== */
+    
+    :root {
+      --color-bg: #0a0a0a;
+      --color-bg-secondary: #111111;
+      --color-bg-card: #161616;
+      --color-bg-elevated: #1a1a1a;
+      --color-accent: #e5383b;
+      --color-accent-hover: #e5383b;
+      --color-text: #ffffff;
+      --color-text-secondary: #a0a0a0;
+      --color-text-muted: #666666;
+      --color-border: #2a2a2a;
+      --color-border-light: #333333;
+      --font-main: 'Inter', 'BPG Glaho', sans-serif;
+      --transition-fast: 0.2s ease;
+      --transition-medium: 0.3s ease;
+      --transition-slow: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+      --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.6);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -194,11 +226,12 @@
     }
 
     body {
-      font-family: "BPG Glaho", sans-serif;
-      background: #0d0d0d;
-      color: #fff;
+      font-family: var(--font-main);
+      background: var(--color-bg);
+      color: var(--color-text);
       min-height: 100vh;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
     /* Navbar */
@@ -209,8 +242,9 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(13, 13, 13, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-border);
     }
 
     /* Container */
@@ -221,18 +255,19 @@
       padding: 0 2rem;
     }
 
-    /* Hero Section */
+    /* ========================================
+       HERO SECTION - CINEMATIC STYLE
+       ======================================== */
     .hero {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 12rem 2rem 8rem;
+      padding: 10rem 2rem 8rem;
       min-height: 100vh;
       position: relative;
       overflow: hidden;
     }
 
-    /* Desktop Background Photo */
     .hero-background-desktop {
       position: absolute;
       top: 0;
@@ -246,12 +281,10 @@
       background-repeat: no-repeat;
     }
 
-    /* Mobile Background Photo - hidden on desktop */
     .hero-background-mobile {
       display: none;
     }
 
-    /* Desktop Video */
     .hero-video-desktop {
       position: absolute;
       top: 50%;
@@ -264,14 +297,13 @@
       object-fit: cover;
       z-index: 1;
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 1s ease;
     }
 
     .hero-video-desktop.loaded {
       opacity: 1;
     }
 
-    /* Mobile Video - hidden on desktop */
     .hero-video-mobile {
       display: none;
     }
@@ -282,7 +314,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.55) 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.7) 0%,
+        rgba(10, 10, 10, 0.4) 40%,
+        rgba(10, 10, 10, 0.6) 70%,
+        rgba(10, 10, 10, 0.95) 100%
+      );
       z-index: 2;
       pointer-events: none;
     }
@@ -292,13 +330,13 @@
       max-width: 900px;
       position: relative;
       z-index: 3;
-      animation: fadeInUp 1s ease-out;
+      animation: heroFadeIn 1.2s ease-out;
     }
 
-    @keyframes fadeInUp {
+    @keyframes heroFadeIn {
       from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -307,111 +345,111 @@
     }
 
     .hero-badge {
-      display: inline-block;
-      background: rgb(255, 255, 255);
-      border: 1px solid rgba(44, 6, 7, 0.062);
-      color: #e5383b;
-      padding: 0.6rem 1.5rem;
-      border-radius: 30px;
-      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201, 169, 98, 0.15);
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 2rem;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-badge i {
+      font-size: 0.9rem;
     }
 
     .hero h1 {
-      font-size: 4rem;
-      color: #fff;
+      font-size: 4.5rem;
+      color: var(--color-text);
       margin-bottom: 1.5rem;
       font-weight: 800;
-      letter-spacing: -1px;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      letter-spacing: -2px;
       line-height: 1.1;
-      background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .hero h2 {
-      font-size: 1.8rem;
-      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.4rem;
+      color: var(--color-text-secondary);
       margin-bottom: 1.5rem;
       font-weight: 400;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .hero p {
-      margin: 1.5rem 0 2.5rem;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1.2rem;
-      line-height: 1.7;
+      margin: 1.5rem auto 3rem;
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.8;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      color: #fff;
-      padding: 1.2rem 3rem;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      padding: 1.1rem 2.5rem;
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: 100px;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.8rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(229, 56, 59, 0.4);
-      position: relative;
-      overflow: hidden;
+      gap: 0.6rem;
+      transition: var(--transition-medium);
+      border: 2px solid var(--color-accent);
     }
 
     .btn-primary:hover {
-      background: linear-gradient(135deg, #ff4447 0%, #e5383b 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(229, 56, 59, 0.5);
+      background: var(--color-accent-hover);
+      border-color: var(--color-accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 169, 98, 0.3);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      padding: 1.2rem 3rem;
+      background: transparent;
+      color: var(--color-text);
+      padding: 1.1rem 2.5rem;
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: 100px;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.8rem;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
+      gap: 0.6rem;
+      transition: var(--transition-medium);
+      border: 2px solid var(--color-border-light);
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--color-text-secondary);
+      transform: translateY(-2px);
     }
 
-    /* Section Styles */
+    /* ========================================
+       SECTIONS - CLEAN MINIMAL STYLE
+       ======================================== */
     .section {
       position: relative;
-      min-height: 120vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--color-text);
       text-align: center;
       background-attachment: fixed;
       background-position: center;
@@ -427,7 +465,12 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
+      background: linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.8) 0%,
+        rgba(10, 10, 10, 0.6) 50%,
+        rgba(10, 10, 10, 0.85) 100%
+      );
       z-index: 1;
     }
 
@@ -436,7 +479,6 @@
       z-index: 2;
     }
 
-    /* Section Backgrounds */
     #vehicles {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990425/ob04hfpvcmmvjgch1rbf.webp');
     }
@@ -453,12 +495,10 @@
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769242821/duevi4wposl5ueza6brx.png');
     }
 
-    /* Tours Section Background */
     #tours-section {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/udvj6mfospzinlv2zhcu.webp');
     }
 
-    /* Weather Section Background - Desktop */
     #weather-section {
       background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1768990424/hlsewmniu6newfhjzibx.webp');
     }
@@ -470,23 +510,26 @@
 
     .section-title {
       font-size: 3rem;
-      font-weight: 800;
+      font-weight: 700;
       margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--color-text);
+      letter-spacing: -1px;
+    }
+
+    .section-title span {
+      color: var(--color-accent);
     }
 
     .section-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      color: var(--color-text-secondary);
       max-width: 600px;
       margin: 0 auto;
+      line-height: 1.7;
     }
 
     /* ========================================
-       3D CARS CAROUSEL - ROTATING EFFECT
+       3D CARS CAROUSEL - PREMIUM STYLE
        ======================================== */
     .cars-carousel-wrapper {
       display: block;
@@ -519,33 +562,33 @@
 
     .cars-carousel-track .car-card {
       position: absolute;
-      width: 340px;
+      width: 360px;
       transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
       transform-origin: center center;
       will-change: transform, opacity;
     }
 
     .car-card {
-      background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-      border-radius: 20px;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border: 1px solid rgba(229, 56, 59, 0.15);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+      transition: var(--transition-slow);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
       cursor: pointer;
-      width: 340px;
+      width: 360px;
       flex-shrink: 0;
     }
 
     .car-card:hover {
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(229, 56, 59, 0.15);
-      border-color: rgba(229, 56, 59, 0.4);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--color-accent);
+      transform: translateY(-5px);
     }
 
     .car-card-image {
       width: 100%;
-      height: 200px;
+      height: 220px;
       overflow: hidden;
       position: relative;
     }
@@ -554,103 +597,109 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
     }
 
     .car-card:hover .car-card-image img {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .car-card-badge {
       position: absolute;
       top: 1rem;
       left: 1rem;
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      color: #fff;
+      background: var(--color-accent);
+      color: var(--color-bg);
       padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .car-card-content {
       padding: 1.5rem;
+      overflow: hidden;
     }
 
     .car-card-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--color-text);
       margin-bottom: 0.5rem;
     }
 
     .car-card-description {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 1rem;
-      line-height: 1.5;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 2.9em;
     }
 
     .car-card-details {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .car-card-detail {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
     }
 
     .car-card-detail i {
-      color: #e5383b;
+      color: var(--color-accent);
+      font-size: 0.9rem;
     }
 
     .car-card-detail.with-driver {
-      color: #22c55e;
+      color: #4ade80;
     }
 
     .car-card-detail.with-driver i {
-      color: #22c55e;
+      color: #4ade80;
     }
 
     .car-card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--color-border);
     }
 
     .car-card-price {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      color: #e5383b;
+      color: var(--color-accent);
     }
 
     .car-card-price span {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--color-text-muted);
     }
 
     .car-card-btn {
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      color: #fff;
+      background: var(--color-accent);
+      color: var(--color-bg);
       padding: 0.7rem 1.5rem;
-      border-radius: 10px;
+      border-radius: 100px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      transition: var(--transition-medium);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -659,12 +708,12 @@
     }
 
     .car-card-btn:hover {
-      background: linear-gradient(135deg, #ff4447 0%, #e5383b 100%);
+      background: var(--color-accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
+      box-shadow: 0 8px 20px rgba(201, 169, 98, 0.3);
     }
 
-    /* Navigation Arrows for Cars */
+    /* Navigation Arrows */
     .cars-carousel-nav {
       position: absolute;
       top: 50%;
@@ -678,33 +727,30 @@
     }
 
     .cars-carousel-arrow {
-      background: rgba(229, 56, 59, 0.9);
-      color: white;
+      background: var(--color-bg-elevated);
+      color: var(--color-accent);
       width: 55px;
       height: 55px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 22px;
+      font-size: 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(229, 56, 59, 0.5);
+      transition: var(--transition-medium);
+      box-shadow: var(--shadow-card);
       pointer-events: auto;
-      border: none;
+      border: 1px solid var(--color-border);
     }
 
     .cars-carousel-arrow:hover {
-      background: rgba(229, 56, 59, 1);
-      transform: scale(1.15);
-      box-shadow: 0 6px 25px rgba(229, 56, 59, 0.6);
+      background: var(--color-accent);
+      color: var(--color-bg);
+      transform: scale(1.1);
+      border-color: var(--color-accent);
     }
 
-    .cars-carousel-arrow:active {
-      transform: scale(1.05);
-    }
-
-    /* Carousel Dots/Indicators for Cars */
+    /* Carousel Dots */
     .cars-carousel-dots {
       display: flex;
       justify-content: center;
@@ -714,73 +760,68 @@
     }
 
     .cars-carousel-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--color-border);
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
+      transition: var(--transition-medium);
+      border: none;
     }
 
     .cars-carousel-dot.active {
-      background: #e5383b;
-      border-color: #e5383b;
+      background: var(--color-accent);
       transform: scale(1.3);
-      box-shadow: 0 0 15px rgba(229, 56, 59, 0.6);
+      box-shadow: 0 0 15px rgba(201, 169, 98, 0.5);
     }
 
     .cars-carousel-dot:hover {
-      background: rgba(229, 56, 59, 0.7);
+      background: var(--color-accent);
+      opacity: 0.7;
     }
 
-    .no-cars-message {
-      text-align: center;
-      padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
-    }
-
+    .no-cars-message,
     .loading-cars {
       text-align: center;
       padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
     }
 
-    /* Tours Section Styles */
+    /* ========================================
+       TOURS SECTION - SAME STYLE AS CARS
+       ======================================== */
     .tours-section {
       padding: 4rem 2rem;
       margin-top: 4rem;
       margin-bottom: 4rem;
     }
 
-    /* Tours Grid - Hidden, use carousel instead */
     .tours-grid {
       display: none;
     }
 
     .tour-card {
-      background: linear-gradient(145deg, rgba(20, 20, 25, 0.95) 0%, rgba(35, 35, 45, 0.9) 50%, rgba(25, 25, 35, 0.95) 100%);
-      border-radius: 20px;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border: 1px solid rgba(229, 56, 59, 0.15);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+      transition: var(--transition-slow);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
       cursor: pointer;
-      width: 340px;
+      width: 360px;
       flex-shrink: 0;
     }
 
     .tour-card:hover {
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 15px 30px rgba(229, 56, 59, 0.15);
-      border-color: rgba(229, 56, 59, 0.4);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--color-accent);
+      transform: translateY(-5px);
     }
 
     .tour-card-image {
       width: 100%;
-      height: 200px;
+      height: 220px;
       overflow: hidden;
       position: relative;
     }
@@ -789,95 +830,101 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
     }
 
     .tour-card:hover .tour-card-image img {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .tour-card-badge {
       position: absolute;
       top: 1rem;
       left: 1rem;
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      color: #fff;
+      background: var(--color-accent);
+      color: var(--color-bg);
       padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .tour-card-content {
       padding: 1.5rem;
+      overflow: hidden;
     }
 
     .tour-card-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--color-text);
       margin-bottom: 0.5rem;
     }
 
     .tour-card-description {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 1rem;
-      line-height: 1.5;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 2.9em;
     }
 
     .tour-card-details {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .tour-card-detail {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
     }
 
     .tour-card-detail i {
-      color: #e5383b;
+      color: var(--color-accent);
+      font-size: 0.9rem;
     }
 
     .tour-card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--color-border);
     }
 
     .tour-card-price {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      color: #e5383b;
+      color: var(--color-accent);
     }
 
     .tour-card-price span {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--color-text-muted);
     }
 
     .tour-card-btn {
-      background: linear-gradient(135deg, #e5383b 0%, #c42e31 100%);
-      color: #fff;
+      background: var(--color-accent);
+      color: var(--color-bg);
       padding: 0.7rem 1.5rem;
-      border-radius: 10px;
+      border-radius: 100px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      transition: var(--transition-medium);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -886,14 +933,12 @@
     }
 
     .tour-card-btn:hover {
-      background: linear-gradient(135deg, #ff4447 0%, #e5383b 100%);
+      background: var(--color-accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
+      box-shadow: 0 8px 20px rgba(201, 169, 98, 0.3);
     }
 
-    /* ========================================
-       3D TOURS CAROUSEL - ROTATING EFFECT (Same as Cars)
-       ======================================== */
+    /* Tours Carousel */
     .tours-carousel-wrapper {
       display: block;
       position: relative;
@@ -925,13 +970,12 @@
 
     .tours-carousel-track .tour-card {
       position: absolute;
-      width: 340px;
+      width: 360px;
       transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
       transform-origin: center center;
       will-change: transform, opacity;
     }
 
-    /* Navigation Arrows */
     .tours-carousel-nav {
       position: absolute;
       top: 50%;
@@ -945,33 +989,29 @@
     }
 
     .tours-carousel-arrow {
-      background: rgba(229, 56, 59, 0.9);
-      color: white;
+      background: var(--color-bg-elevated);
+      color: var(--color-accent);
       width: 55px;
       height: 55px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 22px;
+      font-size: 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(229, 56, 59, 0.5);
+      transition: var(--transition-medium);
+      box-shadow: var(--shadow-card);
       pointer-events: auto;
-      border: none;
+      border: 1px solid var(--color-border);
     }
 
     .tours-carousel-arrow:hover {
-      background: rgba(229, 56, 59, 1);
-      transform: scale(1.15);
-      box-shadow: 0 6px 25px rgba(229, 56, 59, 0.6);
+      background: var(--color-accent);
+      color: var(--color-bg);
+      transform: scale(1.1);
+      border-color: var(--color-accent);
     }
 
-    .tours-carousel-arrow:active {
-      transform: scale(1.05);
-    }
-
-    /* Carousel Dots/Indicators */
     .tours-carousel-dots {
       display: flex;
       justify-content: center;
@@ -981,41 +1021,37 @@
     }
 
     .tours-carousel-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
+      background: var(--color-border);
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
+      transition: var(--transition-medium);
+      border: none;
     }
 
     .tours-carousel-dot.active {
-      background: #e5383b;
-      border-color: #e5383b;
+      background: var(--color-accent);
       transform: scale(1.3);
-      box-shadow: 0 0 15px rgba(229, 56, 59, 0.6);
+      box-shadow: 0 0 15px rgba(201, 169, 98, 0.5);
     }
 
     .tours-carousel-dot:hover {
-      background: rgba(229, 56, 59, 0.7);
+      background: var(--color-accent);
+      opacity: 0.7;
     }
 
-    .no-tours-message {
-      text-align: center;
-      padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
-    }
-
+    .no-tours-message,
     .loading-tours {
       text-align: center;
       padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
     }
 
-    /* Latest Post Section */
+    /* ========================================
+       LATEST POST SECTION - ELEGANT CARD
+       ======================================== */
     .latest-post-section {
       padding: 4rem 2rem;
       margin-top: 4rem;
@@ -1023,15 +1059,14 @@
     }
 
     .latest-post {
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.507) 0%, rgba(0, 0, 0, 0.897) 100%);
-      border-radius: 24px;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-elevated);
       max-width: 800px;
       margin: 0 auto;
-      padding: 3.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
+      padding: 2.5rem;
+      border: 1px solid var(--color-border);
     }
 
     .latest-post-header {
@@ -1041,40 +1076,38 @@
     }
 
     .latest-post-avatar {
-      width: 60px;
-      height: 60px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       object-fit: cover;
       margin-right: 1rem;
-      border: 3px solid #e5383b;
-      box-shadow: 0 4px 15px rgba(229, 56, 59, 0.4);
+      border: 2px solid var(--color-accent);
     }
 
     .latest-post-author {
       font-weight: 700;
-      font-size: 1.3rem;
-      color: #fff;
-      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+      color: var(--color-text);
+      margin-bottom: 0.2rem;
     }
 
     .latest-post-time {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
     }
 
     .latest-post-image {
-      margin-bottom: 2rem;
-      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      max-height: 500px;
-      background-color: rgba(0, 0, 0, 0.3);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      max-height: 450px;
+      background-color: var(--color-bg);
     }
 
     .latest-post-image img {
       width: 100%;
       height: auto;
-      max-height: 500px;
+      max-height: 450px;
       object-fit: contain;
       cursor: pointer;
       transition: transform 0.4s ease;
@@ -1082,77 +1115,82 @@
     }
 
     .latest-post-image img:hover {
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
 
     .latest-post-content {
       line-height: 1.8;
-      color: rgba(255, 255, 255, 0.85);
+      color: var(--color-text-secondary);
       margin-bottom: 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       white-space: pre-wrap;
     }
 
     .latest-post-location {
       display: flex;
       align-items: center;
-      color: #e5383b;
-      margin-bottom: 2rem;
-      font-size: 1.1rem;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
       font-weight: 600;
     }
 
     .latest-post-location i {
-      margin-right: 0.8rem;
-      font-size: 1.3rem;
+      margin-right: 0.6rem;
+      font-size: 1.1rem;
     }
 
     .latest-post-actions {
       display: flex;
       align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--color-border);
       padding-top: 1.5rem;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .post-action {
       display: flex;
       align-items: center;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1.1rem;
+      color: var(--color-text-secondary);
+      font-size: 0.95rem;
       gap: 0.5rem;
     }
 
     .post-action i {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+      color: var(--color-text-muted);
     }
 
     .view-all-posts-btn {
       margin-left: auto;
-      background: linear-gradient(135deg, #e5383b, #c42e31);
-      color: #fff;
-      padding: 0.9rem 2rem;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      padding: 0.8rem 1.8rem;
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: 100px;
       font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 20px rgba(229, 56, 59, 0.4);
+      transition: var(--transition-medium);
     }
 
     .view-all-posts-btn:hover {
-      background: linear-gradient(135deg, #ff4447, #e5383b);
+      background: var(--color-accent-hover);
       transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 169, 98, 0.3);
     }
 
-    .no-posts, .loading-posts, .loading-weather {
+    .no-posts,
+    .loading-posts,
+    .loading-weather {
       text-align: center;
       padding: 3rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.2rem;
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
     }
 
-    /* Map Section */
+    /* ========================================
+       MAP SECTION - MINIMAL STYLE
+       ======================================== */
     .map-section {
       padding: 4rem 2rem;
       margin-top: 4rem;
@@ -1160,16 +1198,15 @@
     }
 
     .map-container {
-      max-width: 800px;
+      max-width: 900px;
       width: 100%;
       margin: 2rem auto 0;
       aspect-ratio: 4 / 3;
-      border-radius: 20px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      background: rgba(0, 0, 0, 0.548);
-      backdrop-filter: blur(15px);
+      box-shadow: var(--shadow-elevated);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
       position: relative;
     }
 
@@ -1184,32 +1221,32 @@
     .svg-map path {
       stroke-width: 0.5;
       transition: all 0.3s ease;
-      fill: rgba(255, 255, 255, 0.274);
-      stroke: rgba(255, 255, 255, 0.3);
+      fill: rgba(255, 255, 255, 0.1);
+      stroke: var(--color-border-light);
     }
 
     .svg-map path:hover {
       cursor: pointer;
-      fill: #e5383b !important;
-      filter: drop-shadow(0 0 10px rgba(229, 56, 59, 0.7));
+      fill: var(--color-accent) !important;
+      filter: drop-shadow(0 0 10px rgba(201, 169, 98, 0.5));
     }
 
     .region-label {
-      font-family: "BPG Glaho", sans-serif;
-      font-size: 12px;
-      fill: #fff;
-      font-weight: bold;
+      font-family: var(--font-main);
+      font-size: 11px;
+      fill: var(--color-text-secondary);
+      font-weight: 600;
       pointer-events: none;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
     }
 
-    /* Weather Section */
+    /* ========================================
+       WEATHER SECTION - GLASS MORPHISM
+       ======================================== */
     .weather-section {
-      background: rgba(0, 0, 0, 0.459);
-      backdrop-filter: blur(50px);
-      border-radius: 30px;
-      padding: 4rem 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      padding: 3rem 2rem;
+      border: 1px solid var(--color-border);
       margin-top: 4rem;
       margin-bottom: 6rem;
     }
@@ -1218,130 +1255,129 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
     }
 
     .weather-controls select {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-      font-family: "BPG Glaho", sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 0.9rem 1.5rem;
+      font-size: 0.95rem;
+      font-family: var(--font-main);
       outline: none;
-      transition: all 0.3s ease;
+      transition: var(--transition-medium);
       cursor: pointer;
-      backdrop-filter: blur(10px);
+      min-width: 180px;
     }
 
     .weather-controls select option {
-      background: rgba(15, 52, 96, 0.95);
-      color: #fff;
+      background: var(--color-bg);
+      color: var(--color-text);
     }
 
     .weather-controls select:hover {
-      border-color: rgba(229, 56, 59, 0.5);
-      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--color-accent);
     }
 
     .weather-controls select:focus {
-      border-color: #e5383b;
-      box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.2);
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.15);
     }
 
     .weather-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-      max-height: 70vh;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      max-height: 65vh;
       overflow-y: auto;
-      padding: 1rem;
+      padding: 0.5rem;
       scrollbar-width: thin;
-      scrollbar-color: #e5383b rgba(255, 255, 255, 0.1);
+      scrollbar-color: var(--color-accent) var(--color-border);
     }
 
     .weather-container::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
 
     .weather-container::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--color-border);
       border-radius: 10px;
     }
 
     .weather-container::-webkit-scrollbar-thumb {
-      background: #e5383b;
+      background: var(--color-accent);
       border-radius: 10px;
     }
 
     .weather-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border-radius: 20px;
-      padding: 2rem;
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-medium);
     }
 
     .weather-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(229, 56, 59, 0.2);
-      border-color: rgba(229, 56, 59, 0.4);
+      transform: translateY(-3px);
+      border-color: var(--color-accent);
     }
 
     .weather-date {
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 1.2rem;
-      color: #fff;
+      margin-bottom: 1rem;
+      color: var(--color-text);
     }
 
     .weather-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1.2rem;
-      filter: drop-shadow(0 4px 10px rgba(229, 56, 59, 0.3));
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--color-accent);
     }
 
     .weather-temp {
       font-size: 2.5rem;
       font-weight: 800;
-      margin-bottom: 0.8rem;
-      color: #fff;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
     }
 
     .weather-description {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1.2rem;
     }
 
     .weather-details {
       display: flex;
       justify-content: space-around;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
       padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--color-border);
     }
 
     .weather-detail {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .weather-detail i {
-      font-size: 1.3rem;
-      color: #e5383b;
+      font-size: 1.1rem;
+      color: var(--color-accent);
     }
 
-    /* Image Modal */
+    /* ========================================
+       IMAGE MODAL - DARK OVERLAY
+       ======================================== */
     .image-modal {
       display: none;
       position: fixed;
@@ -1349,11 +1385,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.96);
-      z-index: 1000;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
       justify-content: center;
       align-items: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
     }
 
     .modal-content {
@@ -1369,11 +1405,10 @@
       max-width: 100%;
       max-height: 85vh;
       object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-elevated);
       opacity: 0;
       transition: opacity 0.5s ease;
-      border: 5px solid rgba(255, 255, 255, 0.1);
     }
 
     .modal-content img.loaded {
@@ -1384,21 +1419,21 @@
       position: absolute;
       top: -60px;
       right: 0;
-      color: white;
-      font-size: 42px;
+      color: var(--color-bg);
+      font-size: 36px;
       cursor: pointer;
-      background: rgba(229, 56, 59, 0.9);
-      width: 50px;
-      height: 50px;
+      background: var(--color-accent);
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: all 0.3s ease;
+      transition: var(--transition-medium);
     }
 
     .modal-close:hover {
-      background: rgba(229, 56, 59, 1);
+      background: var(--color-accent-hover);
       transform: scale(1.1);
     }
 
@@ -1413,21 +1448,21 @@
     }
 
     .nav-btn {
-      background: rgba(229, 56, 59, 0.9);
-      color: white;
-      width: 55px;
-      height: 55px;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 26px;
+      font-size: 22px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition-medium);
     }
 
     .nav-btn:hover {
-      background: rgba(229, 56, 59, 1);
+      background: var(--color-accent-hover);
       transform: scale(1.1);
     }
 
@@ -1436,41 +1471,60 @@
       bottom: -50px;
       left: 50%;
       transform: translateX(-50%);
-      color: white;
-      font-size: 17px;
-      background: rgba(229, 56, 59, 0.9);
-      padding: 12px 24px;
-      border-radius: 30px;
+      color: var(--color-bg);
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: var(--color-accent);
+      padding: 10px 20px;
+      border-radius: 100px;
     }
 
-   
-    /* Scrollbar */
+    /* ========================================
+       SCROLLBAR - MINIMAL
+       ======================================== */
     ::-webkit-scrollbar {
-      width: 12px;
+      width: 8px;
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(22, 33, 62, 0.8);
+      background: var(--color-bg);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #e5383b, #c42e31);
-      border-radius: 6px;
+      background: var(--color-border-light);
+      border-radius: 4px;
     }
 
-    /* MOBILE STYLES (max-width: 768px) */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-accent);
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ========================================
+       MOBILE STYLES (max-width: 768px)
+       ======================================== */
     @media (max-width: 768px) {
       .hero {
-        padding: 10rem 1.5rem 6rem;
+        padding: 9rem 1.5rem 5rem;
         min-height: 100vh;
       }
 
-      /* Desktop background hidden on mobile */
       .hero-background-desktop {
         display: none;
       }
 
-      /* Mobile Background Photo - visible only on mobile */
       .hero-background-mobile {
         display: block;
         position: absolute;
@@ -1485,12 +1539,10 @@
         background-repeat: no-repeat;
       }
 
-      /* Desktop video hidden on mobile */
       .hero-video-desktop {
         display: none;
       }
 
-      /* Mobile video visible only on mobile */
       .hero-video-mobile {
         display: block;
         position: absolute;
@@ -1508,33 +1560,31 @@
         opacity: 1;
       }
 
-      .hero-overlay {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 50%);
-      }
-
       .hero h1 {
         font-size: 2.5rem;
+        letter-spacing: -1px;
       }
 
       .hero h2 {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
       }
 
       .hero p {
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
 
       .hero-buttons {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.8rem;
       }
 
-      .btn-primary, .btn-secondary {
+      .btn-primary,
+      .btn-secondary {
         width: 100%;
         justify-content: center;
+        padding: 1rem 2rem;
       }
 
-      /* Mobile sections */
       .section {
         background-attachment: scroll;
         min-height: auto;
@@ -1556,23 +1606,21 @@
       .section:nth-of-type(4) {
         background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273793/lu61wchecuxpdcq92ggx.png');
         background-attachment: scroll;
-        min-height: 140vh;
+        min-height: 130vh;
       }
 
       .section:nth-of-type(5) {
         background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273795/smxxpzr1y2ly20bnmm68.png');
         background-attachment: scroll;
-        min-height: 160vh;
+        min-height: 150vh;
       }
 
-      /* Tours Section Mobile */
       #tours-section {
         background-attachment: scroll;
         min-height: auto;
         padding: 4rem 0;
       }
 
-      /* Weather Section Mobile */
       #weather-section {
         background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769273794/iy78ajng6usdt55susnq.png');
         background-attachment: scroll;
@@ -1581,14 +1629,14 @@
       }
 
       .section-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
 
       .container {
         padding: 0 1rem;
       }
 
-      /* Cars Mobile - 3D Carousel */
+      /* Cars Mobile */
       .cars-carousel-wrapper {
         overflow: hidden;
         padding: 1rem 0;
@@ -1600,20 +1648,20 @@
       }
 
       .cars-carousel-track .car-card {
-        width: 260px;
+        width: 280px;
       }
 
       .cars-carousel-arrow {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         font-size: 16px;
       }
 
       .cars-carousel-nav {
-        padding: 0 5px;
+        padding: 0 8px;
       }
 
-      /* Tours Mobile - 3D Carousel */
+      /* Tours Mobile */
       .tours-carousel-wrapper {
         overflow: hidden;
         padding: 1rem 0;
@@ -1625,17 +1673,17 @@
       }
 
       .tours-carousel-track .tour-card {
-        width: 260px;
+        width: 280px;
       }
 
       .tours-carousel-arrow {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         font-size: 16px;
       }
 
       .tours-carousel-nav {
-        padding: 0 5px;
+        padding: 0 8px;
       }
 
       /* Mobile Latest Post */
@@ -1650,7 +1698,7 @@
       }
 
       .latest-post {
-        padding: 2rem;
+        padding: 1.5rem;
       }
 
       .latest-post-actions {
@@ -1702,19 +1750,19 @@
       }
 
       .hero h2 {
-        font-size: 1.2rem;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-      }
-
-      .btn-primary, .btn-secondary {
-        padding: 1rem 2rem;
         font-size: 1rem;
       }
 
-      /* Small mobile - Cars 3D Carousel */
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+      }
+
       .cars-carousel {
         height: 460px;
       }
@@ -1723,7 +1771,6 @@
         width: 260px;
       }
 
-      /* Small mobile - Tours 3D Carousel */
       .tours-carousel {
         height: 460px;
       }
@@ -1768,19 +1815,19 @@
       
       <div class="hero-content">
         <div class="hero-badge" data-i18n="heroBadge">
-          <i class="fas fa-car" aria-hidden="true"></i> #1 Car Rental in Georgia
+          <i class="fas fa-star" aria-hidden="true"></i> #1 Car Rental in Georgia
         </div>
-        <h1 data-i18n="homeWelcome">Car Rental in Georgia | Georgia Trips</h1>
-        <h2 data-i18n="homeSubtitle">Tbilisi, Batumi, Kutaisi | Airport Transfer | Jeep, Sedan, Minivan, Bus Rental</h2>
-        <p data-i18n="homeDescription">Georgia Trips - Georgia's #1 car rental service. Rent a sedan, jeep, minivan or bus at the best price. Airport transfer, tourist tours and VIP service 24/7.</p>
+        <h1 data-i18n="homeWelcome">Discover Georgia <span style="color: var(--color-accent);">Your Way</span></h1>
+        <h2 data-i18n="homeSubtitle">Premium Car Rental & Tours in Tbilisi, Batumi, Kutaisi</h2>
+        <p data-i18n="homeDescription">Experience the beauty of Georgia with our premium fleet. From elegant sedans to rugged jeeps, we have the perfect vehicle for your journey. 24/7 service, competitive prices.</p>
         <div class="hero-buttons">
           <a href="booking.html" class="btn-primary" data-i18n="homeBookNow" aria-label="Book a car online">
             <i class="fas fa-calendar-check" aria-hidden="true"></i>
-            Book Now
+            Book Your Ride
           </a>
           <a href="#vehicles" class="btn-secondary" data-i18n="homeLearnMore" aria-label="See our vehicles">
             <i class="fas fa-arrow-down" aria-hidden="true"></i>
-            Learn More
+            Explore Fleet
           </a>
         </div>
       </div>
@@ -1790,8 +1837,8 @@
     <section class="section" id="vehicles" aria-labelledby="vehicles-title">
       <div class="container">
         <header class="section-header">
-          <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">ჩვენი ავტომობილები</h2>
-          <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე</p>
+          <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">Our <span>Premium</span> Fleet</h2>
+          <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">Choose from our carefully curated selection of vehicles for every type of adventure</p>
         </header>
         
         <!-- 3D Cars Carousel -->
@@ -1822,8 +1869,8 @@
     <section class="section" id="tours-section" aria-labelledby="tours-title">
       <div class="container">
         <header class="section-header">
-          <h2 class="section-title" id="tours-title" data-i18n="homeToursTitle">ჩვენი ტურები</h2>
-          <p class="section-subtitle" data-i18n="homeToursSubtitle">აღმოაჩინე საქართველო ჩვენი უნიკალური ტურებით</p>
+          <h2 class="section-title" id="tours-title" data-i18n="homeToursTitle">Unforgettable <span>Tours</span></h2>
+          <p class="section-subtitle" data-i18n="homeToursSubtitle">Discover Georgia's hidden gems with our expertly crafted tour experiences</p>
         </header>
         
         <!-- 3D Tours Carousel -->
@@ -1854,8 +1901,8 @@
       <div class="container">
         <div class="map-section">
           <header class="section-header">
-            <h2 class="section-title" id="map-title" data-i18n="homeChooseRegion">Choose a Region in Georgia</h2>
-            <p class="section-subtitle" data-i18n="homeMapSubtitle">Explore every corner of Georgia with us - Tbilisi, Kakheti, Svaneti, Batumi and more</p>
+            <h2 class="section-title" id="map-title" data-i18n="homeChooseRegion">Explore <span>Georgia</span></h2>
+            <p class="section-subtitle" data-i18n="homeMapSubtitle">Click on any region to discover unique destinations, hidden treasures, and local experiences</p>
           </header>
           <div class="map-container">
             <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="Interactive map of Georgia - Choose a region">
@@ -1870,7 +1917,7 @@
       <div class="container">
         <div class="latest-post-section">
           <header class="section-header">
-            <h2 class="section-title" id="posts-title" data-i18n="homeLatestPost">Latest News and Posts</h2>
+            <h2 class="section-title" id="posts-title" data-i18n="homeLatestPost">Latest <span>Stories</span></h2>
           </header>
           <div id="latest-post-container">
             <div class="loading-posts" data-i18n="homeLoading">Loading...</div>
@@ -1883,8 +1930,8 @@
       <div class="container">
         <div class="weather-section">
           <header class="section-header">
-            <h2 class="section-title" id="weather-title" data-i18n="homeWeatherForecast">Weather Forecast in Georgia</h2>
-            <p class="section-subtitle" data-i18n="homeWeatherSubtitle">Plan your trip according to the weather forecast</p>
+            <h2 class="section-title" id="weather-title" data-i18n="homeWeatherForecast">Weather <span>Forecast</span></h2>
+            <p class="section-subtitle" data-i18n="homeWeatherSubtitle">Plan your perfect trip with accurate weather information for all regions</p>
           </header>
           <div class="weather-controls">
             <label for="region-select" class="sr-only">Choose a region</label>
@@ -2342,7 +2389,6 @@
         '</div>' +
         '<div class="car-card-content">' +
           '<h3 class="car-card-title">' + name + '</h3>' +
-          '<p class="car-card-description">' + description + '</p>' +
           '<div class="car-card-details">' +
             '<span class="car-card-detail"><i class="fas fa-map-marker-alt"></i> ' + regions + '</span>' +
             '<span class="car-card-detail"><i class="fas fa-users"></i> ' + seats + ' ' + safeTranslate('homeSeats', 'seats') + '</span>' +
@@ -2421,7 +2467,7 @@
             zIndex = 100 - absOffset * 10;
           } else {
             // Desktop: More dramatic 3D effect
-            translateX = offset * 320;
+            translateX = offset * 340;
             translateZ = -absOffset * 180;
             rotateY = offset * -20;
             scale = 1 - absOffset * 0.12;
@@ -2603,7 +2649,6 @@
         '</div>' +
         '<div class="tour-card-content">' +
           '<h3 class="tour-card-title">' + name + '</h3>' +
-          '<p class="tour-card-description">' + description + '</p>' +
           '<div class="tour-card-details">' +
             '<span class="tour-card-detail"><i class="fas fa-map-marker-alt"></i> ' + regions + '</span>' +
             (tourType !== '-' ? '<span class="tour-card-detail"><i class="fas fa-hiking"></i> ' + tourType + '</span>' : '') +
@@ -2682,7 +2727,7 @@
             zIndex = 100 - absOffset * 10;
           } else {
             // Desktop: More dramatic 3D effect
-            translateX = offset * 320;
+            translateX = offset * 340;
             translateZ = -absOffset * 180;
             rotateY = offset * -20;
             scale = 1 - absOffset * 0.12;
