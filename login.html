@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <title>Firebase Auth Combo Test</title>
 
+<!-- Facebook JS SDK -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 <script type="module">
-  // Import Firebase modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, FacebookAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, FacebookAuthProvider, signInWithPopup, signInWithCredential, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   // ---------------------------
   // Firebase Config
@@ -26,37 +30,51 @@
   const auth = getAuth(app);
 
   // ---------------------------
-  // Wait for DOM
+  // Facebook JS SDK init
   // ---------------------------
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1118509420324444', // შენი Facebook App ID
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v17.0'
+    });
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
     const fbButton = document.getElementById("facebook-login");
     const phoneButton = document.getElementById("phone-login");
     const loginResult = document.getElementById("login-result");
+    const nameInput = document.getElementById("name-input");
 
     // ---------------------------
     // Facebook Login
     // ---------------------------
-    fbButton.addEventListener("click", () => {
-      const provider = new FacebookAuthProvider();
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-      if (isMobile) {
-        // Redirect for mobile
-        signInWithRedirect(auth, provider);
-      } else {
-        // Popup for desktop
+    if (isMobile) {
+      fbButton.addEventListener("click", () => {
+        FB.login(function(response) {
+          if (response.authResponse) {
+            const accessToken = response.authResponse.accessToken;
+            const credential = FacebookAuthProvider.credential(accessToken);
+
+            signInWithCredential(auth, credential)
+              .then(result => showUser(result.user))
+              .catch(err => showError(err));
+          } else {
+            alert('User cancelled login or did not authorize.');
+          }
+        }, {scope: 'email,public_profile'});
+      });
+    } else {
+      fbButton.addEventListener("click", () => {
+        const provider = new FacebookAuthProvider();
         signInWithPopup(auth, provider)
           .then(result => showUser(result.user))
           .catch(err => showError(err));
-      }
-    });
-
-    // Handle Redirect Result (mobile)
-    getRedirectResult(auth)
-      .then(result => {
-        if (result && result.user) showUser(result.user);
-      })
-      .catch(err => showError(err));
+      });
+    }
 
     // ---------------------------
     // Phone Auth
@@ -72,26 +90,26 @@
 
     phoneButton.addEventListener("click", () => {
       const phoneNumber = document.getElementById("phone-number").value;
+      const name = nameInput.value.trim();
       if (!phoneNumber) return alert("Enter a valid phone number");
+      if (!name) return alert("Enter your name");
 
       signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
         .then(confirmationResult => {
           const code = prompt("Enter the verification code sent to your phone:");
           return confirmationResult.confirm(code);
         })
-        .then(result => {
-          showUser(result.user);
-        })
+        .then(result => showUser(result.user, name))
         .catch(err => showError(err));
     });
 
     // ---------------------------
     // Helper functions
     // ---------------------------
-    function showUser(user) {
+    function showUser(user, name = null) {
       console.log("Logged in user:", user);
       loginResult.innerHTML = `
-        <p>✅ Welcome, ${user.displayName || user.phoneNumber}</p>
+        <p>✅ Welcome, ${name || user.displayName || user.phoneNumber}</p>
         <p>Email: ${user.email || 'Not provided'}</p>
         ${user.photoURL ? `<img src="${user.photoURL}" width="100" />` : ''}
       `;
@@ -118,26 +136,22 @@
   }
 
   h1 {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-shadow: 1px 1px 5px #000;
   }
 
   input, button {
     font-size: 16px;
-    padding: 12px;
+    padding: 10px;
     border-radius: 8px;
     border: none;
     margin: 5px;
   }
 
-  button {
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
   button#facebook-login {
     background-color: #4267B2;
     color: #fff;
+    cursor: pointer;
   }
 
   button#facebook-login:hover {
@@ -147,6 +161,7 @@
   button#phone-login {
     background-color: #28a745;
     color: #fff;
+    cursor: pointer;
   }
 
   button#phone-login:hover {
@@ -169,6 +184,9 @@
 </head>
 <body>
   <h1>Firebase Auth Test</h1>
+
+  <!-- Name input -->
+  <input type="text" id="name-input" placeholder="Enter your name">
 
   <!-- Facebook Login -->
   <button id="facebook-login">Login with Facebook</button>
