@@ -893,53 +893,183 @@
         }
 
         // ===================================
-        // 🔄 REDIRECT RESULT HANDLER
+        // IN-APP BROWSER MODAL
+        // ===================================
+        function showInAppBrowserModal() {
+            // შექმენი მოდალი თუ არ არსებობს
+            let modal = document.getElementById('inAppBrowserModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'inAppBrowserModal';
+                modal.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.8);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 10000;
+                        padding: 20px;
+                        box-sizing: border-box;
+                    ">
+                        <div style="
+                            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                            border-radius: 16px;
+                            padding: 30px;
+                            max-width: 400px;
+                            width: 100%;
+                            text-align: center;
+                            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                            border: 1px solid rgba(255,255,255,0.1);
+                        ">
+                            <div style="font-size: 50px; margin-bottom: 20px;">🌐</div>
+                            <h3 style="color: white; margin-bottom: 15px; font-size: 20px;">გახსენით ბრაუზერში</h3>
+                            <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px; line-height: 1.6; font-size: 14px;">
+                                Facebook/Instagram აპლიკაციიდან რეგისტრაცია შეუძლებელია. გთხოვთ გახსენით საიტი Chrome, Safari ან სხვა ბრაუზერში.
+                            </p>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <button onclick="copyLinkToClipboard()" style="
+                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                    color: white;
+                                    border: none;
+                                    padding: 14px 24px;
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    font-weight: 600;
+                                ">📋 ლინკის კოპირება</button>
+                                <button onclick="openInExternalBrowser()" style="
+                                    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+                                    color: white;
+                                    border: none;
+                                    padding: 14px 24px;
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    font-weight: 600;
+                                ">🚀 გახსნა ბრაუზერში</button>
+                                <button onclick="closeInAppModal()" style="
+                                    background: transparent;
+                                    color: rgba(255,255,255,0.6);
+                                    border: 1px solid rgba(255,255,255,0.2);
+                                    padding: 12px 24px;
+                                    border-radius: 10px;
+                                    font-size: 14px;
+                                    cursor: pointer;
+                                ">დახურვა</button>
+                            </div>
+                            <p id="copySuccess" style="color: #38ef7d; margin-top: 15px; display: none; font-size: 14px;">ლინკი დაკოპირდა!</p>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            modal.style.display = 'block';
+        }
+
+        function closeInAppModal() {
+            const modal = document.getElementById('inAppBrowserModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function copyLinkToClipboard() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const successMsg = document.getElementById('copySuccess');
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 3000);
+                }
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                const successMsg = document.getElementById('copySuccess');
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        }
+
+        function openInExternalBrowser() {
+            const url = window.location.href;
+            // სცადე გახსნა ბრაუზერში სხვადასხვა მეთოდით
+            // Android-ისთვის intent scheme
+            const isAndroid = /android/i.test(navigator.userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            
+            if (isAndroid) {
+                // Android: intent scheme Chrome-ისთვის
+                window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+            } else if (isIOS) {
+                // iOS: სცადე Safari-ში გახსნა
+                window.location.href = url;
+            } else {
+                window.open(url, '_system');
+            }
+        }
+
+        // ===================================
+        // REDIRECT RESULT HANDLER
         // გვერდის ჩატვირთვისას შეამოწმეთ redirect შედეგი
         // ===================================
         async function checkRedirectResult() {
+            // თუ in-app browser-ში ვართ, არ შეამოწმო redirect
+            if (isInAppBrowser()) {
+                return;
+            }
+            
             try {
+                const pendingProvider = localStorage.getItem('pendingAuthProvider');
+                if (!pendingProvider) {
+                    return; // არ იყო pending auth
+                }
+                
                 showLoading();
-                console.log("[Redirect] Checking for redirect result...");
                 
                 const result = await getRedirectResult(auth);
                 
+                // წაშალე pending provider
+                localStorage.removeItem('pendingAuthProvider');
+                
                 if (result && result.user) {
-                    console.log("[Redirect] Got result, user:", result.user.uid);
                     const user = result.user;
-                    
-                    // განსაზღვრე პროვაიდერი
-                    let provider = 'google';
-                    if (result.providerId === 'facebook.com' || 
-                        user.providerData.some(p => p.providerId === 'facebook.com')) {
-                        provider = 'facebook';
-                    }
-                    currentProvider = provider;
+                    currentProvider = pendingProvider;
                     
                     let displayName = user.displayName;
                     
                     if (!displayName || displayName.trim() === '') {
-                        console.log("[Redirect] No display name, showing modal...");
                         tempSocialUser = user;
                         hideLoading();
                         nameModal.style.display = 'flex';
                         return;
                     }
                     
-                    await handleSocialSignInSuccess(user, displayName, provider);
+                    await handleSocialSignInSuccess(user, displayName, pendingProvider);
                 } else {
-                    console.log("[Redirect] No redirect result found");
                     hideLoading();
                 }
             } catch (error) {
-                console.error("[Redirect] Error:", error);
+                localStorage.removeItem('pendingAuthProvider');
                 hideLoading();
                 
-                // თუ შეცდომა არის "missing initial state", აჩვენე მეგობრული შეტყობინება
                 if (error.message && error.message.includes('missing initial state')) {
-                    const errorMsg = window.languageSwitcher ? 
-                        window.languageSwitcher.translate('authSessionError') : 
-                        'სესიის შეცდომა. გთხოვთ სცადოთ თავიდან ან გამოიყენოთ სხვა ბრაუზერი.';
-                    showMessage(errorMsg, "error");
+                    showMessage('სესიის შეცდომა. გთხოვთ სცადოთ თავიდან ნორმალურ ბრაუზერში (Chrome/Safari).', "error");
                 } else if (error.code) {
                     await handleSocialSignInError(error, 'redirect');
                 }
@@ -1388,17 +1518,24 @@
             currentProvider = 'google';
 
             try {
-                // მობილურზე გამოიყენე Redirect, დესკტოპზე - Popup
-                if (isMobileDevice() || isInAppBrowser()) {
-                    console.log("[Google] Using redirect for mobile/in-app browser");
-                    // Redirect-ის დროს localStorage-ში შეინახე პროვაიდერი
-                    localStorage.setItem('pendingAuthProvider', 'google');
-                    await signInWithRedirect(auth, provider);
-                    // redirect-ის შემდეგ კოდი აქ აღარ შესრულდება
+                // IN-APP BROWSER: აჩვენე მოდალი რომ გახსნას ბრაუზერში
+                if (isInAppBrowser()) {
+                    hideLoading();
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                    isSocialSignInProgress = false;
+                    showInAppBrowserModal();
                     return;
                 }
                 
-                console.log("[Google] Using popup for desktop");
+                // მობილურზე (არა in-app) გამოიყენე Redirect
+                if (isMobileDevice()) {
+                    localStorage.setItem('pendingAuthProvider', 'google');
+                    await signInWithRedirect(auth, provider);
+                    return;
+                }
+                
+                // დესკტოპზე გამოიყენე Popup
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
                 
@@ -1446,23 +1583,24 @@
             currentProvider = 'facebook';
 
             try {
-                // 📱 მობილურზე ან in-app browser-ში გამოიყენე Redirect
-                if (isMobileDevice() || isInAppBrowser()) {
-                    console.log("[Facebook] Using redirect for mobile/in-app browser");
-                    console.log("[Facebook] Is mobile:", isMobileDevice());
-                    console.log("[Facebook] Is in-app browser:", isInAppBrowser());
-                    
-                    // Redirect-ის დროს localStorage-ში შეინახე პროვაიდერი
-                    localStorage.setItem('pendingAuthProvider', 'facebook');
-                    
-                    // signInWithRedirect გამოიყენე popup-ის ნაცვლად
-                    await signInWithRedirect(auth, provider);
-                    // redirect-ის შემდეგ კოდი აქ აღარ შესრულდება
+                // IN-APP BROWSER: აჩვენე მოდალი რომ გახსნას ბრაუზერში
+                if (isInAppBrowser()) {
+                    hideLoading();
+                    googleBtn.disabled = false;
+                    facebookBtn.disabled = false;
+                    isSocialSignInProgress = false;
+                    showInAppBrowserModal();
                     return;
                 }
                 
-                console.log("[Facebook] Using popup for desktop");
-                console.log("[Facebook] Starting sign in with popup...");
+                // მობილურზე (არა in-app) გამოიყენე Redirect
+                if (isMobileDevice()) {
+                    localStorage.setItem('pendingAuthProvider', 'facebook');
+                    await signInWithRedirect(auth, provider);
+                    return;
+                }
+                
+                // დესკტოპზე გამოიყენე Popup
                 const result = await signInWithPopup(auth, provider);
                 console.log("[Facebook] Popup result received:", result);
                 
