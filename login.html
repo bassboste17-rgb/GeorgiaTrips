@@ -26,26 +26,31 @@
     const auth = getAuth(app);
 
     // ---------------------------
-    // Facebook Login
+    // Wait for DOM
     // ---------------------------
-    function facebookLogin() {
-      const provider = new FacebookAuthProvider();
+    document.addEventListener("DOMContentLoaded", () => {
+      const fbButton = document.getElementById("facebook-login");
+      const loginResult = document.getElementById("login-result");
 
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const user = result.user;
-          console.log("Logged in user:", user);
-          document.getElementById("login-result").innerHTML = `
-            <p>✅ Welcome, ${user.displayName}</p>
-            <p>Email: ${user.email || 'Not provided'}</p>
-            <img src="${user.photoURL || ''}" alt="Profile photo" width="100">
-          `;
-        })
-        .catch((error) => {
-          console.error(error);
-          document.getElementById("login-result").innerHTML = `<p style="color:red">Login failed: ${error.message}</p>`;
-        });
-    }
+      fbButton.addEventListener("click", () => {
+        const provider = new FacebookAuthProvider();
+
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            console.log("Logged in user:", user);
+            loginResult.innerHTML = `
+              <p>✅ Welcome, ${user.displayName}</p>
+              <p>Email: ${user.email || 'Not provided'}</p>
+              <img src="${user.photoURL || ''}" alt="Profile photo" width="100">
+            `;
+          })
+          .catch((error) => {
+            console.error(error);
+            loginResult.innerHTML = `<p style="color:red">Login failed: ${error.message}</p>`;
+          });
+      });
+    });
   </script>
 
   <style>
@@ -98,7 +103,7 @@
 </head>
 <body>
   <h1>Facebook Login Test</h1>
-  <button onclick="facebookLogin()">Login with Facebook</button>
+  <button id="facebook-login">Login with Facebook</button>
 
   <div id="login-result"></div>
 </body>
