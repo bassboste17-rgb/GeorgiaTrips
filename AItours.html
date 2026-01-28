@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Georgia Trips AI - Create your personalized tour with AI assistant. Smart price calculator and recommendations.">
+    <meta name="keywords" content="Georgia, AI Tours, Travel, Georgia Trips, AI Tours, Smart Planning">
+    <meta name="author" content="Georgia Trips">
+    <meta name="robots" content="index, follow">
+    
+    <title>Georgia Trips - AI Tour Planner</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
+    
+    <style>
+/* Google Fonts - Inter for readability */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Colors */
+    --gold: #e5383b;
+    --gold-light: #e5383b;
+    --gold-dark: #b61a1d;
+    --dark-bg: #151515;
+    --dark-surface: #1a1a1a;
+    --dark-card: #222222;
+    --dark-border: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #c0c0c0;
+    --text-muted: #888888;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --ai-blue: #4f46e5;
+    --ai-purple: #7c3aed;
+    --border-radius: 16px;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-arabic: 'Noto Sans Arabic', 'Inter', sans-serif;
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+body[dir="rtl"] {
+    font-family: var(--font-arabic);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Language Selector */
+.language-selector {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 0.5rem;
+    background: var(--dark-card);
+    padding: 0.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--dark-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.lang-btn:hover {
+    background: var(--dark-surface);
+    color: var(--text-primary);
+}
+
+.lang-btn.active {
+    background: var(--gold);
+    color: white;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 5rem 0 3rem;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--ai-purple));
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a78bfa;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.hero-badge-dot {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+
+.hero h1 .ai-text {
+    background: var(--ai-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+    animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+/* AI Features Grid */
+.ai-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
+.ai-feature-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--ai-gradient);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.ai-feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(124, 58, 237, 0.5);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+}
+
+.ai-feature-card:hover::before {
+    opacity: 1;
+}
+
+.ai-feature-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--ai-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.75rem;
+    color: white;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+}
+
+.ai-feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.ai-feature-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Main Planner Section */
+.planner-section {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}
+
+.planner-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.planner-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.planner-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Form Styles */
+.planner-form {
+    display: grid;
+    gap: 2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group label i {
+    color: var(--ai-purple);
+    font-size: 1rem;
+}
+
+.input,
+.select {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: var(--font-main);
+    transition: var(--transition);
+    width: 100%;
+}
+
+.input:focus,
+.select:focus {
+    outline: none;
+    border-color: var(--ai-purple);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+.select option {
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+/* Number Input Styling */
+.number-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.number-input-wrapper .input {
+    padding-right: 50px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.number-input-wrapper .input::-webkit-outer-spin-button,
+.number-input-wrapper .input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.number-input-wrapper .input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.number-suffix {
+    position: absolute;
+    right: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+/* Date Input Styling */
+input[type="date"] {
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* Calendar Picker Custom Styles */
+input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Interests Grid */
+.interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.interest-tag {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 50px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.interest-tag:hover {
+    border-color: var(--ai-purple);
+    color: var(--text-primary);
+}
+
+.interest-tag.selected {
+    background: var(--ai-gradient);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.interest-tag i {
+    margin-right: 0.5rem;
+}
+
+/* Calculate Button */
+.calculate-btn {
+    background: var(--ai-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto 0;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+.calculate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(124, 58, 237, 0.5);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+.calculate-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.calculate-btn .spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.calculate-btn.loading .spinner {
+    display: inline-block;
+}
+
+.calculate-btn.loading .btn-text {
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Results Section */
+.results-section {
+    display: none;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.results-section.visible {
+    display: block;
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.results-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.results-header h2 i {
+    color: var(--ai-purple);
+}
+
+/* Price Card - Single Card Only */
+.price-card-single {
+    background: var(--dark-surface);
+    border: 2px solid var(--ai-purple);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.2);
+}
+
+.price-card-single::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--ai-gradient);
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.price-card-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--ai-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+.price-card-single h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.price-card-single .price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--ai-purple);
+    margin: 1.5rem 0;
+}
+
+.price-card-single .price-note {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.price-card-single .includes-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--dark-card);
+    border-radius: var(--radius-sm);
+}
+
+.price-card-single .includes-list li {
+    padding: 0.75rem 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.price-card-single .includes-list li:last-child {
+    border-bottom: none;
+}
+
+.price-card-single .includes-list li i {
+    color: var(--success-color);
+    font-size: 1rem;
+    width: 24px;
+}
+
+.price-card-single .select-btn {
+    background: var(--ai-gradient);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.price-card-single .select-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+/* AI Explanation Box */
+.ai-explanation {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.ai-explanation-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ai-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--ai-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.ai-explanation-header h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.ai-explanation-header span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.ai-explanation-text {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.ai-explanation-text p {
+    margin-bottom: 1rem;
+}
+
+.ai-explanation-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Itinerary Preview */
+.itinerary-preview {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+}
+
+.itinerary-preview h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.itinerary-preview h3 i {
+    color: var(--ai-purple);
+}
+
+.itinerary-day {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.itinerary-day:last-child {
+    border-bottom: none;
+}
+
+.day-number {
+    width: 50px;
+    height: 50px;
+    background: var(--ai-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.day-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.day-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.day-content .activities {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.day-content .activity-tag {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 50px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* AI Chat Section */
+.ai-chat-section {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.ai-chat-header {
+    background: var(--ai-gradient);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-chat-header .ai-avatar {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.ai-chat-header h3 {
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.ai-chat-header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.ai-chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chat-message {
+    max-width: 85%;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.chat-message.ai {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message.user {
+    background: var(--ai-gradient);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.chat-message .time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+.chat-message.user .time {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.ai-chat-input {
+    padding: 1.5rem;
+    border-top: 1px solid var(--dark-border);
+    display: flex;
+    gap: 1rem;
+}
+
+.ai-chat-input input {
+    flex: 1;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 50px;
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.ai-chat-input input:focus {
+    outline: none;
+    border-color: var(--ai-purple);
+}
+
+.ai-chat-input button {
+    width: 50px;
+    height: 50px;
+    background: var(--ai-gradient);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-chat-input button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.voice-btn {
+    background: var(--dark-surface) !important;
+    border: 1px solid var(--dark-border) !important;
+    color: var(--text-secondary) !important;
+}
+
+.voice-btn:hover {
+    border-color: var(--ai-purple) !important;
+    color: var(--ai-purple) !important;
+}
+
+.voice-btn.recording {
+    background: var(--error-color) !important;
+    border-color: var(--error-color) !important;
+    color: white !important;
+    animation: pulseRecord 1s infinite;
+}
+
+@keyframes pulseRecord {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+}
+
+/* Quick Suggestions */
+.quick-suggestions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0 1.5rem 1.5rem;
+    flex-wrap: wrap;
+}
+
+.quick-suggestion {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 50px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.quick-suggestion:hover {
+    border-color: var(--ai-purple);
+    color: var(--text-primary);
+    background: rgba(124, 58, 237, 0.1);
+}
+
+/* Contact Section */
+.contact-section {
+    text-align: center;
+    padding: 3rem;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    margin-bottom: 3rem;
+}
+
+.contact-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.contact-section p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.contact-btn.whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.contact-btn.whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+}
+
+.contact-btn.email {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    color: var(--text-primary);
+}
+
+.contact-btn.email:hover {
+    border-color: var(--ai-purple);
+    background: rgba(124, 58, 237, 0.1);
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 420px;
+}
+
+.toast {
+    background: var(--dark-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.75rem;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: start;
+    gap: 1.25rem;
+    animation: toastSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes toastSlideIn {
+    from { opacity: 0; transform: translateY(-20px) translateX(-20px); }
+    to { opacity: 1; transform: translateY(0) translateX(0); }
+}
+
+.toast.success { border-left: 4px solid var(--success-color); }
+.toast.success .toast-icon { color: var(--success-color); }
+.toast.error { border-left: 4px solid var(--error-color); }
+.toast.error .toast-icon { color: var(--error-color); }
+.toast.info { border-left: 4px solid var(--ai-purple); }
+.toast.info .toast-icon { color: var(--ai-purple); }
+
+.toast-icon { font-size: 1.75rem; flex-shrink: 0; }
+.toast-content { flex: 1; }
+.toast-title { color: var(--text-primary); font-weight: 700; margin-bottom: 0.375rem; }
+.toast-message { color: var(--text-secondary); font-size: 0.9rem; }
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0;
+    transition: var(--transition);
+}
+
+.toast-close:hover { color: var(--text-primary); }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--dark-border);
+    margin-top: 3rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: var(--ai-purple);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .language-selector {
+        top: 10px;
+        right: 10px;
+        padding: 0.35rem;
+    }
+    
+    .lang-btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .lang-btn span {
+        display: none;
+    }
+    
+    .hero {
+        padding: 4rem 0 2rem;
+    }
+    
+    .planner-section,
+    .results-section,
+    .ai-chat-section {
+        padding: 1.5rem;
+    }
+    
+    .ai-chat-messages {
+        height: 300px;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+    }
+    
+    .contact-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] .form-group label i,
+[dir="rtl"] .ai-feature-card,
+[dir="rtl"] .interest-tag i {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+[dir="rtl"] .language-selector {
+    right: auto;
+    left: 20px;
+}
+
+[dir="rtl"] .toast-container {
+    left: auto;
+    right: 24px;
+}
+
+[dir="rtl"] .chat-message.ai {
+    align-self: flex-end;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: 4px;
+}
+
+[dir="rtl"] .chat-message.user {
+    align-self: flex-start;
+    border-bottom-right-radius: var(--radius);
+    border-bottom-left-radius: 4px;
+}
+    </style>
+</head>
+<body>
+
+<!-- Language Selector -->
+<div class="language-selector">
+    <button class="lang-btn active" data-lang="ka" onclick="setLanguage('ka')">
+        <span>GE</span>
+    </button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">
+        <span>EN</span>
+    </button>
+    <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">
+        <span>RU</span>
+    </button>
+    <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')">
+        <span>AR</span>
+    </button>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span data-i18n="badge">AI POWERED</span>
+        </div>
+        <h1><span data-i18n="heroTitle1">Create Your Tour</span><br><span class="ai-text" data-i18n="heroTitle2">Choose how you want to plan your tour</span></h1>
+        <p data-i18n="heroDesc">AI - Coming Soon. Our smart system will help you create the perfect tour with transport and professional guide.</p>
+    </section>
+
+    <!-- AI Features -->
+    <section class="ai-features">
+        <div class="ai-feature-card">
+            <div class="ai-feature-icon">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h3 data-i18n="feature1Title">Price Calculator</h3>
+            <p data-i18n="feature1Desc">Get accurate pricing based on your personal parameters with transport and guide included.</p>
+        </div>
+        <div class="ai-feature-card">
+            <div class="ai-feature-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3 data-i18n="feature2Title">AI Recommendations</h3>
+            <p data-i18n="feature2Desc">Smart system recommends the best routes and places for your journey.</p>
+        </div>
+        <div class="ai-feature-card">
+            <div class="ai-feature-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h3 data-i18n="feature3Title">AI Chatbot</h3>
+            <p data-i18n="feature3Desc">Ask any question and get answers in real-time 24/7 in any language.</p>
+        </div>
+        <div class="ai-feature-card">
+            <div class="ai-feature-icon">
+                <i class="fas fa-language"></i>
+            </div>
+            <h3 data-i18n="feature4Title">Multilingual</h3>
+            <p data-i18n="feature4Desc">Available in 4 languages: Georgian, English, Russian and Arabic.</p>
+        </div>
+    </section>
+
+    <!-- Main Planner Section -->
+    <section class="planner-section">
+        <div class="planner-header">
+            <h2 data-i18n="plannerTitle">Plan Your Tour</h2>
+            <p data-i18n="plannerDesc">Fill in the information and AI will calculate the ideal route and price for you</p>
+        </div>
+
+        <form class="planner-form" id="plannerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> <span data-i18n="startLocation">Starting Location</span></label>
+                    <select class="select" id="startLocation">
+                        <option value="" data-i18n="selectPlaceholder">Select...</option>
+                        <option value="tbilisi">Tbilisi</option>
+                        <option value="abkhazia">Abkhazia</option>
+                        <option value="samegrelo">Samegrelo</option>
+                        <option value="racha">Racha-Lechkhumi</option>
+                        <option value="imereti">Imereti</option>
+                        <option value="guria">Guria</option>
+                        <option value="adjara">Adjara</option>
+                        <option value="samtskhe">Samtskhe-Javakheti</option>
+                        <option value="shida">Shida Kartli</option>
+                        <option value="mtskheta">Mtskheta-Mtianeti</option>
+                        <option value="kvemo">Kvemo Kartli</option>
+                        <option value="kakheti">Kakheti</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-flag-checkered"></i> <span data-i18n="destination">Destination</span></label>
+                    <select class="select" id="destination">
+                        <option value="" data-i18n="selectPlaceholder">Select...</option>
+                        <option value="tbilisi">Tbilisi</option>
+                        <option value="abkhazia">Abkhazia</option>
+                        <option value="samegrelo">Samegrelo</option>
+                        <option value="racha">Racha-Lechkhumi</option>
+                        <option value="imereti">Imereti</option>
+                        <option value="guria">Guria</option>
+                        <option value="adjara">Adjara</option>
+                        <option value="samtskhe">Samtskhe-Javakheti</option>
+                        <option value="shida">Shida Kartli</option>
+                        <option value="mtskheta">Mtskheta-Mtianeti</option>
+                        <option value="kvemo">Kvemo Kartli</option>
+                        <option value="kakheti">Kakheti</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> <span data-i18n="startDate">Start Date</span></label>
+                    <input type="date" class="input" id="startDate">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-check"></i> <span data-i18n="endDate">End Date</span></label>
+                    <input type="date" class="input" id="endDate">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-users"></i> <span data-i18n="travelers">Number of Travelers</span></label>
+                    <div class="number-input-wrapper">
+                        <input type="number" class="input" id="travelers" min="1" max="50" value="2" placeholder="2">
+                        <span class="number-suffix" data-i18n="person">people</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-car"></i> <span data-i18n="vehicleType">Vehicle Type</span></label>
+                    <select class="select" id="vehicleType">
+                        <option value="sedan" data-i18n="sedan">Sedan (1-3 people)</option>
+                        <option value="minivan" data-i18n="minivan">Minivan (4-7 people)</option>
+                        <option value="suv" data-i18n="suv">Jeep/SUV (1-4 people)</option>
+                        <option value="bus" data-i18n="bus">Minibus (8-20 people)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-heart"></i> <span data-i18n="interests">Interests</span></label>
+                <div class="interests-grid">
+                    <div class="interest-tag" data-interest="nature" onclick="toggleInterest(this)">
+                        <i class="fas fa-mountain"></i> <span data-i18n="nature">Nature</span>
+                    </div>
+                    <div class="interest-tag" data-interest="history" onclick="toggleInterest(this)">
+                        <i class="fas fa-landmark"></i> <span data-i18n="history">History</span>
+                    </div>
+                    <div class="interest-tag" data-interest="wine" onclick="toggleInterest(this)">
+                        <i class="fas fa-wine-glass"></i> <span data-i18n="wine">Wine</span>
+                    </div>
+                    <div class="interest-tag" data-interest="adventure" onclick="toggleInterest(this)">
+                        <i class="fas fa-hiking"></i> <span data-i18n="adventure">Adventure</span>
+                    </div>
+                    <div class="interest-tag" data-interest="food" onclick="toggleInterest(this)">
+                        <i class="fas fa-utensils"></i> <span data-i18n="food">Food</span>
+                    </div>
+                    <div class="interest-tag" data-interest="photography" onclick="toggleInterest(this)">
+                        <i class="fas fa-camera"></i> <span data-i18n="photography">Photography</span>
+                    </div>
+                    <div class="interest-tag" data-interest="culture" onclick="toggleInterest(this)">
+                        <i class="fas fa-theater-masks"></i> <span data-i18n="culture">Culture</span>
+                    </div>
+                    <div class="interest-tag" data-interest="relax" onclick="toggleInterest(this)">
+                        <i class="fas fa-spa"></i> <span data-i18n="relax">Relaxation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-comment-dots"></i> <span data-i18n="specialRequests">Special Requests</span></label>
+                <textarea class="input" id="specialRequests" rows="3" data-i18n-placeholder="specialRequestsPlaceholder" placeholder="Write if you have any special wishes..."></textarea>
+            </div>
+
+            <button type="button" class="calculate-btn" onclick="calculateTour()">
+                <span class="spinner"></span>
+                <i class="fas fa-magic"></i>
+                <span class="btn-text" data-i18n="calculateBtn">Calculate with AI</span>
+            </button>
+        </form>
+    </section>
+
+    <!-- Results Section (Hidden by default) -->
+    <section class="results-section" id="resultsSection">
+        <div class="results-header">
+            <h2><i class="fas fa-sparkles"></i> <span data-i18n="resultsTitle">AI Recommendation</span></h2>
+        </div>
+
+        <!-- AI Explanation -->
+        <div class="ai-explanation">
+            <div class="ai-explanation-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3 data-i18n="aiAssistant">AI Assistant</h3>
+                    <span data-i18n="aiAnalysis">Analysis Result</span>
+                </div>
+            </div>
+            <div class="ai-explanation-text" id="aiExplanation">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Single Price Card -->
+        <div id="priceCardContainer">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+
+        <!-- Itinerary Preview -->
+        <div class="itinerary-preview" id="itineraryPreview">
+            <h3><i class="fas fa-route"></i> <span data-i18n="suggestedItinerary">Suggested Itinerary</span></h3>
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </section>
+
+    <!-- AI Chat Section -->
+    <section class="ai-chat-section">
+        <div class="ai-chat-header">
+            <div class="ai-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div>
+                <h3 data-i18n="chatTitle">AI Chat Assistant</h3>
+                <p data-i18n="chatDesc">Ask any question - I can help in any language!</p>
+            </div>
+        </div>
+        
+        <div class="ai-chat-messages" id="chatMessages">
+            <div class="chat-message ai">
+                <p data-i18n="welcomeMessage">Hello! I am your AI assistant. How can I help you plan your tour? You can ask me any question about traveling in Georgia in any language!</p>
+                <span class="time" data-i18n="justNow">Just now</span>
+            </div>
+        </div>
+
+        <div class="quick-suggestions">
+            <button class="quick-suggestion" onclick="sendQuickMessage('recommend')" data-i18n="quickRecommend">What do you recommend?</button>
+            <button class="quick-suggestion" onclick="sendQuickMessage('price')" data-i18n="quickPrice">How much does a tour cost?</button>
+            <button class="quick-suggestion" onclick="sendQuickMessage('weather')" data-i18n="quickWeather">What's the weather like?</button>
+            <button class="quick-suggestion" onclick="sendQuickMessage('best')" data-i18n="quickBest">Best time to visit?</button>
+        </div>
+        
+        <div class="ai-chat-input">
+            <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <input type="text" id="chatInput" data-i18n-placeholder="chatPlaceholder" placeholder="Write a message in any language..." onkeypress="handleChatKeypress(event)">
+            <button onclick="sendChatMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2 data-i18n="contactTitle">Need Help?</h2>
+        <p data-i18n="contactDesc">Contact us directly and our team will help you</p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/995555123456" class="contact-btn whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span data-i18n="whatsapp">Contact via WhatsApp</span>
+            </a>
+            <a href="mailto:info@georgiatrips.ge" class="contact-btn email">
+                <i class="fas fa-envelope"></i>
+                <span data-i18n="email">Contact via Email</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Georgia Trips. <span data-i18n="allRights">All rights reserved.</span></p>
+        <p><a href="tours.html" data-i18n="backToTours">Back to Tours</a></p>
+    </footer>
+</div>
+
+<script>
+// ==========================================
+// REGIONS DATA - ALL GEORGIAN REGIONS
+// ==========================================
+const regions = {
+    tbilisi: { ka: "თბილისი", en: "Tbilisi", ru: "Тбилиси", ar: "تبليسي" },
+    abkhazia: { ka: "აფხაზეთი", en: "Abkhazia", ru: "Абхазия", ar: "أبخازيا" },
+    samegrelo: { ka: "სამეგრელო", en: "Samegrelo", ru: "Самегрело", ar: "سامغريلو" },
+    racha: { ka: "რაჭა-ლეჩხუმი", en: "Racha-Lechkhumi", ru: "Рача-Лечхуми", ar: "راتشا-ليتشخومي" },
+    imereti: { ka: "იმერეთი", en: "Imereti", ru: "Имерети", ar: "إيميريتي" },
+    guria: { ka: "გურია", en: "Guria", ru: "Гурия", ar: "غوريا" },
+    adjara: { ka: "აჭარა", en: "Adjara", ru: "Аджара", ar: "أجاريا" },
+    samtskhe: { ka: "სამცხე-ჯავახეთი", en: "Samtskhe-Javakheti", ru: "Самцхе-Джавахети", ar: "سامتسخه-جافاخيتي" },
+    shida: { ka: "შიდა ქართლი", en: "Shida Kartli", ru: "Шида Картли", ar: "شيدا كارتلي" },
+    mtskheta: { ka: "მცხეთა-მთიანეთი", en: "Mtskheta-Mtianeti", ru: "Мцхета-Мтианети", ar: "متسخيتا-متيانيتي" },
+    kvemo: { ka: "ქვემო ქართლი", en: "Kvemo Kartli", ru: "Квемо Картли", ar: "كفيمو كارتلي" },
+    kakheti: { ka: "კახეთი", en: "Kakheti", ru: "Кахети", ar: "كاخيتي" }
+};
+
+// ==========================================
+// TRANSLATIONS - 4 LANGUAGES
+// ==========================================
+const translations = {
+    ka: {
+        badge: "AI POWERED",
+        heroTitle1: "შექმენი შენი ტური",
+        heroTitle2: "აირჩიე როგორ გინდა დაგეგმო",
+        heroDesc: "AI - მალე. ჩვენი ჭკვიანი სისტემა დაგეხმარება იდეალური ტურის შექმნაში ტრანსპორტით და პროფესიონალი გიდით.",
+        feature1Title: "ფასის კალკულატორი",
+        feature1Desc: "მიიღე ზუსტი ფასი შენი მოგზაურობისთვის - ტრანსპორტი და გიდი შედის.",
+        feature2Title: "AI რეკომენდაციები",
+        feature2Desc: "ჭკვიანი სისტემა გირჩევს საუკეთესო მარშრუტებს და ადგილებს.",
+        feature3Title: "AI ჩატბოტი",
+        feature3Desc: "დაუსვი ნებისმიერი კითხვა და მიიღე პასუხები ნებისმიერ ენაზე 24/7.",
+        feature4Title: "მულტიენოვანი",
+        feature4Desc: "ხელმისაწვდომია 4 ენაზე: ქართული, ინგლისური, რუსული და არაბული.",
+        plannerTitle: "დაგეგმე შენი ტური",
+        plannerDesc: "შეავსე ინფორმაცია და AI სისტემა გამოთვლის იდეალურ მარშრუტს და ფასს",
+        startLocation: "საწყისი ლოკაცია",
+        destination: "დანიშნულების ადგილი",
+        selectPlaceholder: "აირჩიე...",
+        startDate: "დაწყების თარიღი",
+        endDate: "დასრულების თარიღი",
+        travelers: "მოგზაურთა რაოდენობა",
+        person: "ადამიანი",
+        vehicleType: "ტრანსპორტის ტიპი",
+        sedan: "სედანი (1-3 ადამიანი)",
+        minivan: "მინივენი (4-7 ადამიანი)",
+        suv: "ჯიპი/SUV (1-4 ადამიანი)",
+        bus: "მიკროავტობუსი (8-20 ადამიანი)",
+        interests: "ინტერესები",
+        nature: "ბუნება",
+        history: "ისტორია",
+        wine: "ღვინო",
+        adventure: "თავგადასავალი",
+        food: "კერძები",
+        photography: "ფოტოგრაფია",
+        culture: "კულტურა",
+        relax: "დასვენება",
+        specialRequests: "სპეციალური მოთხოვნები",
+        specialRequestsPlaceholder: "დაწერე თუ გაქვს სპეციალური სურვილები...",
+        calculateBtn: "AI-ით გამოთვლა",
+        resultsTitle: "AI რეკომენდაცია",
+        aiAssistant: "AI ასისტენტი",
+        aiAnalysis: "ანალიზის შედეგი",
+        suggestedItinerary: "შემოთავაზებული მარშრუტი",
+        chatTitle: "AI ჩატ ასისტენტი",
+        chatDesc: "დაუსვი ნებისმიერი კითხვა - ნებისმიერ ენაზე!",
+        welcomeMessage: "გამარჯობა! მე ვარ თქვენი AI ასისტენტი. როგორ შემიძლია დაგეხმაროთ ტურის დაგეგმვაში? შეგიძლიათ დამისვათ ნებისმიერი კითხვა საქართველოში მოგზაურობის შესახებ ნებისმიერ ენაზე!",
+        quickRecommend: "რას მირჩევ?",
+        quickPrice: "რა ღირს ტური?",
+        quickWeather: "როგორია ამინდი?",
+        quickBest: "საუკეთესო დრო?",
+        chatPlaceholder: "დაწერე შეტყობინება ნებისმიერ ენაზე...",
+        contactTitle: "გჭირდება დახმარება?",
+        contactDesc: "დაგვიკავშირდი პირდაპირ და ჩვენი გუნდი დაგეხმარება",
+        whatsapp: "WhatsApp-ით დაკავშირება",
+        email: "ელ-ფოსტით დაკავშირება",
+        allRights: "ყველა უფლება დაცულია.",
+        backToTours: "დაბრუნება ტურებზე",
+        tourPackage: "ტურის პაკეტი",
+        perPerson: "1 ადამიანზე",
+        includes: "მოიცავს",
+        transport: "ტრანსპორტი",
+        guide: "პროფესიონალი გიდი",
+        select: "არჩევა",
+        day: "დღე",
+        calculating: "გამოთვლა...",
+        fillFields: "გთხოვთ შეავსოთ ყველა სავალდებულო ველი",
+        justNow: "ახლახანს"
+    },
+    en: {
+        badge: "AI POWERED",
+        heroTitle1: "Create Your Tour",
+        heroTitle2: "Choose how you want to plan",
+        heroDesc: "AI - Coming Soon. Our smart system will help you create the perfect tour with transport and professional guide.",
+        feature1Title: "Price Calculator",
+        feature1Desc: "Get accurate pricing based on your personal parameters with transport and guide included.",
+        feature2Title: "AI Recommendations",
+        feature2Desc: "Smart system recommends the best routes and places for your journey.",
+        feature3Title: "AI Chatbot",
+        feature3Desc: "Ask any question and get answers in real-time 24/7 in any language.",
+        feature4Title: "Multilingual",
+        feature4Desc: "Available in 4 languages: Georgian, English, Russian and Arabic.",
+        plannerTitle: "Plan Your Tour",
+        plannerDesc: "Fill in the information and AI will calculate the ideal route and price for you",
+        startLocation: "Starting Location",
+        destination: "Destination",
+        selectPlaceholder: "Select...",
+        startDate: "Start Date",
+        endDate: "End Date",
+        travelers: "Number of Travelers",
+        person: "people",
+        vehicleType: "Vehicle Type",
+        sedan: "Sedan (1-3 people)",
+        minivan: "Minivan (4-7 people)",
+        suv: "Jeep/SUV (1-4 people)",
+        bus: "Minibus (8-20 people)",
+        interests: "Interests",
+        nature: "Nature",
+        history: "History",
+        wine: "Wine",
+        adventure: "Adventure",
+        food: "Food",
+        photography: "Photography",
+        culture: "Culture",
+        relax: "Relaxation",
+        specialRequests: "Special Requests",
+        specialRequestsPlaceholder: "Write if you have any special wishes...",
+        calculateBtn: "Calculate with AI",
+        resultsTitle: "AI Recommendation",
+        aiAssistant: "AI Assistant",
+        aiAnalysis: "Analysis Result",
+        suggestedItinerary: "Suggested Itinerary",
+        chatTitle: "AI Chat Assistant",
+        chatDesc: "Ask any question - I can help in any language!",
+        welcomeMessage: "Hello! I am your AI assistant. How can I help you plan your tour? You can ask me any question about traveling in Georgia in any language!",
+        quickRecommend: "What do you recommend?",
+        quickPrice: "How much does a tour cost?",
+        quickWeather: "What's the weather like?",
+        quickBest: "Best time to visit?",
+        chatPlaceholder: "Write a message in any language...",
+        contactTitle: "Need Help?",
+        contactDesc: "Contact us directly and our team will help you",
+        whatsapp: "Contact via WhatsApp",
+        email: "Contact via Email",
+        allRights: "All rights reserved.",
+        backToTours: "Back to Tours",
+        tourPackage: "Tour Package",
+        perPerson: "per person",
+        includes: "Includes",
+        transport: "Transport",
+        guide: "Professional Guide",
+        select: "Select",
+        day: "Day",
+        calculating: "Calculating...",
+        fillFields: "Please fill in all required fields",
+        justNow: "Just now"
+    },
+    ru: {
+        badge: "AI POWERED",
+        heroTitle1: "Создай свой тур",
+        heroTitle2: "Выбери как хочешь спланировать",
+        heroDesc: "AI - Скоро. Наша умная система поможет создать идеальный тур с транспортом и профессиональным гидом.",
+        feature1Title: "Калькулятор цен",
+        feature1Desc: "Получи точную цену - транспорт и гид включены.",
+        feature2Title: "AI Рекомендации",
+        feature2Desc: "Умная система рекомендует лучшие маршруты и места.",
+        feature3Title: "AI Чатбот",
+        feature3Desc: "Задавай любые вопросы и получай ответы на любом языке 24/7.",
+        feature4Title: "Многоязычный",
+        feature4Desc: "Доступен на 4 языках: грузинский, английский, русский и арабский.",
+        plannerTitle: "Спланируй свой тур",
+        plannerDesc: "Заполни информацию и AI рассчитает идеальный маршрут и цену",
+        startLocation: "Начальная локация",
+        destination: "Место назначения",
+        selectPlaceholder: "Выбери...",
+        startDate: "Дата начала",
+        endDate: "Дата окончания",
+        travelers: "Количество путешественников",
+        person: "человек",
+        vehicleType: "Тип транспорта",
+        sedan: "Седан (1-3 человека)",
+        minivan: "Минивэн (4-7 человек)",
+        suv: "Джип/SUV (1-4 человек��)",
+        bus: "Микроавтобус (8-20 человек)",
+        interests: "Интересы",
+        nature: "Природа",
+        history: "История",
+        wine: "Вино",
+        adventure: "Приключения",
+        food: "Еда",
+        photography: "Фотография",
+        culture: "Культура",
+        relax: "Отдых",
+        specialRequests: "Специальные пожелания",
+        specialRequestsPlaceholder: "Напиши, если есть особые пожелания...",
+        calculateBtn: "Рассчитать с AI",
+        resultsTitle: "AI Рекомендация",
+        aiAssistant: "AI Ассистент",
+        aiAnalysis: "Результат анализа",
+        suggestedItinerary: "Предложенный маршрут",
+        chatTitle: "AI Чат Ассистент",
+        chatDesc: "Задай любой вопрос - на любом языке!",
+        welcomeMessage: "Привет! Я твой AI ассистент. Как я могу помочь спланировать тур? Можешь задать любой вопрос о путешествии по Грузии на любом языке!",
+        quickRecommend: "Что посоветуешь?",
+        quickPrice: "Сколько стоит тур?",
+        quickWeather: "Какая погода?",
+        quickBest: "Лучшее время?",
+        chatPlaceholder: "Напиши сообщение на любом языке...",
+        contactTitle: "Нужна помощь?",
+        contactDesc: "Свяжись с нами напрямую и наша команда поможет",
+        whatsapp: "Связаться через WhatsApp",
+        email: "Связаться по Email",
+        allRights: "Все права защищены.",
+        backToTours: "Вернуться к турам",
+        tourPackage: "Тур Пакет",
+        perPerson: "за человека",
+        includes: "Включает",
+        transport: "Транспорт",
+        guide: "Профессиональный гид",
+        select: "Выбрать",
+        day: "День",
+        calculating: "Расчет...",
+        fillFields: "Пожалуйста, заполните все обязательные поля",
+        justNow: "Только что"
+    },
+    ar: {
+        badge: "مدعوم بالذكاء الاصطناعي",
+        heroTitle1: "أنشئ جولتك",
+        heroTitle2: "اختر كيف تريد التخطيط",
+        heroDesc: "AI - قريباً. سيساعدك نظامنا الذكي في إنشاء الجولة المثالية مع النقل والمرشد المحترف.",
+        feature1Title: "حاسبة الأسعار",
+        feature1Desc: "احصل على سعر دقيق - النقل والمرشد مشمولان.",
+        feature2Title: "توصيات AI",
+        feature2Desc: "النظام الذكي يوصي بأفضل المسارات والأماكن.",
+        feature3Title: "روبوت AI",
+        feature3Desc: "اطرح أي سؤال واحصل على إجابات بأي لغة على مدار الساعة.",
+        feature4Title: "متعدد اللغات",
+        feature4Desc: "متوفر بـ 4 لغات: الجورجية والإنجليزية والروسية والعربية.",
+        plannerTitle: "خطط لجولتك",
+        plannerDesc: "املأ المعلومات وسيحسب AI المسار والسعر المثالي لك",
+        startLocation: "موقع البداية",
+        destination: "الوجهة",
+        selectPlaceholder: "اختر...",
+        startDate: "تاريخ البدء",
+        endDate: "تاريخ الانتهاء",
+        travelers: "عدد المسافرين",
+        person: "شخص",
+        vehicleType: "نوع المركبة",
+        sedan: "سيدان (1-3 أشخاص)",
+        minivan: "ميني فان (4-7 أشخاص)",
+        suv: "جيب/SUV (1-4 أشخاص)",
+        bus: "حافلة صغيرة (8-20 شخص)",
+        interests: "الاهتمامات",
+        nature: "الطبيعة",
+        history: "التاريخ",
+        wine: "النبيذ",
+        adventure: "المغامرة",
+        food: "الطعام",
+        photography: "التصوير",
+        culture: "الثقافة",
+        relax: "الاسترخاء",
+        specialRequests: "طلبات خاصة",
+        specialRequestsPlaceholder: "اكتب إذا كانت لديك رغبات خاصة...",
+        calculateBtn: "احسب مع AI",
+        resultsTitle: "توصية AI",
+        aiAssistant: "مساعد AI",
+        aiAnalysis: "نتيجة التحليل",
+        suggestedItinerary: "المسار المقترح",
+        chatTitle: "مساعد دردشة AI",
+        chatDesc: "اطرح أي سؤال - بأي لغة!",
+        welcomeMessage: "مرحباً! أنا مساعدك AI. كيف يمكنني مساعدتك في التخطيط لجولتك؟ يمكنك طرح أي سؤال حول السفر في جورجيا بأي لغة!",
+        quickRecommend: "ماذا توصي؟",
+        quickPrice: "كم تكلفة الجولة؟",
+        quickWeather: "كيف الطقس؟",
+        quickBest: "أفضل وقت؟",
+        chatPlaceholder: "اكتب رسالة بأي لغة...",
+        contactTitle: "هل تحتاج مساعدة؟",
+        contactDesc: "تواصل معنا مباشرة وفريقنا سيساعدك",
+        whatsapp: "تواصل عبر واتساب",
+        email: "تواصل عبر البريد",
+        allRights: "جميع الحقوق محفوظة.",
+        backToTours: "العودة للجولات",
+        tourPackage: "باقة الجولة",
+        perPerson: "للشخص",
+        includes: "يشمل",
+        transport: "النقل",
+        guide: "مرشد محترف",
+        select: "اختيار",
+        day: "اليوم",
+        calculating: "جاري الحساب...",
+        fillFields: "يرجى ملء جميع الحقول المطلوبة",
+        justNow: "الآن"
+    }
+};
+
+// Current language
+let currentLang = 'ka';
+let selectedInterests = [];
+
+// ==========================================
+// LANGUAGE FUNCTIONS
+// ==========================================
+function setLanguage(lang) {
+    currentLang = lang;
+    
+    // Update button states
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === lang) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Set RTL for Arabic
+    if (lang === 'ar') {
+        document.body.setAttribute('dir', 'rtl');
+        document.documentElement.lang = 'ar';
+    } else {
+        document.body.removeAttribute('dir');
+        document.documentElement.lang = lang;
+    }
+    
+    // Update all translatable elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+    
+    // Update select options with translated region names
+    updateSelectOptions();
+    
+    // Store preference
+    localStorage.setItem('preferredLanguage', lang);
+    
+    showToast('info', lang === 'ar' ? 'تم تغيير اللغة' : (lang === 'ru' ? 'Язык изменен' : (lang === 'en' ? 'Language changed' : 'ენა შეიცვალა')), '');
+}
+
+function updateSelectOptions() {
+    const startSelect = document.getElementById('startLocation');
+    const destSelect = document.getElementById('destination');
+    
+    [startSelect, destSelect].forEach(select => {
+        const options = select.querySelectorAll('option');
+        options.forEach(opt => {
+            const value = opt.value;
+            if (value && regions[value]) {
+                opt.textContent = regions[value][currentLang];
+            } else if (opt.dataset.i18n) {
+                opt.textContent = translations[currentLang][opt.dataset.i18n] || opt.textContent;
+            }
+        });
+    });
+    
+    // Update vehicle type options
+    const vehicleSelect = document.getElementById('vehicleType');
+    vehicleSelect.querySelectorAll('option').forEach(opt => {
+        const key = opt.dataset.i18n;
+        if (key && translations[currentLang][key]) {
+            opt.textContent = translations[currentLang][key];
+        }
+    });
+}
+
+function t(key) {
+    return translations[currentLang] && translations[currentLang][key] ? translations[currentLang][key] : key;
+}
+
+function getRegionName(regionKey) {
+    return regions[regionKey] ? regions[regionKey][currentLang] : regionKey;
+}
+
+// ==========================================
+// TOUR CALCULATOR
+// ==========================================
+const basePrices = {
+    tbilisi: { base: 80, perKm: 0.6 },
+    abkhazia: { base: 200, perKm: 0.9 },
+    samegrelo: { base: 150, perKm: 0.8 },
+    racha: { base: 180, perKm: 0.85 },
+    imereti: { base: 120, perKm: 0.7 },
+    guria: { base: 140, perKm: 0.75 },
+    adjara: { base: 160, perKm: 0.8 },
+    samtskhe: { base: 150, perKm: 0.8 },
+    shida: { base: 100, perKm: 0.65 },
+    mtskheta: { base: 90, perKm: 0.6 },
+    kvemo: { base: 100, perKm: 0.65 },
+    kakheti: { base: 100, perKm: 0.7 }
+};
+
+const vehicleMultipliers = {
+    sedan: 1,
+    minivan: 1.4,
+    suv: 1.6,
+    bus: 2.2
+};
+
+function toggleInterest(el) {
+    const interest = el.dataset.interest;
+    el.classList.toggle('selected');
+    
+    if (el.classList.contains('selected')) {
+        selectedInterests.push(interest);
+    } else {
+        selectedInterests = selectedInterests.filter(i => i !== interest);
+    }
+}
+
+function calculateTour() {
+    const startLocation = document.getElementById('startLocation').value;
+    const destination = document.getElementById('destination').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const travelers = parseInt(document.getElementById('travelers').value) || 1;
+    const vehicleType = document.getElementById('vehicleType').value;
+    
+    if (!startLocation || !destination || !startDate || !endDate) {
+        showToast('error', t('fillFields'), '');
+        return;
+    }
+    
+    const btn = document.querySelector('.calculate-btn');
+    btn.classList.add('loading');
+    
+    // Simulate AI calculation
+    setTimeout(() => {
+        const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+        const basePrice = basePrices[destination] || { base: 100, perKm: 0.7 };
+        const vehicleMult = vehicleMultipliers[vehicleType];
+        
+        // Calculate single price (Transport + Guide only)
+        const totalPrice = Math.round((basePrice.base * days * vehicleMult));
+        const pricePerPerson = Math.round(totalPrice / travelers);
+        
+        // Generate AI explanation
+        generateAIExplanation(destination, days, travelers, selectedInterests, startLocation);
+        
+        // Generate single price card
+        generatePriceCard(totalPrice, pricePerPerson, days, travelers);
+        
+        // Generate itinerary
+        generateItinerary(destination, days, startLocation);
+        
+        // Show results
+        document.getElementById('resultsSection').classList.add('visible');
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        
+        btn.classList.remove('loading');
+        
+        showToast('success', t('resultsTitle'), '');
+    }, 2000);
+}
+
+function generateAIExplanation(destination, days, travelers, interests, startLocation) {
+    const destName = getRegionName(destination);
+    const startName = getRegionName(startLocation);
+    
+    const explanations = {
+        ka: {
+            intro: `გავაანალიზე თქვენი მოთხოვნები და შევქმენი ${days}-დღიანი მარშრუტი ${travelers} ადამიანისთვის.`,
+            route: `მარშრუტი: ${startName} - ${destName}`,
+            includes: 'ტურში შედის: ტრანსპორტი და პროფესიონალი გიდი.',
+            interests: interests.length > 0 ? `თქვენი ინტერესები: ${interests.map(i => t(i)).join(', ')}.` : ''
+        },
+        en: {
+            intro: `I analyzed your requirements and created a ${days}-day itinerary for ${travelers} people.`,
+            route: `Route: ${startName} - ${destName}`,
+            includes: 'Tour includes: Transport and professional guide.',
+            interests: interests.length > 0 ? `Your interests: ${interests.map(i => t(i)).join(', ')}.` : ''
+        },
+        ru: {
+            intro: `Я проанализировал ваши требования и создал ${days}-дневный маршрут для ${travelers} человек.`,
+            route: `Маршрут: ${startName} - ${destName}`,
+            includes: 'Тур включает: Транспорт и профессионального гида.',
+            interests: interests.length > 0 ? `Ваши интересы: ${interests.map(i => t(i)).join(', ')}.` : ''
+        },
+        ar: {
+            intro: `قمت بتحليل متطلباتك وأنشأت مسار رحلة لمدة ${days} أيام لـ ${travelers} أشخاص.`,
+            route: `المسار: ${startName} - ${destName}`,
+            includes: 'الجولة تشمل: النقل والمرشد المحترف.',
+            interests: interests.length > 0 ? `اهتماماتك: ${interests.map(i => t(i)).join('، ')}.` : ''
+        }
+    };
+    
+    const exp = explanations[currentLang];
+    document.getElementById('aiExplanation').innerHTML = `
+        <p>${exp.intro}</p>
+        <p><strong>${exp.route}</strong></p>
+        <p>${exp.includes}</p>
+        ${exp.interests ? `<p>${exp.interests}</p>` : ''}
+    `;
+}
+
+function generatePriceCard(totalPrice, pricePerPerson, days, travelers) {
+    const cardHTML = `
+        <div class="price-card-single">
+            <div class="price-card-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h3>${t('tourPackage')}</h3>
+            <div class="price">$${totalPrice}</div>
+            <div class="price-note">${days} ${t('day')} | ${travelers} ${t('person')} | $${pricePerPerson} ${t('perPerson')}</div>
+            <ul class="includes-list">
+                <li><i class="fas fa-check"></i> <strong>${t('transport')}</strong> - ${currentLang === 'ka' ? 'კომფორტული მანქანა მთელი ტურის განმავლობაში' : (currentLang === 'ru' ? 'Комфортный автомобиль на весь тур' : (currentLang === 'ar' ? 'سيارة مريحة طوال الجولة' : 'Comfortable vehicle for the entire tour'))}</li>
+                <li><i class="fas fa-check"></i> <strong>${t('guide')}</strong> - ${currentLang === 'ka' ? 'გამოცდილი გიდი თქვენს ენაზე' : (currentLang === 'ru' ? 'Опытный гид на вашем языке' : (currentLang === 'ar' ? 'مرشد ذو خبرة بلغتك' : 'Experienced guide in your language'))}</li>
+            </ul>
+            <button class="select-btn" onclick="bookTour()">${t('select')}</button>
+        </div>
+    `;
+    document.getElementById('priceCardContainer').innerHTML = cardHTML;
+}
+
+function bookTour() {
+    showToast('success', currentLang === 'ka' ? 'მადლობა! მალე დაგიკავშირდებით' : (currentLang === 'ru' ? 'Спасибо! Скоро свяжемся' : (currentLang === 'ar' ? 'شكراً! سنتواصل قريباً' : 'Thank you! We will contact you soon')), '');
+}
+
+function generateItinerary(destination, days, startLocation) {
+    const destName = getRegionName(destination);
+    const startName = getRegionName(startLocation);
+    
+    const defaultDays = [];
+    for (let i = 1; i <= days; i++) {
+        if (i === 1) {
+            defaultDays.push({
+                title: `${t('day')} 1: ${startName} - ${destName}`,
+                desc: currentLang === 'ka' ? 'გამგზავრება და პირველი ღირსშესანიშნაობები' : (currentLang === 'ru' ? 'Выезд и первые достопримечательности' : (currentLang === 'ar' ? 'المغادرة والمعالم الأولى' : 'Departure and first sightseeing')),
+                activities: [t('transport'), t('photography')]
+            });
+        } else if (i === days) {
+            defaultDays.push({
+                title: `${t('day')} ${i}: ${t('backToTours')}`,
+                desc: currentLang === 'ka' ? 'დამატებითი აქტივობები და დაბრუნება' : (currentLang === 'ru' ? 'Дополнительные активности и возвращение' : (currentLang === 'ar' ? 'أنشطة إضافية والعودة' : 'Additional activities and return')),
+                activities: [t('culture'), t('food')]
+            });
+        } else {
+            defaultDays.push({
+                title: `${t('day')} ${i}: ${destName}`,
+                desc: currentLang === 'ka' ? 'ძირითადი ღირსშესანიშნაობების დათვალიერება' : (currentLang === 'ru' ? 'Осмотр основных достопримечательностей' : (currentLang === 'ar' ? 'زيارة المعالم الرئيسية' : 'Main sightseeing')),
+                activities: [t('history'), t('nature')]
+            });
+        }
+    }
+    
+    const itinHTML = defaultDays.map((day, i) => `
+        <div class="itinerary-day">
+            <div class="day-number">${i + 1}</div>
+            <div class="day-content">
+                <h4>${day.title}</h4>
+                <p>${day.desc}</p>
+                <div class="activities">
+                    ${day.activities.map(a => `<span class="activity-tag">${a}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    document.getElementById('itineraryPreview').innerHTML = `
+        <h3><i class="fas fa-route"></i> ${t('suggestedItinerary')}</h3>
+        ${itinHTML}
+    `;
+}
+
+// ==========================================
+// INTELLIGENT AI CHAT - RESPONDS TO ANY QUESTION
+// ==========================================
+function detectLanguage(text) {
+    // Georgian
+    if (/[\u10A0-\u10FF]/.test(text)) return 'ka';
+    // Arabic
+    if (/[\u0600-\u06FF]/.test(text)) return 'ar';
+    // Cyrillic (Russian)
+    if (/[\u0400-\u04FF]/.test(text)) return 'ru';
+    // Default to English
+    return 'en';
+}
+
+function generateIntelligentResponse(message, detectedLang) {
+    const lowerMsg = message.toLowerCase();
+    
+    // Knowledge base for Georgia tours
+    const knowledgeBase = {
+        // Greetings
+        greetings: {
+            patterns: ['hello', 'hi', 'hey', 'გამარჯობა', 'გამარჯობ', 'привет', 'здравствуй', 'مرحبا', 'السلام', 'salaam'],
+            responses: {
+                ka: 'გამარჯობა! მე ვარ თქვენი AI ასისტენტი Georgia Trips-ისგან. როგორ შემიძლია დაგეხმაროთ დღეს?',
+                en: 'Hello! I am your AI assistant from Georgia Trips. How can I help you today?',
+                ru: 'Привет! Я ваш AI ассистент от Georgia Trips. Как я могу помочь вам сегодня?',
+                ar: 'مرحباً! أنا مساعدك من Georgia Trips. كيف يمكنني مساعدتك اليوم؟'
+            }
+        },
+        // Price related
+        price: {
+            patterns: ['price', 'cost', 'how much', 'ფასი', 'ღირს', 'რა ღირს', 'цена', 'стоит', 'сколько', 'كم', 'سعر', 'تكلفة'],
+            responses: {
+                ka: 'ჩვენი ტურების ფასები იწყება $80-დან ერთდღიანი ტურისთვის და მოიცავს ტრანსპორტს და პროფესიონალ გიდს. ზუსტი ფასისთვის გამოიყენეთ ზემოთ მოცემული კალკულატორი - აირჩიეთ მარშრუტი, თარიღები და მგზავრთა რაოდენობა.',
+                en: 'Our tour prices start from $80 for a day tour and include transport and a professional guide. For exact pricing, use the calculator above - select your route, dates, and number of travelers.',
+                ru: 'Цены на наши туры начинаются от $80 за однодневный тур и включают транспорт и профессионального гида. Для точной цены используйте калькулятор выше - выберите маршрут, даты и количество путешественников.',
+                ar: 'تبدأ أسعار جولاتنا من 80 دولار للجولة اليومية وتشمل النقل والمرشد المحترف. للحصول على السعر الدقيق، استخدم الحاسبة أعلاه - اختر المسار والتواريخ وعدد المسافرين.'
+            }
+        },
+        // Weather
+        weather: {
+            patterns: ['weather', 'climate', 'temperature', 'ამინდი', 'კლიმატი', 'погода', 'климат', 'температура', 'طقس', 'مناخ', 'درجة'],
+            responses: {
+                ka: 'საქართველოს კლიმატი მრავალფეროვანია: მთებში ზაფხულში 20-25°C, ზამთარში თოვლი. თბილისში ზაფხული ცხელია (35°C+), ზამთარი ზომიერი (0-10°C). ბათუმში ზღვის კლიმატია - ზაფხული თბილი და ტენიანი.',
+                en: 'Georgia has diverse climate: mountains are 20-25°C in summer, snowy in winter. Tbilisi has hot summers (35°C+) and mild winters (0-10°C). Batumi has a coastal climate - warm and humid summers.',
+                ru: 'Климат Грузии разнообразен: в горах летом 20-25°C, зимой снег. В Тбилиси жаркое лето (35°C+) и мягкая зима (0-10°C). В Батуми морской климат - теплое и влажное лето.',
+                ar: 'مناخ جورجيا متنوع: الجبال 20-25 درجة في الصيف، ثلوج في الشتاء. تبليسي صيفها حار (35+) وشتاءها معتدل (0-10). باتومي لها مناخ ساحلي - صيف دافئ ورطب.'
+            }
+        },
+        // Best time
+        bestTime: {
+            patterns: ['best time', 'when', 'season', 'საუკეთესო დრო', 'როდის', 'სეზონი', 'лучшее время', 'когда', 'сезон', 'أفضل وقت', 'متى', 'موسم'],
+            responses: {
+                ka: 'საუკეთესო პერიოდი საქართველოსთვის: მაისი-ოქტომბერი. გაზაფხულზე (აპრილი-მაისი) - ყვავილები და მწვანე ბუნება. ზაფხულში - მზიანი ამინდი მთებში და ზღვაზე. შემოდგომაზე (სექტემბერი-ოქტომბერი) - ღვინის რთველი კახეთში. ზამთარი - სათხილამურო კურორტები!',
+                en: 'Best time for Georgia: May-October. Spring (April-May) - flowers and green nature. Summer - sunny weather in mountains and sea. Autumn (Sept-Oct) - wine harvest in Kakheti. Winter - ski resorts!',
+                ru: 'Лучшее время для Грузии: май-октябрь. Весна (апрель-май) - цветы и зеленая природа. Лето - солнечная погода в горах и на море. Осень (сент-окт) - сбор винограда в Кахетии. Зима - горнолыжные курорты!',
+                ar: 'أفضل وقت لجورجيا: مايو-أكتوبر. الربيع (أبريل-مايو) - الزهور والطبيعة الخضراء. الصيف - طقس مشمس في الجبال والبحر. الخريف (سبتمبر-أكتوبر) - موسم العنب في كاخيتي. الشتاء - منتجعات التزلج!'
+            }
+        },
+        // Recommendations
+        recommend: {
+            patterns: ['recommend', 'suggest', 'what should', 'where', 'რას მირჩევ', 'სად', 'რა ვნახო', 'რекомендую', 'посоветуй', 'куда', 'توصي', 'أين', 'ماذا'],
+            responses: {
+                ka: 'ყველაზე პოპულარული ტურები: 1) ყაზბეგი - მთების სილამაზე 1 დღეში. 2) კახეთი - ღვინის მოყვარულებისთვის. 3) სვანეთი - თავგადასავლისთვის 2-3 დღე. 4) ბათუმი - ზღვის კურორტი. 5) მესტია-უშგული - უნიკალური კულტურისთვის.',
+                en: 'Most popular tours: 1) Kazbegi - mountain beauty in 1 day. 2) Kakheti - for wine lovers. 3) Svaneti - adventure for 2-3 days. 4) Batumi - seaside resort. 5) Mestia-Ushguli - unique culture.',
+                ru: 'Самые популярные туры: 1) Казбеги - красота гор за 1 день. 2) Кахетия - для любителей вина. 3) Сванетия - приключение на 2-3 дня. 4) Батуми - морской курорт. 5) Местия-Ушгули - уникальная культура.',
+                ar: 'أشهر الجولات: 1) كازبيجي - جمال الجبال في يوم واحد. 2) كاخيتي - لمحبي النبيذ. 3) سفانيتي - مغامرة 2-3 أيام. 4) باتومي - منتجع بحري. 5) مستيا-أوشغولي - ثقافة فريدة.'
+            }
+        },
+        // Food
+        food: {
+            patterns: ['food', 'eat', 'cuisine', 'restaurant', 'საჭმელი', 'კერძი', 'სად ვჭამო', 'еда', 'кухня', 'ресторан', 'طعام', 'أكل', 'مطعم'],
+            responses: {
+                ka: 'ქართული სამზარეულო მსოფლიოში ცნობილია! აუცილებლად გასინჯე: ხინკალი, ხაჭაპური (განსაკუთრებით აჭარული), მწვადი, ფხალი, ჩურჩხელა. ღვინო - საუკეთესო კახეთშია. რესტორნებში ერთ ადამიანზე საშუალოდ $15-25 დაგჯდება.',
+                en: 'Georgian cuisine is world famous! Must try: Khinkali (dumplings), Khachapuri (cheese bread, especially Adjarian), Mtsvadi (BBQ), Pkhali, Churchkhela. Best wine - in Kakheti. Restaurant meal costs about $15-25 per person.',
+                ru: 'Грузинская кухня известна во всем мире! Обязательно попробуйте: хинкали, хачапури (особенно аджарский), мцвади (шашлык), пхали, чурчхела. Лучшее вино - в Кахетии. Обед в ресторане - около $15-25 на человека.',
+                ar: 'المطبخ الجورجي مشهور عالمياً! جرب: خينكالي، خاتشابوري (خبز الجبن)، متسفادي (شواء)، فخالي، تشورتشخيلا. أفضل نبيذ في كاخيتي. وجبة المطعم حوالي 15-25 دولار للشخص.'
+            }
+        },
+        // Transport
+        transport: {
+            patterns: ['transport', 'car', 'drive', 'taxi', 'ტრანსპორტი', 'მანქანა', 'ტაქსი', 'транспорт', 'машина', 'такси', 'نقل', 'سيارة', 'تاكسي'],
+            responses: {
+                ka: 'ჩვენს ყველა ტურში შედის კომფორტული ტრანსპორტი: სედანი (1-3 ადამიანი), მინივენი (4-7), SUV (1-4), მიკროავტობუსი (8-20). მძღოლი გამოცდილია მთის გზებზე. საწვავი და დაზღვევა შედის ფასში.',
+                en: 'All our tours include comfortable transport: Sedan (1-3 people), Minivan (4-7), SUV (1-4), Minibus (8-20). Driver is experienced on mountain roads. Fuel and insurance included in price.',
+                ru: 'Все наши туры включают комфортный транспорт: седан (1-3 человека), минивэн (4-7), SUV (1-4), микроавтобус (8-20). Водитель опытен на горных дорогах. Топливо и страховка включены в цену.',
+                ar: 'جميع جولاتنا تشمل نقل مريح: سيدان (1-3 أشخاص)، ميني فان (4-7)، SUV (1-4)، حافلة صغيرة (8-20). السائق ذو خبرة في الطرق الجبلية. الوقود والتأمين مشمولان في السعر.'
+            }
+        },
+        // Guide
+        guide: {
+            patterns: ['guide', 'tour guide', 'language', 'გიდი', 'ენა', 'гид', 'экскурсовод', 'язык', 'مرشد', 'لغة'],
+            responses: {
+                ka: 'ყველა ტურში გთავაზობთ პროფესიონალ გიდს თქვენს ენაზე - ქართული, ინგლისური, რუსული, არაბული და სხვა. გიდები სერტიფიცირებულია და კარგად იცნობენ საქართველოს ისტორიას, კულტურას და ტრადიციებს.',
+                en: 'All tours include a professional guide in your language - Georgian, English, Russian, Arabic and more. Guides are certified and well-versed in Georgia\'s history, culture and traditions.',
+                ru: 'Все туры включают профессионального гида на вашем языке - грузинский, английский, русский, арабский и другие. Гиды сертифицированы и хорошо знают историю, культуру и традиции Грузии.',
+                ar: 'جميع الجولات تشمل مرشد محترف بلغتك - الجورجية، الإنجليزية، الروسية، العربية وغيرها. المرشدون معتمدون ويعرفون تاريخ جورجيا وثقافتها وتقاليدها جيداً.'
+            }
+        },
+        // Safety
+        safety: {
+            patterns: ['safe', 'safety', 'danger', 'უსაფრთხო', 'საფრთხე', 'безопасно', 'опасно', 'آمن', 'خطر'],
+            responses: {
+                ka: 'საქართველო ძალიან უსაფრთხო ქვეყანაა ტურისტებისთვის! დანაშაულის დონე დაბალია, ადგილობრივები მეგობრულები არიან. მთებში რეკომენდირებულია გამოცდილ გიდთან მოგზაურობა - სწორედ ამას გთავაზობთ ჩვენ.',
+                en: 'Georgia is very safe for tourists! Crime rate is low, locals are friendly. For mountains, traveling with an experienced guide is recommended - that\'s exactly what we offer.',
+                ru: 'Грузия очень безопасна для туристов! Уровень преступности низкий, местные дружелюбные. В горах рекомендуется путешествовать с опытным гидом - именно это мы предлагаем.',
+                ar: 'جورجيا آمنة جداً للسياح! معدل الجريمة منخفض، السكان المحليون ودودون. في الجبال ينصح بالسفر مع مرشد ذو خبرة - وهذا بالضبط ما نقدمه.'
+            }
+        },
+        // Regions
+        regions: {
+            patterns: ['tbilisi', 'batumi', 'kakheti', 'svaneti', 'kazbegi', 'თბილისი', 'ბათუმი', 'კახეთი', 'სვანეთი', 'ყაზბეგი', 'тбилиси', 'батуми', 'кахетия', 'сванетия', 'казбеги', 'تبليسي', 'باتومي'],
+            responses: {
+                ka: 'საქართველოს 12 რეგიონი გელით: თბილისი - დედაქალაქი; კახეთი - ღვინის მხარე; მცხეთა-მთიანეთი - ყაზბეგი, გერგეთი; აჭარა - ბათუმი, ზღვა; სვანეთი - მესტია, უშგული; იმერეთი - პრომეთეს მღვიმე; რაჭა - თავგადასავალი და სხვ.',
+                en: 'Georgia\'s 12 regions await: Tbilisi - capital; Kakheti - wine region; Mtskheta-Mtianeti - Kazbegi, Gergeti; Adjara - Batumi, sea; Svaneti - Mestia, Ushguli; Imereti - Prometheus Cave; Racha - adventure and more.',
+                ru: 'Вас ждут 12 регионов Грузии: Тбилиси - столица; Кахетия - винный регион; Мцхета-Мтианети - Казбеги, Гергети; Аджария - Батуми, море; Сванетия - Местия, Ушгули; Имерети - пещера Прометея; Рача - приключения и др.',
+                ar: '12 منطقة في جورجيا تنتظرك: تبليسي - العاصمة؛ كاخيتي - منطقة النبيذ؛ متسخيتا-متيانيتي - كازبيجي، غرغيتي؛ أجاريا - باتومي، البحر؛ سفانيتي - مستيا، أوشغولي؛ إيميريتي - كهف بروميثيوس؛ راتشا - المغامرة والمزيد.'
+            }
+        },
+        // Booking
+        booking: {
+            patterns: ['book', 'reserve', 'order', 'დაჯავშნა', 'შეკვეთა', 'бронь', 'заказ', 'حجز', 'طلب'],
+            responses: {
+                ka: 'ტურის დასაჯავშნად: 1) გამოიყენე კალკულატორი ფასის გასაგებად. 2) დააჭირე "არჩევა" ღილაკს. 3) ან დაგვიკავშირდი WhatsApp-ზე: +995555123456. წინასწარი გადახდა 20% - დანარჩენი ტურის დღეს.',
+                en: 'To book a tour: 1) Use calculator to get price. 2) Click "Select" button. 3) Or contact us on WhatsApp: +995555123456. Advance payment 20% - rest on tour day.',
+                ru: 'Чтобы забронировать тур: 1) Используй калькулятор для цены. 2) Нажми кнопку "Выбрать". 3) Или свяжись в WhatsApp: +995555123456. Предоплата 20% - остаток в день тура.',
+                ar: 'لحجز جولة: 1) استخدم الحاسبة للسعر. 2) اضغط زر "اختيار". 3) أو تواصل على واتساب: +995555123456. دفعة مقدمة 20% - الباقي يوم الجولة.'
+            }
+        },
+        // Thanks
+        thanks: {
+            patterns: ['thank', 'thanks', 'მადლობა', 'спасибо', 'شكر'],
+            responses: {
+                ka: 'გმადლობთ! სიამოვნებით დაგეხმარებით! თუ გაქვთ დამატებითი კითხვები, მზად ვარ გიპასუხოთ. Georgia Trips - თქვენი სანდო პარტნიორი საქართველოში მოგზაურობისთვის!',
+                en: 'Thank you! Happy to help! If you have more questions, I\'m ready to answer. Georgia Trips - your reliable partner for traveling in Georgia!',
+                ru: 'Спасибо! Рад помочь! Если есть еще вопросы, готов ответить. Georgia Trips - ваш надежный партнер для путешествий по Грузии!',
+                ar: 'شكراً! سعيد بالمساعدة! إذا لديك المزيد من الأسئلة، أنا جاهز للإجابة. Georgia Trips - شريكك الموثوق للسفر في جورجيا!'
+            }
+        }
+    };
+    
+    // Check each category for pattern match
+    for (const category in knowledgeBase) {
+        const data = knowledgeBase[category];
+        for (const pattern of data.patterns) {
+            if (lowerMsg.includes(pattern.toLowerCase())) {
+                return data.responses[detectedLang] || data.responses['en'];
+            }
+        }
+    }
+    
+    // Default response if no pattern matched
+    const defaultResponses = {
+        ka: 'მადლობა შეკითხვისთვის! მე შემიძლია დაგეხმაროთ საქართველოში მოგზაურობის დაგეგმვაში - ფასები, მარშრუტები, ამინდი, საჭმელი, ტრანსპორტი და სხვა. გამოიყენეთ ზემოთ მოცემული კალკულატორი ტურის დასაგეგმად, ან დამისვით კონკრეტული კითხვა!',
+        en: 'Thanks for your question! I can help you plan your trip to Georgia - prices, routes, weather, food, transport and more. Use the calculator above to plan your tour, or ask me a specific question!',
+        ru: 'Спасибо за вопрос! Я могу помочь спланировать поездку в Грузию - цены, маршруты, погода, еда, транспорт и другое. Используйте калькулятор выше для планирования тура или задайте конкретный вопрос!',
+        ar: 'شكراً على سؤالك! يمكنني مساعدتك في التخطيط لرحلتك إلى جورجيا - الأسعار، المسارات، الطقس، الطعام، النقل والمزيد. استخدم الحاسبة أعلاه لتخطيط جولتك أو اطرح سؤالاً محدداً!'
+    };
+    
+    return defaultResponses[detectedLang] || defaultResponses['en'];
+}
+
+function sendQuickMessage(type) {
+    const quickMessages = {
+        recommend: {
+            ka: 'რას მირჩევ საქართველოში სანახავად?',
+            en: 'What do you recommend to see in Georgia?',
+            ru: 'Что посоветуешь посмотреть в Грузии?',
+            ar: 'ماذا توصي بزيارته في جورجيا؟'
+        },
+        price: {
+            ka: 'რა ღირს ტური საქართველოში?',
+            en: 'How much does a tour in Georgia cost?',
+            ru: 'Сколько стоит тур по Грузии?',
+            ar: 'كم تكلفة جولة في جورجيا؟'
+        },
+        weather: {
+            ka: 'როგორია ამინდი საქართველოში?',
+            en: 'What\'s the weather like in Georgia?',
+            ru: 'Какая погода в Грузии?',
+            ar: 'كيف الطقس في جورجيا؟'
+        },
+        best: {
+            ka: 'რა არის საუკეთესო დრო საქართველოსთვის?',
+            en: 'What is the best time to visit Georgia?',
+            ru: 'Какое лучшее время для посещения Грузии?',
+            ar: 'ما هو أفضل وقت لزيارة جورجيا؟'
+        }
+    };
+    
+    const input = document.getElementById('chatInput');
+    input.value = quickMessages[type][currentLang];
+    sendChatMessage();
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message
+    addChatMessage(message, 'user');
+    input.value = '';
+    
+    // Detect language and generate intelligent response
+    const detectedLang = detectLanguage(message);
+    
+    // Show typing indicator
+    setTimeout(() => {
+        const response = generateIntelligentResponse(message, detectedLang);
+        addChatMessage(response, 'ai');
+    }, 800 + Math.random() * 700); // Random delay for natural feel
+}
+
+function addChatMessage(text, type) {
+    const container = document.getElementById('chatMessages');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chat-message ${type}`;
+    msgDiv.innerHTML = `
+        <p>${text}</p>
+        <span class="time">${t('justNow')}</span>
+    `;
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function handleChatKeypress(e) {
+    if (e.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+// Voice recognition
+let isRecording = false;
+let recognition = null;
+
+function toggleVoice() {
+    const btn = document.getElementById('voiceBtn');
+    
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        showToast('error', 'Voice recognition not supported', '');
+        return;
+    }
+    
+    if (isRecording) {
+        recognition.stop();
+        btn.classList.remove('recording');
+        isRecording = false;
+    } else {
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = currentLang === 'ka' ? 'ka-GE' : (currentLang === 'ru' ? 'ru-RU' : (currentLang === 'ar' ? 'ar-SA' : 'en-US'));
+        recognition.interimResults = false;
+        
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('chatInput').value = transcript;
+            btn.classList.remove('recording');
+            isRecording = false;
+        };
+        
+        recognition.onerror = () => {
+            btn.classList.remove('recording');
+            isRecording = false;
+        };
+        
+        recognition.start();
+        btn.classList.add('recording');
+        isRecording = true;
+    }
+}
+
+// ==========================================
+// TOAST NOTIFICATIONS
+// ==========================================
+function showToast(type, title, message) {
+    const container = document.getElementById('toastContainer');
+    const icons = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        info: 'fa-info-circle'
+    };
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <i class="fas ${icons[type]} toast-icon"></i>
+        <div class="toast-content">
+            <div class="toast-title">${title}</div>
+            ${message ? `<div class="toast-message">${message}</div>` : ''}
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 4000);
+}
+
+// ==========================================
+// INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved language
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+        setLanguage(savedLang);
+    } else {
+        updateSelectOptions();
+    }
+    
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('startDate').min = today;
+    document.getElementById('endDate').min = today;
+    
+    // Auto-update end date min when start date changes
+    document.getElementById('startDate').addEventListener('change', (e) => {
+        document.getElementById('endDate').min = e.target.value;
+        if (document.getElementById('endDate').value < e.target.value) {
+            document.getElementById('endDate').value = e.target.value;
+        }
+    });
+    
+    // Validate travelers input
+    document.getElementById('travelers').addEventListener('input', (e) => {
+        let val = parseInt(e.target.value);
+        if (val < 1) e.target.value = 1;
+        if (val > 50) e.target.value = 50;
+    });
+});
+</script>
+
+</body>
+</html>
