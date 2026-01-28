@@ -6202,4 +6202,4 @@ class LanguageSwitcher {
 }
 
 // Initialize language switcher
-window.languageSwitcher = new LanguageSwitcher()
+window.languageSwitcher = new LanguageSwitcher() 
