@@ -1782,6 +1782,129 @@ input:checked + .toggle-slider:before {
   object-fit: cover;
 }
 
+/* Custom Tour Request Card Styles */
+.custom-tour-request-card {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.custom-tour-request-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.custom-tour-request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.custom-tour-request-header h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.custom-tour-request-header h3 i {
+  color: var(--primary-color);
+}
+
+.custom-tour-request-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 1rem;
+}
+
+.custom-tour-request-details p {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.custom-tour-request-details p i {
+  color: var(--primary-color);
+  width: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.custom-tour-request-details p strong {
+  color: #fff;
+  min-width: 80px;
+}
+
+.custom-tour-request-regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.custom-tour-request-regions .region-tag {
+  background: rgba(229, 56, 59, 0.2);
+  border: 1px solid rgba(229, 56, 59, 0.4);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.custom-tour-request-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.custom-tour-status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.custom-tour-status-pending {
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+  color: #000;
+}
+
+.custom-tour-status-approved {
+  background: linear-gradient(135deg, var(--success-color) 0%, #218838 100%);
+  color: #fff;
+}
+
+.custom-tour-status-rejected {
+  background: linear-gradient(135deg, var(--error-color) 0%, #c82333 100%);
+  color: #fff;
+}
+
+.custom-tour-route-description {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: var(--border-radius-sm);
+  border-left: 3px solid var(--primary-color);
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--text-color);
+}
+
     </style>
 </head>
 <body>
@@ -1840,6 +1963,9 @@ input:checked + .toggle-slider:before {
                 <button class="tab-btn" data-admin-tab="tours">
                     <i class="fas fa-map-marked-alt"></i> ტურები
                 </button>
+                <button class="tab-btn" data-admin-tab="customTours">
+                    <i class="fas fa-magic"></i> Custom ტურები
+                </button>
                 <button class="tab-btn" data-admin-tab="posts">
                     <i class="fas fa-newspaper"></i> პოსტები
                 </button>
@@ -1864,6 +1990,19 @@ input:checked + .toggle-slider:before {
                     </button>
                 </div>
                 <div class="posts-grid" id="postsGrid"></div>
+            </div>
+
+            <!-- Custom Tour Requests Container -->
+            <div id="customToursContainer" style="display: none;">
+                <div class="filters" style="margin-bottom: 1.5rem;">
+                    <select id="customTourStatusFilter" class="select">
+                        <option value="">📊 ყველა სტატუსი</option>
+                        <option value="pending">⏳ მოლოდინში</option>
+                        <option value="approved">✅ დადასტურებული</option>
+                        <option value="rejected">❌ უარყოფილი</option>
+                    </select>
+                </div>
+                <div id="customToursGrid" class="admin-table"></div>
             </div>
         </div>
     </div>
@@ -2823,16 +2962,24 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             // Toggle containers based on tab
             const adminItemsContainer = document.getElementById("adminItemsContainer")
             const postsContainer = document.getElementById("postsContainer")
+            const customToursContainer = document.getElementById("customToursContainer")
             const addNewItemBtn = document.getElementById("addNewItem")
             
+            // Hide all containers first
+            adminItemsContainer.style.display = "none"
+            postsContainer.style.display = "none"
+            if (customToursContainer) customToursContainer.style.display = "none"
+            
             if (currentAdminTab === "posts") {
-                adminItemsContainer.style.display = "none"
                 postsContainer.style.display = "block"
                 addNewItemBtn.style.display = "none" // დამალე დამატების ღილაკი პოსტებისთვის
                 loadPosts()
+            } else if (currentAdminTab === "customTours") {
+                customToursContainer.style.display = "block"
+                addNewItemBtn.style.display = "none" // დამალე დამატების ღილაკი custom ტურებისთვის
+                loadCustomTourRequests()
             } else {
                 adminItemsContainer.style.display = "flex"
-                postsContainer.style.display = "none"
                 addNewItemBtn.style.display = "inline-flex" // აჩვენე დამატების ღილაკი
                 displayAdminItems()
             }
@@ -2865,6 +3012,234 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             })
         }
 
+        // Custom Tour Requests Functions
+        let allCustomTourRequests = [];
+
+        async function loadCustomTourRequests() {
+            const container = document.getElementById("customToursGrid");
+            if (!container) return;
+            
+            container.innerHTML = '<div class="loading">იტვირთება...</div>';
+            
+            try {
+                // Load from bookings collection where type is 'custom_tour_request'
+                const snapshot = await getDocs(query(collection(db, "bookings"), orderBy("createdAt", "desc")));
+                allCustomTourRequests = snapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(doc => doc.type === 'custom_tour_request');
+                displayCustomTourRequests();
+            } catch (error) {
+                console.error("Error loading custom tour requests:", error);
+                container.innerHTML = '<div class="empty-state">შეცდომა მონაცემების ჩატვირთვისას</div>';
+            }
+        }
+
+        function displayCustomTourRequests() {
+            const container = document.getElementById("customToursGrid");
+            const statusFilter = document.getElementById("customTourStatusFilter")?.value || '';
+            
+            let filtered = allCustomTourRequests;
+            if (statusFilter) {
+                filtered = allCustomTourRequests.filter(r => r.status === statusFilter);
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i><br>Custom ტურის მოთხოვნები არ მოიძებნა</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(request => createCustomTourRequestCard(request)).join('');
+            
+            // Add event listeners
+            container.querySelectorAll('.approve-custom-tour-btn').forEach(btn => {
+                btn.addEventListener('click', () => updateCustomTourStatus(btn.dataset.id, 'approved'));
+            });
+            container.querySelectorAll('.reject-custom-tour-btn').forEach(btn => {
+                btn.addEventListener('click', () => updateCustomTourStatus(btn.dataset.id, 'rejected'));
+            });
+            container.querySelectorAll('.delete-custom-tour-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteCustomTourRequest(btn.dataset.id));
+            });
+        }
+
+        function createCustomTourRequestCard(request) {
+            const createdAt = request.createdAt?.toDate?.() || new Date();
+            const dateFormatted = createdAt.toLocaleDateString('ka-GE');
+            
+            const statusClass = request.status === 'approved' ? 'custom-tour-status-approved' : 
+                               request.status === 'rejected' ? 'custom-tour-status-rejected' : 
+                               'custom-tour-status-pending';
+            
+            const statusText = request.status === 'approved' ? 'დადასტურებული' : 
+                              request.status === 'rejected' ? 'უარყოფილი' : 
+                              'მოლოდინში';
+            
+            const tourTypeTranslations = {
+                'cultural': 'კულტურული',
+                'adventure': 'სათავგადასავლო',
+                'gastronomic': 'გასტრონომიული',
+                'historical': 'ისტორიული',
+                'nature': 'ბუნება'
+            };
+            
+            const regionTranslations = {
+                'tbilisi': 'თბილისი',
+                'afkhazeti': 'აფხაზეთი',
+                'achara': 'აჭარა',
+                'guria': 'გურია',
+                'imereti': 'იმერეთი',
+                'kakheti': 'კახეთი',
+                'kvemo-kartli': 'ქვემო ქართლი',
+                'mtsketa-mtianeti': 'მცხეთა-მთიანეთი',
+                'racha-lechkhumi': 'რაჭა-ლეჩხუმი',
+                'samtskhe-javakheti': 'სამცხე-ჯავახეთი',
+                'shida-kartli': 'შიდა ქართლი',
+                'samegrelo-svaneti': 'სამეგრელო-ზემო სვანეთი'
+            };
+            
+            const regionsHtml = (request.regions || []).map(r => 
+                `<span class="region-tag">${regionTranslations[r] || r}</span>`
+            ).join('');
+            
+            const routeDescHtml = request.routeDescription ? 
+                `<div class="custom-tour-route-description">
+                    <strong><i class="fas fa-route"></i> მარშრუტის აღწერა:</strong><br>
+                    ${request.routeDescription}
+                </div>` : '';
+            
+            return `
+                <div class="custom-tour-request-card">
+                    <div class="custom-tour-request-header">
+                        <h3><i class="fas fa-magic"></i> Custom ტურის მოთხოვნა</h3>
+                        <span class="custom-tour-status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    
+                    <div class="custom-tour-request-details">
+                        <p><i class="fas fa-user"></i> <strong>სახელი:</strong> ${request.contactName || 'N/A'}</p>
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ${request.contactEmail || 'N/A'}</p>
+                        <p><i class="fas fa-phone"></i> <strong>ტელეფონი:</strong> ${request.contactPhone || 'N/A'}</p>
+                        <p><i class="fas fa-calendar"></i> <strong>თარიღი:</strong> ${request.startDate || 'N/A'}${request.endDate ? ' - ' + request.endDate : ''}</p>
+                        <p><i class="fas fa-tags"></i> <strong>ტიპი:</strong> ${tourTypeTranslations[request.tourType] || request.tourType || 'N/A'}</p>
+                        <p><i class="fas fa-clock"></i> <strong>ხანგრძლივობა:</strong> ${request.duration || 'N/A'} დღე</p>
+                        <p><i class="fas fa-users"></i> <strong>რაოდენობა:</strong> ${request.groupSize || 1} ადამიანი</p>
+                        <p><i class="fas fa-dollar-sign"></i> <strong>შეთავაზება:</strong> ${request.suggestedPrice || 0}${request.suggestedCurrency === 'USD' ? '$' : request.suggestedCurrency === 'EUR' ? '€' : '₾'}</p>
+                        <p><i class="fas fa-calendar-plus"></i> <strong>შექმნილია:</strong> ${dateFormatted}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #fff;"><i class="fas fa-map-marked-alt" style="color: var(--primary-color);"></i> რეგიონები:</strong>
+                        <div class="custom-tour-request-regions">
+                            ${regionsHtml || '<span style="color: var(--text-color);">არ არის მითითებული</span>'}
+                        </div>
+                    </div>
+                    
+                    ${routeDescHtml}
+                    
+                    <div class="custom-tour-request-actions">
+                        ${request.status === 'pending' ? `
+                            <button class="btn btn-sm approve-custom-tour-btn" data-id="${request.id}" style="background: linear-gradient(135deg, var(--success-color) 0%, #218838 100%);">
+                                <i class="fas fa-check"></i> დადასტურება
+                            </button>
+                            <button class="btn btn-sm btn-secondary reject-custom-tour-btn" data-id="${request.id}">
+                                <i class="fas fa-times"></i> უარყოფა
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-sm btn-danger delete-custom-tour-btn" data-id="${request.id}">
+                            <i class="fas fa-trash"></i> წაშლა
+                        </button>
+                        <a href="mailto:${request.contactEmail}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-reply"></i> პასუხი
+                        </a>
+                        <a href="tel:${request.contactPhone}" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-phone"></i> დარეკვა
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateCustomTourStatus(requestId, newStatus) {
+            try {
+                // Update in bookings collection (custom tour requests are stored there)
+                await updateDoc(doc(db, "bookings", requestId), { 
+                    status: newStatus,
+                    updatedAt: serverTimestamp(),
+                    updatedBy: currentUser?.uid || null
+                });
+                
+                // Update local data
+                const request = allCustomTourRequests.find(r => r.id === requestId);
+                if (request) {
+                    request.status = newStatus;
+                    
+                    // Send notification to user's "ჩემი დაჯავშნები" section
+                    const notificationData = {
+                        bookingId: requestId,
+                        read: false,
+                        createdAt: serverTimestamp(),
+                    };
+                    
+                    if (newStatus === 'approved') {
+                        notificationData.title = "✓ Custom ტურის მოთხოვნა დადასტურებულია!";
+                        notificationData.message = `გილოცავთ! თქვენი Custom ტურის მოთხოვნა დადასტურდა!\n📍 რეგიონები: ${request.regions?.join(', ') || ''}\n📅 თარიღი: ${request.startDate || ''}\n👥 რაოდენობა: ${request.groupSize || 1}\n\nმალე დაგიკავშირდებით დეტალების შესათანხმებლად. შეგიძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`;
+                        notificationData.type = "custom_tour_approved";
+                    } else {
+                        notificationData.title = "✗ Custom ტურის მოთხოვნა უარყოფილია";
+                        notificationData.message = `სამწუხაროდ, თქვენი Custom ტურის მოთხოვნა ვერ დადასტურდა.\n📍 რეგიონები: ${request.regions?.join(', ') || ''}\n📅 თარიღი: ${request.startDate || ''}\n\nდამატებითი ინფორმაციისთვის დაგვიკავშირდით.`;
+                        notificationData.type = "custom_tour_rejected";
+                    }
+                    
+                    // Send notification - if user was logged in, use their userId, otherwise use null (for guest)
+                    if (request.userId) {
+                        notificationData.userId = request.userId;
+                        await addDoc(collection(db, "notifications"), notificationData);
+                        console.log(`Notification sent to user ${request.userId}`);
+                    } else if (request.contactEmail) {
+                        // For guest users, create notification with email as identifier
+                        notificationData.guestEmail = request.contactEmail;
+                        notificationData.guestPhone = request.contactPhone || '';
+                        notificationData.guestName = request.contactName || '';
+                        await addDoc(collection(db, "notifications"), notificationData);
+                        console.log(`Notification created for guest: ${request.contactEmail}`);
+                    }
+                }
+                
+                displayCustomTourRequests();
+                showToast(
+                    newStatus === 'approved' 
+                        ? 'მოთხოვნა დადასტურებულია.\nმომხმარებელს გაეგზავნა შეტყობინება.' 
+                        : 'მოთხოვნა უარყოფილია.\nმომხმარებელს გაეგზავნა შეტყობინება.', 
+                    'success'
+                );
+            } catch (error) {
+                console.error("Error updating custom tour status:", error);
+                showToast('შეცდომა სტატუსის განახლებისას', 'error');
+            }
+        }
+
+        async function deleteCustomTourRequest(requestId) {
+            if (!confirm('ნამდვილად გსურთ ამ მოთხოვნის წაშლა?')) return;
+            
+            try {
+                // Delete from bookings collection (custom tour requests are stored there)
+                await deleteDoc(doc(db, "bookings", requestId));
+                allCustomTourRequests = allCustomTourRequests.filter(r => r.id !== requestId);
+                displayCustomTourRequests();
+                showToast('მოთხოვნა წაშლილია', 'success');
+            } catch (error) {
+                console.error("Error deleting custom tour request:", error);
+                showToast('შეცდომა წაშლისას', 'error');
+            }
+        }
+
+        // Custom tour status filter listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const customTourStatusFilter = document.getElementById('customTourStatusFilter');
+            if (customTourStatusFilter) {
+                customTourStatusFilter.addEventListener('change', displayCustomTourRequests);
+            }
+        });
+
         function createAdminItemCard(item, type) {
             const imageUrl = item.images && item.images.length > 0 ? item.images[0] : '/placeholder.svg?height=120&width=180'
             const licensePlateHtml = item.licensePlate 
@@ -2890,7 +3265,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <p>${item.description || ""}</p>
                             <div class="admin-item-details">
                                 <span><i class="fas fa-map-marker-alt"></i> ${item.regions && item.regions.length > 0 ? (item.regions.includes('all') ? 'ყველა რეგიონი' : item.regions.join(', ')) : item.region}</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}₾</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
                                 ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.capacity} ადგილი</span>`}
@@ -3041,7 +3416,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <p><strong>დაწყება:</strong> ${booking.startDate} ${booking.startTime || ""}</p>
                                 <p><strong>დასრულება:</strong> ${booking.endDate} ${booking.endTime || ""}</p>
                                 <p><strong>ხანგრძლივობა:</strong> ${booking.duration} დღე</p>
-                                <p><strong>ფასი:</strong> ${booking.totalPrice}₾</p>
+                                <p><strong>ფასი:</strong> ${booking.totalPrice}${booking.currency === 'USD' ? '$' : booking.currency === 'EUR' ? '€' : '₾'}</p>
                                 ${booking.contactDescription ? `<p><strong>აღწერა:</strong> ${booking.contactDescription}</p>` : ''}
                             </div>
                             ${
@@ -3352,7 +3727,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 </div>
                                 <div class="form-group">
                                     <label>ფასი (დღიური) *</label>
-                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="100">
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="100" style="flex: 1;">
+                                        <select id="itemCurrency" class="select" style="width: 100px;">
+                                            <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
+                                            <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
+                                            <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -3728,7 +4110,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 </div>
                                 <div class="form-group">
                                     <label>ფასი (დღიური) *</label>
-                                    <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="200">
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="200" style="flex: 1;">
+                                        <select id="itemCurrency" class="select" style="width: 100px;">
+                                            <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
+                                            <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
+                                            <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -4021,6 +4410,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             
             const type = document.getElementById("itemType").value
             const pricePerDay = Number.parseFloat(document.getElementById("itemPrice").value)
+            const currency = document.getElementById("itemCurrency").value
             const imagesInput = document.getElementById("itemImages")
 
             const uploadButton = document.querySelector('#adminForm button[type="submit"]')
@@ -4052,7 +4442,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     regionsTranslations: regionTranslationsArray,
                     type: typeTranslations.ka,
                     typeTranslations: typeTranslations,
-                    pricePerDay
+                    pricePerDay,
+                    currency
                 }
 
                 const restrictedModeInput = document.getElementById("restrictedMode")

@@ -1033,40 +1033,56 @@
   </script>
 
   <style>
-    /* Base Styles */
+    /* Google Fonts - Inter for readability (same as posts.html) */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    /* Base Styles - Brighter colors same as posts.html */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      margin: 0;
-      font-family: "BPG Glaho", sans-serif;
-      background-color: #0a0a0a;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    /* Variables */
     :root {
+      --gold: #e5383b;
+      --gold-light: #e5383b;
+      --gold-dark: #b61a1d;
+      --dark-bg: #151515;
+      --dark-surface: #1a1a1a;
+      --dark-card: #222222;
+      --dark-border: #333333;
+      --text-primary: #ffffff;
+      --text-secondary: #c0c0c0;
+      --text-muted: #888888;
       --primary-color: #e5383b;
-      --primary-dark: #c42f32;
-      --secondary-color: #0a0a0a;
-      --text-color: #ccc;
-      --light-bg: #1a1a1a;
-      --dark-bg: #0f0f0f;
+      --primary-dark: #b61a1d;
+      --secondary-color: #151515;
+      --text-color: #c0c0c0;
+      --light-bg: #222222;
       --border-radius: 12px;
       --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Font - Inter same as posts.html */
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
     .about-hero {
       position: relative;
       padding: 8rem 1rem 5rem;
       text-align: center;
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+      background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-card) 100%);
       overflow: hidden;
-      border-bottom: 3px solid var(--primary-color);
+      border-bottom: 3px solid var(--gold);
     }
 
     .hero-background {
@@ -1079,17 +1095,21 @@
     }
 
     .about-hero h1 {
-      font-size: 3rem;
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 600;
       margin-bottom: 1rem;
-      color: #fff;
+      color: var(--text-primary);
       text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      letter-spacing: -0.02em;
     }
 
     .about-hero p {
-      font-size: 1.2rem;
-      color: var(--text-color);
+      font-size: 1.1rem;
+      color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto;
+      font-weight: 300;
     }
 
     .fade-in-up {
@@ -1151,11 +1171,11 @@
     }
 
     .stat-card {
-      background: linear-gradient(145deg, #1a1a1a 0%, #0f0f0f 100%);
+      background: var(--dark-card);
       border-radius: var(--border-radius);
       padding: 2rem;
       text-align: center;
-      border: 1px solid rgba(229, 56, 59, 0.2);
+      border: 1px solid var(--dark-border);
       transition: var(--transition);
       opacity: 0;
       transform: translateY(20px);
@@ -1168,14 +1188,14 @@
 
     .stat-card:hover {
       transform: translateY(-10px);
-      border-color: var(--primary-color);
+      border-color: var(--gold);
       box-shadow: 0 20px 40px rgba(229, 56, 59, 0.2);
     }
 
     .stat-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1185,18 +1205,19 @@
 
     .stat-icon i {
       font-size: 1.5rem;
-      color: #fff;
+      color: var(--dark-bg);
     }
 
     .stat-number {
+      font-family: var(--font-heading);
       font-size: 2.5rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
 
     .stat-label {
-      color: var(--text-color);
+      color: var(--text-secondary);
       font-size: 1rem;
     }
 
@@ -1210,7 +1231,7 @@
 
     .stat-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
       transition: width 2s ease;
     }
 
@@ -1223,9 +1244,11 @@
     }
 
     .content-block h2 {
-      font-size: 2rem;
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 600;
       margin-bottom: 1.5rem;
-      color: #fff;
+      color: var(--text-primary);
       position: relative;
       padding-bottom: 0.5rem;
     }
@@ -1237,11 +1260,11 @@
       left: 0;
       width: 60px;
       height: 3px;
-      background: var(--primary-color);
+      background: var(--gold);
     }
 
     .content-block p {
-      color: var(--text-color);
+      color: var(--text-secondary);
       line-height: 1.8;
       font-size: 1.1rem;
     }
@@ -1269,18 +1292,21 @@
       align-items: center;
       gap: 0.75rem;
       padding: 1rem;
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: 8px;
       transition: var(--transition);
+      color: var(--text-secondary);
     }
 
     .features-list li:hover {
-      background: rgba(229, 56, 59, 0.1);
+      background: rgba(229, 56, 59, 0.08);
+      border-color: rgba(229, 56, 59, 0.3);
       transform: translateX(10px);
     }
 
     .features-list li i {
-      color: var(--primary-color);
+      color: var(--gold);
       font-size: 1.2rem;
     }
 
@@ -1294,9 +1320,10 @@
       align-items: center;
       gap: 1.5rem;
       padding: 1.5rem;
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--border-radius);
-      border-left: 4px solid var(--primary-color);
+      border-left: 4px solid var(--gold);
       transition: var(--transition);
     }
 
@@ -1308,7 +1335,7 @@
     .stat-item-icon {
       width: 50px;
       height: 50px;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1318,18 +1345,19 @@
 
     .stat-item-icon i {
       font-size: 1.25rem;
-      color: #fff;
+      color: var(--dark-bg);
     }
 
     .stat-item-content strong {
       display: block;
+      font-family: var(--font-heading);
       font-size: 1.5rem;
-      color: var(--primary-color);
+      color: var(--gold);
       margin-bottom: 0.25rem;
     }
 
     .stat-item-content span {
-      color: var(--text-color);
+      color: var(--text-secondary);
     }
 
     .about-quote {
@@ -1339,18 +1367,20 @@
       text-align: center;
       position: relative;
       margin: 3rem 0;
+      border: 1px solid var(--dark-border);
     }
 
     .about-quote p {
+      font-family: var(--font-heading);
       font-size: 1.5rem;
       font-style: italic;
-      color: #fff;
+      color: var(--text-primary);
       max-width: 800px;
       margin: 0 auto;
     }
 
     .quote-icon {
-      color: var(--primary-color);
+      color: var(--gold);
       font-size: 1.5rem;
       margin: 0 1rem;
       opacity: 0.5;
@@ -1363,7 +1393,8 @@
     }
 
     .value-card {
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--border-radius);
       padding: 2rem;
       text-align: center;
@@ -1380,12 +1411,13 @@
     .value-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(229, 56, 59, 0.3);
     }
 
     .value-icon-wrapper {
       width: 70px;
       height: 70px;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1395,17 +1427,18 @@
 
     .value-icon-wrapper i {
       font-size: 1.75rem;
-      color: #fff;
+      color: var(--dark-bg);
     }
 
     .value-card h3 {
-      color: #fff;
+      font-family: var(--font-heading);
+      color: var(--text-primary);
       margin-bottom: 1rem;
       font-size: 1.25rem;
     }
 
     .value-card p {
-      color: var(--text-color);
+      color: var(--text-secondary);
       font-size: 0.95rem;
       line-height: 1.6;
     }
@@ -1415,14 +1448,27 @@
     }
 
     .review-form-card {
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--border-radius);
       padding: 2rem;
-      border: 1px solid rgba(229, 56, 59, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .review-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
     }
 
     .review-form-card h3 {
-      color: #fff;
+      font-family: var(--font-heading);
+      color: var(--text-primary);
       margin-bottom: 1.5rem;
     }
 
@@ -1432,7 +1478,11 @@
 
     .form-group label {
       display: block;
-      color: var(--text-color);
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
       margin-bottom: 0.5rem;
     }
 
@@ -1440,20 +1490,40 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-      padding: 0.75rem 1rem;
-      background: var(--dark-bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      color: #fff;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      border-radius: 12px;
+      color: var(--text-primary);
       font-size: 1rem;
+      font-family: var(--font-main);
       transition: var(--transition);
+    }
+
+    .form-group select option {
+      background-color: var(--dark-card);
+      color: var(--text-primary);
+      padding: 12px;
+    }
+
+    .form-group select option:hover,
+    .form-group select option:checked {
+      background-color: var(--gold);
+      color: var(--dark-bg);
     }
 
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--primary-color);
+      border-color: var(--gold);
+      background: rgba(229, 56, 59, 0.05);
+      box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.1);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
     }
 
     .star-rating-input {
@@ -1463,7 +1533,7 @@
 
     .star-rating-input i {
       font-size: 1.5rem;
-      color: #ccc;
+      color: var(--text-muted);
       cursor: pointer;
       transition: color 0.2s;
     }
@@ -1474,22 +1544,28 @@
     }
 
     .submit-review-btn {
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-      color: #fff;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--dark-bg);
       border: none;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-main);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      gap: 0.75rem;
       transition: var(--transition);
     }
 
     .submit-review-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(229, 56, 59, 0.3);
+      box-shadow: 0 8px 25px rgba(229, 56, 59, 0.3);
     }
 
     .testimonials-slider {
@@ -1503,21 +1579,22 @@
       align-items: center;
       justify-content: center;
       padding: 3rem;
-      color: var(--text-color);
+      color: var(--text-secondary);
     }
 
     .loading-reviews i {
       font-size: 2rem;
       margin-bottom: 1rem;
-      color: var(--primary-color);
+      color: var(--gold);
     }
 
     .testimonial-card {
       display: none;
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--border-radius);
       padding: 2rem;
-      border-left: 4px solid var(--primary-color);
+      border-left: 4px solid var(--gold);
     }
 
     .testimonial-card.active {
@@ -1549,7 +1626,7 @@
     }
 
     .testimonial-rating i.far {
-      color: #555;
+      color: var(--text-muted);
     }
 
     .review-actions {
@@ -1560,8 +1637,8 @@
     .edit-review-btn,
     .delete-review-btn {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-color);
+      border: 1px solid var(--dark-border);
+      color: var(--text-secondary);
       padding: 0.5rem;
       border-radius: 6px;
       cursor: pointer;
@@ -1569,19 +1646,19 @@
     }
 
     .edit-review-btn:hover {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      color: #fff;
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark-bg);
     }
 
     .delete-review-btn:hover {
       background: #e74c3c;
       border-color: #e74c3c;
-      color: #fff;
+      color: var(--text-primary);
     }
 
     .testimonial-text {
-      color: var(--text-color);
+      color: var(--text-secondary);
       font-size: 1.1rem;
       line-height: 1.6;
       margin-bottom: 1.5rem;
@@ -1596,21 +1673,21 @@
     .author-avatar {
       width: 50px;
       height: 50px;
-      background: var(--primary-color);
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: var(--dark-bg);
     }
 
     .author-info strong {
       display: block;
-      color: #fff;
+      color: var(--text-primary);
     }
 
     .author-info span {
-      color: var(--text-color);
+      color: var(--text-secondary);
       font-size: 0.9rem;
     }
 
@@ -1623,9 +1700,9 @@
     }
 
     .testimonial-btn {
-      background: var(--light-bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      color: var(--text-primary);
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -1634,8 +1711,9 @@
     }
 
     .testimonial-btn:hover {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark-bg);
     }
 
     .testimonial-dots {
@@ -1653,14 +1731,14 @@
     }
 
     .dot.active {
-      background: var(--primary-color);
+      background: var(--gold);
     }
 
     .no-reviews,
     .error-message {
       text-align: center;
       padding: 3rem;
-      color: var(--text-color);
+      color: var(--text-secondary);
     }
 
     .no-reviews i,
@@ -1675,8 +1753,8 @@
     }
 
     .no-booking-message {
-      background: rgba(52, 152, 219, 0.1);
-      border: 1px solid rgba(52, 152, 219, 0.3);
+      background: rgba(229, 56, 59, 0.08);
+      border: 1px solid rgba(229, 56, 59, 0.2);
       border-radius: var(--border-radius);
       padding: 1.5rem;
       display: flex;
@@ -1687,11 +1765,11 @@
 
     .no-booking-message i {
       font-size: 1.5rem;
-      color: #3498db;
+      color: var(--gold);
     }
 
     .no-booking-message p {
-      color: var(--text-color);
+      color: var(--text-secondary);
       margin: 0;
     }
 
@@ -1710,7 +1788,8 @@
     }
 
     .modal-content {
-      background: var(--light-bg);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--border-radius);
       max-width: 500px;
       width: 100%;
@@ -1723,25 +1802,26 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--dark-border);
     }
 
     .modal-header h3 {
-      color: #fff;
+      font-family: var(--font-heading);
+      color: var(--text-primary);
       margin: 0;
     }
 
     .close-modal {
       background: transparent;
       border: none;
-      color: var(--text-color);
+      color: var(--text-secondary);
       font-size: 1.25rem;
       cursor: pointer;
       transition: color 0.2s;
     }
 
     .close-modal:hover {
-      color: var(--primary-color);
+      color: var(--gold);
     }
 
     .edit-review-form {
@@ -1760,14 +1840,15 @@
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
+      font-family: var(--font-main);
       cursor: pointer;
       transition: var(--transition);
     }
 
     .cancel-btn {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-color);
+      border: 1px solid var(--dark-border);
+      color: var(--text-secondary);
     }
 
     .cancel-btn:hover {
@@ -1775,9 +1856,9 @@
     }
 
     .save-btn {
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       border: none;
-      color: #fff;
+      color: var(--dark-bg);
     }
 
     .save-btn:hover {
