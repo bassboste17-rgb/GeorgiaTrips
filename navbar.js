@@ -8,7 +8,17 @@ import {
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
 
-// Firebase კონფიგურაცია
+// Immediately set English as default if no language is saved (runs before anything else)
+;(function() {
+  const savedLang = localStorage.getItem("language")
+  if (!savedLang) {
+    localStorage.setItem("language", "en")
+    // Reload page to apply English translations on first visit
+    window.location.reload()
+  }
+})()
+
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
   authDomain: "rentime-e201e.firebaseapp.com",
@@ -23,17 +33,17 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getFirestore(app)
 
-// ფუნქცია სახელის ფორმატირებისთვის (Facebook-ის გრძელი სახელებისთვის)
+// Function to format display name (for Facebook long names)
 function formatDisplayName(name, maxLength = 15) {
   if (!name) return "User";
   
-  // თუ სახელი უკვე მოკლეა, დააბრუნე როგორც არის
+  // If name is already short, return as is
   if (name.length <= maxLength) return name;
   
-  // თუ სახელი შეიცავს space-ს, აიღე მხოლოდ პირველი სახელი
+  // If name contains space, take only first name
   const firstName = name.split(' ')[0];
   
-  // თუ პირველი სახელიც გრძელია, შეამოკლე
+  // If first name is also long, shorten it
   if (firstName.length > maxLength) {
     return firstName.substring(0, maxLength - 2) + '..';
   }
@@ -41,7 +51,7 @@ function formatDisplayName(name, maxLength = 15) {
   return firstName;
 }
 
-// ფუნქცია შესამოწმებლად არის თუ არა მომხმარებელი social provider-ით შესული
+// Function to check if user is logged in with social provider
 function isSocialProvider(user) {
   if (!user || !user.providerData || user.providerData.length === 0) {
     return false;
@@ -56,7 +66,7 @@ fetch("navbar.html")
   .then((data) => {
     document.getElementById("navbar").innerHTML = data
 
-    // შევამოწმოთ translations.js უკვე ჩატვირთულია თუ არა
+    // Check if translations.js is already loaded
     if (typeof window.translations === 'undefined' && typeof window.languageSwitcher === 'undefined') {
       const translationsScript = document.createElement("script")
       translationsScript.src = "translations.js"
@@ -74,9 +84,9 @@ fetch("navbar.html")
     const authLink = document.getElementById("auth-link")
     const notificationBell = document.getElementById("notificationBell")
 
-    // აქტიური ენის ღილაკის განახლების ფუნქცია
+    // Function to update active language button
     function updateActiveLanguageButton() {
-      // Default ენა არის 'en' (ინგლისური)
+      // Default language is 'en' (English)
       const currentLang = localStorage.getItem("language") || "en"
       const langButtons = document.querySelectorAll(".languages button")
 
@@ -90,24 +100,24 @@ fetch("navbar.html")
     }
 
     function changeLanguageAndReload(lang) {
-      // ენის შეცვლა localStorage-ში
+      // Change language in localStorage
       localStorage.setItem("language", lang)
       
-      // ენის შეცვლა languageSwitcher-ით
+      // Change language with languageSwitcher
       if (window.languageSwitcher && typeof window.languageSwitcher.setLanguage === "function") {
         window.languageSwitcher.setLanguage(lang)
       }
 
-      // აქტიური ღილაკის განახლება
+      // Update active button
       updateActiveLanguageButton()
 
-      // გვერდის გადატვირთვა
+      // Reload page
       setTimeout(() => {
         window.location.reload()
       }, 20)
     }
 
-    // გავხადოთ ფუნქცია გლობალური რათა navbar.html-დან მივწვდეთ
+    // Make function global so it can be accessed from navbar.html
     window.changeLanguageAndReload = changeLanguageAndReload
 
     function setupLanguageButtons() {
@@ -161,13 +171,26 @@ fetch("navbar.html")
     // Listen for language changes
     window.addEventListener("languageChanged", updateNavbarTranslations)
 
-    // პირველად ჩატვირთვისას შეამოწმე და დააყენე default ენა (ინგლისური)
+    // Initialize default language (English) on first load
     function initializeDefaultLanguage() {
       const savedLang = localStorage.getItem("language")
       if (!savedLang) {
-        // თუ ენა არ არის შენახული, დააყენე ინგლისური
+        // If no language is saved, set English and reload
         localStorage.setItem("language", "en")
+        
+        // Apply English using languageSwitcher if available
+        if (window.languageSwitcher && typeof window.languageSwitcher.setLanguage === "function") {
+          window.languageSwitcher.setLanguage("en")
+        }
+        
+        // Reload to apply English translations
+        setTimeout(() => {
+          window.location.reload()
+        }, 50)
+        return
       }
+      
+      // If language is already saved, just update UI
       updateActiveLanguageButton()
       setupLanguageButtons()
     }
@@ -176,7 +199,7 @@ fetch("navbar.html")
       initializeDefaultLanguage()
     }, 100)
 
-    // შეტყობინებების listener ფუნქცია navbar-ისთვის
+    // Notifications listener function for navbar
     function setupNavbarNotificationsListener(user) {
       if (!user) return
 
@@ -204,30 +227,30 @@ fetch("navbar.html")
     }
 
     onAuthStateChanged(auth, (user) => {
-      // გასწორება: Facebook/Google-ით შესულ მომხმარებლებს არ მოვთხოვოთ emailVerified
-      // emailVerified მოვთხოვოთ მხოლოდ email/password-ით რეგისტრირებულებს
+      // Fix: Don't require emailVerified for Facebook/Google users
+      // Only require emailVerified for email/password registered users
       const isValidUser = user && (user.emailVerified || isSocialProvider(user));
       
       if (isValidUser) {
-        // მომხმარებელი ავტორიზირებულია
+        // User is authenticated
         const rawUsername = user.displayName || localStorage.getItem("username") || "User"
         
-        // ფორმატირებული სახელი navbar-ისთვის (მოკლე ვერსია)
+        // Formatted name for navbar (short version)
         const displayUsername = formatDisplayName(rawUsername)
         
-        // სრული სახელი შევინახოთ localStorage-ში
+        // Save full name to localStorage
         localStorage.setItem("username", rawUsername)
         localStorage.setItem("userEmail", user.email || "")
 
-        // აჩვენე notification bell როცა მომხმარებელი ავტორიზირებულია
+        // Show notification bell when user is authenticated
         if (notificationBell) {
           notificationBell.classList.add("show")
         }
 
-        // დაიწყე შეტყობინებების მოსმენა
+        // Start listening for notifications
         setupNavbarNotificationsListener(user)
 
-        // dropdown მენიუს HTML
+        // Dropdown menu HTML
         authLink.innerHTML = `
           <div class="user-menu">
             <span class="user-name" title="${rawUsername}">${displayUsername}</span>
@@ -240,7 +263,7 @@ fetch("navbar.html")
           </div>
         `
 
-        // Dropdown toggle (click-ზე)
+        // Dropdown toggle (on click)
         const userName = document.querySelector(".user-name")
         const dropdown = document.querySelector(".dropdown")
         let open = false
@@ -256,17 +279,17 @@ fetch("navbar.html")
           e.preventDefault()
 
           try {
-            // Firebase-დან გასვლა
+            // Sign out from Firebase
             await signOut(auth)
 
-            // localStorage-ის გასუფთავება
+            // Clear localStorage
             localStorage.removeItem("username")
             localStorage.removeItem("userEmail")
 
-            // sessionStorage-ის გასუფთავება
+            // Clear sessionStorage
             sessionStorage.clear()
 
-            // გადამისამართება login გვერდზე
+            // Redirect to login page
             window.location.href = "login.html"
           } catch (error) {
             console.error("Logout error:", error)
@@ -274,7 +297,7 @@ fetch("navbar.html")
           }
         })
 
-        // გარეთ დაჭერისას დაიხუროს dropdown
+        // Close dropdown when clicking outside
         document.addEventListener("click", (e) => {
           if (!e.target.closest(".user-menu")) {
             dropdown.style.display = "none"
@@ -282,11 +305,11 @@ fetch("navbar.html")
           }
         })
       } else {
-        // მომხმარებელი არ არის ავტორიზირებული
+        // User is not authenticated
         localStorage.removeItem("username")
         localStorage.removeItem("userEmail")
 
-        // დამალე notification bell როცა მომხმარებელი არ არის ავტორიზებული
+        // Hide notification bell when user is not authenticated
         if (notificationBell) {
           notificationBell.classList.remove("show")
         }
