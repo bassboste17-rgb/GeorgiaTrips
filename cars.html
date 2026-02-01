@@ -37,38 +37,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Colors from booking.html */
-    --gold: #e5383b;
-    --gold-light: #e5383b;
-    --gold-dark: #b61a1d;
-    --dark-bg: #151515;
-    --dark-surface: #1a1a1a;
-    --dark-card: #222222;
-    --dark-border: #333333;
-    --text-primary: #ffffff;
-    --text-secondary: #c0c0c0;
-    --text-muted: #888888;
-    --primary-color: #e5383b;
-    --primary-dark: #b61a1d;
-    --secondary-color: #151515;
-    --text-color: #c0c0c0;
-    --light-bg: #222222;
-    --success-color: #28a745;
-    --error-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #17a2b8;
+    /* Brand Colors - Georgia Trips */
+    --gold: #fcaf15;
+    --gold-light: #fdc43d;
+    --gold-dark: #e09800;
+    --primary-color: #0566aa;
+    --primary-light: #0a7cc9;
+    --primary-dark: #044d82;
+    --secondary-color: #28b9bc;
+    --secondary-light: #3dd1d4;
+    
+    /* Light Theme Backgrounds */
+    --dark-bg: #f8fafc;
+    --dark-surface: #ffffff;
+    --dark-card: #ffffff;
+    --dark-border: #e2e8f0;
+    
+    /* Text Colors */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --text-color: #64748b;
+    --text-on-primary: #ffffff;
+    
+    --light-bg: #f1f5f9;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #0ea5e9;
     --border-radius: 16px;
     --radius: 16px;
     --radius-sm: 12px;
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Font - Inter same as booking.html */
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Font - Poppins for consistency */
+    --font-main: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+    /* Light Theme Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 20px rgba(5, 102, 170, 0.08);
+    --shadow-lg: 0 12px 40px rgba(5, 102, 170, 0.12);
 }
 
 * {
@@ -86,7 +95,7 @@ html {
 
 body {
     font-family: var(--font-main);
-    background: var(--dark-bg);
+    background: linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
@@ -128,15 +137,15 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(229, 56, 59, 0.1);
-    border: 1px solid rgba(229, 56, 59, 0.3);
+    background: rgba(5, 102, 170, 0.08);
+    border: 1px solid rgba(5, 102, 170, 0.25);
     border-radius: 100px;
     padding: 0.5rem 1.25rem;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--primary-color);
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
     animation: fadeInUp 0.6s ease-out;
@@ -145,15 +154,15 @@ body {
 .hero-badge-dot {
     width: 8px;
     height: 8px;
-    background: var(--gold);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border-radius: 50%;
     animation: pulse 2s infinite;
-    box-shadow: 0 0 10px rgba(229, 56, 59, 0.4);
+    box-shadow: 0 0 10px rgba(5, 102, 170, 0.4);
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(229, 56, 59, 0.4); }
-    50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(229, 56, 59, 0.4); }
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(5, 102, 170, 0.4); }
+    50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(40, 185, 188, 0.4); }
 }
 
 @keyframes fadeInUp {
@@ -246,9 +255,9 @@ body {
 .input:focus,
 .select:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--primary-color);
     background: var(--dark-surface);
-    box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.15);
+    box-shadow: 0 0 0 3px rgba(5, 102, 170, 0.12);
 }
 
 .input::placeholder {
@@ -282,8 +291,8 @@ body {
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(229, 56, 59, 0.15);
-    border-color: rgba(229, 56, 59, 0.3);
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(5, 102, 170, 0.1);
+    border-color: var(--primary-color);
 }
 
 .card-image {
@@ -339,8 +348,8 @@ body {
 }
 
 .card-details span:hover {
-    background: rgba(229, 56, 59, 0.1);
-    border-color: rgba(229, 56, 59, 0.3);
+    background: rgba(5, 102, 170, 0.08);
+    border-color: var(--primary-color);
 }
 
 .card-details span.with-driver {
@@ -385,10 +394,11 @@ body {
 }
 
 .popularity-btn:hover {
-    background: rgba(0, 0, 0, 0.95);
-    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: var(--primary-color);
     transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(229, 56, 59, 0.3);
+    box-shadow: 0 6px 20px rgba(5, 102, 170, 0.25);
+    color: var(--primary-color);
 }
 
 .popularity-btn.liked {
@@ -437,7 +447,7 @@ body {
 }
 
 .price {
-    color: var(--gold);
+    color: var(--primary-color);
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.5px;
@@ -445,8 +455,8 @@ body {
 
 /* Buttons */
 .btn {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    color: #fff;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-on-primary);
     border: none;
     border-radius: var(--radius-sm);
     padding: 0.875rem 1.75rem;
@@ -459,12 +469,12 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 16px rgba(229, 56, 59, 0.3);
+    box-shadow: 0 4px 16px rgba(5, 102, 170, 0.25);
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(229, 56, 59, 0.4);
+    box-shadow: 0 6px 24px rgba(5, 102, 170, 0.35);
 }
 
 .btn:active {
@@ -479,7 +489,7 @@ body {
 
 .btn-secondary:hover {
     background: var(--dark-surface);
-    border-color: rgba(229, 56, 59, 0.3);
+    border-color: var(--primary-color);
     box-shadow: var(--shadow-md);
 }
 
@@ -554,10 +564,10 @@ body {
 }
 
 .close:hover {
-    color: var(--gold);
+    color: var(--primary-color);
     transform: rotate(90deg);
-    background: rgba(229, 56, 59, 0.15);
-    border-color: rgba(229, 56, 59, 0.3);
+    background: rgba(5, 102, 170, 0.1);
+    border-color: var(--primary-color);
 }
 
 /* Warning Popup Modal */
@@ -1931,7 +1941,7 @@ textarea.input {
                     </div>
                     <div class="region-option">
                         <label>
-                            <input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region>
+                            <input type="checkbox" value="მცხეთა-მთიანე���ი" class="region-checkbox" data-region>
                             <span data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</span>
                         </label>
                     </div>
@@ -3065,7 +3075,7 @@ async function toggleLike(itemId) {
                 car.likedBy = car.likedBy.filter(uid => uid !== currentUser.uid)
             }
             
-            showToast("მოწონება წაიშალა", "info")
+            showToast("მოწონება წაიშ��ლა", "info")
         } else {
             await updateDoc(itemRef, {
                 likes: increment(1),

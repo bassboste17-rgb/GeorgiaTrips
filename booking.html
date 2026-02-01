@@ -65,30 +65,38 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
     :root {
-        /* Colors from about.html */
-        --gold: #e5383b;
-        --gold-light: #e5383b;
-        --gold-dark: #b61a1d;
-        --dark-bg: #151515;
-        --dark-surface: #1a1a1a;
-        --dark-card: #222222;
-        --dark-border: #333333;
-        --text-primary: #ffffff;
-        --text-secondary: #c0c0c0;
-        --text-muted: #888888;
-        --primary-color: #e5383b;
-        --primary-dark: #b61a1d;
-        --secondary-color: #151515;
-        --text-color: #c0c0c0;
-        --light-bg: #222222;
+        /* Brand Colors - Georgia Trips */
+        --gold: #fcaf15;
+        --gold-light: #fdc43d;
+        --gold-dark: #e09800;
+        --primary-color: #0566aa;
+        --primary-light: #0a7cc9;
+        --primary-dark: #044d82;
+        --secondary-color: #28b9bc;
+        --secondary-light: #3dd1d4;
+        
+        /* Light Theme Backgrounds */
+        --dark-bg: #f8fafc;
+        --dark-surface: #ffffff;
+        --dark-card: #ffffff;
+        --dark-border: #e2e8f0;
+        
+        /* Text Colors */
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --text-color: #64748b;
+        --text-on-primary: #ffffff;
+        
+        --light-bg: #f1f5f9;
         --border-radius: 12px;
         --radius: 16px;
         --radius-sm: 12px;
         --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         
-        /* Font - Inter same as about.html */
-        --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        /* Font - Poppins for consistency */
+        --font-main: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-heading: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * {
@@ -106,7 +114,7 @@
 
     body {
         font-family: var(--font-main);
-        background: var(--dark-bg);
+        background: linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
         color: var(--text-primary);
         line-height: 1.6;
         min-height: 100vh;
@@ -135,9 +143,9 @@
         right: 0;
         bottom: 0;
         background: 
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(229, 56, 59, 0.15), transparent),
-            radial-gradient(ellipse 60% 40% at 100% 50%, rgba(229, 56, 59, 0.08), transparent),
-            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(229, 56, 59, 0.08), transparent);
+            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(5, 102, 170, 0.08), transparent),
+            radial-gradient(ellipse 60% 40% at 100% 50%, rgba(40, 185, 188, 0.05), transparent),
+            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(5, 102, 170, 0.05), transparent);
         pointer-events: none;
         z-index: 0;
         animation: bgPulse 8s ease-in-out infinite;
@@ -177,15 +185,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: rgba(229, 56, 59, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.3);
+        background: rgba(5, 102, 170, 0.08);
+        border: 1px solid rgba(5, 102, 170, 0.25);
         border-radius: 100px;
         padding: 0.5rem 1.25rem;
         font-size: 0.75rem;
         font-weight: 500;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: var(--gold);
+        color: var(--primary-color);
         margin-bottom: 1.5rem;
         margin-top: 2rem;
         animation: fadeInUp 0.6s ease-out, floatBadge 3s ease-in-out infinite;
@@ -200,15 +208,15 @@
     .hero-badge-dot {
         width: 8px;
         height: 8px;
-        background: var(--gold);
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         border-radius: 50%;
         animation: pulse 2s infinite;
-        box-shadow: 0 0 10px rgba(229, 56, 59, 0.4);
+        box-shadow: 0 0 10px rgba(5, 102, 170, 0.4);
     }
 
     @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(229, 56, 59, 0.4); }
-        50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(229, 56, 59, 0.4); }
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(5, 102, 170, 0.4); }
+        50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(40, 185, 188, 0.4); }
     }
 
     @keyframes fadeInUp {
@@ -289,10 +297,11 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--gold));
         opacity: 0;
         transition: var(--transition);
+        border-radius: 2px;
     }
 
     .nav-card:nth-child(1) { animation-delay: 0s; }
@@ -309,11 +318,11 @@
 
     .nav-card:hover {
         transform: translateY(-15px) scale(1.02);
-        border-color: rgba(229, 56, 59, 0.3);
+        border-color: var(--primary-color);
         background: var(--dark-surface);
         box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.5),
-            0 0 40px rgba(229, 56, 59, 0.2);
+            0 20px 60px rgba(5, 102, 170, 0.15),
+            0 0 40px rgba(5, 102, 170, 0.1);
         animation: none;
     }
 
@@ -356,8 +365,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(233, 232, 232, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.2);
+        background: rgba(5, 102, 170, 0.08);
+        border: 1px solid rgba(5, 102, 170, 0.2);
         border-radius: var(--radius-sm);
         margin-bottom: 1.5rem;
         transition: var(--transition);
@@ -377,14 +386,14 @@
     }
 
     .nav-card:hover .nav-card-icon {
-        border-color: var(--gold);
-        background: rgba(229, 56, 59, 0.15);
+        border-color: var(--primary-color);
+        background: rgba(5, 102, 170, 0.12);
         transform: scale(1.1);
-        box-shadow: 0 0 30px rgba(229, 56, 59, 0.3);
+        box-shadow: 0 0 30px rgba(5, 102, 170, 0.25);
     }
 
     .nav-card:hover .nav-card-icon svg {
-        stroke: var(--gold);
+        stroke: var(--primary-color);
     }
 
     .nav-card-content {
@@ -402,8 +411,8 @@
     }
 
     .nav-card:hover h3 {
-        color: var(--text-primary);
-        text-shadow: 0 0 20px rgba(229, 56, 59, 0.3);
+        color: var(--primary-color);
+        text-shadow: 0 0 20px rgba(5, 102, 170, 0.2);
     }
 
     .nav-card p {
@@ -419,7 +428,7 @@
         gap: 0.5rem;
         font-size: 0.875rem;
         font-weight: 600;
-        color: var(--gold);
+        color: var(--primary-color);
         opacity: 0;
         transform: translateY(15px);
         transition: var(--transition);
@@ -463,8 +472,8 @@
 
     .feature:hover {
         transform: translateY(-5px);
-        border-color: rgba(229, 56, 59, 0.3);
-        box-shadow: 0 10px 30px rgba(229, 56, 59, 0.12);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 30px rgba(5, 102, 170, 0.12);
     }
 
     .feature-icon {
@@ -474,21 +483,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(229, 56, 59, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.2);
+        background: rgba(5, 102, 170, 0.1);
+        border: 1px solid rgba(5, 102, 170, 0.2);
         border-radius: 12px;
         transition: var(--transition);
     }
 
     .feature:hover .feature-icon {
-        background: rgba(229, 56, 59, 0.15);
+        background: rgba(5, 102, 170, 0.15);
         transform: scale(1.1);
     }
 
     .feature-icon svg {
         width: 24px;
         height: 24px;
-        stroke: var(--gold);
+        stroke: var(--primary-color);
         stroke-width: 2;
         fill: none;
     }
@@ -644,7 +653,7 @@
     }
 
     .nav-card:focus-visible {
-        outline: 2px solid var(--gold);
+        outline: 2px solid var(--primary-color);
         outline-offset: 2px;
     }
 

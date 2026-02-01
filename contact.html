@@ -110,16 +110,27 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
     :root {
-      --gold: #e5383b;
-      --gold-light: #e5383b;
-      --gold-dark: #b61a1d;
-      --dark-bg: #151515;
-      --dark-surface: #1a1a1a;
-      --dark-card: #222222;
-      --dark-border: #333333;
-      --text-primary: #ffffff;
-      --text-secondary: #c0c0c0;
-      --text-muted: #888888;
+      /* Brand Colors - Georgia Trips */
+      --gold: #fcaf15;
+      --gold-light: #fdc43d;
+      --gold-dark: #e09800;
+      --primary-color: #0566aa;
+      --primary-light: #0a7cc9;
+      --primary-dark: #044d82;
+      --secondary-color: #28b9bc;
+      --secondary-light: #3dd1d4;
+      
+      /* Light Theme Backgrounds */
+      --dark-bg: #f8fafc;
+      --dark-surface: #ffffff;
+      --dark-card: #ffffff;
+      --dark-border: #e2e8f0;
+      
+      /* Text Colors */
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --text-on-primary: #ffffff;
     }
 
     * {
@@ -131,8 +142,8 @@
     body {
       margin: 0;
       padding-top: 80px;
-      font-family: 'Inter', 'BPG Glaho', sans-serif;
-      background: var(--dark-bg);
+      font-family: 'Poppins', 'Inter', 'BPG Glaho', sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.6;
@@ -164,9 +175,10 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 1px;
+      width: 3px;
       height: 60px;
-      background: linear-gradient(to bottom, transparent, var(--gold));
+      background: linear-gradient(to bottom, transparent, var(--primary-color), var(--secondary-color));
+      border-radius: 2px;
     }
 
     .contact-hero-badge {
@@ -174,14 +186,14 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1.25rem;
-      background: rgba(201, 169, 98, 0.1);
-      border: 1px solid rgba(201, 169, 98, 0.3);
+      background: rgba(5, 102, 170, 0.08);
+      border: 1px solid rgba(5, 102, 170, 0.25);
       border-radius: 100px;
       font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--primary-color);
       margin-bottom: 1.5rem;
       margin-top: 2rem;
     }
@@ -233,8 +245,9 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--gold));
+      border-radius: 2px;
     }
     
     .contact-info-header {
@@ -274,8 +287,8 @@
     }
 
     .contact-item:hover {
-      background: rgba(201, 169, 98, 0.08);
-      border-color: rgba(201, 169, 98, 0.3);
+      background: rgba(5, 102, 170, 0.06);
+      border-color: rgba(5, 102, 170, 0.25);
       transform: translateX(8px);
     }
 
@@ -285,10 +298,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(201, 169, 98, 0.1);
-      border: 1px solid rgba(201, 169, 98, 0.2);
+      background: rgba(5, 102, 170, 0.1);
+      border: 1px solid rgba(5, 102, 170, 0.2);
       border-radius: 12px;
-      color: var(--gold);
+      color: var(--primary-color);
       font-size: 1.1rem;
       flex-shrink: 0;
     }
@@ -339,8 +352,9 @@
     .social-link:hover {
       background: var(--gold);
       border-color: var(--gold);
-      color: var(--dark-bg);
+      color: var(--primary-color);
       transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(252, 175, 21, 0.35);
     }
 
     /* Contact Form */
@@ -359,8 +373,9 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color), var(--gold));
+      border-radius: 2px;
     }
 
     .contact-form-header {
@@ -415,9 +430,9 @@
     .contact-form input:focus,
     .contact-form textarea:focus {
       outline: none;
-      border-color: var(--gold);
-      background: rgba(201, 169, 98, 0.05);
-      box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.1);
+      border-color: var(--primary-color);
+      background: rgba(5, 102, 170, 0.05);
+      box-shadow: 0 0 0 3px rgba(5, 102, 170, 0.1);
     }
     
     .contact-form textarea {
@@ -428,13 +443,13 @@
     .btn-primary {
       width: 100%;
       padding: 1.1rem 2rem;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-      color: var(--dark-bg);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--text-on-primary);
       border: none;
       border-radius: 12px;
       font-size: 0.9rem;
       font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', 'Inter', sans-serif;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       cursor: pointer;
@@ -443,11 +458,12 @@
       align-items: center;
       justify-content: center;
       gap: 0.75rem;
+      box-shadow: 0 4px 15px rgba(5, 102, 170, 0.25);
     }
     
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(201, 169, 98, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(5, 102, 170, 0.35);
     }
 
     .btn-primary:active {
@@ -496,15 +512,15 @@
       align-items: center;
       gap: 1rem;
       padding: 1rem 1.5rem;
-      background: rgba(201, 169, 98, 0.08);
-      border: 1px solid rgba(201, 169, 98, 0.2);
+      background: rgba(5, 102, 170, 0.08);
+      border: 1px solid rgba(5, 102, 170, 0.2);
       border-radius: 12px;
       color: var(--text-primary);
       font-weight: 500;
     }
 
     .office-address i {
-      color: var(--gold);
+      color: var(--primary-color);
       font-size: 1.25rem;
     }
 
@@ -573,10 +589,10 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 25px rgba(201, 169, 98, 0.4);
+      box-shadow: 0 6px 25px rgba(5, 102, 170, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -586,7 +602,7 @@
 
     .chat-button:hover {
       transform: scale(1.1);
-      box-shadow: 0 8px 30px rgba(201, 169, 98, 0.5);
+      box-shadow: 0 8px 30px rgba(5, 102, 170, 0.5);
     }
     
     .notification-badge {
@@ -638,9 +654,9 @@
     }
 
     .chat-header {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       padding: 1.25rem 1.5rem;
-      color: var(--dark-bg);
+      color: var(--text-on-primary);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -693,7 +709,7 @@
     }
     
     .chat-messages::-webkit-scrollbar-thumb {
-      background: rgba(201, 169, 98, 0.3);
+      background: rgba(5, 102, 170, 0.3);
       border-radius: 3px;
     }
 
@@ -713,8 +729,8 @@
 
     .chat-message.user {
       align-self: flex-end;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-      color: var(--dark-bg);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--text-on-primary);
       border-bottom-right-radius: 4px;
     }
 
@@ -758,7 +774,7 @@
     .typing-dot {
       width: 7px;
       height: 7px;
-      background: var(--gold);
+      background: var(--primary-color);
       border-radius: 50%;
       animation: typingBounce 1.4s infinite ease-in-out both;
     }
