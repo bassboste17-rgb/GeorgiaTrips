@@ -1534,11 +1534,206 @@
     }
 
     /* ========================================
-       MAP SECTION - MINIMAL STYLE
+       REGIONS SHOWCASE CAROUSEL
+       ======================================== */
+    .regions-showcase-section {
+      background: linear-gradient(180deg, #f8fafc 0%, #ecfdf5 50%, #f8fafc 100%);
+    }
+    
+    .regions-showcase-section::before {
+      background: 
+        radial-gradient(ellipse 70% 50% at 50% 30%, rgba(40, 185, 188, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 60% at 30% 70%, rgba(5, 102, 170, 0.04) 0%, transparent 50%);
+    }
+
+    .regions-carousel-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .regions-carousel-container {
+      overflow: hidden;
+      flex: 1;
+      border-radius: var(--radius-lg);
+    }
+
+    .regions-carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      padding: 1rem 0;
+    }
+
+    .region-card {
+      flex-shrink: 0;
+      width: 280px;
+      height: 360px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-slow);
+    }
+
+    .region-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--color-primary);
+    }
+
+    .region-card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .region-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .region-card:hover .region-card-image img {
+      transform: scale(1.1);
+    }
+
+    .region-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(5, 102, 170, 0.4) 70%,
+        rgba(5, 102, 170, 0.85) 100%
+      );
+      transition: var(--transition-medium);
+    }
+
+    .region-card:hover .region-card-overlay {
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 30%,
+        rgba(5, 102, 170, 0.5) 60%,
+        rgba(5, 102, 170, 0.95) 100%
+      );
+    }
+
+    .region-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      color: var(--color-text-on-primary);
+      z-index: 2;
+    }
+
+    .region-card-content h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.5px;
+    }
+
+    .region-card-content p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+
+    .region-explore-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-accent);
+      color: var(--color-text);
+      border-radius: 50%;
+      font-size: 1rem;
+      transition: var(--transition-medium);
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    .region-card:hover .region-explore-btn {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .region-explore-btn:hover {
+      background: var(--color-accent-hover);
+      transform: scale(1.1);
+    }
+
+    .regions-carousel-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition-medium);
+      box-shadow: var(--shadow-card);
+      flex-shrink: 0;
+    }
+
+    .regions-carousel-arrow:hover {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: var(--color-text-on-primary);
+      border-color: var(--color-primary);
+      transform: scale(1.1);
+    }
+
+    .regions-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1.5rem;
+    }
+
+    .regions-carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-border);
+      cursor: pointer;
+      transition: var(--transition-medium);
+      border: none;
+    }
+
+    .regions-carousel-dot.active {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      transform: scale(1.3);
+      box-shadow: 0 0 15px var(--color-accent-glow);
+    }
+
+    /* ========================================
+       MAP SECTION - ENHANCED STYLE
        ======================================== */
     .map-section {
       padding: 4rem 2rem;
-      margin-top: 4rem;
+      margin-top: 2rem;
       margin-bottom: 4rem;
     }
 
@@ -1566,13 +1761,13 @@
     .svg-map path {
       stroke-width: 0.5;
       transition: all 0.3s ease;
-      fill: rgba(255, 255, 255, 0.1);
-      stroke: var(--color-border-light);
+      fill: rgba(5, 102, 170, 0.08);
+      stroke: var(--color-border);
     }
 
     .svg-map path:hover {
       cursor: pointer;
-      fill: var(--color-accent) !important;
+      fill: var(--color-primary) !important;
       filter: drop-shadow(0 0 10px var(--color-accent-glow));
     }
 
@@ -1582,6 +1777,51 @@
       fill: var(--color-text-secondary);
       font-weight: 600;
       pointer-events: none;
+    }
+
+    /* Map Region Stats */
+    .map-region-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
+    }
+
+    .map-region-stats .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1.5rem;
+    }
+
+    .map-region-stats .stat-item i {
+      font-size: 2rem;
+      color: var(--color-primary);
+      opacity: 0.8;
+    }
+
+    .map-region-stats .stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-region-stats .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1;
+    }
+
+    .map-region-stats .stat-label {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
     }
 
     /* ========================================
@@ -2070,6 +2310,64 @@
         text-align: center;
       }
 
+      /* Mobile Regions Carousel */
+      .regions-carousel-wrapper {
+        gap: 0.5rem;
+      }
+
+      .regions-carousel-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+
+      .region-card {
+        width: 220px;
+        height: 280px;
+      }
+
+      .regions-carousel-track {
+        gap: 1rem;
+      }
+
+      .region-card-content h3 {
+        font-size: 1.1rem;
+      }
+
+      .region-card-content p {
+        font-size: 0.8rem;
+      }
+
+      .region-explore-btn {
+        opacity: 1;
+        transform: translateX(0);
+        width: 32px;
+        height: 32px;
+      }
+
+      /* Mobile Map Stats */
+      .map-region-stats {
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+      }
+
+      .map-region-stats .stat-item {
+        padding: 0.5rem;
+        flex: 1 1 40%;
+      }
+
+      .map-region-stats .stat-item i {
+        font-size: 1.5rem;
+      }
+
+      .map-region-stats .stat-number {
+        font-size: 1.2rem;
+      }
+
+      .map-region-stats .stat-label {
+        font-size: 0.75rem;
+      }
+
       /* Mobile Map */
       .map-section {
         padding: 2rem 1rem;
@@ -2262,19 +2560,246 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="map-title">
+    <!-- Regions Carousel Section -->
+    <section class="section regions-showcase-section" id="regions-showcase" aria-labelledby="regions-title">
       <div class="section-grid-overlay"></div>
       <div class="section-decoration section-decoration-1" style="top: 5%; left: auto; right: 10%;"></div>
       <div class="container">
+        <header class="section-header">
+          <h2 class="section-title" id="regions-title" data-i18n="homeRegionsTitle">Discover <span>Georgia's</span> Regions</h2>
+          <p class="section-subtitle" data-i18n="homeRegionsSubtitle">From the mountains of Svaneti to the beaches of Batumi - explore every corner of Georgia</p>
+        </header>
+        
+        <!-- Horizontal Regions Carousel -->
+        <div class="regions-carousel-wrapper">
+          <button class="regions-carousel-arrow regions-arrow-left" id="regionsArrowLeft" type="button" aria-label="Previous regions">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          
+          <div class="regions-carousel-container">
+            <div class="regions-carousel-track" id="regionsCarouselTrack">
+              <!-- Tbilisi -->
+              <a href="tbilisi.html" class="region-card" data-region="tbilisi">
+                <div class="region-card-image">
+                  <img src="addhome/tbilisi.png" alt="Tbilisi - Capital City" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionTbilisi">Tbilisi</h3>
+                  <p data-i18n="regionTbilisiDesc">Capital City</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Adjara / Batumi -->
+              <a href="ajara.html" class="region-card" data-region="adjara">
+                <div class="region-card-image">
+                  <img src="addhome/ajara.png" alt="Adjara - Black Sea Coast" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionAdjara">Adjara</h3>
+                  <p data-i18n="regionAdjaraDesc">Black Sea Coast</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Kakheti -->
+              <a href="kakheti.html" class="region-card" data-region="kakheti">
+                <div class="region-card-image">
+                  <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&h=400&fit=crop" alt="Kakheti - Wine Region" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionKakheti">Kakheti</h3>
+                  <p data-i18n="regionKakhetiDesc">Wine Country</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Svaneti / Samegrelo -->
+              <a href="samegrelo-zemo-svaneti.html" class="region-card" data-region="svaneti">
+                <div class="region-card-image">
+                  <img src="addhome/samegrelo.png" alt="Svaneti - Mountain Towers" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionSamegrelo">Samegrelo-Svaneti</h3>
+                  <p data-i18n="regionSvanetiDesc">Mountain Towers</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Kazbegi / Mtskheta-Mtianeti -->
+              <a href="mtkheta-mtianeti.html" class="region-card" data-region="kazbegi">
+                <div class="region-card-image">
+                  <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&h=400&fit=crop" alt="Kazbegi - Mountain Paradise" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionMtskhetaMtianeti">Mtskheta-Mtianeti</h3>
+                  <p data-i18n="regionKazbegiDesc">Mountain Paradise</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Imereti -->
+              <a href="imereti.html" class="region-card" data-region="imereti">
+                <div class="region-card-image">
+                  <img src="addhome/imereti.png" alt="Imereti - Caves & Canyons" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionImereti">Imereti</h3>
+                  <p data-i18n="regionImeretiDesc">Caves & Canyons</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Racha -->
+              <a href="racha-lechkhumi.html" class="region-card" data-region="racha">
+                <div class="region-card-image">
+                  <img src="addhome/racha.png" alt="Racha - Alpine Lakes" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionRachaLechkhumi">Racha-Lechkhumi</h3>
+                  <p data-i18n="regionRachaDesc">Alpine Lakes</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Samtskhe-Javakheti -->
+              <a href="samtskhe-javakheti.html" class="region-card" data-region="samtskhe">
+                <div class="region-card-image">
+                  <img src="addhome/samcxe.png" alt="Samtskhe-Javakheti - Ancient History" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionSamtskheJavakheti">Samtskhe-Javakheti</h3>
+                  <p data-i18n="regionSamtskheDesc">Ancient History</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Guria -->
+              <a href="guria.html" class="region-card" data-region="guria">
+                <div class="region-card-image">
+                  <img src="addhome/guria.png" alt="Guria - Tea Plantations" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionGuria">Guria</h3>
+                  <p data-i18n="regionGuriaDesc">Tea Plantations</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Shida Kartli -->
+              <a href="shida-kartli.html" class="region-card" data-region="shida">
+                <div class="region-card-image">
+                  <img src="addhome/shida.png" alt="Shida Kartli - Historic Heart" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionShidaKartli">Shida Kartli</h3>
+                  <p data-i18n="regionShidaDesc">Historic Heart</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+              
+              <!-- Kvemo Kartli -->
+              <a href="kvemo-kartli.html" class="region-card" data-region="kvemo">
+                <div class="region-card-image">
+                  <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&h=400&fit=crop" alt="Kvemo Kartli - Ancient Sites" loading="lazy">
+                  <div class="region-card-overlay"></div>
+                </div>
+                <div class="region-card-content">
+                  <h3 data-i18n="regionKvemoKartli">Kvemo Kartli</h3>
+                  <p data-i18n="regionKvemoDesc">Ancient Sites</p>
+                  <span class="region-explore-btn">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+          
+          <button class="regions-carousel-arrow regions-arrow-right" id="regionsArrowRight" type="button" aria-label="Next regions">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        
+        <!-- Carousel Dots -->
+        <div class="regions-carousel-dots" id="regionsCarouselDots"></div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section" aria-labelledby="map-title">
+      <div class="section-grid-overlay"></div>
+      <div class="container">
         <div class="map-section">
           <header class="section-header">
-            <h2 class="section-title" id="map-title" data-i18n="homeChooseRegion">Explore <span>Georgia</span> Regions</h2>
+            <h2 class="section-title" id="map-title" data-i18n="homeChooseRegion">Explore <span>Georgia</span> on Map</h2>
             <p class="section-subtitle" data-i18n="homeMapSubtitle">Click on any region to discover unique destinations - Tbilisi, Kakheti, Kazbegi, Svaneti, Batumi and more!</p>
           </header>
           <div class="map-container">
             <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="Interactive map of Georgia - Choose a region for tours">
               <div class="loading-posts">Loading map...</div>
             </object>
+          </div>
+          
+          <!-- Quick Region Stats -->
+          <div class="map-region-stats">
+            <div class="stat-item">
+              <i class="fas fa-mountain"></i>
+              <div class="stat-info">
+                <span class="stat-number">12</span>
+                <span class="stat-label" data-i18n="homeRegionsCount">Regions</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-landmark"></i>
+              <div class="stat-info">
+                <span class="stat-number">4</span>
+                <span class="stat-label" data-i18n="homeUnescoSites">UNESCO Sites</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-wine-glass"></i>
+              <div class="stat-info">
+                <span class="stat-number">8000+</span>
+                <span class="stat-label" data-i18n="homeWineYears">Years of Wine</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-water"></i>
+              <div class="stat-info">
+                <span class="stat-number">310</span>
+                <span class="stat-label" data-i18n="homeBeachKm">km Coastline</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -3611,10 +4136,110 @@
       }
     });
 
+    // Regions Carousel
+    function initRegionsCarousel() {
+      var track = document.getElementById('regionsCarouselTrack');
+      var leftArrow = document.getElementById('regionsArrowLeft');
+      var rightArrow = document.getElementById('regionsArrowRight');
+      var dotsContainer = document.getElementById('regionsCarouselDots');
+      
+      if (!track || !leftArrow || !rightArrow) return;
+      
+      var cards = track.querySelectorAll('.region-card');
+      var cardWidth = 280 + 24; // card width + gap
+      var visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth) || 3;
+      var currentIndex = 0;
+      var maxIndex = Math.max(0, cards.length - visibleCards);
+      
+      // Create dots
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        var totalDots = Math.ceil(cards.length / visibleCards);
+        for (var i = 0; i < totalDots; i++) {
+          var dot = document.createElement('button');
+          dot.className = 'regions-carousel-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          dot.addEventListener('click', (function(index) {
+            return function() {
+              currentIndex = Math.min(index * visibleCards, maxIndex);
+              updateCarousel();
+            };
+          })(i));
+          dotsContainer.appendChild(dot);
+        }
+      }
+      
+      function updateCarousel() {
+        var offset = currentIndex * cardWidth;
+        track.style.transform = 'translateX(-' + offset + 'px)';
+        
+        // Update dots
+        var dots = dotsContainer.querySelectorAll('.regions-carousel-dot');
+        var activeDotIndex = Math.floor(currentIndex / visibleCards);
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === activeDotIndex);
+        });
+        
+        // Update arrow states
+        leftArrow.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        rightArrow.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      }
+      
+      leftArrow.addEventListener('click', function() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      });
+      
+      rightArrow.addEventListener('click', function() {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateCarousel();
+        }
+      });
+      
+      // Touch/Swipe support
+      var touchStartX = 0;
+      var touchEndX = 0;
+      
+      track.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      
+      track.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > 50) {
+          if (diff > 0 && currentIndex < maxIndex) {
+            currentIndex++;
+            updateCarousel();
+          } else if (diff < 0 && currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+          }
+        }
+      }, { passive: true });
+      
+      // Recalculate on resize
+      window.addEventListener('resize', function() {
+        visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth) || 3;
+        maxIndex = Math.max(0, cards.length - visibleCards);
+        currentIndex = Math.min(currentIndex, maxIndex);
+        updateCarousel();
+      });
+      
+      updateCarousel();
+    }
+
     // Initialize
     async function init() {
       try {
         var firebase = await loadFirebase();
+        
+        // Initialize regions carousel
+        initRegionsCarousel();
         
         // Load cars and tours
         loadCars(firebase);

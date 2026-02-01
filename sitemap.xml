@@ -59,6 +59,28 @@
     </url>
     
     <url>
+        <loc>https://www.georgiatrips.ge/tours.html</loc>
+        <lastmod>2026-02-01</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/tours.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/tours.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/tours.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/tours.html"/>
+    </url>
+    
+    <url>
+        <loc>https://www.georgiatrips.ge/cars.html</loc>
+        <lastmod>2026-02-01</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ka" href="https://www.georgiatrips.ge/cars.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/cars.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://www.georgiatrips.ge/cars.html"/>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://www.georgiatrips.ge/cars.html"/>
+    </url>
+    
+    <url>
         <loc>https://www.georgiatrips.ge/abkhazia.html</loc>
         <lastmod>2026-01-30</lastmod>
         <changefreq>monthly</changefreq>
