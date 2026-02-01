@@ -301,7 +301,7 @@
           
           <div class="review-submission-section" id="reviewSubmissionSection" style="display: none;">
             <div class="review-form-card">
-              <h3 data-i18n="aboutLeaveReview">დატოვე შეფასება</h3>
+              <h3 data-i18n="aboutLeaveReview">დატოვე შე��ასება</h3>
               <form id="reviewForm" aria-label="შეფასების ფორმა">
                 <div class="form-group">
                   <label data-i18n="aboutRating" id="rating-label">შეფასება *</label>
@@ -1044,33 +1044,42 @@
     }
 
     :root {
-      --gold: #e5383b;
-      --gold-light: #e5383b;
-      --gold-dark: #b61a1d;
-      --dark-bg: #151515;
-      --dark-surface: #1a1a1a;
-      --dark-card: #222222;
-      --dark-border: #333333;
-      --text-primary: #ffffff;
-      --text-secondary: #c0c0c0;
-      --text-muted: #888888;
-      --primary-color: #e5383b;
-      --primary-dark: #b61a1d;
-      --secondary-color: #151515;
-      --text-color: #c0c0c0;
-      --light-bg: #222222;
+      /* Brand Colors - Georgia Trips */
+      --gold: #fcaf15;
+      --gold-light: #fdc43d;
+      --gold-dark: #e09800;
+      --primary-color: #0566aa;
+      --primary-light: #0a7cc9;
+      --primary-dark: #044d82;
+      --secondary-color: #28b9bc;
+      --secondary-light: #3dd1d4;
+      
+      /* Light Theme Backgrounds */
+      --dark-bg: #f8fafc;
+      --dark-surface: #ffffff;
+      --dark-card: #ffffff;
+      --dark-border: #e2e8f0;
+      
+      /* Text Colors */
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --text-color: #64748b;
+      --text-on-primary: #ffffff;
+      
+      --light-bg: #f1f5f9;
       --border-radius: 12px;
       --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       
-      /* Font - Inter same as posts.html */
-      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      /* Font - Poppins for consistency */
+      --font-main: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
       margin: 0;
       font-family: var(--font-main);
-      background-color: var(--dark-bg);
+      background: linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
       color: var(--text-primary);
       overflow-x: hidden;
       line-height: 1.6;
@@ -1080,9 +1089,17 @@
       position: relative;
       padding: 8rem 1rem 5rem;
       text-align: center;
-      background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-card) 100%);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       overflow: hidden;
-      border-bottom: 3px solid var(--gold);
+      border-bottom: 4px solid var(--gold);
+    }
+    
+    .about-hero h1 {
+      color: var(--text-on-primary);
+    }
+    
+    .about-hero p {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .hero-background {
@@ -1187,15 +1204,14 @@
     }
 
     .stat-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--gold);
-      box-shadow: 0 20px 40px rgba(229, 56, 59, 0.2);
+      transform: translateY(-8px);
+      border-color: var(--primary-color);
     }
 
     .stat-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1231,7 +1247,7 @@
 
     .stat-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       transition: width 2s ease;
     }
 
@@ -1335,7 +1351,7 @@
     .stat-item-icon {
       width: 50px;
       height: 50px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1417,7 +1433,7 @@
     .value-icon-wrapper {
       width: 70px;
       height: 70px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1673,7 +1689,7 @@
     .author-avatar {
       width: 50px;
       height: 50px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1856,7 +1872,7 @@
     }
 
     .save-btn {
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border: none;
       color: var(--dark-bg);
     }
