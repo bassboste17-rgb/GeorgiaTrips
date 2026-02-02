@@ -67,11 +67,11 @@
   <meta name="twitter:image" content="https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074554/lfpbxtoj33ch8tdeeaoz.png" />
   <meta name="twitter:image:alt" content="Georgia Trips - Tours in Georgia" />
   
-  <!-- Theme Color for Mobile Browsers -->
-  <meta name="theme-color" content="#0f0f0f" />
-  <meta name="msapplication-TileColor" content="#0f0f0f" />
+  <!-- Theme Color for Mobile Browsers - LIGHT THEME -->
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-navbutton-color" content="#dc2626" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Georgia Trips" />
   
@@ -378,50 +378,30 @@
   <style>
     /* ========================================
        DESIGN SYSTEM - GEORGIA TRIPS 2026
-       ======================================== 
-       
-       FONT: Poppins (Latin) + Noto Sans Georgian (ქართული)
-       
-       COLORS:
-       - Primary Accent: #dc2626 (Vibrant Red)
-       - Primary Hover: #b91c1c (Darker Red)
-       - Background: #0f0f0f (Deep Black)
-       - Background Secondary: #141414
-       - Card Background: #1a1a1a
-       - Elevated Background: #1f1f1f
-       - Text Primary: #ffffff
-       - Text Secondary: #a3a3a3
-       - Text Muted: #525252
-       - Border: #262626
-       - Border Light: #404040
-       - Success: #22c55e (Green)
-       
-       SPACING: 4px base unit
-       RADIUS: sm(8px), md(12px), lg(20px), xl(28px), full(9999px)
-       
+       LIGHT THEME - NO SECTIONS
        ======================================== */
     
     :root {
       /* Primary Colors */
-      --color-accent: #dc2626;
-      --color-accent-hover: #b91c1c;
-      --color-accent-light: rgba(220, 38, 38, 0.15);
-      --color-accent-glow: rgba(220, 38, 38, 0.4);
+      --color-accent: #fcaf15;
+      --color-accent-hover: #0566aa;
+      --color-accent-light: rgba(220, 38, 38, 0.1);
+      --color-accent-glow: rgba(220, 38, 38, 0.3);
       
-      /* Background Colors */
-      --color-bg: #0f0f0f;
-      --color-bg-secondary: #141414;
-      --color-bg-card: #1a1a1a;
-      --color-bg-elevated: #1f1f1f;
+      /* Background Colors - LIGHT */
+      --color-bg: #ffffff;
+      --color-bg-secondary: #f8fafc;
+      --color-bg-card: #ffffff;
+      --color-bg-elevated: #f1f5f9;
       
-      /* Text Colors */
-      --color-text: #ffffff;
-      --color-text-secondary: #a3a3a3;
-      --color-text-muted: #525252;
+      /* Text Colors - DARK for contrast */
+      --color-text: #1e293b;
+      --color-text-secondary: #64748b;
+      --color-text-muted: #94a3b8;
       
       /* Border Colors */
-      --color-border: #262626;
-      --color-border-light: #404040;
+      --color-border: #e2e8f0;
+      --color-border-light: #cbd5e1;
       
       /* Status Colors */
       --color-success: #22c55e;
@@ -435,11 +415,11 @@
       --transition-medium: 0.3s ease;
       --transition-slow: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       
-      /* Shadows */
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-      --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.6);
-      --shadow-accent: 0 8px 30px rgba(220, 38, 38, 0.3);
+      /* Shadows - LIGHT */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.12);
+      --shadow-accent: 0 8px 30px rgba(220, 38, 38, 0.2);
       
       /* Border Radius */
       --radius-sm: 8px;
@@ -475,9 +455,8 @@
     /* Selection Style */
     ::selection {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
     }
-
 
     /* Container */
     .container {
@@ -548,10 +527,10 @@
       height: 100%;
       background: linear-gradient(
         180deg,
-        rgba(15, 15, 15, 0.75) 0%,
-        rgba(15, 15, 15, 0.4) 40%,
-        rgba(15, 15, 15, 0.6) 70%,
-        rgba(15, 15, 15, 0.98) 100%
+        rgba(31, 30, 30, 0.3) 0%,
+        rgba(0, 0, 0, 0.548) 40%,
+        rgba(37, 37, 37, 0.5) 70%,
+        rgba(65, 65, 65, 0.5) 100%
       );
       z-index: 2;
       pointer-events: none;
@@ -580,9 +559,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--color-accent-light);
+      background: var(--color-accent);
       border: 1px solid var(--color-accent);
-      color: var(--color-accent);
+      color: #ffffff;
       padding: 0.6rem 1.4rem;
       border-radius: var(--radius-full);
       font-size: 0.85rem;
@@ -590,7 +569,7 @@
       margin-bottom: 2rem;
       letter-spacing: 1px;
       text-transform: uppercase;
-      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-accent);
     }
 
     .hero-badge i {
@@ -599,33 +578,42 @@
 
     .hero h1 {
       font-size: 4.5rem;
-      color: var(--color-text);
+      color: #ffffff;
       margin-bottom: 1.5rem;
       font-weight: 800;
       letter-spacing: -2px;
       line-height: 1.1;
       text-wrap: balance;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .hero h1 .accent {
       color: var(--color-accent);
+      text-shadow: 0 4px 20px rgba(252, 175, 21, 0.4), 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .hero h2 {
       font-size: 1.4rem;
-      color: var(--color-text-secondary);
+      color: rgba(255, 255, 255, 0.95);
       margin-bottom: 1.5rem;
-      font-weight: 400;
-      letter-spacing: 0.3px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      text-wrap: balance;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
     }
 
     .hero p {
       margin: 1.5rem auto 3rem;
-      color: var(--color-text-secondary);
-      font-size: 1.1rem;
-      line-height: 1.8;
-      max-width: 600px;
-      text-wrap: pretty;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      line-height: 1.7;
+      text-wrap: balance;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      max-width: 750px;
     }
 
     .hero-buttons {
@@ -637,7 +625,7 @@
 
     .btn-primary {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       padding: 1.1rem 2.5rem;
       text-decoration: none;
       border-radius: var(--radius-full);
@@ -658,7 +646,7 @@
     }
 
     .btn-secondary {
-      background: transparent;
+      background: #ffffff;
       color: var(--color-text);
       padding: 1.1rem 2.5rem;
       text-decoration: none;
@@ -670,193 +658,38 @@
       gap: 0.6rem;
       transition: var(--transition-medium);
       border: 2px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--color-bg-secondary);
       border-color: var(--color-text-secondary);
       transform: translateY(-2px);
     }
 
     /* ========================================
-       SECTIONS - MODERN GRADIENT STYLE (NO BACKGROUND IMAGES)
+       CONTENT AREA - NO SECTIONS, CONTINUOUS FLOW
        ======================================== */
-    .section {
-      position: relative;
-      min-height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-text);
-      text-align: center;
-      padding: 6rem 0;
-      overflow: hidden;
+    .content-area {
+      padding: 4rem 0;
+      background: var(--color-bg);
     }
 
-    .section::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 0;
-      opacity: 0.6;
+    .content-block {
+      margin-bottom: 6rem;
     }
 
-    .section .container {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Vehicles Section - Red accent gradient */
-    #vehicles {
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a0a0a 50%, #0f0f0f 100%);
-    }
-    
-    #vehicles::before {
-      background: 
-        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
-    }
-
-    /* Tours Section - Dynamic gradient */
-    #tours-section {
-      background: linear-gradient(180deg, #0f0f0f 0%, #12100f 50%, #0f0f0f 100%);
-    }
-    
-    #tours-section::before {
-      background: 
-        radial-gradient(ellipse 70% 50% at 70% 30%, rgba(220, 38, 38, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse 50% 60% at 30% 70%, rgba(139, 69, 19, 0.04) 0%, transparent 50%);
-    }
-
-    /* Map Section - Subtle depth */
-    .section:nth-of-type(3) {
-      background: linear-gradient(135deg, #0f0f0f 0%, #0d0d10 50%, #0f0f0f 100%);
-    }
-    
-    .section:nth-of-type(3)::before {
-      background: 
-        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(220, 38, 38, 0.04) 0%, transparent 60%);
-    }
-
-    /* Posts Section - Warm accent */
-    .section:nth-of-type(4) {
-      background: linear-gradient(180deg, #0f0f0f 0%, #100f0d 50%, #0f0f0f 100%);
-    }
-    
-    .section:nth-of-type(4)::before {
-      background: 
-        radial-gradient(ellipse 80% 40% at 20% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(255, 165, 0, 0.03) 0%, transparent 50%);
-    }
-
-    /* Weather Section - Cool gradient */
-    #weather-section {
-      background: linear-gradient(135deg, #0f0f0f 0%, #0d0f12 50%, #0f0f0f 100%);
-    }
-    
-    #weather-section::before {
-      background: 
-        radial-gradient(ellipse 70% 50% at 30% 40%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(220, 38, 38, 0.04) 0%, transparent 50%);
-    }
-
-    /* Animated glow effect for sections */
-    .section::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(220, 38, 38, 0.3) 50%, transparent 100%);
-      z-index: 1;
-    }
-
-    /* Decorative floating shapes */
-    .section-decoration {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .section-decoration-1 {
-      top: 10%;
-      left: 5%;
-      width: 200px;
-      height: 200px;
-      border: 1px solid rgba(220, 38, 38, 0.08);
-      border-radius: 50%;
-      animation: floatSlow 20s ease-in-out infinite;
-    }
-
-    .section-decoration-2 {
-      bottom: 15%;
-      right: 8%;
-      width: 150px;
-      height: 150px;
-      border: 1px solid rgba(220, 38, 38, 0.05);
-      transform: rotate(45deg);
-      animation: floatSlow 25s ease-in-out infinite reverse;
-    }
-
-    .section-decoration-3 {
-      top: 40%;
-      right: 3%;
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: pulseSlow 10s ease-in-out infinite;
-    }
-
-    @keyframes floatSlow {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.5;
-      }
-      50% {
-        transform: translateY(-20px) rotate(5deg);
-        opacity: 0.8;
-      }
-    }
-
-    @keyframes pulseSlow {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.3;
-      }
-      50% {
-        transform: scale(1.2);
-        opacity: 0.6;
-      }
-    }
-
-    /* Grid pattern overlay for sections */
-    .section-grid-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: 
-        linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
+    .content-block:last-child {
+      margin-bottom: 0;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
 
     .section-title {
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: var(--color-text);
@@ -875,6 +708,143 @@
       margin: 0 auto;
       line-height: 1.7;
       text-wrap: pretty;
+    }
+
+    /* ========================================
+       SECTION WITH BACKGROUND IMAGE - NEW STYLE
+       ======================================== */
+    .section-with-bg {
+      position: relative;
+      padding: 5rem 0;
+      margin-bottom: 0 !important;
+    }
+
+    .section-bg-image {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 350px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+
+    .section-bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 350px;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+      );
+      z-index: 1;
+    }
+
+    .section-with-bg .section-header {
+      position: relative;
+      z-index: 2;
+      padding-top: 2rem;
+    }
+
+    .section-with-bg .section-title {
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-with-bg .section-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-with-bg .cars-carousel-wrapper,
+    .section-with-bg .tours-carousel-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========================================
+       REGION FILTER TABS - FOR TOURS
+       ======================================== */
+    .region-filter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .region-tab {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      color: #ffffff;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition-medium);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+    }
+
+    .region-tab:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .region-tab.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(252, 175, 21, 0.4);
+    }
+
+    /* Light background version */
+    .region-filter-light {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .region-tab-light {
+      background: var(--color-bg-secondary);
+      color: var(--color-text);
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition-medium);
+      border: 2px solid var(--color-border);
+      text-decoration: none;
+    }
+
+    .region-tab-light:hover {
+      background: var(--color-bg-elevated);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .region-tab-light.active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(252, 175, 21, 0.3);
     }
 
     /* ========================================
@@ -958,7 +928,7 @@
       top: 1rem;
       left: 1rem;
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       padding: 0.4rem 1rem;
       border-radius: var(--radius-full);
       font-size: 0.75rem;
@@ -1020,8 +990,6 @@
       color: var(--color-success);
     }
 
-
-
     .car-card-price {
       font-size: 1.5rem;
       font-weight: 800;
@@ -1036,7 +1004,7 @@
 
     .car-card-btn {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       padding: 0.7rem 1.5rem;
       border-radius: var(--radius-full);
       text-decoration: none;
@@ -1070,7 +1038,7 @@
     }
 
     .cars-carousel-arrow {
-      background: var(--color-bg-elevated);
+      background: var(--color-bg-card);
       color: var(--color-accent);
       width: 55px;
       height: 55px;
@@ -1088,7 +1056,7 @@
 
     .cars-carousel-arrow:hover {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       transform: scale(1.1);
       border-color: var(--color-accent);
     }
@@ -1100,6 +1068,8 @@
       gap: 10px;
       margin-top: 2rem;
       padding: 15px 0;
+      position: relative;
+      z-index: 2;
     }
 
     .cars-carousel-dot {
@@ -1110,6 +1080,10 @@
       cursor: pointer;
       transition: var(--transition-medium);
       border: none;
+    }
+
+    .section-with-bg .cars-carousel-dot {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .cars-carousel-dot.active {
@@ -1131,19 +1105,14 @@
       font-size: 1.1rem;
     }
 
+    .section-with-bg .no-cars-message,
+    .section-with-bg .loading-cars {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
     /* ========================================
        TOURS SECTION - SAME STYLE AS CARS
        ======================================== */
-    .tours-section {
-      padding: 4rem 2rem;
-      margin-top: 4rem;
-      margin-bottom: 4rem;
-    }
-
-    .tours-grid {
-      display: none;
-    }
-
     .tour-card {
       background: var(--color-bg-card);
       border-radius: var(--radius-lg);
@@ -1185,7 +1154,7 @@
       top: 1rem;
       left: 1rem;
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       padding: 0.4rem 1rem;
       border-radius: var(--radius-full);
       font-size: 0.75rem;
@@ -1239,8 +1208,6 @@
       font-size: 0.9rem;
     }
 
-
-
     .tour-card-price {
       font-size: 1.5rem;
       font-weight: 800;
@@ -1255,7 +1222,7 @@
 
     .tour-card-btn {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       padding: 0.7rem 1.5rem;
       border-radius: var(--radius-full);
       text-decoration: none;
@@ -1326,7 +1293,7 @@
     }
 
     .tours-carousel-arrow {
-      background: var(--color-bg-elevated);
+      background: var(--color-bg-card);
       color: var(--color-accent);
       width: 55px;
       height: 55px;
@@ -1344,7 +1311,7 @@
 
     .tours-carousel-arrow:hover {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       transform: scale(1.1);
       border-color: var(--color-accent);
     }
@@ -1355,6 +1322,8 @@
       gap: 10px;
       margin-top: 2rem;
       padding: 15px 0;
+      position: relative;
+      z-index: 2;
     }
 
     .tours-carousel-dot {
@@ -1365,6 +1334,10 @@
       cursor: pointer;
       transition: var(--transition-medium);
       border: none;
+    }
+
+    .section-with-bg .tours-carousel-dot {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .tours-carousel-dot.active {
@@ -1386,124 +1359,362 @@
       font-size: 1.1rem;
     }
 
-    /* ========================================
-       LATEST POST SECTION - ELEGANT CARD
-       ======================================== */
-    .latest-post-section {
-      padding: 4rem 2rem;
-      margin-top: 4rem;
-      margin-bottom: 4rem;
+    .section-with-bg .no-tours-message,
+    .section-with-bg .loading-tours {
+      color: rgba(255, 255, 255, 0.8);
     }
 
-    .latest-post {
-      background: var(--color-bg-card);
+    /* ========================================
+       ADVENTURE SECTION - NEW DESIGN
+       ======================================== */
+    .adventure-section {
+      padding: 5rem 0;
+      background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
+    }
+
+    .adventure-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 220px);
+      gap: 1.5rem;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .adventure-card {
+      position: relative;
       border-radius: var(--radius-xl);
       overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition-medium);
+    }
+
+    .adventure-card-large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .adventure-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: var(--transition-slow);
+    }
+
+    .adventure-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+      transition: var(--transition-medium);
+    }
+
+    .adventure-card:hover .adventure-card-bg {
+      transform: scale(1.1);
+    }
+
+    .adventure-card:hover .adventure-card-overlay {
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%);
+    }
+
+    .adventure-card:hover {
+      transform: translateY(-8px);
       box-shadow: var(--shadow-elevated);
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2.5rem;
+    }
+
+    .adventure-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      color: #ffffff;
+      z-index: 2;
+    }
+
+    .adventure-card-large .adventure-card-content {
+      padding: 2rem;
+    }
+
+    .adventure-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 15px rgba(252, 175, 21, 0.4);
+    }
+
+    .adventure-card-large .adventure-icon {
+      width: 65px;
+      height: 65px;
+    }
+
+    .adventure-icon i {
+      font-size: 1.3rem;
+      color: #ffffff;
+    }
+
+    .adventure-card-large .adventure-icon i {
+      font-size: 1.6rem;
+    }
+
+    .adventure-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .adventure-card-large .adventure-card-title {
+      font-size: 1.6rem;
+    }
+
+    .adventure-card-text {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .adventure-card-large .adventure-card-text {
+      font-size: 1rem;
+      -webkit-line-clamp: 3;
+    }
+
+    .adventure-card-stats {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .adventure-card-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.2);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Trust Indicators */
+    .trust-indicators {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      padding: 2.5rem 3rem;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
       border: 1px solid var(--color-border);
     }
 
-    .latest-post-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 2rem;
+    .trust-item {
+      text-align: center;
     }
 
-    .latest-post-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 1rem;
-      border: 2px solid var(--color-accent);
+    .trust-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--color-accent);
+      line-height: 1;
     }
 
-    .latest-post-author {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--color-text);
-      margin-bottom: 0.2rem;
-    }
-
-    .latest-post-time {
+    .trust-label {
       font-size: 0.9rem;
-      color: var(--color-text-muted);
+      color: var(--color-text-secondary);
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    .trust-divider {
+      width: 1px;
+      height: 50px;
+      background: var(--color-border);
+    }
+
+    /* ========================================
+       LATEST POSTS SECTION - IMAGE OVERLAY GRID
+       ======================================== */
+    .latest-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .latest-post {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      cursor: pointer;
+      transition: var(--transition-medium);
+    }
+
+    .latest-post:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-elevated);
     }
 
     .latest-post-image {
-      margin-bottom: 1.5rem;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      max-height: 450px;
-      background-color: var(--color-bg);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
     }
 
     .latest-post-image img {
       width: 100%;
-      height: auto;
-      max-height: 450px;
-      object-fit: contain;
-      cursor: pointer;
-      transition: transform 0.4s ease;
-      display: block;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
     }
 
-    .latest-post-image img:hover {
-      transform: scale(1.02);
+    .latest-post:hover .latest-post-image img {
+      transform: scale(1.05);
     }
 
-    .latest-post-content {
-      line-height: 1.8;
-      color: var(--color-text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-      white-space: pre-wrap;
+    .latest-post-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.5) 70%,
+        rgba(0, 0, 0, 0.85) 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .latest-post-meta {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
     }
 
     .latest-post-location {
       display: flex;
       align-items: center;
-      color: var(--color-accent);
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.8rem;
+      font-weight: 500;
+      gap: 0.4rem;
     }
 
     .latest-post-location i {
-      margin-right: 0.6rem;
-      font-size: 1.1rem;
+      font-size: 0.75rem;
+      color: var(--color-accent);
     }
 
-    .latest-post-actions {
-      display: flex;
-      align-items: center;
-      border-top: 1px solid var(--color-border);
-      padding-top: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1.5rem;
+    .latest-post-time {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
     }
 
-    .post-action {
+    .latest-post-content-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      z-index: 3;
+    }
+
+    .latest-post-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .latest-post-footer {
       display: flex;
       align-items: center;
-      color: var(--color-text-secondary);
-      font-size: 0.95rem;
+      justify-content: space-between;
       gap: 0.5rem;
     }
 
-    .post-action i {
-      font-size: 1.2rem;
-      color: var(--color-text-muted);
+    .latest-post-tag {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      max-width: 85%;
+    }
+
+    .latest-post-tag i {
+      font-size: 0.7rem;
+    }
+
+    .latest-post-excerpt {
+      display: block;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+      line-height: 1.4;
+      margin-top: 0.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .latest-post-extra {
+      background: var(--color-accent);
+      color: #fff;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .view-all-posts-wrapper {
+      text-align: center;
+      margin-top: 2rem;
     }
 
     .view-all-posts-btn {
-      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       background: var(--color-accent);
-      color: var(--color-text);
-      padding: 0.8rem 1.8rem;
+      color: #ffffff;
+      padding: 0.9rem 2rem;
       text-decoration: none;
       border-radius: var(--radius-full);
       font-weight: 600;
@@ -1526,24 +1737,132 @@
     }
 
     /* ========================================
-       MAP SECTION - MINIMAL STYLE
+       MAP SECTION - WITH REGION CARDS
        ======================================== */
-    .map-section {
-      padding: 4rem 2rem;
-      margin-top: 4rem;
-      margin-bottom: 4rem;
+    .map-section-wrapper {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .region-cards-container {
+      width: 320px;
+      flex-shrink: 0;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-accent) var(--color-border);
+    }
+
+    .region-cards-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .region-cards-container::-webkit-scrollbar-track {
+      background: var(--color-border);
+      border-radius: 10px;
+    }
+
+    .region-cards-container::-webkit-scrollbar-thumb {
+      background: var(--color-accent);
+      border-radius: 10px;
+    }
+
+    .region-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--color-bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      transition: var(--transition-medium);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .region-card:hover,
+    .region-card.active {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+      transform: translateX(5px);
+    }
+
+    .region-card.active {
+      background: var(--color-accent-light);
+    }
+
+    .region-card-image {
+      width: 70px;
+      height: 55px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .region-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .region-card:hover .region-card-image img {
+      transform: scale(1.1);
+    }
+
+    .region-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .region-card-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .region-card-name i {
+      color: var(--color-accent);
+      font-size: 0.85rem;
+      transition: transform 0.3s ease;
+    }
+
+    .region-card:hover .region-card-name i {
+      transform: translateX(3px);
+    }
+
+    .region-card-desc {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .map-container-wrapper {
+      flex: 1;
+      min-width: 0;
     }
 
     .map-container {
       max-width: 900px;
       width: 100%;
-      margin: 2rem auto 0;
+      margin: 0 auto;
       aspect-ratio: 4 / 3;
-      border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: var(--shadow-elevated);
-      border: 1px solid var(--color-border);
-      background: var(--color-bg-card);
       position: relative;
     }
 
@@ -1558,7 +1877,7 @@
     .svg-map path {
       stroke-width: 0.5;
       transition: all 0.3s ease;
-      fill: rgba(255, 255, 255, 0.1);
+      fill: var(--color-bg-elevated);
       stroke: var(--color-border-light);
     }
 
@@ -1577,15 +1896,13 @@
     }
 
     /* ========================================
-       WEATHER SECTION - GLASS MORPHISM
+       WEATHER SECTION - CLEAN STYLE
        ======================================== */
-    .weather-section {
-      background: var(--color-bg-card);
+    .weather-section-wrapper {
+      background: var(--color-bg-secondary);
       border-radius: var(--radius-xl);
       padding: 3rem 2rem;
       border: 1px solid var(--color-border);
-      margin-top: 4rem;
-      margin-bottom: 6rem;
     }
 
     .weather-controls {
@@ -1597,7 +1914,7 @@
     }
 
     .weather-controls select {
-      background: var(--color-bg);
+      background: var(--color-bg-card);
       color: var(--color-text);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-full);
@@ -1611,7 +1928,7 @@
     }
 
     .weather-controls select option {
-      background: var(--color-bg);
+      background: var(--color-bg-card);
       color: var(--color-text);
     }
 
@@ -1651,7 +1968,7 @@
     }
 
     .weather-card {
-      background: var(--color-bg);
+      background: var(--color-bg-card);
       border-radius: var(--radius-lg);
       padding: 1.8rem;
       text-align: center;
@@ -1713,7 +2030,7 @@
     }
 
     /* ========================================
-       IMAGE MODAL - DARK OVERLAY
+       IMAGE MODAL
        ======================================== */
     .image-modal {
       display: none;
@@ -1722,7 +2039,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
+      background-color: rgba(0, 0, 0, 0.9);
       z-index: 2000;
       justify-content: center;
       align-items: center;
@@ -1756,7 +2073,7 @@
       position: absolute;
       top: -60px;
       right: 0;
-      color: var(--color-text);
+      color: #ffffff;
       font-size: 36px;
       cursor: pointer;
       background: var(--color-accent);
@@ -1786,7 +2103,7 @@
 
     .nav-btn {
       background: var(--color-accent);
-      color: var(--color-text);
+      color: #ffffff;
       width: 52px;
       height: 52px;
       border-radius: 50%;
@@ -1808,7 +2125,7 @@
       bottom: -50px;
       left: 50%;
       transform: translateX(-50%);
-      color: var(--color-text);
+      color: #ffffff;
       font-size: 0.9rem;
       font-weight: 600;
       background: var(--color-accent);
@@ -1824,7 +2141,7 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--color-bg);
+      background: var(--color-bg-secondary);
     }
 
     ::-webkit-scrollbar-thumb {
@@ -1922,60 +2239,12 @@
         padding: 1rem 2rem;
       }
 
-      .section {
-        min-height: auto;
-        padding: 4rem 0;
+      .content-area {
+        padding: 3rem 0;
       }
 
-      #vehicles {
-        background: linear-gradient(135deg, #0f0f0f 0%, #1a0a0a 50%, #0f0f0f 100%);
-      }
-
-      .section:nth-of-type(3) {
-        background: linear-gradient(135deg, #0f0f0f 0%, #0d0d10 50%, #0f0f0f 100%);
-      }
-
-      .section:nth-of-type(4) {
-        background: linear-gradient(180deg, #0f0f0f 0%, #100f0d 50%, #0f0f0f 100%);
-        min-height: auto;
-      }
-
-      .section:nth-of-type(5) {
-        background: linear-gradient(135deg, #0f0f0f 0%, #0d0f12 50%, #0f0f0f 100%);
-        min-height: auto;
-      }
-
-      #tours-section {
-        background: linear-gradient(180deg, #0f0f0f 0%, #12100f 50%, #0f0f0f 100%);
-        min-height: auto;
-        padding: 4rem 0;
-      }
-
-      #weather-section {
-        background: linear-gradient(135deg, #0f0f0f 0%, #0d0f12 50%, #0f0f0f 100%);
-        min-height: auto;
-        padding: 4rem 0;
-      }
-
-      /* Mobile decorations - smaller and subtle */
-      .section-decoration-1 {
-        width: 100px;
-        height: 100px;
-      }
-      
-      .section-decoration-2 {
-        width: 80px;
-        height: 80px;
-      }
-      
-      .section-decoration-3 {
-        width: 50px;
-        height: 50px;
-      }
-
-      .section-grid-overlay {
-        background-size: 40px 40px;
-        opacity: 0.3;
+      .content-block {
+        margin-bottom: 4rem;
       }
 
       .section-title {
@@ -1984,6 +2253,24 @@
 
       .container {
         padding: 0 1rem;
+      }
+
+      /* Section with BG Mobile - Fixed height and full width */
+      .section-bg-image,
+      .section-bg-overlay {
+        height: 350px;
+        width: 100vw;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .region-filter {
+        gap: 0.5rem;
+      }
+
+      .region-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
       }
 
       /* Cars Mobile */
@@ -2036,44 +2323,52 @@
         padding: 0 8px;
       }
 
-      /* Mobile Latest Post */
-      .latest-post-section {
-        padding: 2rem 1rem;
-        margin-top: 3rem;
-        margin-bottom: 6rem;
-      }
-
-      .latest-post-content {
-        text-align: center;
+      /* Mobile Latest Posts Grid */
+      .latest-posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
       }
 
       .latest-post {
-        padding: 1.5rem;
+        aspect-ratio: 3 / 4;
       }
 
-      .latest-post-actions {
-        flex-direction: column;
-        align-items: flex-start;
+      .latest-post-title {
+        font-size: 1rem;
+      }
+
+      .latest-post-excerpt {
+        display: none;
+      }
+
+      .latest-post-meta {
+        top: 0.8rem;
+        left: 0.8rem;
+        right: 0.8rem;
+      }
+
+      .latest-post-content-wrapper {
+        padding: 1rem;
+      }
+
+      .latest-post-tag {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+      }
+
+      .latest-post-extra {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
       }
 
       .view-all-posts-btn {
-        margin-left: 0;
         width: 100%;
-        text-align: center;
-      }
-
-      /* Mobile Map */
-      .map-section {
-        padding: 2rem 1rem;
-        margin-top: 3rem;
-        margin-bottom: 3rem;
+        justify-content: center;
       }
 
       /* Mobile Weather */
-      .weather-section {
+      .weather-section-wrapper {
         padding: 2rem 1rem;
-        margin-top: 6rem;
-        margin-bottom: 8rem;
       }
 
       .weather-container {
@@ -2086,6 +2381,123 @@
 
       .weather-controls select {
         width: 100%;
+      }
+
+      /* Adventure Section Mobile */
+      .adventure-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 1rem;
+      }
+
+      .adventure-card-large {
+        grid-column: span 1;
+        grid-row: span 1;
+        min-height: 280px;
+      }
+
+      .adventure-card {
+        min-height: 200px;
+      }
+
+      .adventure-card-content {
+        padding: 1.2rem;
+      }
+
+      .adventure-icon {
+        width: 45px;
+        height: 45px;
+      }
+
+      .adventure-icon i {
+        font-size: 1.1rem;
+      }
+
+      .adventure-card-title {
+        font-size: 1rem;
+      }
+
+      .adventure-card-large .adventure-card-title {
+        font-size: 1.3rem;
+      }
+
+      .trust-indicators {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .trust-divider {
+        display: none;
+      }
+
+      .trust-item {
+        min-width: 40%;
+      }
+
+      .trust-number {
+        font-size: 2rem;
+      }
+
+      .trust-label {
+        font-size: 0.8rem;
+      }
+
+      /* Map Section Mobile */
+      .map-section-wrapper {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .region-cards-container {
+        width: 100%;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.8rem;
+        padding-bottom: 0.5rem;
+        padding-right: 0;
+        scrollbar-width: thin;
+      }
+
+      .region-cards-container::-webkit-scrollbar {
+        height: 4px;
+        width: auto;
+      }
+
+      .region-card {
+        min-width: 200px;
+        flex-shrink: 0;
+        margin-bottom: 0;
+      }
+
+      .region-card:hover,
+      .region-card.active {
+        transform: translateY(-3px);
+      }
+
+      .region-card-image {
+        width: 60px;
+        height: 45px;
+      }
+
+      .region-card-name {
+        font-size: 0.85rem;
+      }
+
+      .region-card-desc {
+        font-size: 0.7rem;
+        -webkit-line-clamp: 1;
+      }
+
+      .map-container-wrapper {
+        width: 100%;
+      }
+
+      .map-container {
+        aspect-ratio: 4 / 3;
       }
     }
 
@@ -2127,6 +2539,30 @@
 
       .tours-carousel-track .tour-card {
         width: 260px;
+      }
+
+      .region-tab {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+
+      /* Small Mobile Posts Grid */
+      .latest-posts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .latest-post {
+        aspect-ratio: 16 / 10;
+      }
+
+      .latest-post-title {
+        font-size: 1.1rem;
+      }
+
+      .latest-post-excerpt {
+        display: block;
+        -webkit-line-clamp: 1;
       }
     }
   </style>
@@ -2184,100 +2620,339 @@
       </div>
     </section>
 
-    <!-- Cars Section - Dynamic from Firebase -->
-    <section class="section" id="vehicles" aria-labelledby="vehicles-title">
-      <div class="section-grid-overlay"></div>
-      <div class="section-decoration section-decoration-1"></div>
-      <div class="section-decoration section-decoration-3"></div>
+    <!-- Continuous Content Area - No Sections -->
+    <div class="content-area">
       <div class="container">
-        <header class="section-header">
-          <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">Car Rental Georgia - Our <span>Premium</span> Fleet</h2>
-          <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">Rent a car in Georgia - sedans, SUVs, jeeps, minivans for every type of adventure. Car rental Tbilisi, Batumi, Kutaisi.</p>
-        </header>
         
-        <!-- 3D Cars Carousel -->
-        <div class="cars-carousel-wrapper" id="carsCarouselWrapper">
-          <div class="cars-carousel">
-            <div class="cars-carousel-track" id="carsCarouselTrack">
-              <div class="loading-cars" data-i18n="homeLoading">Loading...</div>
+        <!-- Why Choose Us - Statistics & Benefits Section -->
+<!-- Adventure Awaits - Journey Section -->
+        <div class="content-block adventure-section">
+          <header class="section-header">
+            <h2 class="section-title" data-i18n="homeAdventureTitle">შენი <span>თავგადასავალი</span> იწყება აქ</h2>
+            <p class="section-subtitle" data-i18n="homeAdventureSubtitle">აღმოაჩინე საქართველოს ჯადოსნური სილამაზე - მთებიდან ზღვამდე, უძველესი ტაძრებიდან თანამედროვე თბილისამდე</p>
+          </header>
+          
+          <div class="adventure-grid">
+            <!-- Card 1: Mountains -->
+            <div class="adventure-card adventure-card-large">
+              <div class="adventure-card-bg" style="background-image: url('https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80');"></div>
+              <div class="adventure-card-overlay"></div>
+              <div class="adventure-card-content">
+                <div class="adventure-icon">
+                  <i class="fas fa-mountain" aria-hidden="true"></i>
+                </div>
+                <h3 class="adventure-card-title" data-i18n="adventureMountains">მთის თავგადასავალი</h3>
+                <p class="adventure-card-text" data-i18n="adventureMountainsDesc">ყაზბეგი, სვანეთი, თუშეთი - კავკასიონის მაგიური მწვერვალები გელოდება</p>
+                <div class="adventure-card-stats">
+                  <span><i class="fas fa-map-marker-alt"></i> <span data-i18n="adventureLocations">15+ ლოკაცია</span></span>
+                </div>
+              </div>
             </div>
             
-            <!-- Navigation Arrows -->
-            <div class="cars-carousel-nav">
-              <button class="cars-carousel-arrow" id="carCarouselPrev" type="button" aria-label="Previous car">
-                <i class="fas fa-chevron-left" aria-hidden="true"></i>
-              </button>
-              <button class="cars-carousel-arrow" id="carCarouselNext" type="button" aria-label="Next car">
-                <i class="fas fa-chevron-right" aria-hidden="true"></i>
-              </button>
+            <!-- Card 2: Wine -->
+            <div class="adventure-card">
+              <div class="adventure-card-bg" style="background-image: url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=600&q=80');"></div>
+              <div class="adventure-card-overlay"></div>
+              <div class="adventure-card-content">
+                <div class="adventure-icon">
+                  <i class="fas fa-wine-glass-alt" aria-hidden="true"></i>
+                </div>
+                <h3 class="adventure-card-title" data-i18n="adventureWine">ღვინის მარშრუტი</h3>
+                <p class="adventure-card-text" data-i18n="adventureWineDesc">8000 წლიანი მეღვინეობის ტრადიცია კახეთში</p>
+              </div>
+            </div>
+            
+            <!-- Card 3: Culture -->
+            <div class="adventure-card">
+              <div class="adventure-card-bg" style="background-image: url('https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&q=80');"></div>
+              <div class="adventure-card-overlay"></div>
+              <div class="adventure-card-content">
+                <div class="adventure-icon">
+                  <i class="fas fa-landmark" aria-hidden="true"></i>
+                </div>
+                <h3 class="adventure-card-title" data-i18n="adventureCulture">კულტურული მემკვიდრეობა</h3>
+                <p class="adventure-card-text" data-i18n="adventureCultureDesc">UNESCO-ს ძეგლები და უძველესი მონასტრები</p>
+              </div>
+            </div>
+            
+            <!-- Card 4: Beach -->
+            <div class="adventure-card">
+              <div class="adventure-card-bg" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80');"></div>
+              <div class="adventure-card-overlay"></div>
+              <div class="adventure-card-content">
+                <div class="adventure-icon">
+                  <i class="fas fa-umbrella-beach" aria-hidden="true"></i>
+                </div>
+                <h3 class="adventure-card-title" data-i18n="adventureBeach">შავი ზღვის სანაპირო</h3>
+                <p class="adventure-card-text" data-i18n="adventureBeachDesc">ბათუმის ეგზოტიკური პლაჟები და აჭარის ბუნება</p>
+              </div>
+            </div>
+            
+            <!-- Card 5: Gastro -->
+            <div class="adventure-card">
+              <div class="adventure-card-bg" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80');"></div>
+              <div class="adventure-card-overlay"></div>
+              <div class="adventure-card-content">
+                <div class="adventure-icon">
+                  <i class="fas fa-utensils" aria-hidden="true"></i>
+                </div>
+                <h3 class="adventure-card-title" data-i18n="adventureFood">გასტრო ტური</h3>
+                <p class="adventure-card-text" data-i18n="adventureFoodDesc">ხინკალი, ხაჭაპური, მწვადი - გემოვნების მოგზაურობა</p>
+              </div>
             </div>
           </div>
           
-          <!-- Carousel Dots -->
-          <div class="cars-carousel-dots" id="carsCarouselDots"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tours Section -->
-    <section class="section" id="tours-section" aria-labelledby="tours-title">
-      <div class="section-grid-overlay"></div>
-      <div class="section-decoration section-decoration-2"></div>
-      <div class="section-decoration section-decoration-3" style="left: 5%; right: auto; top: 20%;"></div>
-      <div class="container">
-        <header class="section-header">
-          <h2 class="section-title" id="tours-title" data-i18n="homeToursTitle">Tours in Georgia - Unforgettable <span>Experiences</span></h2>
-          <p class="section-subtitle" data-i18n="homeToursSubtitle">Best tours in Georgia - Kakheti wine tours, Kazbegi mountain tours, Svaneti adventure tours, Tbilisi city tours. Book now!</p>
-        </header>
-        
-        <!-- 3D Tours Carousel -->
-        <div class="tours-carousel-wrapper" id="toursCarouselWrapper">
-          <div class="tours-carousel">
-            <div class="tours-carousel-track" id="toursCarouselTrack">
-              <div class="loading-tours" data-i18n="homeLoading">Loading...</div>
+          <!-- Trust Indicators -->
+          <div class="trust-indicators">
+            <div class="trust-item">
+              <div class="trust-number" data-count="8" data-suffix="+">8+</div>
+              <div class="trust-label" data-i18n="trustYears">წლიანი გამოცდილება</div>
             </div>
-            
-            <!-- Navigation Arrows -->
-            <div class="tours-carousel-nav">
-              <button class="tours-carousel-arrow" id="tourCarouselPrev" type="button" aria-label="Previous tour">
-                <i class="fas fa-chevron-left" aria-hidden="true"></i>
-              </button>
-              <button class="tours-carousel-arrow" id="tourCarouselNext" type="button" aria-label="Next tour">
-                <i class="fas fa-chevron-right" aria-hidden="true"></i>
-              </button>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-number" data-count="50" data-suffix="+">50+</div>
+              <div class="trust-label" data-i18n="trustCountries">ქვეყნიდან სტუმრები</div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-number" data-count="4.9" data-decimals="1">20K</div>
+              <div class="trust-label" data-i18n="trustRating">Google რეიტინგი</div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-number" data-count="24" data-suffix="/7">24/7</div>
+              <div class="trust-label" data-i18n="trustSupport">მხარდაჭერა</div>
             </div>
           </div>
-          
-          <!-- Carousel Dots -->
-          <div class="tours-carousel-dots" id="toursCarouselDots"></div>
         </div>
-      </div>
-    </section>
 
-    <section class="section" aria-labelledby="map-title">
-      <div class="section-grid-overlay"></div>
-      <div class="section-decoration section-decoration-1" style="top: 5%; left: auto; right: 10%;"></div>
-      <div class="container">
-        <div class="map-section">
+        <!-- Cars Block with Background Image -->
+        <div class="content-block section-with-bg" id="vehicles">
+          <!-- Background Image 1700x550 -->
+          <div class="section-bg-image" style="background-image: url('addhome/carsbackground.png');"></div>
+          <div class="section-bg-overlay"></div>
+          
+          <header class="section-header">
+            <h2 class="section-title" id="vehicles-title" data-i18n="homeVehiclesTitle">ჩვენი <span>ავტომობილები</span></h2>
+            <p class="section-subtitle" data-i18n="homeVehiclesSubtitle">აირჩიეთ თქვენთვის სასურველი ტრანსპორტი და დაიწყეთ მოგზაურობა დღესვე. კომფორტული სედანები, მძლავრი ჯიპები, ოჯახური მინივენები და პრემიუმ კლასის ავტომობილები - ყველაფერი თქვენი სურვილისთვის.</p>
+          </header>
+          
+          <!-- 3D Cars Carousel -->
+          <div class="cars-carousel-wrapper" id="carsCarouselWrapper">
+            <div class="cars-carousel">
+              <div class="cars-carousel-track" id="carsCarouselTrack">
+                <div class="loading-cars" data-i18n="homeLoading">Loading...</div>
+              </div>
+              
+              <!-- Navigation Arrows -->
+              <div class="cars-carousel-nav">
+                <button class="cars-carousel-arrow" id="carCarouselPrev" type="button" aria-label="Previous car">
+                  <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="cars-carousel-arrow" id="carCarouselNext" type="button" aria-label="Next car">
+                  <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Carousel Dots -->
+            <div class="cars-carousel-dots" id="carsCarouselDots"></div>
+          </div>
+        </div>
+
+        <!-- Tours Block with Background Image and Region Filter -->
+        <div class="content-block section-with-bg" id="tours-section">
+          <!-- Background Image 1700x550 -->
+          <div class="section-bg-image" style="background-image: url('addhome/toursbackground.png');"></div>
+          <div class="section-bg-overlay"></div>
+          
+          <header class="section-header">
+            <h2 class="section-title" id="tours-title" data-i18n="homeToursTitle">ჩვენი <span>ტურები</span></h2>
+            <p class="section-subtitle" data-i18n="homeToursSubtitle">აღმოაჩინეთ საქართველო ჩვენი უნიკალური ტურებით. კახეთის ღვინის ტურები, ყაზბეგის მთის ექსპედიციები, სვანეთის თავგადასავალი, თბილისის კულტურული გასეირნება და ბათუმის ზღვისპირა დასვენება - თქვენი დაუვიწყარი მოგზაურობა იწყება აქ.</p>
+          </header>
+
+
+          
+          <!-- 3D Tours Carousel -->
+          <div class="tours-carousel-wrapper" id="toursCarouselWrapper">
+            <div class="tours-carousel">
+              <div class="tours-carousel-track" id="toursCarouselTrack">
+                <div class="loading-tours" data-i18n="homeLoading">Loading...</div>
+              </div>
+              
+              <!-- Navigation Arrows -->
+              <div class="tours-carousel-nav">
+                <button class="tours-carousel-arrow" id="tourCarouselPrev" type="button" aria-label="Previous tour">
+                  <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="tours-carousel-arrow" id="tourCarouselNext" type="button" aria-label="Next tour">
+                  <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Carousel Dots -->
+            <div class="tours-carousel-dots" id="toursCarouselDots"></div>
+          </div>
+        </div>
+
+        <!-- Map Block - With Region Cards -->
+         
+        <div class="content-block">
           <header class="section-header">
             <h2 class="section-title" id="map-title" data-i18n="homeChooseRegion">Explore <span>Georgia</span> Regions</h2>
             <p class="section-subtitle" data-i18n="homeMapSubtitle">Click on any region to discover unique destinations - Tbilisi, Kakheti, Kazbegi, Svaneti, Batumi and more!</p>
           </header>
-          <div class="map-container">
-            <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="Interactive map of Georgia - Choose a region for tours">
-              <div class="loading-posts">Loading map...</div>
-            </object>
+          
+          <div class="map-section-wrapper">
+            <!-- Region Cards - Left Side -->
+            <div class="region-cards-container" id="region-cards-container">
+              <!-- Tbilisi -->
+              <a href="tbilisi.html" class="region-card" data-region="GE-TB">
+                <div class="region-card-image">
+                  <img src="addhome/tbilisi.png" alt="Tbilisi" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionTbilisi">თბილისი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionTbilisiDesc">დედაქალაქი, ძველი თბილისი, ნარიყალა</div>
+                </div>
+              </a>
+              
+              <!-- Kakheti -->
+              <a href="kakheti.html" class="region-card" data-region="GE-KA">
+                <div class="region-card-image">
+                  <img src="addhome/kaxeti.png" alt="Kakheti" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionKakheti">კახეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionKakhetiDesc">ღვინის მხარე, ალავერდი, სიღნაღი</div>
+                </div>
+              </a>
+              
+              <!-- Mtskheta-Mtianeti -->
+              <a href="mtkheta-mtianeti.html" class="region-card" data-region="GE-MM">
+                <div class="region-card-image">
+                  <img src="addhome/mcxeta.png" alt="Mtskheta-Mtianeti" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionMtskhetaMtianetiDesc">ყაზბეგი, გერგეტი, მცხეთა, ჯვარი</div>
+                </div>
+              </a>
+              
+              <!-- Adjara -->
+              <a href="ajara.html" class="region-card" data-region="GE-AJ">
+                <div class="region-card-image">
+                  <img src="addhome/ajara.png" alt="Adjara" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionAdjara">აჭარა <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionAdjaraDesc">შავი ზღვის სანაპირო, ბათუმი</div>
+                </div>
+              </a>
+              
+              <!-- Imereti -->
+              <a href="imereti.html" class="region-card" data-region="GE-IM">
+                <div class="region-card-image">
+                  <img src="addhome/imereti.png" alt="Imereti" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionImereti">იმერეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionImeretiDesc">გელათი, მოცამეტა, ქუთაისი</div>
+                </div>
+              </a>
+              
+              <!-- Samegrelo-Zemo Svaneti -->
+              <a href="samegrelo-zemo-svaneti.html" class="region-card" data-region="GE-SZ">
+                <div class="region-card-image">
+                  <img src="addhome/samegrelo.png" alt="Samegrelo-Zemo Svaneti" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionSamegrelo">სამეგრელო-სვანეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionSamegreloDesc">მესტია, უშგული, მარტვილი</div>
+                </div>
+              </a>
+              
+              <!-- Samtskhe-Javakheti -->
+              <a href="samtskhe-javakheti.html" class="region-card" data-region="GE-SJ">
+                <div class="region-card-image">
+                  <img src="addhome/samcxe.png" alt="Samtskhe-Javakheti" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionSamtskheJavakheti">სამცხე-ჯავახეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionSamtskheJavakhetiDesc">ვარძია, ბორჯომი, რაბათი</div>
+                </div>
+              </a>
+              
+              <!-- Shida Kartli -->
+              <a href="shida-kartli.html" class="region-card" data-region="GE-SK">
+                <div class="region-card-image">
+                  <img src="addhome/shida.png" alt="Shida Kartli" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionShidaKartli">შიდა ქართლი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionShidaKartliDesc">უფლისციხე, გორი</div>
+                </div>
+              </a>
+              
+              <!-- Kvemo Kartli -->
+              <a href="kvemo-kartli.html" class="region-card" data-region="GE-KK">
+                <div class="region-card-image">
+                  <img src="addhome/kvemokartli.png" alt="Kvemo Kartli" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionKvemoKartli">ქვემო ქართლი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionKvemoKartliDesc">დმანისი, ბოლნისი</div>
+                </div>
+              </a>
+              
+              <!-- Racha-Lechkhumi -->
+              <a href="racha-lechkhumi.html" class="region-card" data-region="GE-RL">
+                <div class="region-card-image">
+                  <img src="addhome/racha.png" alt="Racha-Lechkhumi" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionRachaLechkhumi">რაჭა-ლეჩხუმი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionRachaLechkhumiDesc">ხვანჭკარა, ნიკორწმინდა</div>
+                </div>
+              </a>
+              
+              <!-- Guria -->
+              <a href="guria.html" class="region-card" data-region="GE-GU">
+                <div class="region-card-image">
+                  <img src="addhome/guria.png" alt="Guria" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionGuria">გურია <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionGuriaDesc">ტრადიციული სოფლები, ჩაი</div>
+                </div>
+              </a>
+              
+              <!-- Abkhazia -->
+              <a href="abkhazia.html" class="region-card" data-region="GE-AB" style="opacity: 0.6;">
+                <div class="region-card-image">
+                  <img src="addhome/afxazeti.png" alt="Abkhazia" loading="lazy">
+                </div>
+                <div class="region-card-content">
+                  <div class="region-card-name" data-i18n="regionAbkhazia">აფხაზეთი <i class="fas fa-arrow-right"></i></div>
+                  <div class="region-card-desc" data-i18n="regionAbkhaziaDesc">საოკუპაციო ზონა</div>
+                </div>
+              </a>
+            </div>
+            
+            <!-- Map - Right Side -->
+            <div class="map-container-wrapper">
+              <div class="map-container">
+                <object id="georgia-map" class="svg-map" type="image/svg+xml" data="addhome/georgiaHigh.svg" aria-label="Interactive map of Georgia - Choose a region for tours">
+                  <div class="loading-posts">Loading map...</div>
+                </object>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="section" aria-labelledby="posts-title">
-      <div class="section-grid-overlay"></div>
-      <div class="section-decoration section-decoration-2" style="bottom: 20%; left: 5%; right: auto;"></div>
-      <div class="section-decoration section-decoration-3" style="top: 30%; right: 8%;"></div>
-      <div class="container">
-        <div class="latest-post-section">
+        <!-- Posts Block -->
+        <div class="content-block">
           <header class="section-header">
             <h2 class="section-title" id="posts-title" data-i18n="homeLatestPost">Georgia Travel <span>Stories</span></h2>
           </header>
@@ -2285,49 +2960,46 @@
             <div class="loading-posts" data-i18n="homeLoading">Loading...</div>
           </div>
         </div>
-      </div>
-    </section>
-    
-    <section class="section" id="weather-section" aria-labelledby="weather-title">
-      <div class="section-grid-overlay"></div>
-      <div class="section-decoration section-decoration-1" style="top: 15%; left: 8%;"></div>
-      <div class="section-decoration section-decoration-2" style="bottom: 10%; right: 5%;"></div>
-      <div class="container">
-        <div class="weather-section">
-          <header class="section-header">
-            <h2 class="section-title" id="weather-title" data-i18n="homeWeatherForecast">Georgia Weather <span>Forecast</span></h2>
-            <p class="section-subtitle" data-i18n="homeWeatherSubtitle">Plan your perfect Georgia trip with accurate weather information for Tbilisi, Batumi, Kazbegi and all regions</p>
-          </header>
-          <div class="weather-controls">
-            <label for="region-select" class="sr-only">Choose a region in Georgia</label>
-            <select id="region-select" aria-label="Region selection for weather in Georgia">
-              <option value="აფხაზეთი" data-i18n="regionAbkhazia">Abkhazia</option>
-              <option value="სამეგრელო" data-i18n="regionSamegrelo">Samegrelo</option>
-              <option value="გურია" data-i18n="regionGuria">Guria</option>
-              <option value="აჭარა" data-i18n="regionAdjara">Adjara</option>
-              <option value="რაჭა-ლეჩხუმი" data-i18n="regionRachaLechkhumi">Racha-Lechkhumi</option>
-              <option value="იმერეთი" data-i18n="regionImereti">Imereti</option>
-              <option value="სამცხე-ჯავახეთი" data-i18n="regionSamtskheJavakheti">Samtskhe-Javakheti</option>
-              <option value="შიდა ქართლი" data-i18n="regionShidaKartli">Shida Kartli</option>
-              <option value="მცხეთა-მთიანეთი" data-i18n="regionMtskhetaMtianeti">Mtskheta-Mtianeti</option>
-              <option value="ქვემო ქართლი" data-i18n="regionKvemoKartli">Kvemo Kartli</option>
-              <option value="თბილისი" data-i18n="regionTbilisi" selected>Tbilisi</option>
-              <option value="კახეთი" data-i18n="regionKakheti">Kakheti</option>
-            </select>
-            <label for="forecast-type" class="sr-only">Choose forecast type</label>
-            <select id="forecast-type" aria-label="Forecast type selection">
-              <option value="current" data-i18n="homeCurrentWeather">Current Weather</option>
-              <option value="24h" data-i18n="home24Hours">24 Hours</option>
-              <option value="7day" data-i18n="home7Days">7 Days</option>
-              <option value="30day" data-i18n="home15Days">15 Days</option>
-            </select>
-          </div>
-          <div id="weather-container" class="weather-container" aria-live="polite">
-            <div class="loading-weather" data-i18n="homeLoading">Loading...</div>
+        
+        <!-- Weather Block -->
+        <div class="content-block" id="weather-section">
+          <div class="weather-section-wrapper">
+            <header class="section-header">
+              <h2 class="section-title" id="weather-title" data-i18n="homeWeatherForecast">Georgia Weather <span>Forecast</span></h2>
+              <p class="section-subtitle" data-i18n="homeWeatherSubtitle">Plan your perfect Georgia trip with accurate weather information for Tbilisi, Batumi, Kazbegi and all regions</p>
+            </header>
+            <div class="weather-controls">
+              <label for="region-select" class="sr-only">Choose a region in Georgia</label>
+              <select id="region-select" aria-label="Region selection for weather in Georgia">
+                <option value="აფხაზეთი" data-i18n="regionAbkhazia">Abkhazia</option>
+                <option value="სამეგრელო" data-i18n="regionSamegrelo">Samegrelo</option>
+                <option value="გურია" data-i18n="regionGuria">Guria</option>
+                <option value="აჭარა" data-i18n="regionAdjara">Adjara</option>
+                <option value="რაჭა-ლეჩხუმი" data-i18n="regionRachaLechkhumi">Racha-Lechkhumi</option>
+                <option value="იმერეთი" data-i18n="regionImereti">Imereti</option>
+                <option value="სამცხე-ჯავახეთი" data-i18n="regionSamtskheJavakheti">Samtskhe-Javakheti</option>
+                <option value="შიდა ქართლი" data-i18n="regionShidaKartli">Shida Kartli</option>
+                <option value="მცხეთა-მთიანეთი" data-i18n="regionMtskhetaMtianeti">Mtskheta-Mtianeti</option>
+                <option value="ქვემო ქართლი" data-i18n="regionKvemoKartli">Kvemo Kartli</option>
+                <option value="თბილისი" data-i18n="regionTbilisi" selected>Tbilisi</option>
+                <option value="კახეთი" data-i18n="regionKakheti">Kakheti</option>
+              </select>
+              <label for="forecast-type" class="sr-only">Choose forecast type</label>
+              <select id="forecast-type" aria-label="Forecast type selection">
+                <option value="current" data-i18n="homeCurrentWeather">Current Weather</option>
+                <option value="24h" data-i18n="home24Hours">24 Hours</option>
+                <option value="7day" data-i18n="home7Days">7 Days</option>
+                <option value="30day" data-i18n="home15Days">15 Days</option>
+              </select>
+            </div>
+            <div id="weather-container" class="weather-container" aria-live="polite">
+              <div class="loading-weather" data-i18n="homeLoading">Loading...</div>
+            </div>
           </div>
         </div>
+
       </div>
-    </section>
+    </div>
   </main>
 
   <div class="image-modal" id="image-modal" role="dialog" aria-modal="true" aria-label="Image enlargement">
@@ -2505,6 +3177,7 @@
     var toursCarouselDots = document.getElementById('toursCarouselDots');
     var carsCarouselTrack = document.getElementById('carsCarouselTrack');
     var carsCarouselDots = document.getElementById('carsCarouselDots');
+    var regionFilter = document.getElementById('regionFilter');
 
     function safeTranslate(key, fallback) {
       fallback = fallback || '';
@@ -2516,6 +3189,7 @@
 
     // Tours Variables
     var allTours = [];
+    var filteredTours = [];
     var allCars = [];
     var MAX_ITEMS = 10;
     var currentTourIndex = 0;
@@ -2523,6 +3197,7 @@
     var autoRotateTourInterval = null;
     var autoRotateCarInterval = null;
     var isMobile = window.innerWidth <= 768;
+    var selectedRegion = 'all';
 
     // Load Cars from Firebase
     async function loadCars(firebase) {
@@ -2571,11 +3246,53 @@
         });
 
         allTours = allTours.slice(0, MAX_ITEMS);
-        setup3DToursCarousel(allTours);
+        filteredTours = allTours;
+        setup3DToursCarousel(filteredTours);
       } catch (error) {
         console.error("Error loading tours:", error);
         toursCarouselTrack.innerHTML = '<div class="no-tours-message">' + safeTranslate('homeToursLoadError', 'Failed to load tours') + '</div>';
       }
+    }
+
+    // Filter Tours by Region
+    function filterToursByRegion(region) {
+      selectedRegion = region;
+      
+      if (region === 'all') {
+        filteredTours = allTours;
+      } else {
+        filteredTours = allTours.filter(function(tour) {
+          if (tour.regions && tour.regions.length > 0) {
+            return tour.regions.includes(region) || tour.regions.includes('all');
+          }
+          return tour.region === region;
+        });
+      }
+      
+      // Reset carousel
+      currentTourIndex = 0;
+      if (autoRotateTourInterval) {
+        clearInterval(autoRotateTourInterval);
+      }
+      
+      setup3DToursCarousel(filteredTours);
+    }
+
+    // Region Filter Tab Click Handler
+    if (regionFilter) {
+      regionFilter.addEventListener('click', function(e) {
+        if (e.target.classList.contains('region-tab')) {
+          // Remove active from all tabs
+          regionFilter.querySelectorAll('.region-tab').forEach(function(tab) {
+            tab.classList.remove('active');
+          });
+          // Add active to clicked tab
+          e.target.classList.add('active');
+          // Filter tours
+          var region = e.target.getAttribute('data-region');
+          filterToursByRegion(region);
+        }
+      });
     }
 
     // ========================================
@@ -3038,7 +3755,8 @@
     // ========================================
     function setup3DToursCarousel(tours) {
       if (tours.length === 0) {
-        toursCarouselTrack.innerHTML = '<div class="no-tours-message">' + safeTranslate('homeNoTours', 'No tours available') + '</div>';
+        toursCarouselTrack.innerHTML = '<div class="no-tours-message">' + safeTranslate('homeNoToursInRegion', 'No tours available in this region') + '</div>';
+        toursCarouselDots.innerHTML = '';
         return;
       }
 
@@ -3478,50 +4196,72 @@
     }
 
     function createLatestPostElement(postData, postId) {
-      var postTime = postData.createdAt ? formatDate(postData.createdAt.toDate()) : safeTranslate('homeTimeUnknown', 'Unknown time');
+      var postDate = postData.createdAt ? postData.createdAt.toDate() : new Date();
+      var postTimeFormatted = postDate.toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
       
       var regionNames = {
-        'აფხაზეთი': 'Abkhazia', 'აჭარა': 'Adjara', 'გურია': 'Guria', 'იმერეთი': 'Imereti',
-        'კახეთი': 'Kakheti', 'ქვემო ქართლი': 'Kvemo Kartli', 'მცხეთა-მთიანეთი': 'Mtskheta-Mtianeti',
-        'რაჭა-ლეჩხუმი': 'Racha-Lechkhumi', 'სამცხე-ჯავახეთი': 'Samtskhe-Javakheti',
-        'შიდა ქართლი': 'Shida Kartli', 'სამეგრელო': 'Samegrelo', 'თბილისი': 'Tbilisi'
+        'აფხაზეთი': 'abkhazia', 'აჭარა': 'adjara', 'გურია': 'guria', 'იმერეთი': 'imereti',
+        'კახეთი': 'kakheti', 'ქვემო ქართლი': 'kvemo-kartli', 'მცხეთა-მთიანეთი': 'mtskheta-mtianeti',
+        'რაჭა-ლეჩხუმი': 'racha-lechkhumi', 'სამცხე-ჯავახეთი': 'samtskhe-javakheti',
+        'შიდა ქართლი': 'shida-kartli', 'სამეგრელო': 'samegrelo', 'თბილისი': 'tbilisi'
       };
       
-      var regionName = regionNames[postData.region] || postData.region;
+      var regionSlug = regionNames[postData.region] || (postData.region || 'georgia').toLowerCase().replace(/\s+/g, '-');
       
-      var imagesHTML = '';
-      if (postData.images && postData.images.length > 0) {
-        imagesHTML = '\
-          <div class="latest-post-image">\
-            <img src="' + postData.images[0] + '" alt="Georgia Trips - ' + (postData.location || 'Georgia') + ' - Travel photo tours in Georgia" onclick="openImageModal(\'' + postId + '\', 0)" loading="lazy">\
-          </div>\
-        ';
+      // Get tag based on content or region
+      var tagCategories = {
+        'მთა': { icon: 'fa-mountain', text: safeTranslate('postTagNature', 'ბუნების ძეგლები') },
+        'ღვინ': { icon: 'fa-wine-glass', text: safeTranslate('postTagWine', 'ღვინო და კულტურა') },
+        'ზღვ': { icon: 'fa-water', text: safeTranslate('postTagBeach', 'ზღვა და დასვენება') },
+        'ეკლესია': { icon: 'fa-church', text: safeTranslate('postTagCulture', 'კულტურული ძეგლები') },
+        'default': { icon: '', text: safeTranslate('', 'მოგზაურობა') }
+      };
+      
+      var tag = tagCategories['default'];
+      var content = (postData.content || '').toLowerCase();
+      for (var key in tagCategories) {
+        if (key !== 'default' && content.indexOf(key) !== -1) {
+          tag = tagCategories[key];
+          break;
+        }
       }
       
-      var likesCount = postData.likesCount || 0;
-      var commentsCount = postData.commentsCount || 0;
+      var imagesCount = postData.images ? postData.images.length : 0;
+      var extraImages = imagesCount > 1 ? '+' + (imagesCount - 1) : '';
+      
+      var defaultImage = 'https://res.cloudinary.com/dmxmlw0ln/image/upload/v1737999067/georgia-default_vxqzpf.jpg';
+      var postImage = (postData.images && postData.images.length > 0) ? postData.images[0] : defaultImage;
+      
+      // Create title from content (first 50 chars or first sentence)
+      var postContent = postData.content || '';
+      var postTitle = postContent.split('.')[0].substring(0, 60);
+      if (postTitle.length >= 60) postTitle += '...';
+      
+      var postExcerpt = postContent.substring(0, 100);
+      if (postExcerpt.length >= 100) postExcerpt += '...';
       
       var postElement = document.createElement('article');
       postElement.className = 'latest-post';
       postElement.setAttribute('data-post-id', postId);
+      postElement.onclick = function() { openImageModal(postId, 0); };
       postElement.innerHTML = '\
-        <header class="latest-post-header">\
-          <img src="' + (postData.authorAvatar || 'https://via.placeholder.com/50?text=User') + '" alt="' + (postData.authorName || 'User') + ' - Profile photo Georgia travel" class="latest-post-avatar" loading="lazy">\
-          <div>\
-            <div class="latest-post-author">' + (postData.authorName || safeTranslate('homeAnonymous', 'Anonymous')) + '</div>\
-            <time class="latest-post-time" datetime="' + (postData.createdAt ? postData.createdAt.toDate().toISOString() : '') + '">' + postTime + ' · ' + regionName + '</time>\
-          </div>\
-        </header>\
-        ' + imagesHTML + '\
-        <div class="latest-post-content">\
-          ' + (postData.content || safeTranslate('homeNoContent', 'No content')) + '\
+        <div class="latest-post-image">\
+          <img src="' + postImage + '" alt="Georgia Trips - ' + (postData.location || 'Georgia') + '" loading="lazy">\
         </div>\
-        ' + (postData.location ? '<div class="latest-post-location"><i class="fas fa-map-marker-alt"></i>' + postData.location + '</div>' : '') + '\
-        <footer class="latest-post-actions">\
-          <div class="post-action"><i class="fas fa-heart"></i> ' + likesCount + '</div>\
-          <div class="post-action"><i class="fas fa-comment"></i> ' + commentsCount + '</div>\
-          <a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts">' + safeTranslate('homeViewAllPosts', 'View All Posts') + '</a>\
-        </footer>\
+        <div class="latest-post-overlay"></div>\
+        <div class="latest-post-meta">\
+          <div class="latest-post-location"><i class="fas fa-map-marker-alt"></i>' + (postData.location || postData.region || 'Georgia') + '</div>\
+          <time class="latest-post-time" datetime="' + postDate.toISOString() + '">' + postTimeFormatted + ' · ' + regionSlug + '</time>\
+        </div>\
+        <div class="latest-post-content-wrapper">\
+          <h3 class="latest-post-title">' + postTitle + '</h3>\
+          <div class="latest-post-footer">\
+            <span class="latest-post-tag"><i class="fas ' + tag.icon + '"></i>' + tag.text + '<span class="latest-post-excerpt">' + postExcerpt + '</span></span>\
+            ' + (extraImages ? '<span class="latest-post-extra">' + extraImages + '</span>' : '') + '\
+          </div>\
+        </div>\
       ';
       
       return postElement;
@@ -3612,25 +4352,39 @@
         loadCars(firebase);
         loadTours(firebase);
         
-        // Load latest post
-        var db = firebase.db;
-        var collection = firebase.collection;
-        var query = firebase.query;
-        var orderBy = firebase.orderBy;
-        var limitFn = firebase.limitFn;
-        var getDocs = firebase.getDocs;
-
-        var postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"), limitFn(1));
-        var postsSnapshot = await getDocs(postsQuery);
+// Load latest posts (3 posts)
+      var db = firebase.db;
+      var collection = firebase.collection;
+      var query = firebase.query;
+      var orderBy = firebase.orderBy;
+      var limitFn = firebase.limitFn;
+      var getDocs = firebase.getDocs;
+      
+      var postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"), limitFn(3));
+      var postsSnapshot = await getDocs(postsQuery);
+      
+      if (!postsSnapshot.empty) {
+        latestPostContainer.innerHTML = '';
         
-        if (!postsSnapshot.empty) {
-          var doc = postsSnapshot.docs[0];
+        // Create grid container
+        var gridContainer = document.createElement('div');
+        gridContainer.className = 'latest-posts-grid';
+        
+        postsSnapshot.docs.forEach(function(doc) {
           var postElement = createLatestPostElement(doc.data(), doc.id);
-          latestPostContainer.innerHTML = '';
-          latestPostContainer.appendChild(postElement);
-        } else {
-          latestPostContainer.innerHTML = '<div class="no-posts" data-i18n="homeNoPosts">' + safeTranslate('homeNoPosts', 'No posts yet') + '</div>';
-        }
+          gridContainer.appendChild(postElement);
+        });
+        
+        latestPostContainer.appendChild(gridContainer);
+        
+        // Add view all button
+        var viewAllWrapper = document.createElement('div');
+        viewAllWrapper.className = 'view-all-posts-wrapper';
+        viewAllWrapper.innerHTML = '<a href="posts.html" class="view-all-posts-btn" data-i18n="homeViewAllPosts"><i class="fas fa-images"></i> ' + safeTranslate('homeViewAllPosts', 'ყველას ნახვა') + '</a>';
+        latestPostContainer.appendChild(viewAllWrapper);
+      } else {
+        latestPostContainer.innerHTML = '<div class="no-posts" data-i18n="homeNoPosts">' + safeTranslate('homeNoPosts', 'No posts yet') + '</div>';
+      }
 
         // Load weather
         fetchWeatherData();
@@ -3649,11 +4403,50 @@
       }
     }
 
+    // Counter Animation for Stats
+    function animateCounters() {
+      var counters = document.querySelectorAll('.stat-number[data-count]');
+      
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var counter = entry.target;
+            var target = parseFloat(counter.getAttribute('data-count'));
+            var decimals = parseInt(counter.getAttribute('data-decimals')) || 0;
+            var duration = 2000;
+            var step = target / (duration / 16);
+            var current = 0;
+            
+            var updateCounter = function() {
+              current += step;
+              if (current < target) {
+                counter.textContent = decimals > 0 ? current.toFixed(decimals) : Math.floor(current);
+                requestAnimationFrame(updateCounter);
+              } else {
+                counter.textContent = decimals > 0 ? target.toFixed(decimals) : target;
+              }
+            };
+            
+            updateCounter();
+            observer.unobserve(counter);
+          }
+        });
+      }, { threshold: 0.5 });
+      
+      counters.forEach(function(counter) {
+        observer.observe(counter);
+      });
+    }
+
     // Wait for DOM and translations to be ready
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener('DOMContentLoaded', function() {
+        init();
+        animateCounters();
+      });
     } else {
       init();
+      animateCounters();
     }
     function removeHtmlExtensionFromURL() {
       if (window.location.pathname.endsWith('.html')) {
@@ -3665,6 +4458,106 @@
 
     window.addEventListener('load', removeHtmlExtensionFromURL);
     window.addEventListener('popstate', removeHtmlExtensionFromURL);
+
+    // ========================================
+    // REGION CARDS - MAP HOVER INTERACTION
+    // ========================================
+    function initRegionCardsInteraction() {
+      const regionCards = document.querySelectorAll('.region-card');
+      const svgObject = document.getElementById('georgia-map');
+      
+      if (!svgObject || regionCards.length === 0) return;
+      
+      // Wait for SVG to load
+      function setupInteraction() {
+        const svgDoc = svgObject.contentDocument;
+        if (!svgDoc) {
+          setTimeout(setupInteraction, 300);
+          return;
+        }
+        
+        const regions = {
+          'GE-AB': { color: '#3a3a3a' },
+          'GE-AJ': { color: '#4d4d4d' },
+          'GE-GU': { color: '#525252' },
+          'GE-IM': { color: '#5a5a5a' },
+          'GE-KA': { color: '#474747' },
+          'GE-KK': { color: '#5f5f5f' },
+          'GE-MM': { color: '#444444' },
+          'GE-RL': { color: '#575757' },
+          'GE-SJ': { color: '#4a4a4a' },
+          'GE-SK': { color: '#505050' },
+          'GE-SZ': { color: '#424242' },
+          'GE-TB': { color: '#666666' }
+        };
+        
+        regionCards.forEach(card => {
+          const regionId = card.getAttribute('data-region');
+          if (!regionId) return;
+          
+          const path = svgDoc.getElementById(regionId);
+          if (!path) return;
+          
+          // Card hover -> highlight map region
+          card.addEventListener('mouseenter', () => {
+            path.style.fill = '#e5383b';
+            card.classList.add('active');
+            
+            // Show region label if exists
+            const labelGroup = svgDoc.getElementById('region-labels');
+            if (labelGroup) {
+              const labels = labelGroup.querySelectorAll('text');
+              labels.forEach(label => {
+                const key = label.getAttribute('data-translation-key');
+                const cardKey = card.querySelector('[data-i18n]')?.getAttribute('data-i18n');
+                if (key && cardKey && key === cardKey) {
+                  label.setAttribute('visibility', 'visible');
+                }
+              });
+            }
+          });
+          
+          card.addEventListener('mouseleave', () => {
+            const originalColor = regions[regionId]?.color || '#4d4d4d';
+            path.style.fill = originalColor;
+            card.classList.remove('active');
+            
+            // Hide region label
+            const labelGroup = svgDoc.getElementById('region-labels');
+            if (labelGroup) {
+              const labels = labelGroup.querySelectorAll('text');
+              labels.forEach(label => {
+                label.setAttribute('visibility', 'hidden');
+              });
+            }
+          });
+          
+          // Map region hover -> highlight card
+          path.addEventListener('mouseenter', () => {
+            card.classList.add('active');
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
+          
+          path.addEventListener('mouseleave', () => {
+            card.classList.remove('active');
+          });
+        });
+      }
+      
+      if (svgObject.contentDocument && svgObject.contentDocument.querySelector('svg')) {
+        setupInteraction();
+      } else {
+        svgObject.addEventListener('load', setupInteraction);
+        setTimeout(setupInteraction, 1000);
+      }
+    }
+    
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRegionCardsInteraction);
+    } else {
+      initRegionCardsInteraction();
+    }
   </script>
 </body>
 </html>

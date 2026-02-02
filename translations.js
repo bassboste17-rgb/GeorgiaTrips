@@ -355,20 +355,53 @@ notifAdminRejectedToast: "მოთხოვნა უარყოფილი�
       "ნოემბერი",
       "დეკემბერი",
     ],
-    // Hero section additions
-    heroBadge: "საუკეთესო ტრანსპორტირება",
-    homeLearnMore: "გაიგე მეტი",
+// Hero section additions
+  heroBadge: "საუკეთესო ტრანსპორტირება",
+  homeLearnMore: "გაიგე მეტი",
+  
+  // Adventure Section - Home Page
+  homeAdventureTitle: "შენი თავგადასავალი იწყება აქ",
+  homeAdventureSubtitle: "აღმოაჩინე საქართველოს ჯადოსნური სილამაზე - მთებიდან ზღვამდე, უძველესი ტაძრებიდან თანამედროვე თბილისამდე",
+  adventureMountains: "მთები და ბუნება",
+  adventureMountainsDesc: "აღმოაჩინე კავკასიონის მთების მომაჯადოებელი სილამაზე, უძველესი ტყეები და კრისტალურად წმინდა მდინარეები",
+  adventureLocations: "100+ ლოკაცია",
+  adventureWine: "ღვინის კულტურა",
+  adventureWineDesc: "8000 წლიანი ღვინის ისტორია - გასინჯე ქვევრის ღვინო და აღმოაჩინე კახეთის ვენახები",
+  adventureCulture: "კულტურული მემკვიდრეობა",
+  adventureCultureDesc: "უძველესი ეკლესიები, მონასტრები და UNESCO-ს ძეგლები",
+  adventureBeach: "შავი ზღვის სანაპირო",
+  adventureBeachDesc: "ბათუმის პლაჟები, აჭარის სუბტროპიკული ბუნება და დასასვენებელი კურორტები",
+  adventureFood: "გასტრონომიული ტურები",
+  adventureFoodDesc: "გასინჯე ხინკალი, ხაჭაპური და ქართული სამზარეულოს საუკეთესო კერძები",
+  trustYears: "წლიანი გამოცდილება",
+  trustCountries: "ქვეყნიდან სტუმრები",
+  trustRating: "მომხმარებლის რეიტინგი",
+  trustSupport: "მხარდაჭერა",
+  
+  // Region Descriptions (for map cards)
+  regionTbilisiDesc: "დედაქალაქი, ძველი თბილისი, ნარიყალა",
+  regionKakhetiDesc: "ღვინის მხარე, ალავერდი, სიღნაღი",
+  regionMtskhetaMtianetiDesc: "ყაზბეგი, გერგეტი, მცხეთა, ჯვარი",
+  regionAdjaraDesc: "შავი ზღვის სანაპირო, ბათუმი",
+  regionImeretiDesc: "გელათი, მოცამეტა, ქუთაისი",
+  regionSamegreloDesc: "მესტია, უშგული, მარტვილი",
+  regionSamtskheJavakhetiDesc: "ვარძია, ბორჯომი, რაბათი",
+  regionShidaKartliDesc: "უფლისციხე, გორი",
+  regionKvemoKartliDesc: "დმანისი, ბოლნისი",
+  regionRachaLechkhumiDesc: "ხვანჭკარა, ნიკორწმინდა",
+  regionGuriaDesc: "ტრადიციული სოფლები, ჩაი",
+  regionAbkhaziaDesc: "საოკუპაციო ზონა",
 
     // Vehicles section additions
     homeVehiclesTitle: "ჩვენი ავტომობილები",
-    homeVehiclesSubtitle: "აირჩიე შენთვის სასურველი ტრანსპორტი და მოგზაურობა დაიწყე დღესვე",
+    homeVehiclesSubtitle: "აირჩიეთ თქვენთვის სასურველი ტრანსპორტი და დაიწყეთ მოგზაურობა დღესვე. კომფორტული სედანები, მძლავრი ჯიპები, ოჯახური მინივენები და პრემიუმ კლასის ავტომობილები - ყველაფერი თქვენი სურვილისთვის.",
 
     // Map section additions
-    homeMapSubtitle: "გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად",
+    homeMapSubtitle: "აირჩიე რეგიონი და გამოიკვლიე საქართველოს ყველა კუთხე ჩვენთან ერთად — ბუნება, ტრადიციები და ემოციები, რომლებიც სამუდამოდ დაგამახსოვრდება.",
     
     // Tours section - Home Page
     homeToursTitle: "ჩვენი ტურები",
-    homeToursSubtitle: "აღმოაჩინე საქართველო ჩვენი უნიკალური ტურებით",
+    homeToursSubtitle: "აღმოაჩინეთ საქართველო ჩვენი უნიკალური ტურებით. კახეთის ღვინის ტურები, ყაზბეგის მთის ექსპედიციები, სვანეთის თავგადასავალი, თბილისის კულტურული გასეირნება და ბათუმის ზღვისპირა დასვენება - თქვენი დაუვიწყარი მოგზაურობა იწყება აქ.",
     homeNoTours: "ტურები არ არის ხელმისაწვდომი",
     homeToursLoadError: "ტურების ჩატვირთვა ვერ მოხერხდა",
     homeTourBadge: "ტური",
@@ -616,7 +649,7 @@ myBookingsLoginDesc: "გთხოვთ შეხვიდეთ სისტ�
     aboutQuote: "მგზავრობა მხოლოდ გადაადგილება არაა — ეს არის გამოცდილება, და ჩვენ მას საუკეთესოდ ვაკეთებთ.",
     aboutMissionTitle: "ჩვენი მისია",
     aboutMissionText:
-      "ჩვენი მისიაა გავხადოთ მგზავრობა საქართველოში ხელმისაწვდომი, უსაფრთხო და დაუვიწყარი ყველასთვის. ვცდილობთ, რომ თითოეული მგზავრობა იყოს არა მხოლოდ გადაადგილება წერტილიდან A წერტილამდე B, არამედ სრულყოფილი გამოცდილება, რომელიც გაგიხსნით საქართველოს სილამაზეს.",
+      "ჩვენი მისიაა გავხადოთ მგზავრობა საქართველოში ხელმისაწვდომი, უსაფრთხო და დაუვიწყარი ყველასთვის. ვ���დილობთ, რომ თითოეული მგზავრობა იყოს არა მხოლოდ გადაადგილება წერტილიდან A წერტილამდე B, არამედ სრულყოფილი გამოცდილება, რომელიც გაგიხსნით საქართველოს სილამაზეს.",
     aboutValuesTitle: "ჩვენი ღირებულებები",
     aboutValueSafetyTitle: "უსაფრთხოება",
     aboutValueSafetyText:
@@ -1351,7 +1384,7 @@ profileSaveAvatar: 'ავატარის შენახვა',
     abkhaziaToursLoadError: "ტურების ჩატვირთვისას მოხდა შეცდომა",
     abkhaziaTransportTitle: "ტრანსპორტი",
     abkhaziaTransportSubtitle: "აფხაზეთში ხელმისაწვდომი ტრანსპორტის საშუალებები",
-    abkhaziaNoTransport: "ამ რეგიონში ჯერ არ არის დამატებული ტრანსპორტი",
+    abkhaziaNoTransport: "ამ რეგიონში ჯერ არ არ��ს დამატებული ტრანსპორტი",
     abkhaziaTransportLoadError: "ტრანსპორტის ჩატვირთვისას მოხდა შეცდომა",
     abkhaziaCTATitle: "მოემზადეთ თქვენი მოგზაურობისთვის აფხაზეთში",
     abkhaziaCTADescription: "დააჯავშნეთ თქვენი ტრანსპორტი ახლავე და ისიამოვნეთ",
@@ -1573,16 +1606,16 @@ calendarClear: "Clear",
     bookingAdminTitle: "Admin Panel",
  bookingAdminDesc: "Manage vehicles, tours, and bookings efficiently",
  bookingActionManage: "Manage",
-    // Vehicles section additions
-    homeVehiclesTitle: "Our Vehicles",
-    homeVehiclesSubtitle: "Choose your preferred transport and start your journey today",
-
-// Map section additions
-  homeMapSubtitle: "Explore every corner of Georgia with us",
-
+  // Vehicles section additions
+  homeVehiclesTitle: "Our Vehicles",
+  homeVehiclesSubtitle: "Choose your preferred transport and start your journey today. Comfortable sedans, powerful SUVs, family minivans, and premium class vehicles - everything for your needs.",
+  
+  // Map section additions
+  homeMapSubtitle: "Choose a region and explore every corner of Georgia with us — nature, traditions, and emotions that will stay with you forever.",
+  
   // Tours section - Home Page
   homeToursTitle: "Our Tours",
-  homeToursSubtitle: "Discover Georgia with our unique tours",
+  homeToursSubtitle: "Discover Georgia with our unique tours. Kakheti wine tours, Kazbegi mountain expeditions, Svaneti adventures, Tbilisi cultural walks, and Batumi seaside relaxation - your unforgettable journey starts here.",
   homeNoTours: "No tours available",
   homeToursLoadError: "Failed to load tours",
   homeTourBadge: "Tour",
@@ -1652,9 +1685,43 @@ customTourSubmitSuccess: "Your custom tour request has been sent successfully!",
 customTourSubmitSuccessTitle: "Request Sent",
 customTourSubmitError: "Error submitting request. Please try again.",
 
-  // Weather section additions
+// Weather section additions
   homeWeatherSubtitle: "Plan your trip according to the weather forecast",
-    // Time ago translations
+  
+  // Adventure Section - Home Page
+  homeAdventureTitle: "Your Adventure Starts Here",
+  homeAdventureSubtitle: "Discover the magical beauty of Georgia - from mountains to sea, from ancient temples to modern Tbilisi",
+  adventureMountains: "Mountains & Nature",
+  adventureMountainsDesc: "Discover the enchanting beauty of the Caucasus Mountains, ancient forests and crystal clear rivers",
+  adventureLocations: "100+ Locations",
+  adventureWine: "Wine Culture",
+  adventureWineDesc: "8000 years of wine history - taste Qvevri wine and discover Kakheti vineyards",
+  adventureCulture: "Cultural Heritage",
+  adventureCultureDesc: "Ancient churches, monasteries and UNESCO heritage sites",
+  adventureBeach: "Black Sea Coast",
+  adventureBeachDesc: "Batumi beaches, Adjara's subtropical nature and resort destinations",
+  adventureFood: "Gastronomic Tours",
+  adventureFoodDesc: "Taste khinkali, khachapuri and the best dishes of Georgian cuisine",
+  trustYears: "Years of Experience",
+  trustCountries: "Countries Served",
+  trustRating: "Customer Rating",
+  trustSupport: "Support",
+  
+  // Region Descriptions (for map cards)
+  regionTbilisiDesc: "Capital city, Old Tbilisi, Narikala",
+  regionKakhetiDesc: "Wine region, Alaverdi, Sighnaghi",
+  regionMtskhetaMtianetiDesc: "Kazbegi, Gergeti, Mtskheta, Jvari",
+  regionAdjaraDesc: "Black Sea coast, Batumi",
+  regionImeretiDesc: "Gelati, Motsameta, Kutaisi",
+  regionSamegreloDesc: "Mestia, Ushguli, Martvili",
+  regionSamtskheJavakhetiDesc: "Vardzia, Borjomi, Rabati",
+  regionShidaKartliDesc: "Uplistsikhe, Gori",
+  regionKvemoKartliDesc: "Dmanisi, Bolnisi",
+  regionRachaLechkhumiDesc: "Khvanchkara, Nikortsminda",
+  regionGuriaDesc: "Traditional villages, tea",
+  regionAbkhaziaDesc: "Occupied zone",
+  
+  // Time ago translations
     timeSecondsAgo: "seconds ago",
     timeMinutesAgo: "minutes ago",
     timeHoursAgo: "hours ago",
@@ -3588,16 +3655,16 @@ warningPopupContinueBtn: "Понятно, продолжить",
     // About page SEO
 aboutMetaTitle: "О нас | Georgia Trips - Транспорт в Грузии",
 aboutMetaDescription: "Georgia Trips - Ведущее туристическое агентство в Грузии. Профессиональные водители, безопасный транспорт, поддержка 24/7.",
-    // Vehicles section additions
-    homeVehiclesTitle: "Наш транспорт",
-    homeVehiclesSubtitle: "Выберите подходящий транспорт и начните путешествие сегодня",
-
-    // Map section additions
-    homeMapSubtitle: "Исследуйте каждый уголок Грузии вместе с нами",
-
-    // Tours section - Home Page
-    homeToursTitle: "Наши туры",
-    homeToursSubtitle: "Откройте для себя Грузию с нашими уникальными турами",
+  // Vehicles section additions
+  homeVehiclesTitle: "Наш транспорт",
+  homeVehiclesSubtitle: "Выберите подходящий транспорт и начните путешествие сегодня. Комфортные седаны, мощные внедорожники, семейные минивэны и автомобили премиум-класса - всё для ваших потребностей.",
+  
+  // Map section additions
+  homeMapSubtitle: "Выберите регион и исследуйте каждый уголок Грузии вместе с нами — природа, традиции и эмоции, которые останутся с вами навсегда.",
+  
+  // Tours section - Home Page
+  homeToursTitle: "Наши туры",
+  homeToursSubtitle: "Откройте для себя Грузию с нашими уникальными турами. Винные туры в Кахетию, горные экспедиции в Казбеги, приключения в Сванетии, культурные прогулки по Тбилиси и морской отдых в Батуми - ваше незабываемое путешествие начинается здесь.",
     homeNoTours: "Нет доступных туров",
     homeToursLoadError: "Не удалось загрузить туры",
     homeTourBadge: "Тур",
@@ -3619,11 +3686,45 @@ homeNoDescription: "Описание не указано",
   homeWithDriver: "С водителем",
   
 heroBadgeTours: "Лучшие туры",
-heroTitleTours: "Исследуйте Грузию с нашими турами",
-heroSubtitleTours: "Уникальные маршруты и незабываемые впечатления",
+  heroTitleTours: "Исследуйте Грузию с нашими турами",
+  heroSubtitleTours: "Уникальные маршруты и незабываемые впечатления",
   // Weather section additions
   homeWeatherSubtitle: "Планируйте поездку согласно прогнозу погоды",
-    // Map Regions
+  
+  // Adventure Section - Home Page
+  homeAdventureTitle: "Твое приключение начинается здесь",
+  homeAdventureSubtitle: "Откройте для себя волшебную красоту Грузии - от гор до моря, от древних храмов до современного Тбилиси",
+  adventureMountains: "Горы и природа",
+  adventureMountainsDesc: "Откройте для себя завораживающую красоту Кавказских гор, древние леса и кристально чистые реки",
+  adventureLocations: "100+ локаций",
+  adventureWine: "Винная культура",
+  adventureWineDesc: "8000-летняя история вина - попробуйте вино из квеври и откройте для себя виноградники Кахетии",
+  adventureCulture: "Культурное наследие",
+  adventureCultureDesc: "Древние церкви, монастыри и объекты всемирного наследия ЮНЕСКО",
+  adventureBeach: "Побережье Черного моря",
+  adventureBeachDesc: "Пляжи Батуми, субтропическая природа Аджарии и курортные направления",
+  adventureFood: "Гастрономические туры",
+  adventureFoodDesc: "Попробуйте хинкали, хачапури и лучшие блюда грузинской кухни",
+  trustYears: "Лет опыта",
+  trustCountries: "Стран обслужено",
+  trustRating: "Рейтинг клиентов",
+  trustSupport: "Поддержка",
+  
+  // Region Descriptions (for map cards)
+  regionTbilisiDesc: "Столица, Старый Тбилиси, Нарикала",
+  regionKakhetiDesc: "Винный регион, Алаверди, Сигнахи",
+  regionMtskhetaMtianetiDesc: "Казбеги, Гергети, Мцхета, Джвари",
+  regionAdjaraDesc: "Черноморское побережье, Батуми",
+  regionImeretiDesc: "Гелати, Моцамета, Кутаиси",
+  regionSamegreloDesc: "Местия, Ушгули, Мартвили",
+  regionSamtskheJavakhetiDesc: "Вардзия, Боржоми, Рабати",
+  regionShidaKartliDesc: "Уплисцихе, Гори",
+  regionKvemoKartliDesc: "Дманиси, Болниси",
+  regionRachaLechkhumiDesc: "Хванчкара, Никорцминда",
+  regionGuriaDesc: "Традиционные деревни, чай",
+  regionAbkhaziaDesc: "Оккупированная зона",
+  
+  // Map Regions
     regionAbkhazia: "Абхазия",
     regionAdjara: "Аджара",
     regionGuria: "Гурия",
@@ -4708,16 +4809,16 @@ myBookingsTimeDaysAgo: "أيام مضت",
     heroBadge: "أفضل وسائل النقل",
     homeLearnMore: "اعرف المزيد",
 
-    // Vehicles section additions
-    homeVehiclesTitle: "سياراتنا",
-    homeVehiclesSubtitle: "اختر وسيلة النقل المفضلة لديك وابدأ رحلتك اليوم",
-
-    // Map section additions
-    homeMapSubtitle: "استكشف كل ركن من جورجيا معنا",
-
-    // Tours section - Home Page
-    homeToursTitle: "جولاتنا",
-    homeToursSubtitle: "اكتشف جورجيا من خلال جولاتنا الفريدة",
+  // Vehicles section additions
+  homeVehiclesTitle: "سياراتنا",
+  homeVehiclesSubtitle: "اختر وسيلة النقل المفضلة لديك وابدأ رحلتك اليوم. سيارات سيدان مريحة، سيارات دفع رباعي قوية، ميني فان عائلية وسيارات فاخرة - كل ما تحتاجه.",
+  
+  // Map section additions
+  homeMapSubtitle: "اختر منطقة واستكشف كل زاوية من جورجيا معنا — طبيعة وتقاليد ومشاعر ستبقى في ذاكرتك إلى الأبد.",
+  
+  // Tours section - Home Page
+  homeToursTitle: "جولاتنا",
+  homeToursSubtitle: "اكتشف جورجيا من خلال جولاتنا الفريدة. جولات النبيذ في كاخيتي، رحلات جبال كازبيجي، مغامرات سفانيتي، جولات تبليسي الثقافية واستجمام باتومي البحري - رحلتك التي لا تُنسى تبدأ هنا.",
     homeNoTours: "لا توجد جولات متاحة",
     homeToursLoadError: "فشل تحميل الجولات",
     homeTourBadge: "جولة",
@@ -4737,10 +4838,44 @@ myBookingsTimeDaysAgo: "أيام مضت",
     homePerDay: "في اليوم",
     homeCarsBook: "حجز",
     homeWithDriver: "مع سائق",
-        bookingNotFound: "لم يتم العثور على الحجز",
-    // Weather section additions
-    homeWeatherSubtitle: "خطط لرحلتك وفقاً لتوقعات الطقس",
-    //Navbar
+bookingNotFound: "لم يتم العثور على الحجز",
+  // Weather section additions
+  homeWeatherSubtitle: "خطط لرحلتك وفقاً لتوقعات الطقس",
+  
+  // Adventure Section - Home Page
+  homeAdventureTitle: "مغامرتك تبدأ هنا",
+  homeAdventureSubtitle: "اكتشف جمال جورجيا الساحر - من الجبال إلى البحر، من المعابد القديمة إلى تبليسي الحديثة",
+  adventureMountains: "الجبال والطبيعة",
+  adventureMountainsDesc: "اكتشف الجمال الساحر لجبال القوقاز والغابات القديمة والأنهار الصافية",
+  adventureLocations: "100+ موقع",
+  adventureWine: "ثقافة النبيذ",
+  adventureWineDesc: "8000 عام من تاريخ النبيذ - تذوق نبيذ كفيفري واكتشف كروم كاخيتي",
+  adventureCulture: "التراث الثقافي",
+  adventureCultureDesc: "الكنائس القديمة والأديرة ومواقع التراث العالمي لليونسكو",
+  adventureBeach: "ساحل البحر الأسود",
+  adventureBeachDesc: "شواطئ باتومي، الطبيعة شبه الاستوائية لأدجارا والوجهات السياحية",
+  adventureFood: "جولات تذوق الطعام",
+  adventureFoodDesc: "تذوق الخينكالي والخاتشابوري وأفضل أطباق المطبخ الجورجي",
+  trustYears: "سنوات الخبرة",
+  trustCountries: "الدول المخدومة",
+  trustRating: "تقييم العملاء",
+  trustSupport: "الدعم",
+  
+  // Region Descriptions (for map cards)
+  regionTbilisiDesc: "العاصمة، تبليسي القديمة، ناريكالا",
+  regionKakhetiDesc: "منطقة النبيذ، ألافيردي، سيغناغي",
+  regionMtskhetaMtianetiDesc: "كازبيغي، غيرغيتي، متسخيتا، جفاري",
+  regionAdjaraDesc: "ساحل البحر الأسود، باتومي",
+  regionImeretiDesc: "غيلاتي، موتساميتا، كوتايسي",
+  regionSamegreloDesc: "ميستيا، أوشغولي، مارتفيلي",
+  regionSamtskheJavakhetiDesc: "فاردزيا، بورجومي، رباتي",
+  regionShidaKartliDesc: "أوبليستسيخي، غوري",
+  regionKvemoKartliDesc: "دمانيسي، بولنيسي",
+  regionRachaLechkhumiDesc: "خفانتشكارا، نيكورتسميندا",
+  regionGuriaDesc: "القرى التقليدية، الشاي",
+  regionAbkhaziaDesc: "منطقة محتلة",
+  
+  //Navbar
     navHome: "الرئيسية",
     navPosts: "المنشورات",
     navAbout: "عن الشركة",
@@ -6202,4 +6337,4 @@ class LanguageSwitcher {
 }
 
 // Initialize language switcher
-window.languageSwitcher = new LanguageSwitcher() 
+window.languageSwitcher = new LanguageSwitcher()

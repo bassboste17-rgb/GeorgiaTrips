@@ -3,7 +3,7 @@
   <a href="home.html" class="logo-link">
     <div class="logo-container">
       <div class="logo-icon">
-        <img src="addhome/logo12.png" alt="Georgia Trips Logo" class="logo-img">
+        <img src="addhome/logo.png" alt="Georgia Trips Logo" class="logo-img">
         <div class="logo-ring"></div>
       </div>
       <div class="logo-text">
@@ -92,34 +92,7 @@
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
-  .logo-ring {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    border: 2px solid transparent;
-    border-top-color: #e5383b;
-    border-right-color: #e5383b;
-    border-radius: 50%;
-    animation: ringRotate 3s linear infinite;
-    opacity: 0.6;
-  }
-  
-  @keyframes ringRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .logo-link:hover .logo-img {
-    transform: scale(1.1) rotate(5deg);
-  }
-  
-  .logo-link:hover .logo-ring {
-    opacity: 1;
-    border-top-color: #ff6b6b;
-    border-right-color: #ff6b6b;
-    animation-duration: 1.5s;
-  }
-  
+  .logo-text
   /* Text Styling */
   .logo-text {
     display: flex;
