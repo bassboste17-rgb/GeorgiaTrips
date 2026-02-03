@@ -1,14 +1,11 @@
 <header class="navbar" id="navbar">
-  <!-- Logo - Clean Elegant Design -->
+  <!-- Logo -->
   <a href="home.html" class="logo-link">
     <div class="logo-container">
-      <div class="logo-icon">
-        <img src="addhome/logo.png" alt="Georgia Trips Logo" class="logo-img">
-        <div class="logo-ring"></div>
-      </div>
+      <img src="addhome/logo.png" alt="Georgia Trips Logo" class="logo-img">
       <div class="logo-text">
-        <span class="text-main">Georgia</span>
-        <span class="text-accent">Trips</span>
+        <span class="text-georgia">Georgia</span>
+        <span class="text-trips">Trips</span>
       </div>
     </div>
   </a>
@@ -30,7 +27,7 @@
 
     <div class="languages">
       <button onclick="window.languageSwitcher.setLanguage('ka')" data-lang="ka" title="ქართული">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/960px-Flag_of_Georgia.svg.png?20231228212034" alt="ქართული" class="flag-icon">
+        <img src="addhome/georgia.png" alt="ქართული" class="flag-icon">
       </button>
       <button onclick="window.languageSwitcher.setLanguage('en')" data-lang="en" title="English" class="active">
         <img src="addhome/flag-en.svg" alt="English" class="flag-icon">
@@ -39,7 +36,7 @@
         <img src="addhome/flag-ru.svg" alt="Русский" class="flag-icon">
       </button>
       <button onclick="window.languageSwitcher.setLanguage('ar')" data-lang="ar" title="العربية">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Arabic-Language-Flag.svg/3840px-Arabic-Language-Flag.svg.png" alt="العربية" class="flag-icon">
+        <img src="addhome/arabic.png" alt="العربية" class="flag-icon">
       </button>
     </div>
 
@@ -59,96 +56,111 @@
 
 <style>
   /* ========================================
-     MINIMALIST PREMIUM LOGO
+     LOGO DESIGN
      ======================================== */
   
   .logo-link {
     text-decoration: none;
     display: inline-flex;
+    flex-shrink: 0;
   }
   
   .logo-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     position: relative;
   }
   
-  /* Logo Icon with Animated Ring */
-  .logo-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  /* Logo Image */
   .logo-img {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
-    position: relative;
-    z-index: 2;
+    flex-shrink: 0;
     filter: drop-shadow(0 2px 8px rgba(229, 56, 59, 0.3));
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.3s ease;
   }
   
-  .logo-text
-  /* Text Styling */
+  /* Brand Text */
   .logo-text {
     display: flex;
     align-items: baseline;
-    gap: 4px;
+    gap: 6px;
     position: relative;
   }
   
-  .text-main {
+  .text-georgia {
     font-family: 'Poppins', 'Segoe UI', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 26px;
+    font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.5px;
     transition: all 0.3s ease;
+    white-space: nowrap;
   }
   
-  .text-accent {
+  .text-trips {
     font-family: 'Poppins', 'Segoe UI', sans-serif;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
     color: #fcaf15;
     letter-spacing: -0.5px;
     position: relative;
     transition: all 0.3s ease;
+    white-space: nowrap;
   }
   
-  .text-accent::after {
+  .text-trips::after {
     content: '';
     position: absolute;
     bottom: -2px;
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #fcaf15, #ff8585);
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #fcaf15, #e5383b);
+    transition: width 0.4s ease;
   }
   
-  .logo-link:hover .text-accent::after {
+  /* Hover Effects */
+  .logo-link:hover .text-trips::after {
     width: 100%;
   }
   
-  .logo-link:hover .text-main {
-    color: #f0f0f0;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  .logo-link:hover .logo-img {
+    transform: scale(1.08);
   }
   
-  .logo-link:hover .text-accent {
-    color: #ff6b6b;
-    text-shadow: 0 0 25px rgba(229, 56, 59, 0.5);
+  .logo-link:hover .text-georgia {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  
+  .logo-link:hover .text-trips {
+    color: #ff8a00;
+    text-shadow: 0 0 15px rgba(252, 175, 21, 0.5);
   }
   
   /* Tablet */
   @media (max-width: 768px) {
     .logo-container {
-      gap: 10px;
+      gap: 8px;
+    }
+    
+    .logo-img {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .text-georgia,
+    .text-trips {
+      font-size: 22px;
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 480px) {
+    .logo-container {
+      gap: 6px;
     }
     
     .logo-img {
@@ -156,21 +168,16 @@
       height: 36px;
     }
     
-    .logo-ring {
-      width: 44px;
-      height: 44px;
-    }
-    
-    .text-main,
-    .text-accent {
+    .text-georgia,
+    .text-trips {
       font-size: 18px;
     }
   }
   
-  /* Mobile */
-  @media (max-width: 480px) {
+  /* Very Small Mobile */
+  @media (max-width: 360px) {
     .logo-container {
-      gap: 8px;
+      gap: 5px;
     }
     
     .logo-img {
@@ -178,37 +185,9 @@
       height: 32px;
     }
     
-    .logo-ring {
-      width: 40px;
-      height: 40px;
-      border-width: 1.5px;
-    }
-    
-    .text-main,
-    .text-accent {
+    .text-georgia,
+    .text-trips {
       font-size: 15px;
-    }
-  }
-  
-  /* Very Small Mobile */
-  @media (max-width: 360px) {
-    .logo-container {
-      gap: 6px;
-    }
-    
-    .logo-img {
-      width: 28px;
-      height: 28px;
-    }
-    
-    .logo-ring {
-      width: 36px;
-      height: 36px;
-    }
-    
-    .text-main,
-    .text-accent {
-      font-size: 13px;
     }
   }
 </style>

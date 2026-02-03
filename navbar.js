@@ -60,11 +60,33 @@ function isSocialProvider(user) {
   return user.providerData.some(provider => socialProviders.includes(provider.providerId));
 }
 
+// Navbar scroll effect - transparent at top, solid when scrolled
+function handleNavbarScroll() {
+  // Try multiple selectors to find the navbar
+  const navbar = document.querySelector('header.navbar') || 
+                 document.querySelector('.navbar') || 
+                 document.getElementById('navbar');
+  
+  if (!navbar) return;
+  
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+}
+
 // Load navbar
 fetch("navbar.html")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("navbar").innerHTML = data
+    
+    // Initial scroll check after navbar loads
+    handleNavbarScroll();
+    
+    // Add scroll listener AFTER navbar is loaded
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
     // Check if translations.js is already loaded
     if (typeof window.translations === 'undefined' && typeof window.languageSwitcher === 'undefined') {

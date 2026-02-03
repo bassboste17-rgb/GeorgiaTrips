@@ -134,7 +134,7 @@ aboutMetaDescription: "Georgia Trips - საქართველოს წა�
         // Media Badges
         badgePhoto: "ფოტო",
         badgeVideo: "ვიდეო",
-        
+        homePostsSubtitle:"ნამდვილი ისტორიები ნამდვილი მოგზაურებისგან ფოტოები და გამოცდილება საქართველოს ყველა კუთხიდან.",
         // Page Content
         addPostTitle: "Georgia Trips - პოსტის დამატება",
         addPostUser: "მომხმარებელი",
@@ -231,7 +231,7 @@ customTourRegions: "მოსანახულებელი რეგიო�
 customTourRoute: "მარშრუტის აღწერა",
 customTourRoutePlaceholder: "აღწერეთ ადგილები, რომლების მონახულებაც გსურთ...",
 customTourType: "ტურის ტიპი",
-tourTypeCultural: "კულტურული",
+tourTypeCultural: " კულტურული",
 tourTypeSightseeing: "სათავგადასავლო",
 tourTypeGastronomic: "გასტრონომიული",
 tourTypeHistorical: "ისტორიული",
@@ -421,6 +421,7 @@ notifAdminRejectedToast: "მოთხოვნა უარყოფილი�
     homePerDay: "დღეში",
     homeCarsBook: "დაჯავშნა",
     homeWithDriver: "მძღოლით",
+    myBookingsNotifLoginDesc: "გთხოვთ შეხვიდეთ სისტემაში შეტყობინებების სანახავად",
 // Contact Page - Georgian (დასამატებელი ka: სექციაში)
 contactBadge: "24/7 მხარდაჭერა",
 contactHeroTitle: "დაგვიკავშირდით",
@@ -620,6 +621,7 @@ myBookingsLoginDesc: "გთხოვთ შეხვიდეთ სისტ�
     postsUserIdNotFound: "მომხმარებლის ID არ მოიძებნა",
     bookingNotFound: "დაჯავშნა არ მოიძებნა",
     // About page
+    homeReadMore: "გაიგე მეტი",
     aboutTitle: "ჩვენს შესახებ | ტრანსპორტი საქართველოში",
     aboutHeroTitle: "ჩვენს შესახებ",
     aboutHeroSubtitle: "პატარა გუნდი დიდი მისიით — გავხადოთ თქვენი მგზავრობა უსაფრთხო და სასიამოვნო.",
@@ -649,7 +651,7 @@ myBookingsLoginDesc: "გთხოვთ შეხვიდეთ სისტ�
     aboutQuote: "მგზავრობა მხოლოდ გადაადგილება არაა — ეს არის გამოცდილება, და ჩვენ მას საუკეთესოდ ვაკეთებთ.",
     aboutMissionTitle: "ჩვენი მისია",
     aboutMissionText:
-      "ჩვენი მისიაა გავხადოთ მგზავრობა საქართველოში ხელმისაწვდომი, უსაფრთხო და დაუვიწყარი ყველასთვის. ვ���დილობთ, რომ თითოეული მგზავრობა იყოს არა მხოლოდ გადაადგილება წერტილიდან A წერტილამდე B, არამედ სრულყოფილი გამოცდილება, რომელიც გაგიხსნით საქართველოს სილამაზეს.",
+      "ჩვენი მისიაა გავხადოთ მგზავრობა საქართველოში ხელმისაწვდომი, უსაფრთხო და დაუვიწყარი ყველასთვის. ვციდილობთ, რომ თითოეული მგზავრობა იყოს არა მხოლოდ გადაადგილება წერტილიდან A წერტილამდე B, არამედ სრულყოფილი გამოცდილება, რომელიც გაგიხსნით საქართველოს სილამაზეს.",
     aboutValuesTitle: "ჩვენი ღირებულებები",
     aboutValueSafetyTitle: "უსაფრთხოება",
     aboutValueSafetyText:
@@ -1684,7 +1686,7 @@ customTourSelectRegion: "Please select at least one region",
 customTourSubmitSuccess: "Your custom tour request has been sent successfully!",
 customTourSubmitSuccessTitle: "Request Sent",
 customTourSubmitError: "Error submitting request. Please try again.",
-
+myBookingsNotifLoginDesc: "Please log in to view your bookings.",
 // Weather section additions
   homeWeatherSubtitle: "Plan your trip according to the weather forecast",
   
@@ -1720,7 +1722,7 @@ customTourSubmitError: "Error submitting request. Please try again.",
   regionRachaLechkhumiDesc: "Khvanchkara, Nikortsminda",
   regionGuriaDesc: "Traditional villages, tea",
   regionAbkhaziaDesc: "Occupied zone",
-  
+   homePostsSubtitle:"Real stories from real travelers Photos and experiences from every corner of Georgia.",
   // Time ago translations
     timeSecondsAgo: "seconds ago",
     timeMinutesAgo: "minutes ago",
@@ -2440,6 +2442,7 @@ heroSubtitleTours: "Experience the beauty and culture of Georgia through our cur
     bookingCapacity: "Capacity",
     bookingLikeBtn: "Like",
     // Detail modal
+    homeReadMore: "Read More",
     bookingDetailRegion: "Region",
     bookingDetailType: "Type",
     bookingFuelType: "Fuel Type",
@@ -3135,7 +3138,7 @@ profileSaveAvatar: 'Сохранить аватар',
     enterPasswordToLink: "Введите пароль для связывания:",
     accountsLinkedSuccess: "Аккаунты успешно связаны!",
     // Validation messages
-
+    myBookingsNotifLoginDesc: "Войдите, чтобы просмотреть уведомления",
      homeNoPosts: "Объявления не найдены",
     validationEmailRequired: "Пожалуйста, введите эл. почту",
     validationEmailInvalid: "Пожалуйста, введите корректный адрес эл. почты",
@@ -3202,6 +3205,7 @@ myBookingsTimeDaysAgo: "дней назад",
     authMissingEmail: "Пожалуйста, укажите эл. почту",
     authAccountExistsDifferent: "Эта эл. почта уже используется другим методом",
     // Time ago translations
+    homePostsSubtitle:"Реальные истории от настоящих путешественников Фотографии и впечатления из всех уголков Грузии.",
     customTourDay: "день",
 calendarJanuary: "Январь",
 calendarFebruary: "Февраль",
@@ -3230,6 +3234,7 @@ calendarClear: "Очистить",
     timeHoursAgo: "часов назад",
     timeDaysAgo: "дней назад",
     // Profile Page
+    homeReadMore: "Читать далее",
     customTourGroupSizeTitle: "Размер группы",
     carsHeroBadge: "Большой выбор автомобилей",
 carsHeroTitle: "Аренда автомобилей в Грузии",
@@ -4663,6 +4668,7 @@ bookingActionView: "عرض",
     tbilisiBookTransport: "حجز النقل",
     tbilisiAboutTitle: "عن تبليسي",
     tbilisiAboutDescription:
+  
       "تبليسي - عاصمة جورجيا وأكبر مدنها، تقع على ضفتي نهر كورا. تشتهر المدينة بهندستها المعمارية المتنوعة، والبلدة القديمة التاريخية، وحمامات الكبريت، والتراث الثقافي الفريد. تجمع تبليسي بين القديم والجديد، التقليدي والحديث، مما يمنحها سحراً خاصاً.",
     tbilisiStatArea: "المساحة",
     tbilisiStatPopulation: "السكان",
@@ -4691,7 +4697,9 @@ bookingActionView: "عرض",
     tbilisiPriceLabel: "السعر",
     tbilisiBookingButton: "حجز",
     // Profile1 page translations
+    homeReadMore: "اقرأ المزيد",
     bookingFeature1Title: "آمن",
+    myBookingsNotifLoginDesc: "يرجى تسجيل الدخول لعرض الإشعارات",
 bookingFeature1Desc: "محمي 100%",
 bookingFeature2Title: "سريع",
 bookingFeature2Desc: "احجز في دقائق",
@@ -4841,7 +4849,7 @@ myBookingsTimeDaysAgo: "أيام مضت",
 bookingNotFound: "لم يتم العثور على الحجز",
   // Weather section additions
   homeWeatherSubtitle: "خطط لرحلتك وفقاً لتوقعات الطقس",
-  
+  homePostsSubtitle:"قصص حقيقية من مسافرين حقيقيين صور وتجارب من جميع أنحاء جورجيا.",
   // Adventure Section - Home Page
   homeAdventureTitle: "مغامرتك تبدأ هنا",
   homeAdventureSubtitle: "اكتشف جمال جورجيا الساحر - من الجبال إلى البحر، من المعابد القديمة إلى تبليسي الحديثة",

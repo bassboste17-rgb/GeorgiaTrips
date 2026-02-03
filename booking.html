@@ -66,9 +66,9 @@
 
     :root {
         /* Colors from about.html */
-        --gold: #e5383b;
-        --gold-light: #e5383b;
-        --gold-dark: #b61a1d;
+        --gold: #fcaf15;
+        --gold-light: #fcaf15;
+        --gold-dark: #fcaf15;
         --dark-bg: #151515;
         --dark-surface: #1a1a1a;
         --dark-card: #222222;
@@ -76,8 +76,8 @@
         --text-primary: #ffffff;
         --text-secondary: #c0c0c0;
         --text-muted: #888888;
-        --primary-color: #e5383b;
-        --primary-dark: #b61a1d;
+        --primary-color: #fcaf15;
+        --primary-dark: #fcaf15;
         --secondary-color: #151515;
         --text-color: #c0c0c0;
         --light-bg: #222222;
@@ -135,17 +135,11 @@
         right: 0;
         bottom: 0;
         background: 
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(229, 56, 59, 0.15), transparent),
-            radial-gradient(ellipse 60% 40% at 100% 50%, rgba(229, 56, 59, 0.08), transparent),
-            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(229, 56, 59, 0.08), transparent);
+            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(252, 175, 21, 0.08), transparent),
+            radial-gradient(ellipse 60% 40% at 100% 50%, rgba(252, 175, 21, 0.04), transparent),
+            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(252, 175, 21, 0.04), transparent);
         pointer-events: none;
         z-index: 0;
-        animation: bgPulse 8s ease-in-out infinite;
-    }
-
-    @keyframes bgPulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
     }
 
     .container {
@@ -177,8 +171,8 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: rgba(229, 56, 59, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.3);
+        background: rgba(252, 175, 21, 0.1);
+        border: 1px solid rgba(252, 175, 21, 0.3);
         border-radius: 100px;
         padding: 0.5rem 1.25rem;
         font-size: 0.75rem;
@@ -203,12 +197,12 @@
         background: var(--gold);
         border-radius: 50%;
         animation: pulse 2s infinite;
-        box-shadow: 0 0 10px rgba(229, 56, 59, 0.4);
+        box-shadow: 0 0 10px rgba(252, 175, 21, 0.4);
     }
 
     @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(229, 56, 59, 0.4); }
-        50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(229, 56, 59, 0.4); }
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(252, 175, 21, 0.4); }
+        50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(252, 175, 21, 0.4); }
     }
 
     @keyframes fadeInUp {
@@ -309,11 +303,11 @@
 
     .nav-card:hover {
         transform: translateY(-15px) scale(1.02);
-        border-color: rgba(229, 56, 59, 0.3);
+        border-color: rgba(252, 175, 21, 0.3);
         background: var(--dark-surface);
         box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.5),
-            0 0 40px rgba(229, 56, 59, 0.2);
+            0 20px 60px rgba(0, 0, 0, 0.3),
+            0 0 40px rgba(252, 175, 21, 0.15);
         animation: none;
     }
 
@@ -328,8 +322,8 @@
 
     .nav-card.admin-only:hover {
         box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.5),
-            0 0 40px rgba(255, 56, 59, 0.4);
+            0 20px 60px rgba(0, 0, 0, 0.3),
+            0 0 40px rgba(255, 193, 7, 0.2);
     }
 
     .nav-card.admin-only .nav-card-icon {
@@ -356,8 +350,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(233, 232, 232, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.2);
+        background: rgba(252, 175, 21, 0.08);
+        border: 1px solid rgba(252, 175, 21, 0.2);
         border-radius: var(--radius-sm);
         margin-bottom: 1.5rem;
         transition: var(--transition);
@@ -378,9 +372,9 @@
 
     .nav-card:hover .nav-card-icon {
         border-color: var(--gold);
-        background: rgba(229, 56, 59, 0.15);
+        background: rgba(252, 175, 21, 0.15);
         transform: scale(1.1);
-        box-shadow: 0 0 30px rgba(229, 56, 59, 0.3);
+        box-shadow: 0 0 30px rgba(252, 175, 21, 0.2);
     }
 
     .nav-card:hover .nav-card-icon svg {
@@ -403,7 +397,7 @@
 
     .nav-card:hover h3 {
         color: var(--text-primary);
-        text-shadow: 0 0 20px rgba(229, 56, 59, 0.3);
+        text-shadow: 0 0 20px rgba(252, 175, 21, 0.2);
     }
 
     .nav-card p {
@@ -463,8 +457,8 @@
 
     .feature:hover {
         transform: translateY(-5px);
-        border-color: rgba(229, 56, 59, 0.3);
-        box-shadow: 0 10px 30px rgba(229, 56, 59, 0.12);
+        border-color: rgba(252, 175, 21, 0.3);
+        box-shadow: 0 10px 30px rgba(252, 175, 21, 0.1);
     }
 
     .feature-icon {
@@ -474,14 +468,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(229, 56, 59, 0.1);
-        border: 1px solid rgba(229, 56, 59, 0.2);
+        background: rgba(252, 175, 21, 0.1);
+        border: 1px solid rgba(252, 175, 21, 0.2);
         border-radius: 12px;
         transition: var(--transition);
     }
 
     .feature:hover .feature-icon {
-        background: rgba(229, 56, 59, 0.15);
+        background: rgba(252, 175, 21, 0.15);
         transform: scale(1.1);
     }
 
@@ -906,7 +900,7 @@
                     
                     ctx.beginPath();
                     ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(229, 56, 59, ${particle.opacity})`;
+                    ctx.fillStyle = `rgba(252, 175, 21, ${particle.opacity})`;
                     ctx.fill();
                 });
                 
@@ -920,7 +914,7 @@
                             ctx.beginPath();
                             ctx.moveTo(p1.x, p1.y);
                             ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = `rgba(229, 56, 59, ${0.1 * (1 - distance / 150)})`;
+                            ctx.strokeStyle = `rgba(252, 175, 21, ${0.1 * (1 - distance / 150)})`;
                             ctx.lineWidth = 1;
                             ctx.stroke();
                         }

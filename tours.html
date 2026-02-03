@@ -38,9 +38,9 @@
 
 :root {
     /* Colors from booking.html */
-    --gold: #e5383b;
-    --gold-light: #e5383b;
-    --gold-dark: #b61a1d;
+    --gold: #fcaf15;
+    --gold-light: #fcaf15;
+    --gold-dark: #fcaf15;
     --dark-bg: #151515;
     --dark-surface: #1a1a1a;
     --dark-card: #222222;
@@ -48,7 +48,7 @@
     --text-primary: #ffffff;
     --text-secondary: #c0c0c0;
     --text-muted: #888888;
-    --primary-color: #e5383b;
+    --primary-color: #fcaf15;
     --primary-dark: #b61a1d;
     --secondary-color: #151515;
     --text-color: #c0c0c0;
@@ -128,8 +128,8 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(229, 56, 59, 0.1);
-    border: 1px solid rgba(229, 56, 59, 0.3);
+    background: rgba(252, 175, 21, 0.1);
+    border: 1px solid rgba(252, 175, 21, 0.3);
     border-radius: 100px;
     padding: 0.5rem 1.25rem;
     font-size: 0.75rem;
@@ -148,12 +148,12 @@ body {
     background: var(--gold);
     border-radius: 50%;
     animation: pulse 2s infinite;
-    box-shadow: 0 0 10px rgba(229, 56, 59, 0.4);
+    box-shadow: 0 0 10px rgba(252, 175, 21, 0.4);
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(229, 56, 59, 0.4); }
-    50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(229, 56, 59, 0.4); }
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px rgba(252, 175, 21, 0.4); }
+    50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px rgba(252, 175, 21, 0.4); }
 }
 
 @keyframes fadeInUp {
@@ -248,7 +248,7 @@ body {
     outline: none;
     border-color: var(--gold);
     background: var(--dark-surface);
-    box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.15);
+    box-shadow: 0 0 0 3px rgba(252, 175, 21, 0.15);
 }
 
 .input::placeholder {
@@ -282,8 +282,8 @@ body {
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(229, 56, 59, 0.15);
-    border-color: rgba(229, 56, 59, 0.3);
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(252, 175, 21, 0.15);
+    border-color: rgba(252, 175, 21, 0.3);
 }
 
 .card-image {
@@ -339,7 +339,7 @@ body {
 }
 
 .card-details span:hover {
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
     border-color: var(--gold);
 }
 
@@ -384,17 +384,17 @@ body {
     background: rgba(0, 0, 0, 0.95);
     border-color: var(--gold);
     transform: scale(1.08);
-    box-shadow: 0 6px 16px rgba(229, 56, 59, 0.3);
+    box-shadow: 0 6px 16px rgba(252, 175, 21, 0.3);
 }
 
 .popularity-btn.liked {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    border-color: #e74c3c;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    border-color: var(--gold);
 }
 
 .popularity-btn.liked:hover {
-    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
-    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
 }
 
 .popularity-btn i {
@@ -461,12 +461,12 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 12px rgba(229, 56, 59, 0.3);
+    box-shadow: 0 4px 12px rgba(252, 175, 21, 0.3);
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(229, 56, 59, 0.4);
+    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
 }
 
 .btn:active {
@@ -686,7 +686,7 @@ body {
 
 .warning-popup-contact a.chat-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(229, 56, 59, 0.4);
+    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
 }
 
 .warning-popup-continue {
@@ -801,7 +801,7 @@ body {
 .close:hover {
     color: var(--gold);
     transform: rotate(90deg);
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
 }
 
 .form-group {
@@ -1225,7 +1225,7 @@ textarea.input {
 
 .detail-thumbnail.active {
     border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.2);
+    box-shadow: 0 0 0 3px rgba(252, 175, 21, 0.2);
 }
 
 .detail-info {
@@ -1698,7 +1698,7 @@ textarea.input {
     gap: 0.75rem;
     font-weight: 600;
     padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(229, 56, 59, 0.3);
+    border-bottom: 2px solid rgba(252, 175, 21, 0.3);
     font-family: var(--font-heading);
 }
 
@@ -1748,7 +1748,7 @@ textarea.input {
     outline: none;
     border-color: var(--gold);
     background: var(--dark-surface);
-    box-shadow: 0 0 0 4px rgba(229, 56, 59, 0.1);
+    box-shadow: 0 0 0 4px rgba(252, 175, 21, 0.1);
     transform: translateY(-2px);
 }
 
@@ -1765,9 +1765,9 @@ textarea.input {
     width: 100%;
     margin-top: 0.5rem;
     padding: 0.6rem;
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
     border-radius: 8px;
-    border: 1px solid rgba(229, 56, 59, 0.3);
+    border: 1px solid rgba(252, 175, 21, 0.3);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -1794,9 +1794,9 @@ textarea.input {
     width: 100%;
     margin-top: 0.5rem;
     padding: 0.6rem;
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
     border-radius: 8px;
-    border: 1px solid rgba(229, 56, 59, 0.3);
+    border: 1px solid rgba(252, 175, 21, 0.3);
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
@@ -1869,7 +1869,7 @@ textarea.input {
 
 /* Custom Tour Card Styles */
 .custom-tour-card {
-    background: linear-gradient(135deg, rgba(229, 56, 59, 0.15) 0%, var(--dark-card) 100%);
+    background: linear-gradient(135deg, rgba(252, 175, 21, 0.15) 0%, var(--dark-card) 100%);
     border: 2px dashed var(--gold);
     position: relative;
     overflow: hidden;
@@ -1882,7 +1882,7 @@ textarea.input {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(229, 56, 59, 0.1) 50%, transparent 70%);
+    background: linear-gradient(45deg, transparent 30%, rgba(252, 175, 21, 0.1) 50%, transparent 70%);
     animation: shimmer 3s infinite;
 }
 
@@ -1895,7 +1895,7 @@ textarea.input {
     border-color: var(--gold);
     border-style: solid;
     transform: translateY(-10px) scale(1.02);
-    box-shadow: var(--shadow-lg), 0 0 60px rgba(229, 56, 59, 0.25);
+    box-shadow: var(--shadow-lg), 0 0 60px rgba(252, 175, 21, 0.25);
 }
 
 .custom-tour-content {
@@ -1961,12 +1961,12 @@ textarea.input {
 
 .tour-type-btn:hover {
     border-color: var(--gold);
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
 }
 
 .tour-type-btn.active {
     border-color: var(--gold);
-    background: linear-gradient(135deg, rgba(229, 56, 59, 0.2) 0%, var(--dark-surface) 100%);
+    background: linear-gradient(135deg, rgba(252, 175, 21, 0.2) 0%, var(--dark-surface) 100%);
 }
 
 .tour-type-btn.tour-type-locked {
@@ -2009,7 +2009,7 @@ textarea.input {
 }
 
 .custom-tour-calendar-container .day.in-range {
-    background: rgba(229, 56, 59, 0.3);
+    background: rgba(252, 175, 21, 0.3);
     color: var(--text-primary);
     border-radius: 0;
 }
@@ -2072,7 +2072,7 @@ textarea.input {
 
 .checkbox-item:hover {
     border-color: var(--gold);
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
 }
 
 .checkbox-item input {
@@ -2108,7 +2108,7 @@ textarea.input {
 
 .type-chip:hover {
     border-color: var(--gold);
-    background: rgba(229, 56, 59, 0.1);
+    background: rgba(252, 175, 21, 0.1);
 }
 
 .type-chip.selected {
@@ -3836,7 +3836,7 @@ let customTourCalendar = null;
               <span>${this.selectedText}</span>
             </div>
             <div class="legend-item">
-              <div class="legend-color" style="background: rgba(229, 56, 59, 0.3);"></div>
+              <div class="legend-color" style="background: rgba(252, 175, 21, 0.3);"></div>
               <span>${this.rangeText}</span>
             </div>
           </div>

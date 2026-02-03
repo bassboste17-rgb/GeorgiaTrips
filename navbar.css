@@ -18,7 +18,7 @@ body {
   font-family: "BPG Glaho", sans-serif;
   background-color: #0f0f0f;
   color: #fff;
-  padding-top: 80px;
+  padding-top: 0px;
   /* iOS Safari fixes */
   min-height: 100vh;
   min-height: -webkit-fill-available;
@@ -28,8 +28,6 @@ body {
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 }
-
-
 
 :root {
   --primary-color: #e5383b;
@@ -44,7 +42,11 @@ body {
   --vh: 1vh;
 }
 
-/* Fixed navbar positioning with iOS safe area */
+/* ============================================
+   NAVBAR STYLES
+   ============================================ */
+
+/* Fixed navbar positioning with iOS safe area - FULLY TRANSPARENT INITIALLY */
 .navbar {
   display: -webkit-box;
   display: -webkit-flex;
@@ -57,17 +59,17 @@ body {
   align-items: center;
   padding: 1rem 2rem;
   /* Safe area for notch */
-  padding-top: calc(1rem + env(safe-area-inset-top));
+  padding-top: 0px;
   padding-left: calc(2rem + env(safe-area-inset-left));
   padding-right: calc(2rem + env(safe-area-inset-right));
-  background-color: var(--dark-bg);
+  background-color: transparent; /* სრულად გამჭვირვალე */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: none;
+  box-shadow: none;
   height: 70px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -76,330 +78,28 @@ body {
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  /* Smooth transition for scroll effect */
+  -webkit-transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Logo link wrapper */
-.logo-link {
-  text-decoration: none;
-  display: inline-block;
-  /* iOS touch fix */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
+/* Navbar with background when scrolled */
+.navbar.scrolled {
+  background-color: var(--dark-bg);
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* New animated logo styles */
-.logo-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  cursor: pointer;
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
+/* Optional: Add a subtle hover effect even when transparent */
+.navbar:hover:not(.scrolled) {
+  background-color: rgba(20, 20, 20, 0.1);
 }
 
-.logo-container:hover {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
+.navbar.scrolled:hover {
+  background-color: rgba(20, 20, 20, 0.95);
 }
 
-.logo-svg {
-  width: 250px;
-  height: 90px;
-}
-
-/* Globe rotation with webkit prefix */
-.globe {
-  -webkit-transform-origin: 55px 60px;
-  transform-origin: 55px 60px;
-  -webkit-animation: globePulse 3s ease-in-out infinite;
-  animation: globePulse 3s ease-in-out infinite;
-}
-
-@-webkit-keyframes globePulse {
-  0%, 100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(1.02);
-    transform: scale(1.02);
-  }
-}
-
-@keyframes globePulse {
-  0%, 100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(1.02);
-    transform: scale(1.02);
-  }
-}
-
-/* Airplane orbit animation with webkit */
-.airplane-orbit {
-  -webkit-transform-origin: 55px 60px;
-  transform-origin: 55px 60px;
-  -webkit-animation: orbit 6s linear infinite;
-  animation: orbit 6s linear infinite;
-}
-
-@-webkit-keyframes orbit {
-  0% {
-    -webkit-transform: rotate(0deg) translateX(48px) rotate(90deg);
-    transform: rotate(0deg) translateX(48px) rotate(90deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg) translateX(48px) rotate(90deg);
-    transform: rotate(360deg) translateX(48px) rotate(90deg);
-  }
-}
-
-@keyframes orbit {
-  0% {
-    -webkit-transform: rotate(0deg) translateX(48px) rotate(90deg);
-    transform: rotate(0deg) translateX(48px) rotate(90deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg) translateX(48px) rotate(90deg);
-    transform: rotate(360deg) translateX(48px) rotate(90deg);
-  }
-}
-
-/* Location pin bounce with webkit */
-.location-pin {
-  -webkit-animation: pinBounce 2s ease-in-out infinite;
-  animation: pinBounce 2s ease-in-out infinite;
-}
-
-@-webkit-keyframes pinBounce {
-  0%, 100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  50% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes pinBounce {
-  0%, 100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-  50% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
-/* Car driving animation with webkit */
-.car {
-  -webkit-animation: carDriveNew 4s ease-in-out infinite;
-  animation: carDriveNew 4s ease-in-out infinite;
-}
-
-@-webkit-keyframes carDriveNew {
-  0% {
-    -webkit-transform: translate(105px, 85px);
-    transform: translate(105px, 85px);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translate(210px, 85px);
-    transform: translate(210px, 85px);
-    opacity: 0;
-  }
-}
-
-@keyframes carDriveNew {
-  0% {
-    -webkit-transform: translate(105px, 85px);
-    transform: translate(105px, 85px);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translate(210px, 85px);
-    transform: translate(210px, 85px);
-    opacity: 0;
-  }
-}
-
-/* Road dashes moving with webkit */
-.road-dashes {
-  -webkit-animation: dashMove 1s linear infinite;
-  animation: dashMove 1s linear infinite;
-}
-
-@-webkit-keyframes dashMove {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(-15px);
-    transform: translateX(-15px);
-  }
-}
-
-@keyframes dashMove {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(-15px);
-    transform: translateX(-15px);
-  }
-}
-
-/* Cloud floating animations with webkit */
-.cloud1 {
-  -webkit-animation: cloudFloat1 8s ease-in-out infinite;
-  animation: cloudFloat1 8s ease-in-out infinite;
-}
-
-.cloud2 {
-  -webkit-animation: cloudFloat2 10s ease-in-out infinite;
-  animation: cloudFloat2 10s ease-in-out infinite;
-}
-
-@-webkit-keyframes cloudFloat1 {
-  0%, 100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  50% {
-    -webkit-transform: translateX(15px);
-    transform: translateX(15px);
-  }
-}
-
-@keyframes cloudFloat1 {
-  0%, 100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  50% {
-    -webkit-transform: translateX(15px);
-    transform: translateX(15px);
-  }
-}
-
-@-webkit-keyframes cloudFloat2 {
-  0%, 100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  50% {
-    -webkit-transform: translateX(-10px);
-    transform: translateX(-10px);
-  }
-}
-
-@keyframes cloudFloat2 {
-  0%, 100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  50% {
-    -webkit-transform: translateX(-10px);
-    transform: translateX(-10px);
-  }
-}
-
-/* Text animations with webkit */
-.logo-text-georgia {
-  -webkit-animation: textShine 3s ease-in-out infinite;
-  animation: textShine 3s ease-in-out infinite;
-}
-
-.logo-text-trips {
-  -webkit-animation: tripsGlow 2s ease-in-out infinite;
-  animation: tripsGlow 2s ease-in-out infinite;
-}
-
-@-webkit-keyframes textShine {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-@keyframes textShine {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-@-webkit-keyframes tripsGlow {
-  0%, 100% {
-    -webkit-filter: drop-shadow(0 0 2px #e5383b);
-    filter: drop-shadow(0 0 2px #e5383b);
-  }
-  50% {
-    -webkit-filter: drop-shadow(0 0 8px #e5383b) drop-shadow(0 0 15px rgba(229, 56, 59, 0.5));
-    filter: drop-shadow(0 0 8px #e5383b) drop-shadow(0 0 15px rgba(229, 56, 59, 0.5));
-  }
-}
-
-@keyframes tripsGlow {
-  0%, 100% {
-    -webkit-filter: drop-shadow(0 0 2px #e5383b);
-    filter: drop-shadow(0 0 2px #e5383b);
-  }
-  50% {
-    -webkit-filter: drop-shadow(0 0 8px #e5383b) drop-shadow(0 0 15px rgba(229, 56, 59, 0.5));
-    filter: drop-shadow(0 0 8px #e5383b) drop-shadow(0 0 15px rgba(229, 56, 59, 0.5));
-  }
-}
-
-/* Hover effects with webkit */
-.logo-link:hover .airplane-orbit {
-  -webkit-animation: orbit 3s linear infinite;
-  animation: orbit 3s linear infinite;
-}
-
-.logo-link:hover .car {
-  -webkit-animation: carDriveNew 2s ease-in-out infinite;
-  animation: carDriveNew 2s ease-in-out infinite;
-}
-
-.logo-link:hover .logo-text-trips {
-  -webkit-filter: drop-shadow(0 0 10px #e5383b) drop-shadow(0 0 20px rgba(229, 56, 59, 0.7));
-  filter: drop-shadow(0 0 10px #e5383b) drop-shadow(0 0 20px rgba(229, 56, 59, 0.7));
-}
-
-.logo-link:hover .globe {
-  stroke-width: 3;
-  -webkit-filter: drop-shadow(0 0 5px rgba(229, 56, 59, 0.5));
-  filter: drop-shadow(0 0 5px rgba(229, 56, 59, 0.5));
-}
-
-/* Remove old logo styles that conflict */
+/* Logo styles are in navbar.html inline styles */
 .logo {
   display: none;
 }
@@ -448,7 +148,7 @@ body {
 }
 
 /* ============================================
-   Languages Section - აქტიური ენის დიზაინი
+   Languages Section
    ============================================ */
 .languages {
   display: -webkit-box;
@@ -458,7 +158,6 @@ body {
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
-  /* დროშების ზომის შეზღუდვა */
   flex-shrink: 0;
 }
 
@@ -480,11 +179,9 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  /* iOS button fix */
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
-  /* ფიქსირებული ზომა */
   width: 44px;
   height: 36px;
   flex-shrink: 0;
@@ -498,7 +195,6 @@ body {
   display: block;
   -webkit-transition: transform 0.3s ease;
   transition: transform 0.3s ease;
-  /* ფიქსირებული ზომა */
   max-width: 24px;
   max-height: 18px;
   flex-shrink: 0;
@@ -523,7 +219,6 @@ body {
   transform: translateY(0);
 }
 
-/* აქტიური ენის ღილაკის სტილი */
 .languages button.active {
   background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
   border-color: transparent;
@@ -531,7 +226,6 @@ body {
   box-shadow: 0 4px 20px rgba(229, 56, 59, 0.4), 0 0 0 3px rgba(229, 56, 59, 0.2);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-  /* ზომა არ შეიცვალოს scale-ით */
   width: 44px;
   height: 36px;
 }
@@ -555,7 +249,6 @@ body {
   filter: brightness(1.1) contrast(1.05);
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  /* ზომა იგივე დარჩეს */
   width: 24px;
   height: 18px;
 }
@@ -578,7 +271,9 @@ body {
   }
 }
 
-/* Notification Bell Styles */
+/* ============================================
+   Notification Bell Styles
+   ============================================ */
 .notification-bell {
   position: relative;
   display: none;
@@ -721,6 +416,9 @@ body {
   }
 }
 
+/* ============================================
+   Mobile Menu Toggle
+   ============================================ */
 .mobile-menu-toggle {
   display: none;
   background: none;
@@ -729,11 +427,9 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
-  /* iOS button fix */
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
-  /* Touch target size for iOS */
   min-width: 44px;
   min-height: 44px;
 }
@@ -743,16 +439,24 @@ body {
    ============================================ */
 @media (max-width: 768px) {
   body {
-    padding-top: calc(70px + env(safe-area-inset-top));
+     padding-top: 0px;
   }
 
   .navbar {
     padding: 1rem;
-    padding-top: calc(1rem + env(safe-area-inset-top));
+     padding-top: 0px;
     padding-left: calc(1rem + env(safe-area-inset-left));
     padding-right: calc(1rem + env(safe-area-inset-right));
     height: auto;
     min-height: 60px;
+    /* Ensure mobile navbar is also transparent initially */
+    background-color: transparent;
+  }
+
+  .navbar.scrolled {
+    background-color: var(--dark-bg);
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   }
 
   .navbar-right {
@@ -770,7 +474,6 @@ body {
     z-index: 1000;
     -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    /* iOS smooth scrolling */
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
     max-height: calc(100vh - 60px);
@@ -799,7 +502,6 @@ body {
   .nav-menu a {
     display: block;
     padding: 0.75rem;
-    /* Larger touch target for iOS */
     min-height: 44px;
     display: -webkit-box;
     display: -webkit-flex;
@@ -822,7 +524,6 @@ body {
   }
 
   .languages button {
-    /* Larger touch target */
     min-width: 44px;
     min-height: 44px;
     width: 44px;
@@ -871,50 +572,28 @@ body {
 
   .bell-icon {
     font-size: 1.5rem;
-    /* Larger touch target */
     min-width: 44px;
     min-height: 44px;
-  }
-
-  /* Mobile logo adjustments */
-  .logo-svg {
-    width: 160px;
-    height: 60px;
   }
 
   .logo-container {
     max-width: 160px;
   }
-
-  .car-animation {
-    height: 12px;
-  }
-
-  .car-icon {
-    width: 16px;
-    height: 16px;
-  }
 }
 
 @media (max-width: 480px) {
   body {
-    padding-top: calc(65px + env(safe-area-inset-top));
+     padding-top: 0px;
   }
 
   .navbar {
     min-height: 55px;
     padding: 0.75rem 1rem;
-    padding-top: calc(0.75rem + env(safe-area-inset-top));
+     padding-top: 0px;
   }
 
   .logo {
     font-size: 1.3rem;
-  }
-
-  /* Small mobile logo adjustments */
-  .logo-svg {
-    width: 130px;
-    height: 50px;
   }
 
   .logo-container {
@@ -924,17 +603,10 @@ body {
   .languages button {
     padding: 0.4rem 0.8rem;
     font-size: 0.7rem;
-    /* Keep touch target size */
     min-width: 40px;
     min-height: 40px;
     width: 40px;
     height: 40px;
-  }
-
-  /* Small mobile car adjustments */
-  .car-icon {
-    width: 14px;
-    height: 14px;
   }
 }
 
@@ -962,7 +634,6 @@ body {
   display: inline-block;
   text-align: center;
   text-decoration: none;
-  /* iOS fixes */
   -webkit-appearance: none;
   appearance: none;
   -webkit-tap-highlight-color: transparent;
@@ -977,14 +648,15 @@ body {
   box-shadow: 0 4px 15px rgba(229, 56, 59, 0.3);
 }
 
-/* User Menu Styles */
+/* ============================================
+   User Menu Styles
+   ============================================ */
 .user-menu {
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-/* სახელის სტილები - Facebook-ის გრძელი სახელებისთვის */
 .user-name {
   color: var(--text-color);
   font-weight: 500;
@@ -994,7 +666,6 @@ body {
   border-radius: 25px;
   -webkit-transition: var(--transition);
   transition: var(--transition);
-  /* გრძელი სახელების შეზღუდვა */
   display: inline-block;
   max-width: 150px;
   overflow: hidden;
@@ -1048,7 +719,9 @@ body {
   border-radius: 0 0 8px 8px;
 }
 
-/* Mobile user menu */
+/* ============================================
+   Mobile user menu
+   ============================================ */
 @media (max-width: 768px) {
   .user-name {
     max-width: 120px;
@@ -1076,5 +749,130 @@ body {
     margin-top: 0.5rem;
     width: 100%;
     max-width: 200px;
+  }
+}
+
+/* ============================================
+   Accessibility Improvements
+   ============================================ */
+.mobile-menu-toggle:focus,
+.languages button:focus,
+.auth-link:focus,
+.user-name:focus,
+.dropdown a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Scroll Performance
+   ============================================ */
+.navbar {
+  will-change: background-color, box-shadow;
+}
+
+/* ============================================
+   Navbar Logo Fix for Transparency
+   ============================================ */
+.logo-link {
+  text-decoration: none;
+  display: inline-flex;
+  flex-shrink: 0;
+  z-index: 101;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Logo should remain visible even when navbar is transparent */
+.logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(229, 56, 59, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.logo-text {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  position: relative;
+}
+
+.text-georgia {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility on transparent background */
+}
+
+.text-trips {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fcaf15;
+  letter-spacing: -0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility on transparent background */
+}
+
+/* When navbar has background (scrolled), reduce shadow intensity */
+.navbar.scrolled .text-georgia,
+.navbar.scrolled .text-trips {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   Smooth Scrolling Enhancement
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   Navbar Link States for Better UX
+   ============================================ */
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-menu li {
+  position: relative;
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+  width: 100%;
+}
+
+/* Adjust for mobile */
+@media (max-width: 768px) {
+  .nav-menu a::after {
+    display: none;
+  }
+  
+  .nav-menu a:hover,
+  .nav-menu a.active {
+    background-color: rgba(229, 56, 59, 0.1);
+    border-radius: var(--border-radius);
   }
 }
