@@ -1957,7 +1957,7 @@
         width: 100%;
         height: 100%;
         z-index: 0;
-        background-image: url('addhome/postsbackground.png');
+        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074277/p7hgrnwegcbzx96dpda6.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -2183,42 +2183,102 @@
         width: 100%;
       }
 
-      /* Adventure Section Mobile */
+      /* Adventure Section Mobile - Bento Grid with Mirror Effect */
       .adventure-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 95px 95px 110px;
+        gap: 0.6rem;
       }
 
+      /* Mountains - large card, left side spanning 2 rows */
       .adventure-card-large {
-        grid-column: span 1;
-        grid-row: span 1;
-        min-height: 280px;
+        grid-column: 1;
+        grid-row: 1 / 3;
+        min-height: auto;
+      }
+
+      /* Wine - top right */
+      .adventure-card:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      /* Culture - middle right */
+      .adventure-card:nth-child(3) {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      /* Beach - bottom left */
+      .adventure-card:nth-child(4) {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      /* Gastro - bottom right */
+      .adventure-card:nth-child(5) {
+        grid-column: 2;
+        grid-row: 3;
       }
 
       .adventure-card {
-        min-height: 200px;
+        min-height: auto;
       }
 
       .adventure-card-content {
-        padding: 1.2rem;
+        padding: 0.8rem;
+      }
+
+      .adventure-card-large .adventure-card-content {
+        padding: 1rem;
       }
 
       .adventure-icon {
-        width: 45px;
-        height: 45px;
+        width: 38px;
+        height: 38px;
+        margin-bottom: 0.4rem;
+      }
+
+      .adventure-card-large .adventure-icon {
+        width: 48px;
+        height: 48px;
       }
 
       .adventure-icon i {
-        font-size: 1.1rem;
-      }
-
-      .adventure-card-title {
         font-size: 1rem;
       }
 
+      .adventure-card-large .adventure-icon i {
+        font-size: 1.2rem;
+      }
+
+      .adventure-card-title {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+      }
+
       .adventure-card-large .adventure-card-title {
-        font-size: 1.3rem;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .adventure-card-text {
+        font-size: 0.65rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .adventure-card-large .adventure-card-text {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 3;
+      }
+
+      .adventure-card-stats {
+        display: none;
       }
 
       .trust-indicators {
@@ -4377,6 +4437,106 @@
     } else {
       initRegionCardsInteraction();
     }
+    
+    // ========================================
+    // MOBILE SCROLL PROTECTION FOR REGION CARDS & MAP
+    // Prevents accidental clicks while scrolling
+    // ========================================
+    (function initScrollProtection() {
+      let isScrolling = false;
+      let scrollTimeout;
+      let touchStartY = 0;
+      let touchStartX = 0;
+      const scrollThreshold = 10; // pixels of movement to consider as scroll
+      
+      // Track scroll state
+      window.addEventListener('scroll', function() {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          isScrolling = false;
+        }, 150);
+      }, { passive: true });
+      
+      // Protect region cards from accidental taps while scrolling
+      const regionCards = document.querySelectorAll('.region-card');
+      regionCards.forEach(function(card) {
+        card.addEventListener('touchstart', function(e) {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        card.addEventListener('click', function(e) {
+          // Check if user was scrolling
+          if (isScrolling) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        }, { capture: true });
+        
+        card.addEventListener('touchend', function(e) {
+          const touchEndY = e.changedTouches[0].clientY;
+          const touchEndX = e.changedTouches[0].clientX;
+          const deltaY = Math.abs(touchEndY - touchStartY);
+          const deltaX = Math.abs(touchEndX - touchStartX);
+          
+          // If finger moved more than threshold, it's a scroll not a tap
+          if (deltaY > scrollThreshold || deltaX > scrollThreshold || isScrolling) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        });
+      });
+      
+      // Protect SVG map regions from accidental taps
+      const svgMap = document.getElementById('georgia-map');
+      if (svgMap) {
+        function protectMapRegions() {
+          const svgDoc = svgMap.contentDocument;
+          if (!svgDoc) {
+            setTimeout(protectMapRegions, 500);
+            return;
+          }
+          
+          const paths = svgDoc.querySelectorAll('path[id^="GE-"]');
+          paths.forEach(function(path) {
+            path.addEventListener('touchstart', function(e) {
+              touchStartY = e.touches[0].clientY;
+              touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+            
+            path.addEventListener('click', function(e) {
+              if (isScrolling) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+              }
+            }, { capture: true });
+            
+            path.addEventListener('touchend', function(e) {
+              const touchEndY = e.changedTouches[0].clientY;
+              const touchEndX = e.changedTouches[0].clientX;
+              const deltaY = Math.abs(touchEndY - touchStartY);
+              const deltaX = Math.abs(touchEndX - touchStartX);
+              
+              if (deltaY > scrollThreshold || deltaX > scrollThreshold || isScrolling) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+              }
+            });
+          });
+        }
+        
+        if (svgMap.contentDocument && svgMap.contentDocument.querySelector('svg')) {
+          protectMapRegions();
+        } else {
+          svgMap.addEventListener('load', protectMapRegions);
+        }
+      }
+    })();
   </script>
 </body>
 </html>

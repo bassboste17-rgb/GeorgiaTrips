@@ -51,12 +51,12 @@ function formatDisplayName(name, maxLength = 15) {
   return firstName;
 }
 
-// Function to check if user is logged in with social provider
-function isSocialProvider(user) {
+// Function to check if user is logged in with social provider or phone
+function isSocialOrPhoneProvider(user) {
   if (!user || !user.providerData || user.providerData.length === 0) {
     return false;
   }
-  const socialProviders = ['google.com', 'facebook.com', 'twitter.com', 'github.com'];
+  const socialProviders = ['google.com', 'facebook.com', 'twitter.com', 'github.com', 'phone'];
   return user.providerData.some(provider => socialProviders.includes(provider.providerId));
 }
 
@@ -249,9 +249,9 @@ fetch("navbar.html")
     }
 
     onAuthStateChanged(auth, (user) => {
-      // Fix: Don't require emailVerified for Facebook/Google users
+      // Fix: Don't require emailVerified for Facebook/Google/Phone users
       // Only require emailVerified for email/password registered users
-      const isValidUser = user && (user.emailVerified || isSocialProvider(user));
+      const isValidUser = user && (user.emailVerified || isSocialOrPhoneProvider(user));
       
       if (isValidUser) {
         // User is authenticated
@@ -262,7 +262,7 @@ fetch("navbar.html")
         
         // Save full name to localStorage
         localStorage.setItem("username", rawUsername)
-        localStorage.setItem("userEmail", user.email || "")
+        localStorage.setItem("userEmail", user.email || user.phoneNumber || "")
 
         // Show notification bell when user is authenticated
         if (notificationBell) {

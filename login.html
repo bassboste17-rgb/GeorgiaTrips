@@ -35,6 +35,10 @@
             --facebook-color: #1877F2;
             --facebook-hover: #166fe5;
             
+            /* Phone color */
+            --phone-color: #25D366;
+            --phone-hover: #128C7E;
+            
             /* Star animation variables */
             --starFieldWidth: 2560;
             --starFieldHeight: 2560;
@@ -53,12 +57,11 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding-top: 80px; /* დამატებული navbar-ისთვის ადგილი */
+            padding-top: 80px;
             position: relative;
             overflow-x: hidden;
         }
         
-        /* დამატებული main container ცენტრირებისთვის */
         main {
             flex: 1;
             display: flex;
@@ -378,6 +381,15 @@
             background: var(--facebook-hover);
         }
         
+        .phone-btn {
+            background: var(--phone-color);
+            border-color: var(--phone-color);
+        }
+        
+        .phone-btn:hover:not(:disabled) {
+            background: var(--phone-hover);
+        }
+        
         .social-buttons-container {
             margin-bottom: 25px;
         }
@@ -419,6 +431,7 @@
             justify-content: center;
             margin-bottom: 20px;
             gap: 10px;
+            align-items: center;
         }
         
         .step {
@@ -635,6 +648,86 @@
         .verification-notice p {
             margin-bottom: 10px;
         }
+
+        /* Phone input styling */
+        .phone-input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .phone-input-wrapper select {
+            width: 100px;
+            padding: 15px 10px;
+            background: var(--background-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .phone-input-wrapper select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .phone-input-wrapper input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* OTP Input styling */
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .otp-inputs input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 0;
+            margin: 0;
+        }
+
+        .resend-otp {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .resend-otp button {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .resend-otp button:disabled {
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+
+        /* reCAPTCHA container */
+        #recaptcha-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .phone-info {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -653,11 +746,11 @@
     
     <!-- დამატებული main tag auth-container-ის შესაფუთად -->
     <main>
-        <!-- Name Input Modal for Social Sign-in -->
+        <!-- Name Input Modal for Social/Phone Sign-in -->
         <div class="modal-overlay" id="nameModal">
             <div class="name-modal">
                 <h3 data-i18n="pleaseEnterName">გთხოვთ მიუთითოთ თქვენი სახელი</h3>
-                <p data-i18n="socialNameNotFound">სოციალური ქსელის ანგარიშიდან ვერ მოიძებნა თქვენი სახელი. გთხოვთ მიუთითოთ ის ხელით.</p>
+                <p data-i18n="phoneNameInfo">გთხოვთ მიუთითოთ თქვენი სახელი რომ გამოჩნდეს სისტემაში.</p>
                 <input type="text" id="socialUserName" placeholder="სახელი" required data-i18n-placeholder="name">
                 <div class="name-modal-buttons">
                     <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმება</button>
@@ -758,6 +851,110 @@
                 </div>
             </form>
 
+            <!-- ტელეფონით რეგისტრაციის ფორმა -->
+            <form id="phoneAuthForm" class="auth-form" novalidate>
+                <!-- ეტაპი 1: ტელეფონის ნომერი -->
+                <div class="form-step active" id="phoneStep1">
+                    <div class="step-indicator">
+                        <div class="step active">1</div>
+                        <div class="step-line"></div>
+                        <div class="step">2</div>
+                        <div class="step-line"></div>
+                        <div class="step">3</div>
+                    </div>
+                    
+                    <p class="phone-info" data-i18n="phoneAuthInfo">შეიყვანეთ თქვენი ტელეფონის ნომერი SMS კოდის მისაღებად</p>
+                    
+                    <div class="phone-input-wrapper">
+                        <select id="countryCode">
+                            <option value="+995">🇬🇪 +995</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+90">🇹🇷 +90</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                            <option value="+374">🇦🇲 +374</option>
+                            <option value="+994">🇦🇿 +994</option>
+                        </select>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="555 123 456" required />
+                    </div>
+                    <div class="error-message" id="phoneNumberError"></div>
+                    
+                    <!-- reCAPTCHA კონტეინერი -->
+                    <div id="recaptcha-container"></div>
+                    
+                    <button type="button" id="sendOtpBtn">
+                        <span id="sendOtpBtnText" data-i18n="sendCode">კოდის გაგზავნა</span>
+                    </button>
+                    
+                    <button type="button" id="backFromPhone" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                        უკან
+                    </button>
+                </div>
+                
+                <!-- ეტაპი 2: OTP შეყვანა -->
+                <div class="form-step" id="phoneStep2">
+                    <div class="step-indicator">
+                        <div class="step completed">1</div>
+                        <div class="step-line"></div>
+                        <div class="step active">2</div>
+                        <div class="step-line"></div>
+                        <div class="step">3</div>
+                    </div>
+                    
+                    <p class="phone-info" id="otpSentMessage" data-i18n="otpSent">SMS კოდი გაიგზავნა ნომერზე</p>
+                    
+                    <div class="otp-inputs">
+                        <input type="text" maxlength="1" class="otp-input" data-index="0" inputmode="numeric" pattern="[0-9]" />
+                        <input type="text" maxlength="1" class="otp-input" data-index="1" inputmode="numeric" pattern="[0-9]" />
+                        <input type="text" maxlength="1" class="otp-input" data-index="2" inputmode="numeric" pattern="[0-9]" />
+                        <input type="text" maxlength="1" class="otp-input" data-index="3" inputmode="numeric" pattern="[0-9]" />
+                        <input type="text" maxlength="1" class="otp-input" data-index="4" inputmode="numeric" pattern="[0-9]" />
+                        <input type="text" maxlength="1" class="otp-input" data-index="5" inputmode="numeric" pattern="[0-9]" />
+                    </div>
+                    <div class="error-message" id="otpError"></div>
+                    
+                    <div class="resend-otp">
+                        <button type="button" id="resendOtpBtn" disabled>
+                            <span id="resendOtpText">ხელახლა გაგზავნა (60s)</span>
+                        </button>
+                    </div>
+                    
+                    <button type="button" id="verifyOtpBtn">
+                        <span id="verifyOtpBtnText" data-i18n="verifyCode">კოდის დადასტურება</span>
+                    </button>
+                    
+                    <button type="button" id="backToPhoneStep1" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                        უკან
+                    </button>
+                </div>
+                
+                <!-- ეტაპი 3: სახელის შეყვანა -->
+                <div class="form-step" id="phoneStep3">
+                    <div class="step-indicator">
+                        <div class="step completed">1</div>
+                        <div class="step-line"></div>
+                        <div class="step completed">2</div>
+                        <div class="step-line"></div>
+                        <div class="step active">3</div>
+                    </div>
+                    
+                    <p class="phone-info" data-i18n="enterYourName">გთხოვთ შეიყვანოთ თქვენი სახელი</p>
+                    
+                    <input type="text" id="phoneUserName" name="phoneUserName" placeholder="სახელი" required data-i18n-placeholder="name" />
+                    <div class="error-message" id="phoneUserNameError"></div>
+                    
+                    <button type="button" id="completePhoneAuthBtn">
+                        <span id="completePhoneAuthBtnText" data-i18n="complete">დასრულება</span>
+                    </button>
+                </div>
+            </form>
+
             <p class="divider" data-i18n="or">ან</p>
 
             <!-- Social Login Buttons -->
@@ -768,6 +965,10 @@
                 
                 <button id="facebookSignIn" class="social-btn facebook-btn">
                     <i class="fab fa-facebook-f"></i> <span data-i18n="signInWithFacebook">Facebook-ით შესვლა</span>
+                </button>
+                
+                <button id="phoneSignIn" class="social-btn phone-btn">
+                    <i class="fas fa-phone"></i> <span data-i18n="signInWithPhone">ტელეფონით შესვლა</span>
                 </button>
             </div>
 
@@ -803,6 +1004,8 @@
             getRedirectResult,
             GoogleAuthProvider,
             FacebookAuthProvider,
+            RecaptchaVerifier,
+            signInWithPhoneNumber,
             updateProfile,
             signOut,
             fetchSignInMethodsForEmail,
@@ -846,30 +1049,23 @@
         }
 
         // ===================================
-        // 🔧 შეამოწმეთ არის თუ არა in-app ბრაუზერი (Facebook, Instagram და ა.შ.)
+        // 🔧 შეამოწმეთ არის თუ არა in-app ბრაუზერი
         // ===================================
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            // Facebook in-app browser
             if (ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1) return true;
-            // Instagram in-app browser
             if (ua.indexOf('Instagram') > -1) return true;
-            // Twitter in-app browser
             if (ua.indexOf('Twitter') > -1) return true;
-            // LinkedIn in-app browser
             if (ua.indexOf('LinkedInApp') > -1) return true;
-            // Generic WebView detection
             if (ua.indexOf('wv') > -1) return true;
             return false;
         }
 
         // ===================================
-        // 🔧 დავაყენოთ persistence localStorage-ზე მობილურისთვის
+        // 🔧 დავაყენოთ persistence localStorage-ზე
         // ===================================
         async function initializeAuth() {
             try {
-                // მობილურ მოწყობილობებზე გამოვიყენოთ localStorage persistence
-                // ეს გადაჭრის sessionStorage-თან დაკავშირებულ პრობლემებს
                 await setPersistence(auth, browserLocalPersistence);
                 console.log("[Auth] Persistence set to browserLocalPersistence");
             } catch (error) {
@@ -877,7 +1073,6 @@
             }
         }
 
-        // დაუყოვნებლივ გამოვიძახოთ
         initializeAuth();
         
         const messageBox = document.getElementById("message");
@@ -892,7 +1087,6 @@
         const registerBtnText = document.getElementById("registerBtnText");
         const resetPasswordBtnText = document.getElementById("resetPasswordBtnText");
 
-        // Store user for resending verification
         let unverifiedUser = null;
 
         const errorMessages = {
@@ -912,14 +1106,27 @@
             'auth/popup-blocked': 'authPopupBlocked',
             'auth/web-storage-unsupported': 'authWebStorageUnsupported',
             'auth/missing-initial-state': 'authMissingInitialState',
+            'auth/invalid-verification-code': 'authInvalidVerificationCode',
+            'auth/invalid-phone-number': 'authInvalidPhoneNumber',
+            'auth/missing-phone-number': 'authMissingPhoneNumber',
+            'auth/quota-exceeded': 'authQuotaExceeded',
+            'auth/billing-not-enabled': 'authBillingNotEnabled',
+            'auth/internal-error': 'authInternalError',
             'default': 'authDefaultError'
         };
+
+        // Phone Auth Variables
+        let confirmationResult = null;
+        let phoneAuthUser = null;
+        let recaptchaVerifier = null;
+        let resendCountdown = 60;
+        let resendTimer = null;
 
         // Variables to store social user data
         let tempSocialCredential = null;
         let tempSocialUser = null;
-        let currentProvider = null; // 'google' or 'facebook'
-        let isSocialSignInProgress = false; // Flag to prevent double clicks
+        let currentProvider = null;
+        let isSocialSignInProgress = false;
 
         // Star animation generation
         function generateStars(count) {
@@ -1032,6 +1239,18 @@
             return null;
         }
 
+        function validatePhoneNumber(phone) {
+            if (!phone) {
+                return 'validationPhoneRequired';
+            }
+            // მხოლოდ ციფრები, 9 სიმბოლო საქართველოსთვის
+            const cleanPhone = phone.replace(/\s/g, '');
+            if (!/^\d{9,15}$/.test(cleanPhone)) {
+                return 'validationPhoneInvalid';
+            }
+            return null;
+        }
+
         const step1 = document.getElementById('step1');
         const step2 = document.getElementById('step2');
         const nextToStep2Btn = document.getElementById('nextToStep2');
@@ -1042,7 +1261,6 @@
         nextToStep2Btn.addEventListener('click', async () => {
             userEmail = document.getElementById('email').value.trim();
             
-            // Validation
             const emailError = validateEmail(userEmail);
             if (emailError) {
                 showError('email', emailError);
@@ -1090,6 +1308,7 @@
         const loginForm = document.getElementById("loginForm");
         const registerForm = document.getElementById("registerForm");
         const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+        const phoneAuthForm = document.getElementById("phoneAuthForm");
 
         showLoginBtn.addEventListener("click", () => {
             showLoginBtn.classList.add("active");
@@ -1097,6 +1316,7 @@
             loginForm.classList.add("active");
             registerForm.classList.remove("active");
             forgotPasswordForm.classList.remove("active");
+            phoneAuthForm.classList.remove("active");
             messageBox.style.display = "none";
             verificationNotice.style.display = "none";
         });
@@ -1107,6 +1327,7 @@
             registerForm.classList.add("active");
             loginForm.classList.remove("active");
             forgotPasswordForm.classList.remove("active");
+            phoneAuthForm.classList.remove("active");
             messageBox.style.display = "none";
             verificationNotice.style.display = "none";
             step2.classList.remove('active');
@@ -1127,11 +1348,381 @@
             messageBox.style.display = "none";
         });
 
+        // ===================================
+        // 📱 PHONE AUTHENTICATION
+        // ===================================
+
+        // Phone sign in button
+        document.getElementById("phoneSignIn").addEventListener("click", () => {
+            // დავმალოთ ყველა ფორმა და ვაჩვენოთ ტელეფონის ფორმა
+            loginForm.classList.remove("active");
+            registerForm.classList.remove("active");
+            forgotPasswordForm.classList.remove("active");
+            phoneAuthForm.classList.add("active");
+            messageBox.style.display = "none";
+            
+            // Reset phone form to step 1
+            document.getElementById('phoneStep1').classList.add('active');
+            document.getElementById('phoneStep2').classList.remove('active');
+            document.getElementById('phoneStep3').classList.remove('active');
+            
+            // Initialize reCAPTCHA if not already done
+            initializeRecaptcha();
+        });
+
+        // Back from phone form
+        document.getElementById("backFromPhone").addEventListener("click", () => {
+            phoneAuthForm.classList.remove("active");
+            loginForm.classList.add("active");
+            showLoginBtn.classList.add("active");
+            showRegisterBtn.classList.remove("active");
+        });
+
+        // Initialize reCAPTCHA
+        function initializeRecaptcha() {
+            // Clear previous verifier safely
+            if (recaptchaVerifier) {
+                try {
+                    recaptchaVerifier.clear();
+                } catch (e) {
+                    console.log("[Phone] Previous reCAPTCHA already cleared");
+                }
+                recaptchaVerifier = null;
+            }
+            
+            // Clear the container
+            const container = document.getElementById('recaptcha-container');
+            if (container) {
+                container.innerHTML = '';
+            }
+            
+            try {
+                recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'normal',
+                    'callback': (response) => {
+                        console.log("[Phone] reCAPTCHA verified");
+                        document.getElementById('sendOtpBtn').disabled = false;
+                    },
+                    'expired-callback': () => {
+                        console.log("[Phone] reCAPTCHA expired");
+                        document.getElementById('sendOtpBtn').disabled = true;
+                        showMessage(window.languageSwitcher ? 
+                            window.languageSwitcher.translate('recaptchaExpired') : 
+                            'reCAPTCHA ვადა გაუვიდა. გთხოვთ განაახლოთ.', "error");
+                    }
+                });
+                
+                recaptchaVerifier.render().then((widgetId) => {
+                    console.log("[Phone] reCAPTCHA rendered, widget ID:", widgetId);
+                }).catch((error) => {
+                    console.error("[Phone] reCAPTCHA render error:", error);
+                });
+            } catch (error) {
+                console.error("[Phone] Error creating reCAPTCHA:", error);
+            }
+        }
+
+        // Send OTP
+        document.getElementById("sendOtpBtn").addEventListener("click", async () => {
+            const countryCode = document.getElementById("countryCode").value;
+            const phoneNumber = document.getElementById("phoneNumber").value.trim().replace(/\s/g, '');
+            
+            const phoneError = validatePhoneNumber(phoneNumber);
+            if (phoneError) {
+                showError('phoneNumber', phoneError);
+                return;
+            }
+            hideError('phoneNumber');
+            
+            const fullPhoneNumber = countryCode + phoneNumber;
+            console.log("[Phone] Sending OTP to:", fullPhoneNumber);
+            
+            const sendOtpBtn = document.getElementById("sendOtpBtn");
+            const sendOtpBtnText = document.getElementById("sendOtpBtnText");
+            const sendText = window.languageSwitcher ? window.languageSwitcher.translate('sendCode') : 'კოდის გაგზავნა';
+            
+            setButtonLoading(sendOtpBtn, sendOtpBtnText, sendText);
+            
+            try {
+                confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, recaptchaVerifier);
+                console.log("[Phone] OTP sent successfully");
+                
+                // Update message with phone number
+                const otpSentMsg = document.getElementById("otpSentMessage");
+                otpSentMsg.textContent = `SMS კოდი გაიგზავნა ნომერზე: ${fullPhoneNumber}`;
+                
+                // Move to step 2
+                document.getElementById('phoneStep1').classList.remove('active');
+                document.getElementById('phoneStep2').classList.add('active');
+                
+                // Start resend countdown
+                startResendCountdown();
+                
+                // Focus first OTP input
+                document.querySelector('.otp-input').focus();
+                
+                resetButton(sendOtpBtn, sendOtpBtnText, sendText);
+            } catch (error) {
+                console.error("[Phone] Error sending OTP:", error);
+                resetButton(sendOtpBtn, sendOtpBtnText, sendText);
+                
+                // Reset reCAPTCHA safely
+                try {
+                    if (recaptchaVerifier) {
+                        recaptchaVerifier.clear();
+                    }
+                } catch (e) {
+                    console.log("[Phone] reCAPTCHA clear error (ignored):", e.message);
+                }
+                recaptchaVerifier = null;
+                initializeRecaptcha();
+                
+                // Special handling for billing error
+                let errorMsg;
+                if (error.code === 'auth/billing-not-enabled') {
+                    errorMsg = 'Firebase Phone Auth მოითხოვს Blaze Plan-ს. გთხოვთ გააქტიუროთ Billing Firebase Console-ში.';
+                } else if (error.code === 'auth/internal-error') {
+                    errorMsg = 'შიდა შეცდომა. გთხოვთ შეამოწმოთ Firebase Console-ში Phone Authentication ჩართულია თუ არა.';
+                } else {
+                    errorMsg = window.languageSwitcher ?
+                        window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) :
+                        error.message;
+                }
+                showMessage(errorMsg, "error");
+            }
+        });
+
+        // OTP input handling
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                
+                // მხოლოდ ციფრები
+                if (!/^\d*$/.test(value)) {
+                    e.target.value = '';
+                    return;
+                }
+                
+                // Move to next input
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+                
+                // Auto verify when all filled
+                if (index === otpInputs.length - 1 && value) {
+                    const otp = getOtpValue();
+                    if (otp.length === 6) {
+                        document.getElementById('verifyOtpBtn').click();
+                    }
+                }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                // Handle backspace
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+            
+            // Handle paste
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                pasteData.split('').forEach((digit, i) => {
+                    if (otpInputs[i]) {
+                        otpInputs[i].value = digit;
+                    }
+                });
+                if (pasteData.length === 6) {
+                    document.getElementById('verifyOtpBtn').click();
+                }
+            });
+        });
+
+        function getOtpValue() {
+            return Array.from(otpInputs).map(input => input.value).join('');
+        }
+
+        // Verify OTP
+        document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
+            const otp = getOtpValue();
+            
+            if (otp.length !== 6) {
+                showError('otp', 'validationOtpRequired');
+                return;
+            }
+            hideError('otp');
+            
+            const verifyBtn = document.getElementById("verifyOtpBtn");
+            const verifyBtnText = document.getElementById("verifyOtpBtnText");
+            const verifyText = window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება';
+            
+            setButtonLoading(verifyBtn, verifyBtnText, verifyText);
+            
+            try {
+                const result = await confirmationResult.confirm(otp);
+                console.log("[Phone] OTP verified successfully");
+                phoneAuthUser = result.user;
+                
+                // Check if user already has a name
+                const userDoc = await getDoc(doc(db, "users", phoneAuthUser.uid));
+                
+                if (userDoc.exists() && userDoc.data().displayName) {
+                    // User already exists with name, login directly
+                    const successMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('loginSuccess') : 
+                        'წარმატებით შეხვედით სისტემაში!';
+                    showMessage(successMsg, "success");
+                    setTimeout(() => {
+                        window.location.href = "home.html";
+                    }, 1500);
+                } else {
+                    // New user or no name, show step 3
+                    document.getElementById('phoneStep2').classList.remove('active');
+                    document.getElementById('phoneStep3').classList.add('active');
+                    document.getElementById('phoneUserName').focus();
+                }
+                
+                resetButton(verifyBtn, verifyBtnText, verifyText);
+            } catch (error) {
+                console.error("[Phone] Error verifying OTP:", error);
+                resetButton(verifyBtn, verifyBtnText, verifyText);
+                
+                // Clear OTP inputs
+                otpInputs.forEach(input => input.value = '');
+                otpInputs[0].focus();
+                
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || 'authInvalidVerificationCode') : 
+                    'არასწორი კოდი. გთხოვთ სცადოთ თავიდან.';
+                showMessage(errorMsg, "error");
+            }
+        });
+
+        // Complete phone auth with name
+        document.getElementById("completePhoneAuthBtn").addEventListener("click", async () => {
+            const userName = document.getElementById("phoneUserName").value.trim();
+            
+            const nameError = validateUsername(userName);
+            if (nameError) {
+                showError('phoneUserName', nameError);
+                return;
+            }
+            hideError('phoneUserName');
+            
+            const completeBtn = document.getElementById("completePhoneAuthBtn");
+            const completeBtnText = document.getElementById("completePhoneAuthBtnText");
+            const completeText = window.languageSwitcher ? window.languageSwitcher.translate('complete') : 'დასრულება';
+            
+            setButtonLoading(completeBtn, completeBtnText, completeText);
+            
+            try {
+                // Update Firebase profile
+                await updateProfile(phoneAuthUser, {
+                    displayName: userName
+                });
+                
+                // Save to localStorage
+                localStorage.setItem("username", userName);
+                
+                // Save to Firestore
+                await setDoc(doc(db, "users", phoneAuthUser.uid), {
+                    uid: phoneAuthUser.uid,
+                    phone: phoneAuthUser.phoneNumber,
+                    displayName: userName,
+                    photoURL: '',
+                    createdAt: serverTimestamp(),
+                    provider: 'phone'
+                }, { merge: true });
+                
+                console.log("[Phone] User profile saved successfully");
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('loginSuccess') : 
+                    'წარმატებით შეხვედით სისტემაში!';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+                
+            } catch (error) {
+                console.error("[Phone] Error saving profile:", error);
+                resetButton(completeBtn, completeBtnText, completeText);
+                
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('authDefaultError') : 
+                    'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.';
+                showMessage(errorMsg, "error");
+            }
+        });
+
+        // Back to phone step 1
+        document.getElementById("backToPhoneStep1").addEventListener("click", () => {
+            document.getElementById('phoneStep2').classList.remove('active');
+            document.getElementById('phoneStep1').classList.add('active');
+            
+            // Clear OTP inputs
+            otpInputs.forEach(input => input.value = '');
+            
+            // Reset reCAPTCHA
+            if (recaptchaVerifier) {
+                recaptchaVerifier.clear();
+                initializeRecaptcha();
+            }
+            
+            // Stop countdown
+            if (resendTimer) {
+                clearInterval(resendTimer);
+            }
+        });
+
+        // Resend OTP countdown
+        function startResendCountdown() {
+            resendCountdown = 60;
+            const resendBtn = document.getElementById("resendOtpBtn");
+            const resendText = document.getElementById("resendOtpText");
+            
+            resendBtn.disabled = true;
+            
+            resendTimer = setInterval(() => {
+                resendCountdown--;
+                resendText.textContent = `ხელახლა გაგზავნა (${resendCountdown}s)`;
+                
+                if (resendCountdown <= 0) {
+                    clearInterval(resendTimer);
+                    resendBtn.disabled = false;
+                    resendText.textContent = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('resendCode') : 'ხელახლა გაგზავნა';
+                }
+            }, 1000);
+        }
+
+        // Resend OTP
+        document.getElementById("resendOtpBtn").addEventListener("click", async () => {
+            // Go back to step 1 to resend
+            document.getElementById('phoneStep2').classList.remove('active');
+            document.getElementById('phoneStep1').classList.add('active');
+            
+            // Clear OTP inputs
+            otpInputs.forEach(input => input.value = '');
+            
+            // Reset reCAPTCHA
+            if (recaptchaVerifier) {
+                recaptchaVerifier.clear();
+                initializeRecaptcha();
+            }
+        });
+
+        // ===================================
+        // EMAIL/PASSWORD LOGIN
+        // ===================================
+
         // Resend verification email
         document.getElementById("resendVerification").addEventListener("click", async () => {
             if (unverifiedUser) {
                 try {
-                    // Configure action code settings for custom redirect
                     const actionCodeSettings = {
                         url: window.location.origin + '/login.html',
                         handleCodeInApp: false
@@ -1180,6 +1771,7 @@
             }
             hideError('loginPassword');
             
+            const loginBtn = document.getElementById("loginBtn");
             const loginText = window.languageSwitcher ? window.languageSwitcher.translate('signIn') : 'შესვლა';
             setButtonLoading(loginBtn, loginBtnText, loginText);
 
@@ -1187,11 +1779,9 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 
                 if (!userCredential.user.emailVerified) {
-                    // Store user for resend functionality
                     unverifiedUser = userCredential.user;
                     await signOut(auth);
                     
-                    // Show verification notice with resend option
                     verificationNotice.style.display = "block";
                     const verifyMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('emailVerificationRequired') : 
@@ -1238,6 +1828,7 @@
             }
             hideError('password');
             
+            const registerBtn = document.getElementById("registerBtn");
             const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რეგისტრაცია';
             setButtonLoading(registerBtn, registerBtnText, registerText);
 
@@ -1259,13 +1850,11 @@
                     provider: 'email'
                 });
 
-                // Configure action code settings
                 const actionCodeSettings = {
                     url: window.location.origin + '/login.html',
                     handleCodeInApp: false
                 };
 
-                // Send verification email with better error handling
                 try {
                     await sendEmailVerification(user, actionCodeSettings);
                     console.log("Verification email sent successfully to:", userEmail);
@@ -1276,7 +1865,6 @@
                     showMessage(successMsg, "success");
                 } catch (emailError) {
                     console.error("Error sending verification email:", emailError);
-                    // Registration succeeded but email failed
                     const warningMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('registrationSuccessEmailFailed') : 
                         'რეგისტრაცია წარმატებულია, მაგრამ დამადასტურებელი ემაილის გაგზავნა ვერ მოხერხდა. გთხოვთ სცადოთ შესვლა და აირჩიოთ "ხელახლა გაგზავნა".';
@@ -1316,6 +1904,7 @@
             }
             hideError('resetEmail');
             
+            const resetPasswordBtn = document.getElementById("resetPasswordBtn");
             const resetText = window.languageSwitcher ? window.languageSwitcher.translate('resetPassword') : 'პაროლის აღდგენა';
             setButtonLoading(resetPasswordBtn, resetPasswordBtnText, resetText);
 
@@ -1344,31 +1933,25 @@
         });
 
         // ===================================
-        // 🔵 სოციალური ავტორიზაციის ფუნქცია (popup ან redirect)
+        // 🔵 სოციალური ავტორიზაციის ფუნქცია
         // ===================================
         async function socialSignIn(provider, providerName) {
             const useMobile = isMobileDevice() || isInAppBrowser();
             
             console.log(`[${providerName}] Starting sign in...`);
-            console.log(`[${providerName}] Is mobile device: ${isMobileDevice()}`);
-            console.log(`[${providerName}] Is in-app browser: ${isInAppBrowser()}`);
             console.log(`[${providerName}] Using ${useMobile ? 'redirect' : 'popup'} method`);
 
             if (useMobile) {
-                // მობილურზე ან in-app ბრაუზერში გამოვიყენოთ redirect
                 try {
-                    // შევინახოთ provider-ის ინფორმაცია redirect-ის შემდეგ გამოსაყენებლად
                     localStorage.setItem('pendingAuthProvider', providerName);
                     console.log(`[${providerName}] Initiating redirect...`);
                     await signInWithRedirect(auth, provider);
-                    // ეს ხაზი არ მიიღწევა, რადგან redirect მოხდება
                 } catch (error) {
                     console.error(`[${providerName}] Redirect error:`, error);
                     localStorage.removeItem('pendingAuthProvider');
                     throw error;
                 }
             } else {
-                // დესკტოპზე გამოვიყენოთ popup
                 try {
                     console.log(`[${providerName}] Opening popup...`);
                     const result = await signInWithPopup(auth, provider);
@@ -1377,18 +1960,11 @@
                 } catch (error) {
                     console.error(`[${providerName}] Popup error:`, error);
                     
-                    // თუ popup დაიბლოკა ან სხვა პრობლემაა, სცადეთ redirect
-                    if (error.code === 'auth/popup-blocked' || 
-                        error.code === 'auth/popup-closed-by-user' ||
-                        error.code === 'auth/cancelled-popup-request') {
-                        
-                        // მხოლოდ popup-blocked-ის შემთხვევაში სცადეთ redirect
-                        if (error.code === 'auth/popup-blocked') {
-                            console.log(`[${providerName}] Popup blocked, trying redirect...`);
-                            localStorage.setItem('pendingAuthProvider', providerName);
-                            await signInWithRedirect(auth, provider);
-                            return null;
-                        }
+                    if (error.code === 'auth/popup-blocked') {
+                        console.log(`[${providerName}] Popup blocked, trying redirect...`);
+                        localStorage.setItem('pendingAuthProvider', providerName);
+                        await signInWithRedirect(auth, provider);
+                        return null;
                     }
                     throw error;
                 }
@@ -1404,8 +1980,10 @@
             
             const googleBtn = document.getElementById("googleSignIn");
             const facebookBtn = document.getElementById("facebookSignIn");
+            const phoneBtn = document.getElementById("phoneSignIn");
             googleBtn.disabled = true;
             facebookBtn.disabled = true;
+            phoneBtn.disabled = true;
             
             showLoading();
             const provider = new GoogleAuthProvider();
@@ -1414,7 +1992,6 @@
             try {
                 const result = await socialSignIn(provider, 'google');
                 
-                // თუ result არის null, მაშინ redirect მოხდა
                 if (!result) {
                     return;
                 }
@@ -1429,6 +2006,7 @@
                     nameModal.style.display = 'flex';
                     googleBtn.disabled = false;
                     facebookBtn.disabled = false;
+                    phoneBtn.disabled = false;
                     isSocialSignInProgress = false;
                     return;
                 }
@@ -1440,6 +2018,7 @@
             } finally {
                 googleBtn.disabled = false;
                 facebookBtn.disabled = false;
+                phoneBtn.disabled = false;
                 isSocialSignInProgress = false;
             }
         });
@@ -1453,12 +2032,13 @@
             
             const googleBtn = document.getElementById("googleSignIn");
             const facebookBtn = document.getElementById("facebookSignIn");
+            const phoneBtn = document.getElementById("phoneSignIn");
             googleBtn.disabled = true;
             facebookBtn.disabled = true;
+            phoneBtn.disabled = true;
             
             showLoading();
             const provider = new FacebookAuthProvider();
-            // დამატებითი scopes რომ მივიღოთ ელ. ფოსტა და სახელი
             provider.addScope('email');
             provider.addScope('public_profile');
             currentProvider = 'facebook';
@@ -1467,7 +2047,6 @@
                 console.log("[Facebook] Starting sign in...");
                 const result = await socialSignIn(provider, 'facebook');
                 
-                // თუ result არის null, მაშინ redirect მოხდა
                 if (!result) {
                     console.log("[Facebook] Redirect initiated, waiting for return...");
                     return;
@@ -1475,7 +2054,6 @@
                 
                 console.log("[Facebook] Result received:", result);
                 const user = result.user;
-                console.log("[Facebook] User:", user);
                 
                 let displayName = user.displayName;
                 
@@ -1487,6 +2065,7 @@
                     nameModal.style.display = 'flex';
                     googleBtn.disabled = false;
                     facebookBtn.disabled = false;
+                    phoneBtn.disabled = false;
                     isSocialSignInProgress = false;
                     return;
                 }
@@ -1496,19 +2075,17 @@
                 
             } catch (error) {
                 console.error("[Facebook] Error:", error);
-                console.error("[Facebook] Error code:", error.code);
-                console.error("[Facebook] Error message:", error.message);
                 await handleSocialSignInError(error, 'facebook');
             } finally {
                 googleBtn.disabled = false;
                 facebookBtn.disabled = false;
+                phoneBtn.disabled = false;
                 isSocialSignInProgress = false;
             }
         });
 
         // ===================================
         // 🔵 REDIRECT RESULT HANDLER
-        // გვერდის ჩატვირთვისას შევამოწმოთ redirect-ის შედეგი
         // ===================================
         async function handleRedirectResult() {
             try {
@@ -1544,7 +2121,6 @@
                 } else {
                     console.log("[Redirect] No redirect result found");
                     hideLoading();
-                    // წაშალეთ pending provider თუ არ არის შედეგი
                     localStorage.removeItem('pendingAuthProvider');
                 }
             } catch (error) {
@@ -1552,10 +2128,9 @@
                 localStorage.removeItem('pendingAuthProvider');
                 hideLoading();
                 
-                // თუ ეს არის "missing initial state" შეცდომა
                 if (error.code === 'auth/missing-initial-state' || 
                     error.message.includes('missing initial state')) {
-                    console.log("[Redirect] Missing initial state error - this can happen in certain browser environments");
+                    console.log("[Redirect] Missing initial state error");
                     const errorMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('authMissingInitialState') : 
                         'სესიის მონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გამოიყენოთ სხვა ბრაუზერი.';
@@ -1567,7 +2142,6 @@
             }
         }
 
-        // გვერდის ჩატვირთვისას შევამოწმოთ redirect შედეგი
         handleRedirectResult();
 
         // ===================================
@@ -1576,23 +2150,16 @@
         async function handleSocialSignInSuccess(user, displayName, provider) {
             try {
                 console.log(`[${provider}] handleSocialSignInSuccess called for user:`, user.uid);
-                console.log(`[${provider}] Display name to save:`, displayName);
                 
-                // ყოველთვის განაახლე Firebase Auth პროფილი displayName-ით
-                // ეს აუცილებელია რომ navbar-ში სწორად გამოჩნდეს სახელი
                 if (displayName && displayName.trim() !== '') {
                     console.log(`[${provider}] Updating Firebase Auth profile with displayName...`);
                     await updateProfile(user, {
                         displayName: displayName
                     });
-                    console.log(`[${provider}] Firebase Auth profile updated`);
-                    
-                    // ასევე შეინახე localStorage-ში backup-ისთვის
                     localStorage.setItem("username", displayName);
                 }
                 
                 const userDoc = await getDoc(doc(db, "users", user.uid));
-                console.log(`[${provider}] User doc exists:`, userDoc.exists());
                 
                 if (!userDoc.exists()) {
                     console.log(`[${provider}] Creating new user document...`);
@@ -1605,9 +2172,7 @@
                         emailVerified: user.emailVerified,
                         provider: provider
                     });
-                    console.log(`[${provider}] User document created`);
                 } else {
-                    // თუ დოკუმენტი უკვე არსებობს, მაინც განაახლე displayName თუ ცარიელია
                     const existingData = userDoc.data();
                     if (!existingData.displayName || existingData.displayName.trim() === '') {
                         console.log(`[${provider}] Updating existing user document with displayName...`);
@@ -1639,7 +2204,6 @@
 
         async function handleSocialSignInError(error, provider) {
             console.error(`${provider} Sign-In error:`, error);
-            console.error(`${provider} Error code:`, error.code);
             
             if (error.code === 'auth/account-exists-with-different-credential') {
                 try {
@@ -1721,13 +2285,11 @@
                 }
             }
             
-            // Handle popup closed by user
             if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
                 hideLoading();
-                return; // Silent return, user cancelled
+                return;
             }
             
-            // Handle popup blocked
             if (error.code === 'auth/popup-blocked') {
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
@@ -1737,7 +2299,6 @@
                 return;
             }
 
-            // Handle missing initial state (mobile/in-app browser issue)
             if (error.code === 'auth/missing-initial-state' || 
                 (error.message && error.message.includes('missing initial state'))) {
                 hideLoading();
@@ -1815,23 +2376,16 @@
             }
         });
 
-        // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+        // URL .html extension removal
         function removeHtmlExtensionFromURL() {
-            // შეამოწმეთ, თუ URL შეიცავს .html
             if (window.location.pathname.endsWith('.html')) {
-                // შექმენით ახალი URL .html-ის გარეშე
                 const newPath = window.location.pathname.replace(/\.html$/, '');
                 const newURL = newPath + window.location.search + window.location.hash;
-                
-                // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
                 window.history.replaceState({}, '', newURL);
             }
         }
 
-        // გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
         window.addEventListener('load', removeHtmlExtensionFromURL);
-
-        // ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
         window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
     
