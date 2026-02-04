@@ -2275,19 +2275,30 @@
             showLoading();
             
             onAuthStateChanged(auth, async (user) => {
-                if (user && user.emailVerified) {
-                    isAuthenticated = true;
-                    await loadUserData(user);
-                    authCheckComplete = true;
-                    sessionStorage.removeItem('viewOnlyMode');
-                    await loadPosts();
-                } else if (user && !user.emailVerified) {
-                    isAuthenticated = false;
-                    userData = null;
-                    authCheckComplete = true;
-                    sessionStorage.setItem('viewOnlyMode', 'true');
-                    await loadPosts();
-                    showToast('postsVerifyEmail');
+                if (user) {
+                    // შევამოწმოთ პროვაიდერი - ტელეფონი, Facebook ან Google არ საჭიროებს email verification-ს
+                    const providerData = user.providerData || [];
+                    const isPhoneUser = providerData.some(p => p.providerId === 'phone');
+                    const isFacebookUser = providerData.some(p => p.providerId === 'facebook.com');
+                    const isGoogleUser = providerData.some(p => p.providerId === 'google.com');
+                    const isSocialOrPhoneUser = isPhoneUser || isFacebookUser || isGoogleUser;
+                    
+                    // თუ სოციალური/ტელეფონის მომხმარებელია ან email დადასტურებულია
+                    if (isSocialOrPhoneUser || user.emailVerified) {
+                        isAuthenticated = true;
+                        await loadUserData(user);
+                        authCheckComplete = true;
+                        sessionStorage.removeItem('viewOnlyMode');
+                        await loadPosts();
+                    } else {
+                        // Email მომხმარებელი, მაგრამ არ დაადასტურა email
+                        isAuthenticated = false;
+                        userData = null;
+                        authCheckComplete = true;
+                        sessionStorage.setItem('viewOnlyMode', 'true');
+                        await loadPosts();
+                        showToast('postsVerifyEmail');
+                    }
                 } else {
                     isAuthenticated = false;
                     userData = null;

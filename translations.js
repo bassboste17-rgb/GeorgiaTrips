@@ -4,6 +4,13 @@ const translations = {
   ka: {
     // Login page translations - ka (ქართული)
     // Contact page SEO
+    signInWithPhone: "ტელეფონით შესვლა",
+    phoneAuthInfo: "შეიყვანეთ თქვენი ტელეფონის ნომერი.",
+    sendCode: "კოდის გაგზავნა",
+    verifyCode: "კოდის გადამოწმება",
+    resendCode: "კოდის ხელახლა გაგზავნა",
+    enterYourName: "შეიყვანეთ თქვენი სახელი",
+    complete: "დასრულება",
     // ka (ქართული)
     customTourSelectedDates: "არჩეული თარიღები",
      customTourDurationLabel: "ტურის ხანგრძლივობა:",
