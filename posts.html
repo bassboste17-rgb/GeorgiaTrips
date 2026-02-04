@@ -2470,7 +2470,7 @@
                 comment.replies.forEach((reply, replyIndex) => {
                     repliesHTML += `
                         <div class="comment comment-reply" data-reply-index="${replyIndex}">
-                            <img src="${reply.authorAvatar || 'https://via.placeholder.com/30'}" alt="Commenter" class="comment-avatar">
+                            <img src="${reply.authorAvatar || 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%2720%27 fill=%27%23000000%27/%3E%3C/svg%3E'}" alt="Commenter" class="comment-avatar">
                             <div class="comment-body">
                                 <div class="comment-content">
                                     <div class="comment-author">${reply.authorName}</div>
@@ -2497,7 +2497,7 @@
             
             return `
                 <div class="comment" data-comment-index="${commentIndex}">
-                    <img src="${comment.authorAvatar || 'https://via.placeholder.com/30'}" alt="Commenter" class="comment-avatar">
+                    <img src="${comment.authorAvatar || 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%2720%27 fill=%27%23000000%27/%3E%3C/svg%3E'}" alt="Commenter" class="comment-avatar">
                     <div class="comment-body">
                         <div class="comment-content">
                             <div class="comment-author">${comment.authorName}</div>
@@ -2796,7 +2796,7 @@
                 commentPreviewHTML = 
                     '<div class="comment-preview" onclick="toggleComments(\'' + postId + '\')">' +
                         '<div class="comment-preview-content">' +
-                            '<img src="' + (latestComment.authorAvatar || 'https://via.placeholder.com/28') + '" alt="' + latestComment.authorName + '" class="comment-preview-avatar">' +
+                            '<img src="' + (latestComment.authorAvatar || 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%2720%27 fill=%27%23000000%27/%3E%3C/svg%3E') + '" alt="' + latestComment.authorName + '" class="comment-preview-avatar">' +
                             '<div class="comment-preview-text">' +
                                 '<span class="comment-preview-author">' + latestComment.authorName + '</span>' +
                                 '<span class="comment-preview-body">' + (latestComment.text.length > 50 ? latestComment.text.substring(0, 50) + '...' : latestComment.text) + '</span>' +
@@ -2858,7 +2858,6 @@
             if (isAuthenticated) {
                 commentInputHTML = 
                     '<div class="add-comment">' +
-                        '<img src="' + (userData?.avatar || 'https://via.placeholder.com/40') + '" alt="User" class="comment-avatar">' +
                         '<input type="text" class="comment-input" id="comment-input-' + postId + '" placeholder="' + commentPlaceholder + '">' +
                         '<button class="comment-submit" onclick="addComment(\'' + postId + '\')"><i class="fas fa-paper-plane"></i></button>' +
                     '</div>';
@@ -2874,7 +2873,7 @@
             postElement.setAttribute('data-post-id', postId);
             postElement.innerHTML = 
                 '<div class="post-header">' +
-                    '<img src="' + (postData.authorAvatar || 'https://via.placeholder.com/40') + '" alt="Author" class="post-avatar">' +
+                    '<img src="' + (postData.authorAvatar || 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%2720%27 fill=%27%23000000%27/%3E%3C/svg%3E') + '" alt="Author" class="post-avatar">' +
                     '<div>' +
                         '<div class="post-author" onclick="goToProfile(\'' + postData.authorId + '\')">' + postData.authorName + '</div>' +
                         '<div class="post-time">' + postTime + ' · ' + regionLinkHTML + '</div>' +
