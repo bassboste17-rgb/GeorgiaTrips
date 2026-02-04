@@ -562,7 +562,7 @@ contactMessageSendFailed: "შეტყობინება ვერ გა�
 contactSuccessMessage: "შეტყობინება წარმატებით გაიგზავნა!",
 contactErrorMessage: "შეცდომა გაგზავნისას:",
     // Weather section additions
-    homeWeatherSubtitle: "დაგეგმე შენი მოგზა��რ��ბა ამინდის პროგნოზის მიხედვით",
+    homeWeatherSubtitle: "დაგეგმე შენი მო��ზა��რ��ბა ამინდის პროგნოზის მიხედვით",
     //Navbar
     navHome: "მთავარი",
     navPosts: "პოსტები",
@@ -609,7 +609,7 @@ contactErrorMessage: "შეცდომა გაგზავნისას:",
     home7Days: "7 დღე",
     home15Days: "15 დღე",
     homeViewAllPosts: "ყველა პოსტის ნახვა",
-    homeAnonymous: "ანონიმური",
+    homeAnonymous: "��ნონიმური",
     homeTimeUnknown: "დრო უცნობია",
     homeNoContentProvided: "პოსტის შინაარსი არ არის მითითებული",
     homeNoLocationProvided: "ადგილმდებარეობა არ არის მითითებული",
@@ -751,7 +751,7 @@ myBookingsLoginDesc: "გთხოვთ შეხვიდეთ სისტ�
     aboutFeatureSupport: "24/7 მხარდაჭერა",
     aboutFeatureCompetitivePrices: "კონკურენტული ფასები",
     aboutAchievementsTitle: "ჩვენი მიღწევები რიცხვებში",
-    aboutAchievementTransport: "ტრანსპო��ტის ე���თეული სხვადასხვა კატეგორიაში",
+    aboutAchievementTransport: "ტ��ანსპო��ტის ე���თეული სხვადასხვა კატეგორიაში",
     aboutAchievementTours: "საინტერესო ტური საქართველოს მასშტაბით",
     aboutAchievementBookings: "წარმატებით შესრულებული დაჯავშნა",
     aboutAchievementUsers: "კმაყოფილი მომხმარებელი",
@@ -924,7 +924,7 @@ profileAvatarSaved: "ავატარი წარმატებით შე
     rachaLechkhumiBookTransport: "ტრანსპორტის დაჯავშნა",
     rachaLechkhumiAboutTitle: "რაჭა-ლეჩხუმი და ქვემო სვანეთის შესახებ",
     rachaLechkhumiAboutDescription:
-      "რაჭა-ლეჩხუმი და ქვემო სვანეთი - საქართველოს მხარე, რომელიც მდებარეობს ქვეყნის ჩრდილო-დასავლეთ ნაწილში. რეგიონი ცნობილია თავისი უნიკალური ბუნებით, მთიანი ლანდშაფტებით, ისტორიული და კულტურული ძეგლებით. აქ გვხვდება მდიდ���რი ფლორა დ�� ფაუნა, ბალნეოლოგიური კურორტები და საუკეთესო პირობები ეკოტურიზმისთვის.",
+      "რაჭა-ლეჩხუმი და ქვემო სვანეთი - საქართველოს მხარე, რომელიც მდებარეობს ქვეყნის ჩრდილო-დასავლეთ ნაწილში. რეგიონი ცნობილია თავისი უნიკალური ბუნებით, მთიანი ლანდშაფტებით, ისტორიული და კულტურული ძეგლებით. აქ გვხვდ��ბა მდიდ���რი ფლორა დ�� ფაუნა, ბალნეოლოგიური კურორტები და საუკეთესო პირობები ეკოტურიზმისთვის.",
     rachaLechkhumiStatArea: "ფართობი",
     rachaLechkhumiStatPopulation: "მოსახლეობა",
     rachaLechkhumiStatCapital: "ადმინისტრაციული ცენტრი",
@@ -1002,7 +1002,7 @@ profileAvatarSaved: "ავატარი წარმატებით შე
     weatherCode67: "ძლიერი გაყინული წვიმა",
     weatherCode71: "მსუბუქი თოვლი",
     weatherCode73: "ზომიერი თოვლი",
-    weatherCode75: "ძლიერი თოვლი",
+    weatherCode75: "ძლიერი ��ოვლი",
     weatherCode77: "თოვლის მარცვლები",
     weatherCode80: "მსუბუქი წვიმა",
     weatherCode81: "ზომიერი წვიმა",
@@ -1324,7 +1324,7 @@ profileAvatarSaved: "ავატარი წარმატებით შე
     imeretiDoorsLabel: "კარი",
     imeretiPeopleLabel: "ადამიანი",
     imeretiRouteLabel: "მარშრუტი",
-    imeretiNoDescription: "აღწერა არ არის მითითებული",
+    imeretiNoDescription: "აღწერა არ ���რის მითითებული",
     imeretiPriceLabel: "ფასი",
     imeretiBookingButton: "დაჯავშნა",
     // Kakheti page translations - Georgian
@@ -4536,7 +4536,7 @@ officeAddress: "Батуми, улица Багратиони 161",
     imeretiBookingButton: "Забронировать",
     // Kakheti page translations - Russian
     postsTravelAlertTitle: "Посты и фотографии путешествий из Грузии",
-postsTravelAlertDescription: "Откройте для себя удивительные истории путешествий, фотографии, видео и приключения из всех регионов Грузии. От улиц Тбилиси до гор Сванетии, от пляжей Батуми до винного региона Кахетии. Найдите скрытые места, получите советы по путешествиям и поделитесь своим приключением.",
+postsTravelAlertDescription: "Откройте для себя удивительные истории путешествий, фотографии, видео и приключения из всех регионов Грузии. От улиц Тбилиси до гор Сванетии, от пляжей Батуми до винного региона Кахе��ии. Найдите скрытые места, получите советы по путешествиям и поделитесь своим приключением.",
 postsTravelAlertButton: "Понятно",
     postsFacebook: "Фейсбук",
 postsTwitter: "Твиттер",
@@ -4946,7 +4946,7 @@ bookingActionView: "عرض",
     authOperationNotAllowed: "العملية غير مسموح بها",
     authWeakPassword: "كلمة المرور ضعيفة جداً (6 أحرف على الأقل)",
     authTooManyRequests: "طلبات كثيرة جداً، حاول لاحقاً",
-    authMissingEmail: "يرجى تحديد البريد الإلكتروني",
+    authMissingEmail: "يرجى تحديد البريد الإلكتر��ني",
     authAccountExistsDifferent: "هذا البريد ا��إلكتروني مستخدم بالفعل بطريقة أخرى",
     authDefaultError: "حدث خطأ. يرجى المحاولة لاحقاً",
   carsPageSubtitle: "استئجار السيارات والجولات السياحية في جورجيا",
@@ -4972,7 +4972,7 @@ bookingActionView: "عرض",
     tbilisiToursLoadError: "حدث خطأ أثناء تحميل الجولات",
     tbilisiTransportTitle: "النقل",
     tbilisiTransportSubtitle: "وسائل النقل المتاحة في تبليسي",
-    tbilisiNoTransport: "لا توجد وسائل نقل مضافة في هذه المنطقة بعد",
+    tbilisiNoTransport: "لا توجد وسائل نقل مضافة في هذه ا��منطقة بعد",
     tbilisiTransportLoadError: "ح��ث خطأ أثناء تحميل النقل",
     tbilisiCTATitle: "استعد ل��حلتك إلى تبليسي",
     tbilisiCTADescription: "احجز وسيلة نقلك الآن واستمتع",
@@ -6097,7 +6097,7 @@ officeAddress: "باتومي، شارع باغراتيوني 161",
       "إيميريتي - منطقة في جورجيا تقع في الجزء الغربي من البلاد. تشتهر المنطقة بتاريخها الغني، وتقاليد النبيذ والجمال الطبيعي. إيميريتي هي واحدة من أهم المراكز الثقافية في جورجيا.",
     imeretiStatArea: "المساحة",
     imeretiStatPopulation: "السكان",
-    imeretiStatCapital: "المركز الإداري",
+    imeretiStatCapital: "المركز الإ��اري",
     imeretiStatKnownFor: "معروف بـ",
     imeretiStatKnownForValue: "المعالم التاريخية",
     imeretiWeatherTitle: "توقعات الطقس - إيميريتي",
@@ -6509,25 +6509,6 @@ class LanguageSwitcher {
       .fa, .fas, .far, .fab, .fal, .fad {
         font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands" !important;
       }
-      
-      /* Arabic specific styles */
-      ${this.currentLang === 'ar' ? `
-        body {
-          direction: rtl;
-          text-align: right;
-        }
-        .navbar {
-          direction: ltr;
-        }
-        .navbar-right {
-          direction: rtl;
-        }
-      ` : `
-        body {
-          direction: ltr;
-          text-align: left;
-        }
-      `}
     `
     document.head.appendChild(style)
     
