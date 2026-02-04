@@ -52,7 +52,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: inherit;
   background: var(--bg-dark);
   color: var(--text-color);
   line-height: 1.6;
@@ -1061,7 +1061,7 @@ body {
                 await db.collection('notifications').add({
                     userId: currentUser.uid,
                     title: t('myBookingsNotifCancelledTitle', 'დაჯავშნა გაუქმებულია'),
-                    message: t('myBookingsNotifCancelledMsg', 'თქვენი დაჯავშნა წარმატებით გაუქმდა'),
+                    message: t('myBookingsNotifCancelledMsg', 'თქვენი დაჯავ���ნა წარმატებით გაუქმდა'),
                     type: 'booking_cancelled',
                     read: false,
                     bookingId: bookingId,

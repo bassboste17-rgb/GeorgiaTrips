@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .map-loading-text {
         color: #fff;
         font-size: 1.1rem;
-        font-family: "BPG Glaho", sans-serif;
+        font-family: inherit;
         margin: 0;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       }
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .region-label {
           pointer-events: none;
           font-size: 16px;
-          font-family: 'BPG Glaho', sans-serif;
+          font-family: inherit;
           font-weight: bold;
           text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
           fill: #ffffff !important;
