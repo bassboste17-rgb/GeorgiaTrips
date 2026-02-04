@@ -2055,7 +2055,7 @@
             
             const sendOtpBtn = document.getElementById("resetSendOtpBtn");
             const sendOtpBtnText = document.getElementById("resetSendOtpBtnText");
-            const sendText = 'კოდის გაგზავნა';
+            const sendText = window.languageSwitcher ? window.languageSwitcher.translate('sendCode') : 'კოდის გაგზავნა';
             
             setButtonLoading(sendOtpBtn, sendOtpBtnText, sendText);
             
@@ -2136,7 +2136,8 @@
             const verifyBtn = document.getElementById("resetVerifyOtpBtn");
             const verifyBtnText = document.getElementById("resetVerifyOtpBtnText");
             
-            setButtonLoading(verifyBtn, verifyBtnText, 'კოდის დადასტურება');
+            const verifyText = window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება';
+            setButtonLoading(verifyBtn, verifyBtnText, verifyText);
             
             try {
                 const result = await resetPhoneData.confirmationResult.confirm(otp);
@@ -2146,10 +2147,10 @@
                 document.getElementById('resetPhoneStep2').style.display = 'none';
                 document.getElementById('resetPhoneStep3').style.display = 'block';
                 
-                resetButton(verifyBtn, verifyBtnText, window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება');
+                resetButton(verifyBtn, verifyBtnText, verifyText);
             } catch (error) {
                 console.error("[Reset] OTP verification error:", error);
-                resetButton(verifyBtn, verifyBtnText, window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება');
+                resetButton(verifyBtn, verifyBtnText, verifyText);
                 resetOtpInputs.forEach(i => i.value = '');
                 resetOtpInputs[0].focus();
                 showMessage(window.languageSwitcher ? window.languageSwitcher.translate('wrongCode') : 'არასწორი კოდი', "error");
@@ -2177,7 +2178,8 @@
             const saveBtn = document.getElementById("resetSavePasswordBtn");
             const saveBtnText = document.getElementById("resetSavePasswordBtnText");
             
-            setButtonLoading(saveBtn, saveBtnText, 'პაროლის შენახვა');
+            const saveText = window.languageSwitcher ? window.languageSwitcher.translate('savePassword') : 'პაროლის შენახვა';
+            setButtonLoading(saveBtn, saveBtnText, saveText);
             
             try {
                 // Use the authenticated user's UID from the phone verification
@@ -2209,7 +2211,7 @@
                 
             } catch (error) {
                 console.error("[Reset] Error saving password:", error);
-                resetButton(saveBtn, saveBtnText, window.languageSwitcher ? window.languageSwitcher.translate('savePassword') : 'პაროლის შენახვა');
+                resetButton(saveBtn, saveBtnText, saveText);
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('passwordSaveFailed') : 
                     'პაროლის შენახვა ვერ მოხერხდა';
