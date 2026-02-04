@@ -6,6 +6,8 @@ import {
   query,
   where,
   onSnapshot,
+  doc,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
 
 // Immediately set English as default if no language is saved (runs before anything else)
@@ -58,6 +60,22 @@ function isSocialOrPhoneProvider(user) {
   }
   const socialProviders = ['google.com', 'facebook.com', 'twitter.com', 'github.com', 'phone'];
   return user.providerData.some(provider => socialProviders.includes(provider.providerId));
+}
+
+// Function to get user's name from Firestore
+async function getUserNameFromFirestore(userId) {
+  try {
+    const userDoc = await getDoc(doc(db, "users", userId));
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      // Check multiple possible name fields
+      return userData.name || userData.displayName || userData.fullName || userData.firstName || null;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching user name from Firestore:", error);
+    return null;
+  }
 }
 
 // Navbar scroll effect - transparent at top, solid when scrolled
@@ -248,20 +266,99 @@ fetch("navbar.html")
       )
     }
 
-    onAuthStateChanged(auth, (user) => {
+    // Function to render user menu
+    function renderUserMenu(rawUsername) {
+      // Formatted name for navbar (short version)
+      const displayUsername = formatDisplayName(rawUsername)
+      
+      // Save full name to localStorage
+      localStorage.setItem("username", rawUsername)
+
+      // Dropdown menu HTML
+      authLink.innerHTML = `
+        <div class="user-menu">
+          <span class="user-name" title="${rawUsername}">${displayUsername}</span>
+          <div class="dropdown">
+            <a href="profile.html" data-i18n="navMyProfile">${window.languageSwitcher?.translate("navMyProfile") || "My Profile"}</a>
+            <a href="addPost.html" data-i18n="navAddPost">${window.languageSwitcher?.translate("navAddPost") || "Add Post"}</a>
+            <a href="myposts.html" data-i18n="navMyPosts">${window.languageSwitcher?.translate("navMyPosts") || "My Posts"}</a>
+            <a href="#" id="logout-btn" data-i18n="navLogout">${window.languageSwitcher?.translate("navLogout") || "Logout"}</a>
+          </div>
+        </div>
+      `
+
+      // Dropdown toggle (on click)
+      const userName = document.querySelector(".user-name")
+      const dropdown = document.querySelector(".dropdown")
+      let open = false
+
+      userName.addEventListener("click", (e) => {
+        e.stopPropagation()
+        open = !open
+        dropdown.style.display = open ? "block" : "none"
+      })
+
+      const logoutBtn = document.getElementById("logout-btn")
+      logoutBtn?.addEventListener("click", async (e) => {
+        e.preventDefault()
+
+        try {
+          // Sign out from Firebase
+          await signOut(auth)
+
+          // Clear localStorage
+          localStorage.removeItem("username")
+          localStorage.removeItem("userEmail")
+
+          // Clear sessionStorage
+          sessionStorage.clear()
+
+          // Redirect to login page
+          window.location.href = "login.html"
+        } catch (error) {
+          console.error("Logout error:", error)
+          alert("An error occurred while logging out. Please try again.")
+        }
+      })
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".user-menu")) {
+          dropdown.style.display = "none"
+          open = false
+        }
+      })
+    }
+
+    onAuthStateChanged(auth, async (user) => {
       // Fix: Don't require emailVerified for Facebook/Google/Phone users
       // Only require emailVerified for email/password registered users
       const isValidUser = user && (user.emailVerified || isSocialOrPhoneProvider(user));
       
       if (isValidUser) {
         // User is authenticated
-        const rawUsername = user.displayName || localStorage.getItem("username") || "User"
+        // First try to get name from Firebase Auth
+        let rawUsername = user.displayName;
         
-        // Formatted name for navbar (short version)
-        const displayUsername = formatDisplayName(rawUsername)
+        // If no displayName (common for phone auth), try localStorage
+        if (!rawUsername) {
+          rawUsername = localStorage.getItem("username");
+        }
         
-        // Save full name to localStorage
-        localStorage.setItem("username", rawUsername)
+        // If still no name, fetch from Firestore (this is where phone registration saves the name)
+        if (!rawUsername || rawUsername === "User") {
+          const firestoreName = await getUserNameFromFirestore(user.uid);
+          if (firestoreName) {
+            rawUsername = firestoreName;
+          }
+        }
+        
+        // Fallback to "User" if all else fails
+        if (!rawUsername) {
+          rawUsername = "User";
+        }
+        
+        // Save email/phone to localStorage
         localStorage.setItem("userEmail", user.email || user.phoneNumber || "")
 
         // Show notification bell when user is authenticated
@@ -272,60 +369,8 @@ fetch("navbar.html")
         // Start listening for notifications
         setupNavbarNotificationsListener(user)
 
-        // Dropdown menu HTML
-        authLink.innerHTML = `
-          <div class="user-menu">
-            <span class="user-name" title="${rawUsername}">${displayUsername}</span>
-            <div class="dropdown">
-              <a href="profile.html" data-i18n="navMyProfile">${window.languageSwitcher?.translate("navMyProfile") || "My Profile"}</a>
-              <a href="addPost.html" data-i18n="navAddPost">${window.languageSwitcher?.translate("navAddPost") || "Add Post"}</a>
-              <a href="myposts.html" data-i18n="navMyPosts">${window.languageSwitcher?.translate("navMyPosts") || "My Posts"}</a>
-              <a href="#" id="logout-btn" data-i18n="navLogout">${window.languageSwitcher?.translate("navLogout") || "Logout"}</a>
-            </div>
-          </div>
-        `
-
-        // Dropdown toggle (on click)
-        const userName = document.querySelector(".user-name")
-        const dropdown = document.querySelector(".dropdown")
-        let open = false
-
-        userName.addEventListener("click", (e) => {
-          e.stopPropagation()
-          open = !open
-          dropdown.style.display = open ? "block" : "none"
-        })
-
-        const logoutBtn = document.getElementById("logout-btn")
-        logoutBtn?.addEventListener("click", async (e) => {
-          e.preventDefault()
-
-          try {
-            // Sign out from Firebase
-            await signOut(auth)
-
-            // Clear localStorage
-            localStorage.removeItem("username")
-            localStorage.removeItem("userEmail")
-
-            // Clear sessionStorage
-            sessionStorage.clear()
-
-            // Redirect to login page
-            window.location.href = "login.html"
-          } catch (error) {
-            console.error("Logout error:", error)
-            alert("An error occurred while logging out. Please try again.")
-          }
-        })
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", (e) => {
-          if (!e.target.closest(".user-menu")) {
-            dropdown.style.display = "none"
-            open = false
-          }
-        })
+        // Render user menu with the username
+        renderUserMenu(rawUsername)
       } else {
         // User is not authenticated
         localStorage.removeItem("username")

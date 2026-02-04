@@ -657,7 +657,7 @@
         }
 
         .phone-input-wrapper select {
-            width: 100px;
+            width: 120px;
             padding: 15px 10px;
             background: var(--background-dark);
             border: 1px solid var(--border-color);
@@ -728,6 +728,72 @@
             text-align: center;
             margin-bottom: 15px;
         }
+
+        /* Login method tabs */
+        .login-method-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .login-method-tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .login-method-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .login-method-tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Reset method tabs */
+        .reset-method-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .reset-method-tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .reset-method-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .reset-method-tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .reset-form-content {
+            display: none;
+        }
+
+        .reset-form-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -776,8 +842,62 @@
 
             <!-- შესვლა -->
             <form id="loginForm" class="auth-form active" novalidate>
-                <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
-                <div class="error-message" id="loginEmailError"></div>
+                <!-- Login method tabs -->
+                <div class="login-method-tabs">
+                    <button type="button" class="login-method-tab active" id="loginEmailTab">
+                        <i class="fas fa-envelope"></i> <span data-i18n="loginWithEmail">ელ. ფოსტა</span>
+                    </button>
+                    <button type="button" class="login-method-tab" id="loginPhoneTab">
+                        <i class="fas fa-phone"></i> <span data-i18n="loginWithPhone">ნომერი</span>
+                    </button>
+                </div>
+
+                <!-- Email login -->
+                <div id="emailLoginContent" class="login-content active">
+                    <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                    <div class="error-message" id="loginEmailError"></div>
+                </div>
+
+                <!-- Phone login -->
+                <div id="phoneLoginContent" class="login-content" style="display: none;">
+                    <div class="phone-input-wrapper">
+                        <select id="loginCountryCode">
+                            <option value="+995">🇬🇪 +995</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+90">🇹🇷 +90</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                            <option value="+974">🇶🇦 +974</option>
+                            <option value="+973">🇧🇭 +973</option>
+                            <option value="+965">🇰🇼 +965</option>
+                            <option value="+968">🇴🇲 +968</option>
+                            <option value="+962">🇯🇴 +962</option>
+                            <option value="+961">🇱🇧 +961</option>
+                            <option value="+20">🇪🇬 +20</option>
+                            <option value="+212">🇲🇦 +212</option>
+                            <option value="+972">🇮🇱 +972</option>
+                            <option value="+374">🇦🇲 +374</option>
+                            <option value="+994">🇦🇿 +994</option>
+                            <option value="+380">🇺🇦 +380</option>
+                            <option value="+48">🇵🇱 +48</option>
+                            <option value="+31">🇳🇱 +31</option>
+                            <option value="+41">🇨🇭 +41</option>
+                            <option value="+43">🇦🇹 +43</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+82">🇰🇷 +82</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+91">🇮🇳 +91</option>
+                        </select>
+                        <input type="tel" id="loginPhoneNumber" name="loginPhoneNumber" placeholder="555 123 456" required />
+                    </div>
+                    <div class="error-message" id="loginPhoneNumberError"></div>
+                </div>
                 
                 <input type="password" id="loginPassword" name="loginPassword" placeholder="პაროლი" required data-i18n-placeholder="password" />
                 <div class="error-message" id="loginPasswordError"></div>
@@ -798,15 +918,113 @@
 
             <!-- პაროლის აღდგენა -->
             <form id="forgotPasswordForm" class="auth-form" novalidate>
-                <p style="color: var(--text-secondary); margin-bottom: 15px;" data-i18n="resetPasswordInfo">
-                    შეიყვანეთ თქვენი ელ. ფოსტა, რათა გამოგიგზავნოთ პაროლის აღდგენის ბმული.
+                <p style="color: var(--text-secondary); margin-bottom: 15px;" data-i18n="resetPasswordInfoBoth">
+                    შეიყვანეთ თქვენი ელ. ფოსტა ან ნომერი, რათა აღადგინოთ პაროლი.
                 </p>
-                <input type="email" id="resetEmail" name="resetEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
-                <div class="error-message" id="resetEmailError"></div>
+
+                <!-- Reset method tabs -->
+                <div class="reset-method-tabs">
+                    <button type="button" class="reset-method-tab active" id="resetEmailTab">
+                        <i class="fas fa-envelope"></i> <span data-i18n="loginWithEmail">ელ. ფოსტა</span>
+                    </button>
+                    <button type="button" class="reset-method-tab" id="resetPhoneTab">
+                        <i class="fas fa-phone"></i> <span data-i18n="loginWithPhone">ნომერი</span>
+                    </button>
+                </div>
+
+                <!-- Email reset -->
+                <div id="resetEmailContent" class="reset-form-content active">
+                    <input type="email" id="resetEmail" name="resetEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                    <div class="error-message" id="resetEmailError"></div>
+                    
+                    <button type="submit" id="resetPasswordBtn">
+                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
+                    </button>
+                </div>
+
+                <!-- Phone reset - Step 1: Phone number -->
+                <div id="resetPhoneContent" class="reset-form-content">
+                    <div id="resetPhoneStep1">
+                        <div class="phone-input-wrapper">
+                            <select id="resetCountryCode">
+                                <option value="+995">🇬🇪 +995</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+39">🇮🇹 +39</option>
+                                <option value="+34">🇪🇸 +34</option>
+                                <option value="+7">🇷🇺 +7</option>
+                                <option value="+90">🇹🇷 +90</option>
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+966">🇸🇦 +966</option>
+                                <option value="+974">🇶🇦 +974</option>
+                                <option value="+973">🇧🇭 +973</option>
+                                <option value="+965">🇰🇼 +965</option>
+                                <option value="+968">🇴🇲 +968</option>
+                                <option value="+962">🇯🇴 +962</option>
+                                <option value="+961">🇱🇧 +961</option>
+                                <option value="+20">🇪🇬 +20</option>
+                                <option value="+212">🇲🇦 +212</option>
+                                <option value="+972">🇮🇱 +972</option>
+                                <option value="+374">🇦🇲 +374</option>
+                                <option value="+994">🇦🇿 +994</option>
+                                <option value="+380">🇺🇦 +380</option>
+                                <option value="+48">🇵🇱 +48</option>
+                                <option value="+31">🇳🇱 +31</option>
+                                <option value="+41">🇨🇭 +41</option>
+                                <option value="+43">🇦🇹 +43</option>
+                                <option value="+81">🇯🇵 +81</option>
+                                <option value="+82">🇰🇷 +82</option>
+                                <option value="+86">🇨🇳 +86</option>
+                                <option value="+91">🇮🇳 +91</option>
+                            </select>
+                            <input type="tel" id="resetPhoneNumber" name="resetPhoneNumber" placeholder="555 123 456" required />
+                        </div>
+                        <div class="error-message" id="resetPhoneNumberError"></div>
+                        
+                        <div id="reset-recaptcha-container"></div>
+                        
+                        <button type="button" id="resetSendOtpBtn">
+                            <span id="resetSendOtpBtnText" data-i18n="sendCode">კოდის გაგზავნა</span>
+                        </button>
+                    </div>
+
+                    <!-- Phone reset - Step 2: OTP -->
+                    <div id="resetPhoneStep2" style="display: none;">
+                        <p class="phone-info" id="resetOtpSentMessage" data-i18n="codeSentToPhone">SMS კოდი გაიგზავნა</p>
+                        
+                        <div class="otp-inputs" id="resetOtpInputs">
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="0" inputmode="numeric" pattern="[0-9]" />
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="1" inputmode="numeric" pattern="[0-9]" />
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="2" inputmode="numeric" pattern="[0-9]" />
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="3" inputmode="numeric" pattern="[0-9]" />
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="4" inputmode="numeric" pattern="[0-9]" />
+                            <input type="text" maxlength="1" class="reset-otp-input" data-index="5" inputmode="numeric" pattern="[0-9]" />
+                        </div>
+                        <div class="error-message" id="resetOtpError"></div>
+                        
+                        <button type="button" id="resetVerifyOtpBtn">
+                            <span id="resetVerifyOtpBtnText" data-i18n="verifyCode">კოდის დადასტურება</span>
+                        </button>
+                    </div>
+
+                    <!-- Phone reset - Step 3: New password -->
+                    <div id="resetPhoneStep3" style="display: none;">
+                        <p class="phone-info" data-i18n="enterNewPassword">შეიყვანეთ ახალი პაროლი</p>
+                        
+                        <input type="password" id="resetNewPassword" name="resetNewPassword" placeholder="ახალი პაროლი" required data-i18n-placeholder="newPassword" />
+                        <div class="error-message" id="resetNewPasswordError"></div>
+                        
+                        <input type="password" id="resetConfirmPassword" name="resetConfirmPassword" placeholder="გაიმეორეთ პაროლი" required data-i18n-placeholder="confirmPassword" />
+                        <div class="error-message" id="resetConfirmPasswordError"></div>
+                        
+                        <button type="button" id="resetSavePasswordBtn">
+                            <span id="resetSavePasswordBtnText" data-i18n="savePassword">პაროლის შენახვა</span>
+                        </button>
+                    </div>
+                </div>
                 
-                <button type="submit" id="resetPasswordBtn">
-                    <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
-                </button>
                 <button type="button" id="backToLogin" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
                     უკან
                 </button>
@@ -851,9 +1069,9 @@
                 </div>
             </form>
 
-            <!-- ტელეფონით რეგისტრაციის ფორმა -->
+            <!-- ტელეფონით რეგისტრაციის ფორმა - ახალი თანმიმდევრობა: სახელი -> პაროლი -> ნომერი -> კოდი -->
             <form id="phoneAuthForm" class="auth-form" novalidate>
-                <!-- ეტაპი 1: ტელეფონის ნომერი -->
+                <!-- ეტაპი 1: სახელის შეყვანა -->
                 <div class="form-step active" id="phoneStep1">
                     <div class="step-indicator">
                         <div class="step active">1</div>
@@ -861,6 +1079,63 @@
                         <div class="step">2</div>
                         <div class="step-line"></div>
                         <div class="step">3</div>
+                        <div class="step-line"></div>
+                        <div class="step">4</div>
+                    </div>
+                    
+                    <p class="phone-info" data-i18n="enterYourName">გთხოვთ შეიყვანოთ თქვენი სახელი</p>
+                    
+                    <input type="text" id="phoneUserName" name="phoneUserName" placeholder="სახელი" required data-i18n-placeholder="name" />
+                    <div class="error-message" id="phoneUserNameError"></div>
+                    
+                    <button type="button" id="phoneNextToStep2Btn">
+                        <span id="phoneNextToStep2BtnText" data-i18n="next">შემდეგი</span>
+                    </button>
+                    
+                    <button type="button" id="backFromPhone" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                        უკან
+                    </button>
+                </div>
+
+                <!-- ეტაპი 2: პაროლის შეყვანა -->
+                <div class="form-step" id="phoneStep2">
+                    <div class="step-indicator">
+                        <div class="step completed">1</div>
+                        <div class="step-line"></div>
+                        <div class="step active">2</div>
+                        <div class="step-line"></div>
+                        <div class="step">3</div>
+                        <div class="step-line"></div>
+                        <div class="step">4</div>
+                    </div>
+                    
+                    <p class="phone-info" data-i18n="enterPasswordForRegistration">შეიყვანეთ პაროლი (შესვლისთვის)</p>
+                    
+                    <input type="password" id="phonePassword" name="phonePassword" placeholder="პაროლი" required minlength="6" data-i18n-placeholder="password" />
+                    <div class="error-message" id="phonePasswordError"></div>
+                    
+                    <input type="password" id="phonePasswordConfirm" name="phonePasswordConfirm" placeholder="გაიმეორეთ პაროლი" required data-i18n-placeholder="confirmPassword" />
+                    <div class="error-message" id="phonePasswordConfirmError"></div>
+                    
+                    <button type="button" id="phoneNextToStep3Btn">
+                        <span id="phoneNextToStep3BtnText" data-i18n="next">შემდეგი</span>
+                    </button>
+                    
+                    <button type="button" id="backToPhoneStep1" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                        უკან
+                    </button>
+                </div>
+                
+                <!-- ეტაპი 3: ტელეფონის ნომერი -->
+                <div class="form-step" id="phoneStep3">
+                    <div class="step-indicator">
+                        <div class="step completed">1</div>
+                        <div class="step-line"></div>
+                        <div class="step completed">2</div>
+                        <div class="step-line"></div>
+                        <div class="step active">3</div>
+                        <div class="step-line"></div>
+                        <div class="step">4</div>
                     </div>
                     
                     <p class="phone-info" data-i18n="phoneAuthInfo">შეიყვანეთ თქვენი ტელეფონის ნომერი SMS კოდის მისაღებად</p>
@@ -878,8 +1153,26 @@
                             <option value="+90">🇹🇷 +90</option>
                             <option value="+971">🇦🇪 +971</option>
                             <option value="+966">🇸🇦 +966</option>
+                            <option value="+974">🇶🇦 +974</option>
+                            <option value="+973">🇧🇭 +973</option>
+                            <option value="+965">🇰🇼 +965</option>
+                            <option value="+968">🇴🇲 +968</option>
+                            <option value="+962">🇯🇴 +962</option>
+                            <option value="+961">🇱🇧 +961</option>
+                            <option value="+20">🇪🇬 +20</option>
+                            <option value="+212">🇲🇦 +212</option>
+                            <option value="+972">🇮🇱 +972</option>
                             <option value="+374">🇦🇲 +374</option>
                             <option value="+994">🇦🇿 +994</option>
+                            <option value="+380">🇺🇦 +380</option>
+                            <option value="+48">🇵🇱 +48</option>
+                            <option value="+31">🇳🇱 +31</option>
+                            <option value="+41">🇨🇭 +41</option>
+                            <option value="+43">🇦🇹 +43</option>
+                            <option value="+81">🇯🇵 +81</option>
+                            <option value="+82">🇰🇷 +82</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+91">🇮🇳 +91</option>
                         </select>
                         <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="555 123 456" required />
                     </div>
@@ -892,19 +1185,21 @@
                         <span id="sendOtpBtnText" data-i18n="sendCode">კოდის გაგზავნა</span>
                     </button>
                     
-                    <button type="button" id="backFromPhone" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                    <button type="button" id="backToPhoneStep2" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
                         უკან
                     </button>
                 </div>
                 
-                <!-- ეტაპი 2: OTP შეყვანა -->
-                <div class="form-step" id="phoneStep2">
+                <!-- ეტაპი 4: OTP შეყვანა -->
+                <div class="form-step" id="phoneStep4">
                     <div class="step-indicator">
                         <div class="step completed">1</div>
                         <div class="step-line"></div>
-                        <div class="step active">2</div>
+                        <div class="step completed">2</div>
                         <div class="step-line"></div>
-                        <div class="step">3</div>
+                        <div class="step completed">3</div>
+                        <div class="step-line"></div>
+                        <div class="step active">4</div>
                     </div>
                     
                     <p class="phone-info" id="otpSentMessage" data-i18n="otpSent">SMS კოდი გაიგზავნა ნომერზე</p>
@@ -921,7 +1216,7 @@
                     
                     <div class="resend-otp">
                         <button type="button" id="resendOtpBtn" disabled>
-                            <span id="resendOtpText">ხელახლა გაგზავნა (60s)</span>
+                            <span id="resendOtpText" data-i18n="resendCodeTimer">ხელახლა გაგზავნა (60s)</span>
                         </button>
                     </div>
                     
@@ -929,28 +1224,8 @@
                         <span id="verifyOtpBtnText" data-i18n="verifyCode">კოდის დადასტურება</span>
                     </button>
                     
-                    <button type="button" id="backToPhoneStep1" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
+                    <button type="button" id="backToPhoneStep3" style="background: transparent; border: 1px solid var(--border-color); margin-top: 10px;" data-i18n="back">
                         უკან
-                    </button>
-                </div>
-                
-                <!-- ეტაპი 3: სახელის შეყვანა -->
-                <div class="form-step" id="phoneStep3">
-                    <div class="step-indicator">
-                        <div class="step completed">1</div>
-                        <div class="step-line"></div>
-                        <div class="step completed">2</div>
-                        <div class="step-line"></div>
-                        <div class="step active">3</div>
-                    </div>
-                    
-                    <p class="phone-info" data-i18n="enterYourName">გთხოვთ შეიყვანოთ თქვენი სახელი</p>
-                    
-                    <input type="text" id="phoneUserName" name="phoneUserName" placeholder="სახელი" required data-i18n-placeholder="name" />
-                    <div class="error-message" id="phoneUserNameError"></div>
-                    
-                    <button type="button" id="completePhoneAuthBtn">
-                        <span id="completePhoneAuthBtnText" data-i18n="complete">დასრულება</span>
                     </button>
                 </div>
             </form>
@@ -968,7 +1243,7 @@
                 </button>
                 
                 <button id="phoneSignIn" class="social-btn phone-btn">
-                    <i class="fas fa-phone"></i> <span data-i18n="signInWithPhone">ტელეფონით შესვლა</span>
+                    <i class="fas fa-phone"></i> <span data-i18n="signInWithPhone">ტელეფონით რეგისტრაცია</span>
                 </button>
             </div>
 
@@ -1012,18 +1287,23 @@
             linkWithCredential,
             EmailAuthProvider,
             browserLocalPersistence,
-            setPersistence
+            setPersistence,
+            updatePassword
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { 
             getFirestore, 
             doc, 
             setDoc, 
             getDoc,
+            getDocs,
+            collection,
+            query,
+            where,
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         // ===================================
-        // ⚠️ Firebase კონფიგურაცია
+        // Firebase კონფიგურაცია
         // ჩაანაცვლეთ თქვენი Firebase პროექტის მონაცემებით
         // ===================================
         const firebaseConfig = {
@@ -1041,7 +1321,24 @@
         const db = getFirestore(app);
 
         // ===================================
-        // 🔧 მობილური მოწყობილობის დეტექცია
+        // უსაფრთხო პაროლის hashing ფუნქციები (SHA-256)
+        // ===================================
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function verifyPassword(password, storedHash) {
+            const inputHash = await hashPassword(password);
+            return inputHash === storedHash;
+        }
+
+        // ===================================
+        // მობილური მოწყობილობის დეტექცია
         // ===================================
         function isMobileDevice() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
@@ -1049,7 +1346,7 @@
         }
 
         // ===================================
-        // 🔧 შეამოწმეთ არის თუ არა in-app ბრაუზერი
+        // შეამოწმეთ არის თუ არა in-app ბრაუზერი
         // ===================================
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -1062,7 +1359,7 @@
         }
 
         // ===================================
-        // 🔧 დავაყენოთ persistence localStorage-ზე
+        // დავაყენოთ persistence localStorage-ზე
         // ===================================
         async function initializeAuth() {
             try {
@@ -1088,6 +1385,7 @@
         const resetPasswordBtnText = document.getElementById("resetPasswordBtnText");
 
         let unverifiedUser = null;
+        let currentLoginMethod = 'email'; // 'email' or 'phone'
 
         const errorMessages = {
             'auth/invalid-credential': 'authInvalidCredential',
@@ -1119,8 +1417,23 @@
         let confirmationResult = null;
         let phoneAuthUser = null;
         let recaptchaVerifier = null;
+        let resetRecaptchaVerifier = null;
         let resendCountdown = 60;
         let resendTimer = null;
+
+        // Phone registration data
+        let phoneRegData = {
+            userName: '',
+            password: '',
+            phoneNumber: ''
+        };
+
+        // Reset password phone data
+        let resetPhoneData = {
+            phoneNumber: '',
+            confirmationResult: null,
+            userId: null
+        };
 
         // Variables to store social user data
         let tempSocialCredential = null;
@@ -1219,105 +1532,65 @@
             return null;
         }
 
-        function validatePassword(password) {
-            if (!password) {
-                return 'validationPasswordRequired';
-            }
-            if (password.length < 6) {
-                return 'validationPasswordLength';
-            }
-            return null;
-        }
-
-        function validateUsername(username) {
-            if (!username) {
-                return 'validationUsernameRequired';
-            }
-            if (username.length < 2) {
-                return 'validationUsernameLength';
-            }
-            return null;
-        }
-
-        function validatePhoneNumber(phone) {
-            if (!phone) {
-                return 'validationPhoneRequired';
-            }
-            // მხოლოდ ციფრები, 9 სიმბოლო საქართველოსთვის
-            const cleanPhone = phone.replace(/\s/g, '');
-            if (!/^\d{9,15}$/.test(cleanPhone)) {
-                return 'validationPhoneInvalid';
-            }
-            return null;
-        }
-
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const nextToStep2Btn = document.getElementById('nextToStep2');
-        const backToStep1Btn = document.getElementById('backToStep1');
-        
-        let userEmail = '';
-        
-        nextToStep2Btn.addEventListener('click', async () => {
-            userEmail = document.getElementById('email').value.trim();
-            
-            const emailError = validateEmail(userEmail);
-            if (emailError) {
-                showError('email', emailError);
-                return;
-            }
-            hideError('email');
-            
-            try {
-                const nextText = window.languageSwitcher ? window.languageSwitcher.translate('next') : 'შემდეგი';
-                setButtonLoading(nextToStep2Btn, nextToStep2Text, nextText);
-                
-                const signInMethods = await fetchSignInMethodsForEmail(auth, userEmail);
-                if (signInMethods.length > 0) {
-                    showError('email', 'validationEmailAlreadyInUse');
-                    resetButton(nextToStep2Btn, nextToStep2Text, nextText);
-                    return;
-                }
-                
-                step1.classList.remove('active');
-                step2.classList.add('active');
-                resetButton(nextToStep2Btn, nextToStep2Text, nextText);
-            } catch (error) {
-                console.error("Error checking email:", error);
-                const nextText = window.languageSwitcher ? window.languageSwitcher.translate('next') : 'შემდეგი';
-                const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
-                    error.message;
-                showMessage(errorMsg, "error");
-                resetButton(nextToStep2Btn, nextToStep2Text, nextText);
-            }
-        });
-        
-        backToStep1Btn.addEventListener('click', () => {
-            step2.classList.remove('active');
-            step1.classList.add('active');
-        });
-
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
 
-        const showLoginBtn = document.getElementById("showLogin");
-        const showRegisterBtn = document.getElementById("showRegister");
+        function validatePassword(password) {
+            if (!password) {
+                return 'validationPasswordRequired';
+            }
+            if (password.length < 6) {
+                return 'validationPasswordMinLength';
+            }
+            return null;
+        }
+
+        function validateUsername(username) {
+            if (!username || username.trim() === '') {
+                return 'validationUsernameRequired';
+            }
+            if (username.length < 2) {
+                return 'validationUsernameMinLength';
+            }
+            return null;
+        }
+
+        function validatePhoneNumber(phoneNumber) {
+            if (!phoneNumber) {
+                return 'validationPhoneRequired';
+            }
+            const cleanNumber = phoneNumber.replace(/\s/g, '');
+            if (cleanNumber.length < 9 || cleanNumber.length > 15) {
+                return 'validationPhoneInvalid';
+            }
+            if (!/^\d+$/.test(cleanNumber)) {
+                return 'validationPhoneInvalid';
+            }
+            return null;
+        }
+
+        // ===================================
+        // ფორმების გადართვა
+        // ===================================
         const loginForm = document.getElementById("loginForm");
         const registerForm = document.getElementById("registerForm");
-        const forgotPasswordForm = document.getElementById("forgotPasswordForm");
         const phoneAuthForm = document.getElementById("phoneAuthForm");
+        const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+        const showLoginBtn = document.getElementById("showLogin");
+        const showRegisterBtn = document.getElementById("showRegister");
+        const step1 = document.getElementById("step1");
+        const step2 = document.getElementById("step2");
+        let userEmail = '';
 
         showLoginBtn.addEventListener("click", () => {
             showLoginBtn.classList.add("active");
             showRegisterBtn.classList.remove("active");
             loginForm.classList.add("active");
             registerForm.classList.remove("active");
-            forgotPasswordForm.classList.remove("active");
             phoneAuthForm.classList.remove("active");
-            messageBox.style.display = "none";
+            forgotPasswordForm.classList.remove("active");
             verificationNotice.style.display = "none";
         });
 
@@ -1326,99 +1599,221 @@
             showLoginBtn.classList.remove("active");
             registerForm.classList.add("active");
             loginForm.classList.remove("active");
-            forgotPasswordForm.classList.remove("active");
             phoneAuthForm.classList.remove("active");
-            messageBox.style.display = "none";
+            forgotPasswordForm.classList.remove("active");
             verificationNotice.style.display = "none";
-            step2.classList.remove('active');
-            step1.classList.add('active');
+        });
+
+        document.getElementById("nextToStep2").addEventListener("click", () => {
+            const email = document.getElementById("email").value.trim();
+            
+            const emailError = validateEmail(email);
+            if (emailError) {
+                showError('email', emailError);
+                return;
+            }
+            hideError('email');
+            
+            userEmail = email;
+            step1.classList.remove("active");
+            step2.classList.add("active");
+        });
+
+        document.getElementById("backToStep1").addEventListener("click", () => {
+            step2.classList.remove("active");
+            step1.classList.add("active");
         });
 
         document.getElementById("showForgotPassword").addEventListener("click", (e) => {
             e.preventDefault();
             loginForm.classList.remove("active");
             forgotPasswordForm.classList.add("active");
-            messageBox.style.display = "none";
             verificationNotice.style.display = "none";
         });
 
         document.getElementById("backToLogin").addEventListener("click", () => {
             forgotPasswordForm.classList.remove("active");
             loginForm.classList.add("active");
-            messageBox.style.display = "none";
+            // Reset phone steps
+            document.getElementById('resetPhoneStep1').style.display = 'block';
+            document.getElementById('resetPhoneStep2').style.display = 'none';
+            document.getElementById('resetPhoneStep3').style.display = 'none';
+        });
+
+        // Login method tabs
+        document.getElementById("loginEmailTab").addEventListener("click", () => {
+            document.getElementById("loginEmailTab").classList.add("active");
+            document.getElementById("loginPhoneTab").classList.remove("active");
+            document.getElementById("emailLoginContent").style.display = "block";
+            document.getElementById("phoneLoginContent").style.display = "none";
+            currentLoginMethod = 'email';
+        });
+
+        document.getElementById("loginPhoneTab").addEventListener("click", () => {
+            document.getElementById("loginPhoneTab").classList.add("active");
+            document.getElementById("loginEmailTab").classList.remove("active");
+            document.getElementById("phoneLoginContent").style.display = "block";
+            document.getElementById("emailLoginContent").style.display = "none";
+            currentLoginMethod = 'phone';
+        });
+
+        // Reset method tabs
+        document.getElementById("resetEmailTab").addEventListener("click", () => {
+            document.getElementById("resetEmailTab").classList.add("active");
+            document.getElementById("resetPhoneTab").classList.remove("active");
+            document.getElementById("resetEmailContent").classList.add("active");
+            document.getElementById("resetPhoneContent").classList.remove("active");
+        });
+
+        document.getElementById("resetPhoneTab").addEventListener("click", () => {
+            document.getElementById("resetPhoneTab").classList.add("active");
+            document.getElementById("resetEmailTab").classList.remove("active");
+            document.getElementById("resetPhoneContent").classList.add("active");
+            document.getElementById("resetEmailContent").classList.remove("active");
+            if (!resetRecaptchaVerifier) {
+                initializeResetRecaptcha();
+            }
         });
 
         // ===================================
-        // 📱 PHONE AUTHENTICATION
+        // ტელეფონით ავტორიზაცია
         // ===================================
-
-        // Phone sign in button
         document.getElementById("phoneSignIn").addEventListener("click", () => {
-            // დავმალოთ ყველა ფორმა და ვაჩვენოთ ტელეფონის ფორმა
             loginForm.classList.remove("active");
             registerForm.classList.remove("active");
             forgotPasswordForm.classList.remove("active");
             phoneAuthForm.classList.add("active");
-            messageBox.style.display = "none";
+            showLoginBtn.classList.remove("active");
+            showRegisterBtn.classList.remove("active");
             
-            // Reset phone form to step 1
+            // Reset to step 1
             document.getElementById('phoneStep1').classList.add('active');
             document.getElementById('phoneStep2').classList.remove('active');
             document.getElementById('phoneStep3').classList.remove('active');
-            
-            // Initialize reCAPTCHA if not already done
-            initializeRecaptcha();
+            document.getElementById('phoneStep4').classList.remove('active');
         });
 
-        // Back from phone form
         document.getElementById("backFromPhone").addEventListener("click", () => {
             phoneAuthForm.classList.remove("active");
             loginForm.classList.add("active");
             showLoginBtn.classList.add("active");
-            showRegisterBtn.classList.remove("active");
+        });
+
+        // Phone registration step navigation
+        document.getElementById("phoneNextToStep2Btn").addEventListener("click", () => {
+            const userName = document.getElementById("phoneUserName").value.trim();
+            
+            const usernameError = validateUsername(userName);
+            if (usernameError) {
+                showError('phoneUserName', usernameError);
+                return;
+            }
+            hideError('phoneUserName');
+            
+            phoneRegData.userName = userName;
+            console.log("[Phone] Step 1 complete, userName:", phoneRegData.userName);
+            
+            document.getElementById('phoneStep1').classList.remove('active');
+            document.getElementById('phoneStep2').classList.add('active');
+        });
+
+        document.getElementById("backToPhoneStep1").addEventListener("click", () => {
+            document.getElementById('phoneStep2').classList.remove('active');
+            document.getElementById('phoneStep1').classList.add('active');
+        });
+
+        document.getElementById("phoneNextToStep3Btn").addEventListener("click", () => {
+            const password = document.getElementById("phonePassword").value;
+            const confirmPassword = document.getElementById("phonePasswordConfirm").value;
+            
+            const passwordError = validatePassword(password);
+            if (passwordError) {
+                showError('phonePassword', passwordError);
+                return;
+            }
+            hideError('phonePassword');
+            
+            if (password !== confirmPassword) {
+                showError('phonePasswordConfirm', 'validationPasswordMismatch');
+                return;
+            }
+            hideError('phonePasswordConfirm');
+            
+            phoneRegData.password = password;
+            console.log("[Phone] Step 2 complete, password saved");
+            
+            document.getElementById('phoneStep2').classList.remove('active');
+            document.getElementById('phoneStep3').classList.add('active');
+            
+            // Initialize reCAPTCHA
+            if (!recaptchaVerifier) {
+                initializeRecaptcha();
+            }
+        });
+
+        document.getElementById("backToPhoneStep2").addEventListener("click", () => {
+            document.getElementById('phoneStep3').classList.remove('active');
+            document.getElementById('phoneStep2').classList.add('active');
+        });
+
+        document.getElementById("backToPhoneStep3").addEventListener("click", () => {
+            document.getElementById('phoneStep4').classList.remove('active');
+            document.getElementById('phoneStep3').classList.add('active');
         });
 
         // Initialize reCAPTCHA
         function initializeRecaptcha() {
-            // Clear previous verifier safely
-            if (recaptchaVerifier) {
-                try {
-                    recaptchaVerifier.clear();
-                } catch (e) {
-                    console.log("[Phone] Previous reCAPTCHA already cleared");
-                }
-                recaptchaVerifier = null;
-            }
-            
-            // Clear the container
-            const container = document.getElementById('recaptcha-container');
-            if (container) {
-                container.innerHTML = '';
-            }
-            
             try {
                 recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                     'size': 'normal',
                     'callback': (response) => {
-                        console.log("[Phone] reCAPTCHA verified");
-                        document.getElementById('sendOtpBtn').disabled = false;
+                        console.log("[reCAPTCHA] Verified");
                     },
                     'expired-callback': () => {
-                        console.log("[Phone] reCAPTCHA expired");
-                        document.getElementById('sendOtpBtn').disabled = true;
-                        showMessage(window.languageSwitcher ? 
-                            window.languageSwitcher.translate('recaptchaExpired') : 
-                            'reCAPTCHA ვადა გაუვიდა. გთხოვთ განაახლოთ.', "error");
+                        console.log("[reCAPTCHA] Expired");
+                        recaptchaVerifier.clear();
+                        initializeRecaptcha();
                     }
                 });
-                
-                recaptchaVerifier.render().then((widgetId) => {
-                    console.log("[Phone] reCAPTCHA rendered, widget ID:", widgetId);
-                }).catch((error) => {
-                    console.error("[Phone] reCAPTCHA render error:", error);
-                });
+                recaptchaVerifier.render();
             } catch (error) {
-                console.error("[Phone] Error creating reCAPTCHA:", error);
+                console.error("[reCAPTCHA] Error:", error);
+            }
+        }
+
+        function initializeResetRecaptcha() {
+            try {
+                resetRecaptchaVerifier = new RecaptchaVerifier(auth, 'reset-recaptcha-container', {
+                    'size': 'normal',
+                    'callback': (response) => {
+                        console.log("[Reset reCAPTCHA] Verified");
+                    },
+                    'expired-callback': () => {
+                        console.log("[Reset reCAPTCHA] Expired");
+                        resetRecaptchaVerifier.clear();
+                        initializeResetRecaptcha();
+                    }
+                });
+                resetRecaptchaVerifier.render();
+            } catch (error) {
+                console.error("[Reset reCAPTCHA] Error:", error);
+            }
+        }
+
+        // Get user by phone number
+        async function getUserByPhone(phoneNumber) {
+            try {
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("phone", "==", phoneNumber));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    return querySnapshot.docs[0];
+                }
+                return null;
+            } catch (error) {
+                console.error("[Firestore] Error getting user by phone:", error);
+                return null;
             }
         }
 
@@ -1435,7 +1830,10 @@
             hideError('phoneNumber');
             
             const fullPhoneNumber = countryCode + phoneNumber;
+            phoneRegData.phoneNumber = fullPhoneNumber;
+            
             console.log("[Phone] Sending OTP to:", fullPhoneNumber);
+            console.log("[Phone] Current phoneRegData:", phoneRegData);
             
             const sendOtpBtn = document.getElementById("sendOtpBtn");
             const sendOtpBtnText = document.getElementById("sendOtpBtnText");
@@ -1447,52 +1845,36 @@
                 confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, recaptchaVerifier);
                 console.log("[Phone] OTP sent successfully");
                 
-                // Update message with phone number
-                const otpSentMsg = document.getElementById("otpSentMessage");
-                otpSentMsg.textContent = `SMS კოდი გაიგზავნა ნომერზე: ${fullPhoneNumber}`;
+                const otpSentText = window.languageSwitcher ? window.languageSwitcher.translate('otpSentToNumber') : 'SMS კოდი გაიგზავნა ნომერზე:';
+                document.getElementById("otpSentMessage").textContent = `${otpSentText} ${fullPhoneNumber}`;
                 
-                // Move to step 2
-                document.getElementById('phoneStep1').classList.remove('active');
-                document.getElementById('phoneStep2').classList.add('active');
-                
-                // Start resend countdown
-                startResendCountdown();
+                document.getElementById('phoneStep3').classList.remove('active');
+                document.getElementById('phoneStep4').classList.add('active');
                 
                 // Focus first OTP input
                 document.querySelector('.otp-input').focus();
+                
+                // Start countdown
+                startResendCountdown();
                 
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
             } catch (error) {
                 console.error("[Phone] Error sending OTP:", error);
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
                 
-                // Reset reCAPTCHA safely
-                try {
-                    if (recaptchaVerifier) {
-                        recaptchaVerifier.clear();
-                    }
-                } catch (e) {
-                    console.log("[Phone] reCAPTCHA clear error (ignored):", e.message);
+                if (recaptchaVerifier) {
+                    try { recaptchaVerifier.clear(); } catch(e) {}
                 }
-                recaptchaVerifier = null;
                 initializeRecaptcha();
                 
-                // Special handling for billing error
-                let errorMsg;
-                if (error.code === 'auth/billing-not-enabled') {
-                    errorMsg = 'Firebase Phone Auth მოითხოვს Blaze Plan-ს. გთხოვთ გააქტიუროთ Billing Firebase Console-ში.';
-                } else if (error.code === 'auth/internal-error') {
-                    errorMsg = 'შიდა შეცდომა. გთხოვთ შეამოწმოთ Firebase Console-ში Phone Authentication ჩართულია თუ არა.';
-                } else {
-                    errorMsg = window.languageSwitcher ?
-                        window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) :
-                        error.message;
-                }
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate(errorMessages[error.code] || 'codeSendFailed') : 
+                    'კოდის გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.';
                 showMessage(errorMsg, "error");
             }
         });
 
-        // OTP input handling
+        // OTP Input handling
         const otpInputs = document.querySelectorAll('.otp-input');
         otpInputs.forEach((input, index) => {
             input.addEventListener('input', (e) => {
@@ -1544,7 +1926,7 @@
             return Array.from(otpInputs).map(input => input.value).join('');
         }
 
-        // Verify OTP
+        // Verify OTP - გასწორებული ვერსია SHA-256 hashing-ით
         document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
             const otp = getOtpValue();
             
@@ -1561,30 +1943,48 @@
             setButtonLoading(verifyBtn, verifyBtnText, verifyText);
             
             try {
+                console.log("[Phone] Verifying OTP...");
+                console.log("[Phone] phoneRegData before verification:", phoneRegData);
+                
                 const result = await confirmationResult.confirm(otp);
                 console.log("[Phone] OTP verified successfully");
                 phoneAuthUser = result.user;
                 
-                // Check if user already has a name
-                const userDoc = await getDoc(doc(db, "users", phoneAuthUser.uid));
+                // Update Firebase profile with name
+                await updateProfile(phoneAuthUser, {
+                    displayName: phoneRegData.userName
+                });
                 
-                if (userDoc.exists() && userDoc.data().displayName) {
-                    // User already exists with name, login directly
-                    const successMsg = window.languageSwitcher ? 
-                        window.languageSwitcher.translate('loginSuccess') : 
-                        'წარმატებით შეხვედით სისტემაში!';
-                    showMessage(successMsg, "success");
-                    setTimeout(() => {
-                        window.location.href = "home.html";
-                    }, 1500);
-                } else {
-                    // New user or no name, show step 3
-                    document.getElementById('phoneStep2').classList.remove('active');
-                    document.getElementById('phoneStep3').classList.add('active');
-                    document.getElementById('phoneUserName').focus();
-                }
+                // Save to localStorage
+                localStorage.setItem("username", phoneRegData.userName);
                 
-                resetButton(verifyBtn, verifyBtnText, verifyText);
+                // Hash the password with SHA-256
+                const hashedPassword = await hashPassword(phoneRegData.password);
+                console.log("[Phone] Password hashed successfully");
+                
+                // Save to Firestore with hashed password
+                await setDoc(doc(db, "users", phoneAuthUser.uid), {
+                    uid: phoneAuthUser.uid,
+                    phone: phoneRegData.phoneNumber,
+                    displayName: phoneRegData.userName,
+                    photoURL: '',
+                    createdAt: serverTimestamp(),
+                    provider: 'phone',
+                    hasPassword: true,
+                    passwordHash: hashedPassword // SHA-256 hashed password
+                }, { merge: true });
+                
+                console.log("[Phone] User profile saved successfully with hashed password");
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('loginSuccess') : 
+                    'წარმატებით დარეგისტრირდით!';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+                
             } catch (error) {
                 console.error("[Phone] Error verifying OTP:", error);
                 resetButton(verifyBtn, verifyBtnText, verifyText);
@@ -1597,84 +1997,6 @@
                     window.languageSwitcher.translate(errorMessages[error.code] || 'authInvalidVerificationCode') : 
                     'არასწორი კოდი. გთხოვთ სცადოთ თავიდან.';
                 showMessage(errorMsg, "error");
-            }
-        });
-
-        // Complete phone auth with name
-        document.getElementById("completePhoneAuthBtn").addEventListener("click", async () => {
-            const userName = document.getElementById("phoneUserName").value.trim();
-            
-            const nameError = validateUsername(userName);
-            if (nameError) {
-                showError('phoneUserName', nameError);
-                return;
-            }
-            hideError('phoneUserName');
-            
-            const completeBtn = document.getElementById("completePhoneAuthBtn");
-            const completeBtnText = document.getElementById("completePhoneAuthBtnText");
-            const completeText = window.languageSwitcher ? window.languageSwitcher.translate('complete') : 'დასრულება';
-            
-            setButtonLoading(completeBtn, completeBtnText, completeText);
-            
-            try {
-                // Update Firebase profile
-                await updateProfile(phoneAuthUser, {
-                    displayName: userName
-                });
-                
-                // Save to localStorage
-                localStorage.setItem("username", userName);
-                
-                // Save to Firestore
-                await setDoc(doc(db, "users", phoneAuthUser.uid), {
-                    uid: phoneAuthUser.uid,
-                    phone: phoneAuthUser.phoneNumber,
-                    displayName: userName,
-                    photoURL: '',
-                    createdAt: serverTimestamp(),
-                    provider: 'phone'
-                }, { merge: true });
-                
-                console.log("[Phone] User profile saved successfully");
-                
-                const successMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate('loginSuccess') : 
-                    'წარმატებით შეხვედით სისტემაში!';
-                showMessage(successMsg, "success");
-                
-                setTimeout(() => {
-                    window.location.href = "home.html";
-                }, 1500);
-                
-            } catch (error) {
-                console.error("[Phone] Error saving profile:", error);
-                resetButton(completeBtn, completeBtnText, completeText);
-                
-                const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate('authDefaultError') : 
-                    'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.';
-                showMessage(errorMsg, "error");
-            }
-        });
-
-        // Back to phone step 1
-        document.getElementById("backToPhoneStep1").addEventListener("click", () => {
-            document.getElementById('phoneStep2').classList.remove('active');
-            document.getElementById('phoneStep1').classList.add('active');
-            
-            // Clear OTP inputs
-            otpInputs.forEach(input => input.value = '');
-            
-            // Reset reCAPTCHA
-            if (recaptchaVerifier) {
-                recaptchaVerifier.clear();
-                initializeRecaptcha();
-            }
-            
-            // Stop countdown
-            if (resendTimer) {
-                clearInterval(resendTimer);
             }
         });
 
@@ -1701,9 +2023,9 @@
 
         // Resend OTP
         document.getElementById("resendOtpBtn").addEventListener("click", async () => {
-            // Go back to step 1 to resend
-            document.getElementById('phoneStep2').classList.remove('active');
-            document.getElementById('phoneStep1').classList.add('active');
+            // Go back to step 3 to resend
+            document.getElementById('phoneStep4').classList.remove('active');
+            document.getElementById('phoneStep3').classList.add('active');
             
             // Clear OTP inputs
             otpInputs.forEach(input => input.value = '');
@@ -1712,6 +2034,186 @@
             if (recaptchaVerifier) {
                 recaptchaVerifier.clear();
                 initializeRecaptcha();
+            }
+        });
+
+        // ===================================
+        // RESET PASSWORD WITH PHONE
+        // ===================================
+        document.getElementById("resetSendOtpBtn").addEventListener("click", async () => {
+            const countryCode = document.getElementById("resetCountryCode").value;
+            const phoneNumber = document.getElementById("resetPhoneNumber").value.trim().replace(/\s/g, '');
+            
+            const phoneError = validatePhoneNumber(phoneNumber);
+            if (phoneError) {
+                showError('resetPhoneNumber', phoneError);
+                return;
+            }
+            hideError('resetPhoneNumber');
+            
+            const fullPhoneNumber = countryCode + phoneNumber;
+            
+            const sendOtpBtn = document.getElementById("resetSendOtpBtn");
+            const sendOtpBtnText = document.getElementById("resetSendOtpBtnText");
+            const sendText = 'კოდის გაგზავნა';
+            
+            setButtonLoading(sendOtpBtn, sendOtpBtnText, sendText);
+            
+            // შევამოწმოთ ნომერი რეგისტრირებულია თუ არა
+            const userDoc = await getUserByPhone(fullPhoneNumber);
+            if (!userDoc) {
+                showMessage(window.languageSwitcher ? window.languageSwitcher.translate('phoneNotRegistered') : 'ეს ნომერი არ არის რეგისტრირებული.', "error");
+                resetButton(sendOtpBtn, sendOtpBtnText, sendText);
+                return;
+            }
+            
+            resetPhoneData.userId = userDoc.id;
+            resetPhoneData.phoneNumber = fullPhoneNumber;
+            
+            try {
+                resetPhoneData.confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, resetRecaptchaVerifier);
+                console.log("[Reset] OTP sent successfully");
+                
+                const resetOtpSentText = window.languageSwitcher ? window.languageSwitcher.translate('otpSentToNumber') : 'SMS კოდი გაიგზავნა ნომერზე:';
+                    document.getElementById("resetOtpSentMessage").textContent = `${resetOtpSentText} ${fullPhoneNumber}`;
+                
+                document.getElementById('resetPhoneStep1').style.display = 'none';
+                document.getElementById('resetPhoneStep2').style.display = 'block';
+                
+                // Focus first OTP input
+                document.querySelector('.reset-otp-input').focus();
+                
+                resetButton(sendOtpBtn, sendOtpBtnText, sendText);
+            } catch (error) {
+                console.error("[Reset] Error sending OTP:", error);
+                resetButton(sendOtpBtn, sendOtpBtnText, sendText);
+                
+                if (resetRecaptchaVerifier) {
+                    try { resetRecaptchaVerifier.clear(); } catch(e) {}
+                }
+                initializeResetRecaptcha();
+                
+                showMessage(window.languageSwitcher ? window.languageSwitcher.translate('codeSendFailed') : 'კოდის გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.', "error");
+            }
+        });
+
+        // Reset OTP input handling
+        const resetOtpInputs = document.querySelectorAll('.reset-otp-input');
+        resetOtpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                if (!/^\d*$/.test(value)) {
+                    e.target.value = '';
+                    return;
+                }
+                if (value && index < resetOtpInputs.length - 1) {
+                    resetOtpInputs[index + 1].focus();
+                }
+                if (index === resetOtpInputs.length - 1 && value) {
+                    const otp = Array.from(resetOtpInputs).map(i => i.value).join('');
+                    if (otp.length === 6) {
+                        document.getElementById('resetVerifyOtpBtn').click();
+                    }
+                }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    resetOtpInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Verify Reset OTP
+        document.getElementById("resetVerifyOtpBtn").addEventListener("click", async () => {
+            const otp = Array.from(resetOtpInputs).map(i => i.value).join('');
+            
+            if (otp.length !== 6) {
+                showError('resetOtp', 'შეიყვანეთ 6-ნიშნა კოდი');
+                return;
+            }
+            
+            const verifyBtn = document.getElementById("resetVerifyOtpBtn");
+            const verifyBtnText = document.getElementById("resetVerifyOtpBtnText");
+            
+            setButtonLoading(verifyBtn, verifyBtnText, 'კოდის დადასტურება');
+            
+            try {
+                const result = await resetPhoneData.confirmationResult.confirm(otp);
+                console.log("[Reset] OTP verified");
+                phoneAuthUser = result.user;
+                
+                document.getElementById('resetPhoneStep2').style.display = 'none';
+                document.getElementById('resetPhoneStep3').style.display = 'block';
+                
+                resetButton(verifyBtn, verifyBtnText, window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება');
+            } catch (error) {
+                console.error("[Reset] OTP verification error:", error);
+                resetButton(verifyBtn, verifyBtnText, window.languageSwitcher ? window.languageSwitcher.translate('verifyCode') : 'კოდის დადასტურება');
+                resetOtpInputs.forEach(i => i.value = '');
+                resetOtpInputs[0].focus();
+                showMessage(window.languageSwitcher ? window.languageSwitcher.translate('wrongCode') : 'არასწორი კოდი', "error");
+            }
+        });
+
+        // Save new password - გასწორებული SHA-256 hashing-ით
+        document.getElementById("resetSavePasswordBtn").addEventListener("click", async () => {
+            const newPassword = document.getElementById("resetNewPassword").value;
+            const confirmPassword = document.getElementById("resetConfirmPassword").value;
+            
+            const passwordError = validatePassword(newPassword);
+            if (passwordError) {
+                showError('resetNewPassword', passwordError);
+                return;
+            }
+            hideError('resetNewPassword');
+            
+            if (newPassword !== confirmPassword) {
+                showError('resetConfirmPassword', 'პაროლები არ ემთხვევა');
+                return;
+            }
+            hideError('resetConfirmPassword');
+            
+            const saveBtn = document.getElementById("resetSavePasswordBtn");
+            const saveBtnText = document.getElementById("resetSavePasswordBtnText");
+            
+            setButtonLoading(saveBtn, saveBtnText, 'პაროლის შენახვა');
+            
+            try {
+                // Use the authenticated user's UID from the phone verification
+                const userId = phoneAuthUser ? phoneAuthUser.uid : resetPhoneData.userId;
+                console.log("[Reset] Saving password for user:", userId);
+                
+                // Hash the new password with SHA-256
+                const hashedPassword = await hashPassword(newPassword);
+                
+                // Update password in Firestore
+                await setDoc(doc(db, "users", userId), {
+                    passwordHash: hashedPassword,
+                    hasPassword: true
+                }, { merge: true });
+                
+                const successMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('passwordResetSuccess') : 
+                    'პაროლი წარმატებით შეიცვალა!';
+                showMessage(successMsg, "success");
+                
+                setTimeout(() => {
+                    forgotPasswordForm.classList.remove("active");
+                    loginForm.classList.add("active");
+                    // Reset steps
+                    document.getElementById('resetPhoneStep1').style.display = 'block';
+                    document.getElementById('resetPhoneStep2').style.display = 'none';
+                    document.getElementById('resetPhoneStep3').style.display = 'none';
+                }, 1500);
+                
+            } catch (error) {
+                console.error("[Reset] Error saving password:", error);
+                resetButton(saveBtn, saveBtnText, window.languageSwitcher ? window.languageSwitcher.translate('savePassword') : 'პაროლის შენახვა');
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('passwordSaveFailed') : 
+                    'პაროლის შენახვა ვერ მოხერხდა';
+                showMessage(errorMsg, "error");
             }
         });
 
@@ -1754,57 +2256,135 @@
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             
-            const email = document.getElementById("loginEmail").value.trim();
-            const password = document.getElementById("loginPassword").value;
-            
-            const emailError = validateEmail(email);
-            if (emailError) {
-                showError('loginEmail', emailError);
-                return;
-            }
-            hideError('loginEmail');
-            
-            const passwordError = validatePassword(password);
-            if (passwordError) {
-                showError('loginPassword', passwordError);
-                return;
-            }
-            hideError('loginPassword');
-            
             const loginBtn = document.getElementById("loginBtn");
             const loginText = window.languageSwitcher ? window.languageSwitcher.translate('signIn') : 'შესვლა';
-            setButtonLoading(loginBtn, loginBtnText, loginText);
-
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            
+            if (currentLoginMethod === 'email') {
+                // Email login
+                const email = document.getElementById("loginEmail").value.trim();
+                const password = document.getElementById("loginPassword").value;
                 
-                if (!userCredential.user.emailVerified) {
-                    unverifiedUser = userCredential.user;
-                    await signOut(auth);
-                    
-                    verificationNotice.style.display = "block";
-                    const verifyMsg = window.languageSwitcher ? 
-                        window.languageSwitcher.translate('emailVerificationRequired') : 
-                        'გთხოვთ დაადასტუროთ თქვენი ელ. ფოსტა. შეამოწმეთ თქვენი ინბოქსი და spam ფოლდერი.';
-                    showMessage(verifyMsg, "error");
-                    resetButton(loginBtn, loginBtnText, loginText);
+                const emailError = validateEmail(email);
+                if (emailError) {
+                    showError('loginEmail', emailError);
                     return;
                 }
+                hideError('loginEmail');
                 
-                const successMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate('loginSuccess') : 
-                    'წარმატებით შეხვედით სისტემაში!';
-                showMessage(successMsg, "success");
-                setTimeout(() => {
-                    window.location.href = "home.html";
-                }, 1500);
-            } catch (error) {
-                console.error("Login error:", error);
-                const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
-                    error.message;
-                showMessage(errorMsg, "error");
-                resetButton(loginBtn, loginBtnText, loginText);
+                const passwordError = validatePassword(password);
+                if (passwordError) {
+                    showError('loginPassword', passwordError);
+                    return;
+                }
+                hideError('loginPassword');
+                
+                setButtonLoading(loginBtn, loginBtnText, loginText);
+
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    
+                    if (!userCredential.user.emailVerified) {
+                        unverifiedUser = userCredential.user;
+                        await signOut(auth);
+                        
+                        verificationNotice.style.display = "block";
+                        const verifyMsg = window.languageSwitcher ? 
+                            window.languageSwitcher.translate('emailVerificationRequired') : 
+                            'გთხოვთ დაადასტუროთ თქვენი ელ. ფოსტა. შეამოწმეთ თქვენი ინბოქსი და spam ფოლდერი.';
+                        showMessage(verifyMsg, "error");
+                        resetButton(loginBtn, loginBtnText, loginText);
+                        return;
+                    }
+                    
+                    const successMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('loginSuccess') : 
+                        'წარმატებით შეხვედით სისტემაში!';
+                    showMessage(successMsg, "success");
+                    setTimeout(() => {
+                        window.location.href = "home.html";
+                    }, 1500);
+                } catch (error) {
+                    console.error("Login error:", error);
+                    const errorMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
+                        error.message;
+                    showMessage(errorMsg, "error");
+                    resetButton(loginBtn, loginBtnText, loginText);
+                }
+            } else {
+                // Phone login - გასწორებული SHA-256 verification-ით
+                const countryCode = document.getElementById("loginCountryCode").value;
+                const phoneNumber = document.getElementById("loginPhoneNumber").value.trim().replace(/\s/g, '');
+                const password = document.getElementById("loginPassword").value;
+                
+                const phoneError = validatePhoneNumber(phoneNumber);
+                if (phoneError) {
+                    showError('loginPhoneNumber', phoneError);
+                    return;
+                }
+                hideError('loginPhoneNumber');
+                
+                const passwordError = validatePassword(password);
+                if (passwordError) {
+                    showError('loginPassword', passwordError);
+                    return;
+                }
+                hideError('loginPassword');
+                
+                const fullPhoneNumber = countryCode + phoneNumber;
+                
+                setButtonLoading(loginBtn, loginBtnText, loginText);
+                
+                try {
+                    // ვიპოვოთ მომხმარებელი ნომრით
+                    const userDoc = await getUserByPhone(fullPhoneNumber);
+                    
+                    if (!userDoc) {
+                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('userNotFoundByPhone') : 'მომხმარებელი ამ ნომრით არ მოიძებნა', "error");
+                        resetButton(loginBtn, loginBtnText, loginText);
+                        return;
+                    }
+                    
+                    const userData = userDoc.data();
+                    
+                    // შევამოწმოთ პაროლი
+                    if (!userData.hasPassword || !userData.passwordHash) {
+                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('accountNoPassword') : 'ამ ანგარიშს არ აქვს პაროლი. გთხოვთ აღადგინოთ პაროლი.', "error");
+                        resetButton(loginBtn, loginBtnText, loginText);
+                        return;
+                    }
+                    
+                    // შევადაროთ პაროლი SHA-256-ით
+                    const isPasswordValid = await verifyPassword(password, userData.passwordHash);
+                    
+                    if (!isPasswordValid) {
+                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('wrongPassword') : 'არასწორი პაროლი', "error");
+                        resetButton(loginBtn, loginBtnText, loginText);
+                        return;
+                    }
+                    
+                    // პაროლი სწორია, შევიყვანოთ მომხმარებელი
+                    localStorage.setItem("username", userData.displayName);
+                    localStorage.setItem("phoneAuthUser", JSON.stringify({
+                        uid: userDoc.id,
+                        phone: fullPhoneNumber,
+                        displayName: userData.displayName,
+                        photoURL: userData.photoURL || ''
+                    }));
+                    
+                    const successMsg = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('loginSuccess') : 
+                        'წარმატებით შეხვედით სისტემაში!';
+                    showMessage(successMsg, "success");
+                    setTimeout(() => {
+                        window.location.href = "home.html";
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error("Phone login error:", error);
+                    showMessage(window.languageSwitcher ? window.languageSwitcher.translate('loginFailed') : 'შესვლა ვერ მოხერხდა', "error");
+                    resetButton(loginBtn, loginBtnText, loginText);
+                }
             }
         });
 
@@ -1895,6 +2475,11 @@
         document.getElementById("forgotPasswordForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             
+            // Only handle email reset here
+            if (!document.getElementById('resetEmailContent').classList.contains('active')) {
+                return;
+            }
+            
             const email = document.getElementById("resetEmail").value.trim();
             
             const emailError = validateEmail(email);
@@ -1933,7 +2518,7 @@
         });
 
         // ===================================
-        // 🔵 სოციალური ავტორიზაციის ფუნქცია
+        // სოციალური ავტორიზაციის ფუნქცია
         // ===================================
         async function socialSignIn(provider, providerName) {
             const useMobile = isMobileDevice() || isInAppBrowser();
@@ -1972,7 +2557,7 @@
         }
 
         // ===================================
-        // 🔵 GOOGLE SIGN-IN
+        // GOOGLE SIGN-IN
         // ===================================
         document.getElementById("googleSignIn").addEventListener("click", async () => {
             if (isSocialSignInProgress) return;
@@ -2024,7 +2609,7 @@
         });
 
         // ===================================
-        // 🔵 FACEBOOK SIGN-IN
+        // FACEBOOK SIGN-IN
         // ===================================
         document.getElementById("facebookSignIn").addEventListener("click", async () => {
             if (isSocialSignInProgress) return;
@@ -2085,7 +2670,7 @@
         });
 
         // ===================================
-        // 🔵 REDIRECT RESULT HANDLER
+        // REDIRECT RESULT HANDLER
         // ===================================
         async function handleRedirectResult() {
             try {
