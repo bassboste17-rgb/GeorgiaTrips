@@ -16,7 +16,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'BPG Glaho', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: inherit;
         }
         
         :root {
@@ -819,7 +819,7 @@
                 <p data-i18n="phoneNameInfo">გთხოვთ მიუთითოთ თქვენი სახელი რომ გამოჩნდეს სისტემაში.</p>
                 <input type="text" id="socialUserName" placeholder="სახელი" required data-i18n-placeholder="name">
                 <div class="name-modal-buttons">
-                    <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმება</button>
+                    <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმე���ა</button>
                     <button class="primary" id="submitName" data-i18n="save">შენახვა</button>
                 </div>
             </div>
@@ -2157,7 +2157,7 @@
             }
         });
 
-        // Save new password - გასწორებული SHA-256 hashing-ით
+        // Save new password - გასწორებული SHA-256 hashing-ი��
         document.getElementById("resetSavePasswordBtn").addEventListener("click", async () => {
             const newPassword = document.getElementById("resetNewPassword").value;
             const confirmPassword = document.getElementById("resetConfirmPassword").value;
