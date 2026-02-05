@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeorgiaTrips - Full Multilingual Test</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ლოკალური ფონტის ჩატვირთვა */
+        @font-face {
+            font-family: 'LGV Anastasia';
+            src: local('LGV Anastasia 2025 Geo'), url('fonts/LGV_Anastasia_2025.ttf');
+        }
+
+        body {
+            background-color: #fcfcfc;
+            font-family: 'Montserrat', sans-serif;
+            color: #222;
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+        }
+
+        .language-row {
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff5a5f; /* საიტის აქცენტური ფერი */
+            font-weight: 700;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        /* ფონტების სტილები */
+        .ka { font-family: 'LGV Anastasia', serif; font-size: 32px; }
+        .en { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 700; }
+        .ru { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 400; }
+        .ar { 
+            font-family: 'IBM Plex Sans Arabic', sans-serif; 
+            font-size: 28px; 
+            direction: rtl; 
+            text-align: right;
+        }
+
+        .sub-text {
+            font-size: 16px;
+            color: #888;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align: center; margin-bottom: 60px; font-weight: 400; letter-spacing: -1px;">georgiatrips<b style="color:#ff5a5f">.ge</b></h2>
+
+    <div class="language-row">
+        <span class="label">Georgian / ქართული</span>
+        <div class="ka">აღმოაჩინე საქართველო ჩვენთან ერთად</div>
+    </div>
+
+    <div class="language-row">
+        <span class="label">English / ინგლისური</span>
+        <div class="en">DISCOVER GEORGIA WITH US</div>
+    </div>
+
+    <div class="language-row">
+        <span class="label">Russian / რუსული</span>
+        <div class="ru">Откройте Грузию вместе с нами</div>
+    </div>
+
+    <div class="language-row">
+        <span class="label">Arabic / არაბული</span>
+        <div class="ar">اكتشف جورجيا معنا</div>
+    </div>
+</div>
+
+</body>
+</html>
