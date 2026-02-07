@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html lang="ka">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   
-  <!-- Title -->
-  <title>Georgia Trips</title>
+  <!-- Primary Meta Tags -->
+  <title>Georgia Trips | Tours, Car Rentals & Travel in Georgia</title>
+  <meta name="description" content="Book tours, rent cars, and plan your perfect trip to Georgia. Explore Tbilisi, Batumi, Svaneti, Kakheti wine region, and more with Georgia Trips - your trusted local travel partner." />
+  <meta name="keywords" content="Georgia tours, car rental Georgia, Tbilisi tours, Batumi travel, Svaneti trekking, Kakheti wine tour, Georgia travel agency, book tour Georgia, private transfer Georgia" />
+  <meta name="author" content="Georgia Trips" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://www.georgiatrips.ge/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Georgia Trips" />
+  <meta property="og:url" content="https://www.georgiatrips.ge/" />
+  <meta property="og:title" content="Georgia Trips | Tours, Car Rentals & Travel in Georgia" />
+  <meta property="og:description" content="Book tours, rent cars, and plan your perfect trip to Georgia. Explore Tbilisi, Batumi, Svaneti, Kakheti and more." />
+  <meta property="og:image" content="https://www.georgiatrips.ge/addhome/logo12.png" />
+  <meta property="og:locale" content="en_US" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Georgia Trips | Tours, Car Rentals & Travel in Georgia" />
+  <meta name="twitter:description" content="Book tours, rent cars, and plan your perfect trip to Georgia. Explore Tbilisi, Batumi, Svaneti, Kakheti and more." />
+  <meta name="twitter:image" content="https://www.georgiatrips.ge/addhome/logo12.png" />
+  
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="en" href="https://www.georgiatrips.ge/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.georgiatrips.ge/" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Georgia Trips",
+    "url": "https://www.georgiatrips.ge",
+    "logo": "https://www.georgiatrips.ge/addhome/logo12.png",
+    "image": "https://www.georgiatrips.ge/addhome/logo12.png",
+    "description": "Book tours, rent cars, and plan your perfect trip to Georgia. Explore all regions with a trusted local travel partner.",
+    "telephone": "+995599186927",
+    "email": "lominadzebusiness@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Bagrationi Street 161",
+      "addressLocality": "Batumi",
+      "addressCountry": "GE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "41.6168",
+      "longitude": "41.6367"
+    },
+    "priceRange": "$$",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Georgia"
+    },
+    "serviceType": ["Tours", "Car Rental", "Private Transfers", "Airport Transfers"],
+    "sameAs": ["https://wa.me/995599186927"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Georgia Trips",
+    "url": "https://www.georgiatrips.ge",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.georgiatrips.ge/tours?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   
   <!-- Favicon Set -->
   <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
@@ -1289,10 +1365,10 @@
       position: relative;
       z-index: 2;
       /* ================================================
-         🟢 პოსტების დაშორება ტექსტიდან - margin-top 🟢
+         🟢 პო���ტების დაშორება ტექსტიდან - margin-top 🟢
          შეცვალე ეს რიცხვი დაშორების შესაცვლელად:
          - მეტი დაშორება = უფრო დიდი რიცხვი (მაგ: 5rem, 6rem)
-         - ნაკლები დაშორება = უფრო პატარა რიცხვი (მაგ: 2rem, 3rem)
+         - ნაკლები დაშორება = უფრო პა���არა რიცხვი (მაგ: 2rem, 3rem)
          ================================================ */
       margin-top: 4rem; /* 🟢 პოსტების დაშორება ტექსტიდან */
       padding: 0 1rem;
@@ -3216,11 +3292,6 @@
 
     function getTranslatedType(typeValue) {
       var typeTranslationMap = {
-        'კულტურული': 'tourTypeCultural',
-        'სათავგადასავლო': 'tourTypeSightseeing',
-        'გასტრონომიული': 'tourTypeGastronomic',
-        'ისტორიული': 'tourTypeHistorical',
-        'ბუნება': 'tourTypeNature',
         'cultural': 'tourTypeCultural',
         'sightseeing': 'tourTypeSightseeing',
         'gastronomic': 'tourTypeGastronomic',
@@ -3228,6 +3299,14 @@
         'nature': 'tourTypeNature',
         'adventure': 'tourTypeSightseeing'
       };
+
+      // Also match Georgian type names
+      var geoMap = {};
+      geoMap['\u10D9\u10E3\u10DA\u10E2\u10E3\u10E0\u10E3\u10DA\u10D8'] = 'tourTypeCultural';
+      geoMap['\u10E1\u10D0\u10D7\u10D0\u10D5\u10D2\u10D0\u10D3\u10D0\u10E1\u10D0\u10D5\u10DA\u10DD'] = 'tourTypeSightseeing';
+      geoMap['\u10D2\u10D0\u10E1\u10E2\u10E0\u10DD\u10DC\u10DD\u10DB\u10D8\u10E3\u10DA\u10D8'] = 'tourTypeGastronomic';
+      geoMap['\u10D8\u10E1\u10E2\u10DD\u10E0\u10D8\u10E3\u10DA\u10D8'] = 'tourTypeHistorical';
+      geoMap['\u10D1\u10E3\u10DC\u10D4\u10D1\u10D0'] = 'tourTypeNature';
 
       if (!typeValue) return '-';
       
@@ -3240,6 +3319,10 @@
       
       if (typeTranslationMap[keyLower]) {
         return safeTranslate(typeTranslationMap[keyLower], key);
+      }
+
+      if (geoMap[key]) {
+        return safeTranslate(geoMap[key], key);
       }
       
       return key;

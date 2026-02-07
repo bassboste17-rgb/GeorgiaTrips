@@ -1,0 +1,57 @@
+# Georgia Trips - robots.txt
+# https://www.georgiatrips.ge
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.georgiatrips.ge/sitemap.xml
+
+# Block admin and private pages
+Disallow: /admin
+Disallow: /allbookong
+Disallow: /mybookings
+Disallow: /myposts
+Disallow: /saved-posts
+Disallow: /profile
+Disallow: /profile1
+Disallow: /login
+Disallow: /addPost
+Disallow: /availability-calendar
+Disallow: /onlinechat
+Disallow: /navbar
+Disallow: /footer
+Disallow: /fonts
+
+# Allow all public pages
+Allow: /home
+Allow: /about
+Allow: /contact
+Allow: /tours
+Allow: /cars
+Allow: /booking
+Allow: /posts
+Allow: /AItours
+Allow: /policy
+
+# Allow all region pages
+Allow: /tbilisi
+Allow: /ajara
+Allow: /kakheti
+Allow: /imereti
+Allow: /guria
+Allow: /kvemo-kartli
+Allow: /mtkheta-mtianeti
+Allow: /racha-lechkhumi
+Allow: /samegrelo-zemo-svaneti
+Allow: /samtskhe-javakheti
+Allow: /shida-kartli
+Allow: /abkhazia
+
+# Allow search engine crawlers to index images
+User-agent: Googlebot-Image
+Allow: /addhome/
+
+# Crawl delay for bots
+User-agent: Bingbot
+Crawl-delay: 1

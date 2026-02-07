@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ka">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Georgia Trips - login</title>
+    <title>Login | Georgia Trips - Sign In to Your Account</title>
+    <meta name="description" content="Sign in to Georgia Trips to manage your bookings, save favorite tours, and access personalized travel recommendations." />
+    <meta name="robots" content="noindex, nofollow" />
     <!-- დამატებულია navbar.css -->
     <link rel="stylesheet" href="/pages/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -2842,7 +2844,7 @@
                             
                             const successMsg = window.languageSwitcher ? 
                                 window.languageSwitcher.translate('accountsLinkedSuccess') : 
-                                'ანგარიშები წარმატებით დაკავშირდა!';
+                                'ანგარი��ები წარმატებით დაკავშირდა!';
                             showMessage(successMsg, "success");
                             accountLinkInfo.style.display = 'none';
                             
@@ -2895,7 +2897,7 @@
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('authMissingInitialState') : 
-                    'სესიის ���ონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
+                    'სესიის ���ონაცემები ვე��� მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
                 showMessage(errorMsg, "error");
                 return;
             }
