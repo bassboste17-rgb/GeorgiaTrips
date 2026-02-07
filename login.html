@@ -9,10 +9,10 @@
     <!-- დამატებულია navbar.css -->
     <link rel="stylesheet" href="/pages/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo12.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo12.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo12.png">
+    <link rel="icon" type="image/x-icon" href="addhome/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo.png">
     <style>
         * {
             margin: 0;
@@ -856,7 +856,7 @@
 
                 <!-- Email login -->
                 <div id="emailLoginContent" class="login-content active">
-                    <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
+                    <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფ���სტა" required data-i18n-placeholder="email" />
                     <div class="error-message" id="loginEmailError"></div>
                 </div>
 
@@ -1328,7 +1328,7 @@
         const db = getFirestore(app);
 
         // ===================================
-        // უსაფრთხო პაროლის hashing ფუნქციები (SHA-256)
+        // უსაფრთხო ��აროლის hashing ფუნქციები (SHA-256)
         // ===================================
         async function hashPassword(password) {
             const encoder = new TextEncoder();

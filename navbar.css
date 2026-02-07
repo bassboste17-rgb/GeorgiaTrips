@@ -18,7 +18,7 @@ body {
   font-family: inherit;
   background-color: #ffffff;
   color: #fff;
-  padding-top: 0px;
+  padding-top: 70px;
   /* iOS Safari fixes */
   min-height: 100vh;
   min-height: -webkit-fill-available;
@@ -27,6 +27,15 @@ body {
   /* Safe area for notch devices */
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+/* Hero sections should go behind the navbar for full-bleed effect */
+.hero,
+.region-hero,
+.about-hero,
+.contact-hero {
+  margin-top: -70px;
+  padding-top: 70px;
 }
 
 :root {
@@ -439,7 +448,15 @@ body {
    ============================================ */
 @media (max-width: 768px) {
   body {
-     padding-top: 0px;
+     padding-top: 60px;
+  }
+
+  .hero,
+  .region-hero,
+  .about-hero,
+  .contact-hero {
+    margin-top: -60px;
+    padding-top: 60px;
   }
 
   .navbar {
@@ -583,7 +600,15 @@ body {
 
 @media (max-width: 480px) {
   body {
-     padding-top: 0px;
+     padding-top: 55px;
+  }
+
+  .hero,
+  .region-hero,
+  .about-hero,
+  .contact-hero {
+    margin-top: -55px;
+    padding-top: 55px;
   }
 
   .navbar {
