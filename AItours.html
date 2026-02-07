@@ -7,12 +7,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Georgia Trips AI - Create your personalized tour with AI assistant. Smart price calculator and recommendations.">
-    <meta name="keywords" content="Georgia, AI Tours, Travel, Georgia Trips, AI Tours, Smart Planning">
-    <meta name="author" content="Georgia Trips">
-    <meta name="robots" content="index, follow">
-    
     <title>Georgia Trips - AI Tour Planner</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1541,7 +1535,7 @@ const translations = {
         select: "არჩევა",
         day: "დღე",
         calculating: "გამოთვლა...",
-        fillFields: "გთხოვთ შეავსოთ ყველა სავალდებულო ველი",
+        fillFields: "გთხოვთ შეავსოთ ყველა სავალდებულო ვე��ი",
         justNow: "ახლახანს"
     },
     en: {
@@ -1625,7 +1619,7 @@ const translations = {
         feature3Desc: "Задавай любые вопросы и получай ответы на любом языке 24/7.",
         feature4Title: "Многоязычный",
         feature4Desc: "Доступен на 4 языках: грузинский, английский, русский и арабский.",
-        plannerTitle: "Спланируй свой тур",
+        plannerTitle: "Спланир��й свой тур",
         plannerDesc: "Заполни информацию и AI рассчитает идеальный маршрут и цену",
         startLocation: "Начальная локация",
         destination: "Место назначения",
@@ -1941,7 +1935,7 @@ function generateAIExplanation(destination, days, travelers, interests, startLoc
             interests: interests.length > 0 ? `Ваши интересы: ${interests.map(i => t(i)).join(', ')}.` : ''
         },
         ar: {
-            intro: `قمت بتحليل متطلباتك وأنشأت مسار رحلة لمدة ${days} أيام لـ ${travelers} أشخاص.`,
+            intro: `قمت بتحليل متطلباتك وأ��شأت مسار رحلة لمدة ${days} أيام لـ ${travelers} أشخاص.`,
             route: `المسار: ${startName} - ${destName}`,
             includes: 'الجولة تشمل: النقل والمرشد المحترف.',
             interests: interests.length > 0 ? `اهتماماتك: ${interests.map(i => t(i)).join('، ')}.` : ''
@@ -2089,7 +2083,7 @@ function generateIntelligentResponse(message, detectedLang) {
             responses: {
                 ka: 'ყველაზე პოპულარული ტურები: 1) ყაზბეგი - მთების სილამაზე 1 დღეში. 2) კახეთი - ღვინის მოყვარულებისთვის. 3) სვანეთი - თავგადასავლისთვის 2-3 დღე. 4) ბათუმი - ზღვის კურორტი. 5) მესტია-უშგული - უნიკალური კულტურისთვის.',
                 en: 'Most popular tours: 1) Kazbegi - mountain beauty in 1 day. 2) Kakheti - for wine lovers. 3) Svaneti - adventure for 2-3 days. 4) Batumi - seaside resort. 5) Mestia-Ushguli - unique culture.',
-                ru: 'Самые популярные туры: 1) Казбеги - красота гор за 1 день. 2) Кахетия - для любителей вина. 3) Сванетия - приключение на 2-3 дня. 4) Батуми - морской курорт. 5) Местия-Ушгули - уникальная культура.',
+                ru: 'Самые популярные туры: 1) Казбеги - красота гор за 1 день. 2) ��ахетия - для любителей вина. 3) Сванетия - приключение на 2-3 дня. 4) Батуми - морской курорт. 5) Местия-Ушгули - уникальная культура.',
                 ar: 'أشهر الجولات: 1) كازبيجي - جمال الجبال في يوم واحد. 2) كاخيتي - لمحبي النبيذ. 3) سفانيتي - مغامرة 2-3 أيام. 4) باتومي - منتجع بحري. 5) مستيا-أوشغولي - ثقافة فريدة.'
             }
         },

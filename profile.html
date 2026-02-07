@@ -547,6 +547,167 @@
             color: var(--text-primary);
         }
         
+        /* Danger Zone - Delete Account */
+        .danger-zone {
+            background: rgba(229, 56, 59, 0.05);
+            border: 1px solid rgba(229, 56, 59, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .danger-zone h3 {
+            color: #e5383b;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .danger-zone p {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: #e5383b;
+            border: 1px solid #e5383b;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-danger:hover {
+            background: #e5383b;
+            color: #fff;
+        }
+
+        /* Delete Confirmation Modal */
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .delete-modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .delete-modal-content .warning-icon {
+            font-size: 3rem;
+            color: #e5383b;
+            margin-bottom: 16px;
+        }
+
+        .delete-modal-content h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .delete-modal-content p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .delete-modal-content .confirm-input {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .delete-modal-content .confirm-input:focus {
+            outline: none;
+            border-color: #e5383b;
+        }
+
+        .delete-modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .delete-modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel-delete {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn-cancel-delete:hover {
+            background: #444;
+        }
+
+        .btn-confirm-delete {
+            background: #e5383b;
+            color: #fff;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-confirm-delete.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .btn-confirm-delete.active:hover {
+            background: #c62828;
+        }
+
+        .privacy-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #888;
+            font-size: 0.8rem;
+            text-decoration: none;
+            margin-top: 16px;
+            transition: color 0.2s;
+        }
+
+        .privacy-link:hover {
+            color: #e5383b;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             body {
@@ -675,7 +836,30 @@
                 
                 <button type="submit" class="btn btn-block" data-i18n="profileSaveBtn">ცვლილებების შენახვა</button>
             </form>
+
+            <!-- Danger Zone - Delete Account -->
+            <div class="danger-zone">
+                <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                <p data-i18n="profileDeleteWarning">Once you delete your account, all your data including bookings, posts, and profile information will be permanently removed. This action cannot be undone.</p>
+                <button class="btn-danger" id="delete-account-btn" data-i18n="profileDeleteAccount">Delete Account</button>
+                <br>
+                <a href="policy.html" class="privacy-link"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </div>
         </main>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="delete-modal" id="delete-modal">
+        <div class="delete-modal-content">
+            <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 data-i18n="profileDeleteConfirmTitle">Are you sure?</h3>
+            <p data-i18n="profileDeleteConfirmMsg">This will permanently delete your account and all associated data. Type <strong>DELETE</strong> below to confirm.</p>
+            <input type="text" class="confirm-input" id="delete-confirm-input" placeholder='Type "DELETE" to confirm' autocomplete="off">
+            <div class="delete-modal-buttons">
+                <button class="btn-cancel-delete" id="cancel-delete-btn" data-i18n="cancel">Cancel</button>
+                <button class="btn-confirm-delete" id="confirm-delete-btn" data-i18n="profileDeleteConfirmBtn">Delete Forever</button>
+            </div>
+        </div>
     </div>
 
     <!-- Avatar Change Modal -->
@@ -718,14 +902,25 @@
             getAuth, 
             signOut,
             onAuthStateChanged,
-            updateProfile
+            updateProfile,
+            deleteUser,
+            reauthenticateWithPopup,
+            GoogleAuthProvider,
+            FacebookAuthProvider,
+            EmailAuthProvider,
+            reauthenticateWithCredential
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { 
             getFirestore,
             doc,
             getDoc,
             setDoc,
-            updateDoc
+            updateDoc,
+            deleteDoc,
+            collection,
+            query,
+            where,
+            getDocs
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         // Cloudinary კონფიგურაცია
@@ -1245,15 +1440,129 @@
                 hideLoading();
             }
         });
-          // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
+        // ====================================
+        // DELETE ACCOUNT FUNCTIONALITY
+        // ====================================
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        const deleteModal = document.getElementById('delete-modal');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const deleteConfirmInput = document.getElementById('delete-confirm-input');
+
+        // Open delete modal
+        deleteAccountBtn.addEventListener('click', function() {
+            deleteModal.style.display = 'flex';
+            deleteConfirmInput.value = '';
+            confirmDeleteBtn.classList.remove('active');
+        });
+
+        // Close delete modal
+        cancelDeleteBtn.addEventListener('click', function() {
+            deleteModal.style.display = 'none';
+            deleteConfirmInput.value = '';
+        });
+
+        // Close modal on outside click
+        deleteModal.addEventListener('click', function(e) {
+            if (e.target === deleteModal) {
+                deleteModal.style.display = 'none';
+                deleteConfirmInput.value = '';
+            }
+        });
+
+        // Enable delete button when user types DELETE
+        deleteConfirmInput.addEventListener('input', function() {
+            if (this.value.trim().toUpperCase() === 'DELETE') {
+                confirmDeleteBtn.classList.add('active');
+            } else {
+                confirmDeleteBtn.classList.remove('active');
+            }
+        });
+
+        // Confirm account deletion
+        confirmDeleteBtn.addEventListener('click', async function() {
+            if (deleteConfirmInput.value.trim().toUpperCase() !== 'DELETE') return;
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            showLoading();
+            deleteModal.style.display = 'none';
+
+            try {
+                // 1. Delete user data from Firestore "users" collection
+                await deleteDoc(doc(db, "users", user.uid));
+
+                // 2. Try to delete user posts if any
+                try {
+                    const postsQuery = query(collection(db, "posts"), where("userId", "==", user.uid));
+                    const postsSnapshot = await getDocs(postsQuery);
+                    const deletePromises = [];
+                    postsSnapshot.forEach((postDoc) => {
+                        deletePromises.push(deleteDoc(doc(db, "posts", postDoc.id)));
+                    });
+                    await Promise.all(deletePromises);
+                } catch (e) {
+                    console.log("No posts to delete or posts collection doesn't exist");
+                }
+
+                // 3. Try to delete user bookings if any
+                try {
+                    const bookingsQuery = query(collection(db, "bookings"), where("userId", "==", user.uid));
+                    const bookingsSnapshot = await getDocs(bookingsQuery);
+                    const bookingDeletePromises = [];
+                    bookingsSnapshot.forEach((bookingDoc) => {
+                        bookingDeletePromises.push(deleteDoc(doc(db, "bookings", bookingDoc.id)));
+                    });
+                    await Promise.all(bookingDeletePromises);
+                } catch (e) {
+                    console.log("No bookings to delete or bookings collection doesn't exist");
+                }
+
+                // 4. Delete Firebase Auth account
+                await deleteUser(user);
+
+                // 5. Clear local storage
+                localStorage.removeItem('language');
+                
+                // 6. Redirect to home
+                showNotification(getTranslation('profileSuccessTitle'), getTranslation('profileAccountDeleted') || 'Your account has been deleted successfully.', "success");
+                
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 2000);
+
+            } catch (error) {
+                console.error("Account deletion error:", error);
+                
+                if (error.code === 'auth/requires-recent-login') {
+                    // User needs to re-authenticate
+                    hideLoading();
+                    showNotification(
+                        getTranslation('profileErrorTitle'), 
+                        getTranslation('profileDeleteReauthRequired') || 'For security, please log out and log back in, then try again.', 
+                        "error"
+                    );
+                } else {
+                    hideLoading();
+                    showNotification(
+                        getTranslation('profileErrorTitle'), 
+                        getTranslation('profileDeleteError') || 'Failed to delete account. Please try again or contact support.', 
+                        "error"
+                    );
+                }
+            }
+        });
+
+        // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
 function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
+    // შეამოწ��ეთ, თუ URL შეიცავს .html
     if (window.location.pathname.endsWith('.html')) {
         // შექმენით ახალი URL .html-ის გარეშე
         const newPath = window.location.pathname.replace(/\.html$/, '');
         const newURL = newPath + window.location.search + window.location.hash;
         
-        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
+        // შეცვალეთ URL ბ��აუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
         window.history.replaceState({}, '', newURL);
     }
 }

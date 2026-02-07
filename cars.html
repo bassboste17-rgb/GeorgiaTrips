@@ -7,23 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Georgia Trips - დაჯავშნეთ მანქანები საქართველოში. მარტივი და სწრაფი ონლაინ დაჯავშნის პლატფორმა საუკეთესო ფასებით.">
-    <meta name="keywords" content="საქართველო, მანქანის დაჯავშნა, მოგზაურობა, Georgia Trips, Car Rental Georgia">
-    <meta name="author" content="Georgia Trips">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.georgiatrips.ge/cars.html">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Georgia Trips - Cars Booking">
-    <meta property="og:description" content="დაჯავშნეთ მანქანები საქართველოში მარტივად და სწრაფად. საუკეთესო ფასები და პროფესიონალური სერვისი.">
-    <meta property="og:image" content="https://www.georgiatrips.ge/addhome/logo12.png">
-    <meta property="og:url" content="https://www.georgiatrips.ge/cars.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Georgia Trips">
-    <meta property="og:locale" content="ka_GE">
-    
-    <title>Georgia Trips - Car Booking | მანქანების დაჯავშნა</title>
+    <title>Georgia Trips - Car Booking | Cars</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="addhome/logo12.png">
@@ -1931,7 +1915,7 @@ textarea.input {
                     </div>
                     <div class="region-option">
                         <label>
-                            <input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region>
+                            <input type="checkbox" value="მცხე���ა-მთიანეთი" class="region-checkbox" data-region>
                             <span data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</span>
                         </label>
                     </div>
@@ -2228,7 +2212,7 @@ textarea.input {
             'იმერეთი': 'regionImereti',
             'კახეთი': 'regionKakheti',
             'ქვემო ქართლი': 'regionKvemoKartli',
-            'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
+            'მცხეთა-მთიანე��ი': 'regionMtskhetaMtianeti',
             'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
             'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
             'შიდა ქართლი': 'regionShidaKartli',
@@ -3065,7 +3049,7 @@ async function toggleLike(itemId) {
                 car.likedBy = car.likedBy.filter(uid => uid !== currentUser.uid)
             }
             
-            showToast("მოწონება წაიშალა", "info")
+            showToast("მოწო��ება წაიშალა", "info")
         } else {
             await updateDoc(itemRef, {
                 likes: increment(1),

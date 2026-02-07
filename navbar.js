@@ -15,8 +15,6 @@ import {
   const savedLang = localStorage.getItem("language")
   if (!savedLang) {
     localStorage.setItem("language", "en")
-    // Reload page to apply English translations on first visit
-    window.location.reload()
   }
 })()
 
@@ -151,7 +149,7 @@ fetch("navbar.html")
       // Update active button
       updateActiveLanguageButton()
 
-      // Reload page
+      // Reload page to fully re-render dynamic sections
       setTimeout(() => {
         window.location.reload()
       }, 20)
@@ -215,22 +213,16 @@ fetch("navbar.html")
     function initializeDefaultLanguage() {
       const savedLang = localStorage.getItem("language")
       if (!savedLang) {
-        // If no language is saved, set English and reload
+        // If no language is saved, set English
         localStorage.setItem("language", "en")
         
         // Apply English using languageSwitcher if available
         if (window.languageSwitcher && typeof window.languageSwitcher.setLanguage === "function") {
           window.languageSwitcher.setLanguage("en")
         }
-        
-        // Reload to apply English translations
-        setTimeout(() => {
-          window.location.reload()
-        }, 50)
-        return
       }
       
-      // If language is already saved, just update UI
+      // Update UI
       updateActiveLanguageButton()
       setupLanguageButtons()
     }
