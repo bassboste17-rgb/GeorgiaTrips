@@ -2632,7 +2632,6 @@
             showLoading();
             const provider = new FacebookAuthProvider();
             provider.addScope('email');
-            provider.addScope('public_profile');
             currentProvider = 'facebook';
 
             try {
@@ -2896,7 +2895,7 @@
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('authMissingInitialState') : 
-                    'სესიის მონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
+                    'სესიის ���ონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
                 showMessage(errorMsg, "error");
                 return;
             }
