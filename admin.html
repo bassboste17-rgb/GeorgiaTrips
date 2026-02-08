@@ -1921,7 +1921,7 @@ input:checked + .toggle-slider:before {
             <i class="fas fa-comments"></i> ონლაინ ჩატი
         </a>
         <button class="btn btn-secondary" data-view="adminBookings">
-            <i class="fas fa-tasks"></i> დაჯავშ���ის მართვა
+            <i class="fas fa-tasks"></i> დაჯავშნის მართვა
         </button>
         <button class="btn btn-secondary" data-view="emails">
             <i class="fas fa-envelope"></i> მაილები
@@ -3249,7 +3249,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             
             const availableDatesCount = item.bookedDates ? item.bookedDates.length : 0
             const availableDatesHtml = item.restrictedMode 
-                ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444;"><i class="fas fa-ban"></i> სრულად დაკავე���ული</span>` 
+                ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444;"><i class="fas fa-ban"></i> სრულად დაკავებული</span>` 
                 : availableDatesCount > 0 
                     ? `<span style="background: rgba(220, 53, 69, 0.2); color: #ef4444;"><i class="fas fa-calendar-times"></i> ${availableDatesCount} დაკავებული</span>` 
                     : ''
@@ -3454,7 +3454,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 ? "დარწმუნებული ხართ, რომ გსურთ ამ დაჯავშნის დადასტურება?"
                 : "დარწმუნებული ხართ, რომ გსურთ ამ დაჯავშნის უარყოფა?"
 
-            const confirmed = await showConfirm(confirmMessage, "დაჯავშნის სტატუსის შეცვ��ა")
+            const confirmed = await showConfirm(confirmMessage, "დაჯავშნის სტატუსის შეცვლა")
             if (!confirmed) return
 
             try {
@@ -3660,7 +3660,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონებ���) *</label>
+                                    <label>რეგიონი (რეგიონები) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
@@ -3831,7 +3831,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             <i class="fas fa-ban"></i> სრული გათიშვა
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            როცა ჩართულია, მანქანა სრულად დაკავებულად გამოჩნდება booking.html-ში და კალენდარი გაქრებ��
+                                            როცა ჩართულია, მანქანა სრულად დაკავებულად გამოჩნდება booking.html-ში და კალენდარი გაქრება
                                         </div>
                                     </div>
                                 </label>
@@ -4031,7 +4031,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="translation-text">${item.descriptionTranslations.en || 'N/A'}</span>
                                     </div>
                                     <div class="translation-item">
-                                        <span class="flag">🇷��</span>
+                                        <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
                                         <span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span>
                                     </div>
@@ -4134,7 +4134,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         </div>
 
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-calendar-times"></i> დაკავებული თარიღე��ი</h3>
+                            <h3><i class="fas fa-calendar-times"></i> დაკავებული თარიღები</h3>
                             
                             <div class="form-group" style="margin-bottom: 1rem;">
                                 <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid var(--border-color);">
@@ -4192,7 +4192,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div id="restrictedMessage" style="display: ${restrictedMode ? 'block' : 'none'}; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; text-align: center;">
                                 <i class="fas fa-ban" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"></i>
                                 <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">კალენდარი გათიშულია</p>
-                                <p style="color: var(--text-color); font-size: 0.9rem;">ტური სრულად დაკავებულად გამო��ნდება მომხმარებლებისთვის</p>
+                                <p style="color: var(--text-color); font-size: 0.9rem;">ტური სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
                             </div>
                             
                             <input type="hidden" id="tourBookedDates" value='${JSON.stringify(existingBookedDates)}'>

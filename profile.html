@@ -1137,7 +1137,7 @@
             });
         });
 
-        // თვეების ოფციებ���ს განახლება ენის შეცვლისას
+        // თვეების ოფციების განახლება ენის შეცვლისას
         function updateMonthOptions() {
             const currentValue = birthMonthSelect.value;
             const months = getMonthNames();
@@ -1557,13 +1557,13 @@
 
         // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
 function removeHtmlExtensionFromURL() {
-    // შეამოწ��ეთ, თუ URL შეიცავს .html
+    // შეამოწმეთ, თუ URL შეიცავს .html
     if (window.location.pathname.endsWith('.html')) {
         // შექმენით ახალი URL .html-ის გარეშე
         const newPath = window.location.pathname.replace(/\.html$/, '');
         const newURL = newPath + window.location.search + window.location.hash;
         
-        // შეცვალეთ URL ბ��აუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
+        // შეცვალეთ URL ბრაუზერის ისტორიაში (გვერდის გადატვირთვის გარეშე)
         window.history.replaceState({}, '', newURL);
     }
 }

@@ -1825,7 +1825,7 @@
                                 <span class="item-card-tag"><i class="fas fa-clock"></i> ${tour.duration}</span>
                                 <span class="item-card-tag"><i class="fas fa-users"></i> მაქს. ${tour.maxPeople}</span>
                             </div>
-                            <div class="item-card-price">${tour.price} ���</div>
+                            <div class="item-card-price">${tour.price} ₾</div>
                             <div class="item-card-actions">
                                 <button class="btn-icon" onclick="editTour('${tour.id}')" title="რედაქტირება">
                                     <i class="fas fa-edit"></i>
@@ -2000,7 +2000,7 @@
             const selectedRegions = getSelectedRegions('edit-car-regions-grid');
             
             if (selectedRegions.length === 0) {
-                showToast('გთხო���თ აირჩიოთ მინიმუ��� ერთი რეგიონი', true);
+                showToast('გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი', true);
                 return;
             }
 

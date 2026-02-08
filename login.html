@@ -821,7 +821,7 @@
                 <p data-i18n="phoneNameInfo">გთხოვთ მიუთითოთ თქვენი სახელი რომ გამოჩნდეს სისტემაში.</p>
                 <input type="text" id="socialUserName" placeholder="სახელი" required data-i18n-placeholder="name">
                 <div class="name-modal-buttons">
-                    <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმე���ა</button>
+                    <button class="secondary" id="cancelName" data-i18n="cancel">გაუქმება</button>
                     <button class="primary" id="submitName" data-i18n="save">შენახვა</button>
                 </div>
             </div>
@@ -856,7 +856,7 @@
 
                 <!-- Email login -->
                 <div id="emailLoginContent" class="login-content active">
-                    <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფ���სტა" required data-i18n-placeholder="email" />
+                    <input type="email" id="loginEmail" name="loginEmail" placeholder="ელ. ფოსტა" required data-i18n-placeholder="email" />
                     <div class="error-message" id="loginEmailError"></div>
                 </div>
 
@@ -1328,7 +1328,7 @@
         const db = getFirestore(app);
 
         // ===================================
-        // უსაფრთხო ��აროლის hashing ფუნქციები (SHA-256)
+        // უსაფრთხო პაროლის hashing ფუნქციები (SHA-256)
         // ===================================
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -2164,7 +2164,7 @@
             }
         });
 
-        // Save new password - გასწორებული SHA-256 hashing-ი��
+        // Save new password - გასწორებული SHA-256 hashing-ით
         document.getElementById("resetSavePasswordBtn").addEventListener("click", async () => {
             const newPassword = document.getElementById("resetNewPassword").value;
             const confirmPassword = document.getElementById("resetConfirmPassword").value;
@@ -2844,7 +2844,7 @@
                             
                             const successMsg = window.languageSwitcher ? 
                                 window.languageSwitcher.translate('accountsLinkedSuccess') : 
-                                'ანგარი��ები წარმატებით დაკავშირდა!';
+                                'ანგარიშები წარმატებით დაკავშირდა!';
                             showMessage(successMsg, "success");
                             accountLinkInfo.style.display = 'none';
                             
@@ -2897,7 +2897,7 @@
                 hideLoading();
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('authMissingInitialState') : 
-                    'სესიის ���ონაცემები ვე��� მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
+                    'სესიის მონაცემები ვერ მოიძებნა. გთხოვთ სცადოთ თავიდან ან გახსენით ბრაუზერში (Safari/Chrome).';
                 showMessage(errorMsg, "error");
                 return;
             }

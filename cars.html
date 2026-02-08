@@ -1932,7 +1932,7 @@ textarea.input {
                     </div>
                     <div class="region-option">
                         <label>
-                            <input type="checkbox" value="მცხე���ა-მთიანეთი" class="region-checkbox" data-region>
+                            <input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region>
                             <span data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</span>
                         </label>
                     </div>
@@ -2229,7 +2229,7 @@ textarea.input {
             'იმერეთი': 'regionImereti',
             'კახეთი': 'regionKakheti',
             'ქვემო ქართლი': 'regionKvemoKartli',
-            'მცხეთა-მთიანე��ი': 'regionMtskhetaMtianeti',
+            'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
             'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
             'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
             'შიდა ქართლი': 'regionShidaKartli',
@@ -3066,7 +3066,7 @@ async function toggleLike(itemId) {
                 car.likedBy = car.likedBy.filter(uid => uid !== currentUser.uid)
             }
             
-            showToast("მოწო��ება წაიშალა", "info")
+            showToast("მოწონება წაიშალა", "info")
         } else {
             await updateDoc(itemRef, {
                 likes: increment(1),
