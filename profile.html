@@ -924,9 +924,8 @@
             getDocs
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        // Cloudinary კონფიგურაცია
-        const CLOUD_NAME = "dmxmlw0ln";
-        const UPLOAD_PRESET = "rentime";
+        // ImgBB კონფიგურაცია (ავატარისთვის)
+        const IMGBB_API_KEY = "ea8ff594a843b3fe86d9b6ee6fb3eade";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
@@ -1377,10 +1376,9 @@
                 progressBar.style.width = '0%';
                 
                 const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", UPLOAD_PRESET);
+                formData.append("image", file);
                 
-                const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                     method: "POST",
                     body: formData
                 });
@@ -1390,7 +1388,7 @@
                 }
                 
                 const data = await res.json();
-                const imageUrl = data.secure_url;
+                const imageUrl = data.data.url;
                 
                 userData.avatar = imageUrl;
                 

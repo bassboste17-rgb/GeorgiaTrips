@@ -587,10 +587,8 @@
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        // Cloudinary კონფიგურაცია
-        const CLOUD_NAME = "dmxmlw0ln";
-        const CLOUDINARY_API_KEY = "229791698755831";
-        const CLOUDINARY_API_SECRET = "wDdFhjtQXlgV7Sq_q46_ETBuQE0";
+        // Cloudinary კონფიგურაცია (ვიდეოების წაშლისთვის - ახალი აქაუნტი)
+        const CLOUD_NAME = "ddxr0vmsm";
 
         const postsContainer = document.getElementById('posts-container');
         const statsContainer = document.getElementById('stats-container');
@@ -633,137 +631,29 @@
             'tbilisi': 'regionTbilisi'
         };
 
-        // ============ CLOUDINARY DELETE FUNCTIONS ============
+        // ============ DELETE FUNCTIONS ============
 
-        // SHA-1 hash ფუნქცია signature-ისთვის
-        async function sha1(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
-        }
-
-        // Cloudinary URL-დან public_id-ის ამოღება
-        function extractPublicIdFromCloudinaryUrl(url) {
-            try {
-                // მაგალითი URL: https://res.cloudinary.com/dmxmlw0ln/image/upload/v1234567890/folder/image_name.jpg
-                const regex = /\/v\d+\/(.+)\.\w+$/;
-                const match = url.match(regex);
-                if (match && match[1]) {
-                    return match[1];
-                }
-                // ალტერნატივა: თუ არ არის version
-                const altRegex = /\/(?:image|video)\/upload\/(.+)\.\w+$/;
-                const altMatch = url.match(altRegex);
-                if (altMatch && altMatch[1]) {
-                    return altMatch[1];
-                }
-                return null;
-            } catch (error) {
-                console.error('Error extracting public_id:', error);
-                return null;
-            }
-        }
-
-        // Cloudinary-დან სურათების წაშლა
+        // ImgBB-ს ფოტოები ვერ იშლება API-ით (მხოლოდ ImgBB დეშბორდიდან)
+        // Firestore-დან წაიშლება მონაცემი, ფოტო ImgBB-ზე დარჩება
         async function deleteImagesFromCloudinary(imageUrls) {
             if (!imageUrls || imageUrls.length === 0) {
-                console.log('No images to delete from Cloudinary');
+                console.log('No images to delete');
                 return;
             }
-
-            console.log('Deleting images from Cloudinary:', imageUrls.length);
-            
-            const deletePromises = imageUrls.map(async (url) => {
-                const publicId = extractPublicIdFromCloudinaryUrl(url);
-                if (!publicId) {
-                    console.warn('Could not extract public_id from URL:', url);
-                    return;
-                }
-
-                try {
-                    const timestamp = Math.round(new Date().getTime() / 1000);
-                    const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${CLOUDINARY_API_SECRET}`;
-                    const signature = await sha1(stringToSign);
-                    
-                    const formData = new FormData();
-                    formData.append('public_id', publicId);
-                    formData.append('timestamp', timestamp);
-                    formData.append('api_key', CLOUDINARY_API_KEY);
-                    formData.append('signature', signature);
-                    
-                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/destroy`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    console.log('Cloudinary image delete result for', publicId, ':', result);
-                    
-                    if (result.result === 'ok') {
-                        console.log('Successfully deleted image from Cloudinary:', publicId);
-                    } else {
-                        console.warn('Could not delete image from Cloudinary:', publicId, result);
-                    }
-                } catch (error) {
-                    console.error('Error deleting image from Cloudinary:', error);
-                }
-            });
-
-            await Promise.all(deletePromises);
+            console.log('Images removed from post (ImgBB images stay hosted):', imageUrls.length);
         }
 
-        // Cloudinary-დან ვიდეოების წაშლა
+        // ვიდეოების წაშლა - Cloudinary-დან ვერ წაიშლება unsigned preset-ით
+        // Firestore-დან წაიშლება მონაცემი
         async function deleteVideosFromCloudinary(videoUrls) {
             if (!videoUrls || videoUrls.length === 0) {
-                console.log('No videos to delete from Cloudinary');
+                console.log('No videos to delete');
                 return;
             }
-
-            console.log('Deleting videos from Cloudinary:', videoUrls.length);
-            
-            const deletePromises = videoUrls.map(async (url) => {
-                const publicId = extractPublicIdFromCloudinaryUrl(url);
-                if (!publicId) {
-                    console.warn('Could not extract public_id from URL:', url);
-                    return;
-                }
-
-                try {
-                    const timestamp = Math.round(new Date().getTime() / 1000);
-                    const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${CLOUDINARY_API_SECRET}`;
-                    const signature = await sha1(stringToSign);
-                    
-                    const formData = new FormData();
-                    formData.append('public_id', publicId);
-                    formData.append('timestamp', timestamp);
-                    formData.append('api_key', CLOUDINARY_API_KEY);
-                    formData.append('signature', signature);
-                    
-                    // ვიდეოსთვის ვიყენებთ /video/destroy endpoint-ს
-                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/destroy`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    console.log('Cloudinary video delete result for', publicId, ':', result);
-                    
-                    if (result.result === 'ok') {
-                        console.log('Successfully deleted video from Cloudinary:', publicId);
-                    } else {
-                        console.warn('Could not delete video from Cloudinary:', publicId, result);
-                    }
-                } catch (error) {
-                    console.error('Error deleting video from Cloudinary:', error);
-                }
-            });
-
-            await Promise.all(deletePromises);
+            console.log('Videos removed from post:', videoUrls.length);
         }
 
-        // ============ END CLOUDINARY DELETE FUNCTIONS ============
+        // ============ END DELETE FUNCTIONS ============
 
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();

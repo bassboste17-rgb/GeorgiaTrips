@@ -688,8 +688,11 @@
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        const CLOUD_NAME = "dmxmlw0ln";
-        const UPLOAD_PRESET = "rentime";
+        // ImgBB კონფიგურაცია (ფოტოებისთვის)
+        const IMGBB_API_KEY = "ea8ff594a843b3fe86d9b6ee6fb3eade";
+        // Cloudinary კონფიგურაცია (ვიდეოებისთვის)
+        const CLOUD_NAME = "ddxr0vmsm";
+        const UPLOAD_PRESET = "ml_default";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
@@ -1037,16 +1040,15 @@
             mediaPreviewContainer.appendChild(previewDiv);
         }
 
-        async function uploadImagesToCloudinary(files) {
+        async function uploadImagesToImgBB(files) {
             const imageUrls = [];
             
             for (const file of files) {
                 const formData = new FormData();
-                formData.append("file", file);
-                formData.append("upload_preset", UPLOAD_PRESET);
+                formData.append("image", file);
                 
                 try {
-                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                         method: "POST",
                         body: formData
                     });
@@ -1056,7 +1058,7 @@
                     }
                     
                     const data = await res.json();
-                    imageUrls.push(data.secure_url);
+                    imageUrls.push(data.data.url);
                 } catch (error) {
                     console.error("ფოტოს ატვირთვის შეცდომა:", error);
                     throw error;
@@ -1066,7 +1068,7 @@
             return imageUrls;
         }
 
-        async function uploadVideosToCloudinary(files) {
+        async function uploadVideosToNewCloudinary(files) {
             const videoUrls = [];
             
             for (const file of files) {
@@ -1116,11 +1118,11 @@
                 let videoUrls = [];
 
                 if (selectedImages.length > 0) {
-                    imageUrls = await uploadImagesToCloudinary(selectedImages);
+                    imageUrls = await uploadImagesToImgBB(selectedImages);
                 }
 
                 if (selectedVideos.length > 0) {
-                    videoUrls = await uploadVideosToCloudinary(selectedVideos);
+                    videoUrls = await uploadVideosToNewCloudinary(selectedVideos);
                 }
                 
                 const postData = {

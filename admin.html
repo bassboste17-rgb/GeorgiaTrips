@@ -1951,6 +1951,11 @@ input:checked + .toggle-slider:before {
                     <span class="admin-stat-label">ტურები</span>
                 </div>
                 <div class="admin-stat-card">
+                    <i class="fas fa-hotel admin-stat-icon"></i>
+                    <span class="admin-stat-value" id="totalHotelsStat">0</span>
+                    <span class="admin-stat-label">სასტუმროები</span>
+                </div>
+                <div class="admin-stat-card">
                     <i class="fas fa-newspaper admin-stat-icon"></i>
                     <span class="admin-stat-value" id="totalPostsStat">0</span>
                     <span class="admin-stat-label">პოსტები</span>
@@ -1963,6 +1968,9 @@ input:checked + .toggle-slider:before {
                 </button>
                 <button class="tab-btn" data-admin-tab="tours">
                     <i class="fas fa-map-marked-alt"></i> ტურები
+                </button>
+                <button class="tab-btn" data-admin-tab="hotels">
+                    <i class="fas fa-hotel"></i> სასტუმროები
                 </button>
                 <button class="tab-btn" data-admin-tab="customTours">
                     <i class="fas fa-magic"></i> Custom ტურები
@@ -2029,6 +2037,7 @@ input:checked + .toggle-slider:before {
                     <option value="">🏷️ ყველა ტიპი</option>
                     <option value="cars">🚗 მანქანა</option>
                     <option value="tours">🗺️ ტური</option>
+                    <option value="hotels">🏨 სასტუმრო</option>
                 </select>
             </div>
 
@@ -2256,168 +2265,55 @@ input:checked + .toggle-slider:before {
         }
         // </CHANGE>
 
-        const CLOUD_NAME = "dmxmlw0ln"
-        const UPLOAD_PRESET = "rentime"
-        const CLOUDINARY_API_KEY = "229791698755831"
-        const CLOUDINARY_API_SECRET = "wDdFhjtQXlgV7Sq_q46_ETBuQE0"
+        // ImgBB კონფიგურაცია (ფოტოებისთვის)
+        const IMGBB_API_KEY = "ea8ff594a843b3fe86d9b6ee6fb3eade";
+        // Cloudinary კონფიგურაცია (ვიდეოებისთვის)
+        const CLOUD_NAME = "ddxr0vmsm"
+        const UPLOAD_PRESET = "ml_default"
+        const CLOUDINARY_API_KEY = ""
+        const CLOUDINARY_API_SECRET = ""
 
         async function uploadImagesToCloudinary(files) {
             const uploadUrls = [];
             const uploadPromises = Array.from(files).map(file => {
                 const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', UPLOAD_PRESET);
+                formData.append('image', file);
 
-                return fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                return fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                     method: 'POST',
                     body: formData,
                 })
                 .then(response => response.json())
                 .then(data => {
-                    uploadUrls.push(data.secure_url);
+                    uploadUrls.push(data.data.url);
                 });
             });
             await Promise.all(uploadPromises);
             return uploadUrls;
         }
 
-        // SHA-1 hash ფუნქცია signature-ისთვის
-        async function sha1(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
-        }
-
-        // Cloudinary-დან სურათის public_id-ის ამოღება URL-დან
-        function extractPublicIdFromCloudinaryUrl(url) {
-            try {
-                // მაგალითი URL: https://res.cloudinary.com/dmxmlw0ln/image/upload/v1234567890/folder/image_name.jpg
-                const regex = /\/v\d+\/(.+)\.\w+$/;
-                const match = url.match(regex);
-                if (match && match[1]) {
-                    return match[1];
-                }
-                // ალტერნატივა: თუ არ არის version
-                const altRegex = /\/image\/upload\/(.+)\.\w+$/;
-                const altMatch = url.match(altRegex);
-                if (altMatch && altMatch[1]) {
-                    return altMatch[1];
-                }
-                return null;
-            } catch (error) {
-                console.error('Error extracting public_id:', error);
-                return null;
-            }
-        }
-
-        // Cloudinary-დან სურათების წაშლა (signed request)
+        // ImgBB-ს ფოტოები ვერ იშლება API-ით (მხოლოდ ImgBB დეშბორდიდან)
+        // Firestore-დან წაიშლება მონაცემი, ფოტო ImgBB-ზე დარჩება
         async function deleteImagesFromCloudinary(imageUrls) {
             if (!imageUrls || imageUrls.length === 0) {
-                console.log('No images to delete from Cloudinary');
+                console.log('No images to delete');
                 return;
             }
-
-            console.log('Attempting to delete images from Cloudinary:', imageUrls);
-            
-            const deletePromises = imageUrls.map(async (url) => {
-                const publicId = extractPublicIdFromCloudinaryUrl(url);
-                if (!publicId) {
-                    console.warn('Could not extract public_id from URL:', url);
-                    return;
-                }
-
-                try {
-                    const timestamp = Math.round(new Date().getTime() / 1000);
-                    
-                    // Signature გენერაცია - Cloudinary მოითხოვს ამ ფორმატს
-                    const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${CLOUDINARY_API_SECRET}`;
-                    const signature = await sha1(stringToSign);
-                    
-                    const formData = new FormData();
-                    formData.append('public_id', publicId);
-                    formData.append('timestamp', timestamp);
-                    formData.append('api_key', CLOUDINARY_API_KEY);
-                    formData.append('signature', signature);
-                    
-                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/destroy`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    console.log('Cloudinary delete result for', publicId, ':', result);
-                    
-                    if (result.result === 'ok') {
-                        console.log('Successfully deleted image from Cloudinary:', publicId);
-                    } else {
-                        console.warn('Could not delete image from Cloudinary:', publicId, result);
-                    }
-                } catch (error) {
-                    console.error('Error deleting image from Cloudinary:', error);
-                }
-            });
-
-            await Promise.all(deletePromises);
+            console.log('Images removed from listing (ImgBB images stay hosted):', imageUrls.length);
         }
 
         // Firebase Storage-დან სურათების წაშლა (თუ იქაც ინახავთ)
         async function deleteImagesFromFirebaseStorage(imageUrls) {
-            // თუ Firebase Storage არ იყენებთ, ეს ფუნქცია არაფერს გააკეთებს
-            // თუ იყენებთ, დაამატეთ Firebase Storage import და წაშლის ლოგიკა
-            console.log('Firebase Storage deletion skipped (images stored in Cloudinary)');
+            console.log('Storage deletion skipped (images stored in ImgBB)');
         }
 
-        // Cloudinary-დან ვიდეოების წაშლა (signed request)
+        // ვიდეოების წაშლა - Firestore-დან წაიშლება, Cloudinary-ზე დარჩება
         async function deleteVideosFromCloudinary(videoUrls) {
             if (!videoUrls || videoUrls.length === 0) {
-                console.log('No videos to delete from Cloudinary');
+                console.log('No videos to delete');
                 return;
             }
-
-            console.log('Attempting to delete videos from Cloudinary:', videoUrls);
-            
-            const deletePromises = videoUrls.map(async (url) => {
-                const publicId = extractPublicIdFromCloudinaryUrl(url);
-                if (!publicId) {
-                    console.warn('Could not extract public_id from URL:', url);
-                    return;
-                }
-
-                try {
-                    const timestamp = Math.round(new Date().getTime() / 1000);
-                    
-                    // Signature გენერაცია
-                    const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${CLOUDINARY_API_SECRET}`;
-                    const signature = await sha1(stringToSign);
-                    
-                    const formData = new FormData();
-                    formData.append('public_id', publicId);
-                    formData.append('timestamp', timestamp);
-                    formData.append('api_key', CLOUDINARY_API_KEY);
-                    formData.append('signature', signature);
-                    
-                    // ვიდეოებისთვის video/destroy endpoint
-                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/destroy`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    console.log('Cloudinary video delete result for', publicId, ':', result);
-                    
-                    if (result.result === 'ok') {
-                        console.log('Successfully deleted video from Cloudinary:', publicId);
-                    } else {
-                        console.warn('Could not delete video from Cloudinary:', publicId, result);
-                    }
-                } catch (error) {
-                    console.error('Error deleting video from Cloudinary:', error);
-                }
-            });
-
-            await Promise.all(deletePromises);
+            console.log('Videos removed from listing:', videoUrls.length);
         }
         
         function formatDateToLocal(date) {
@@ -2697,9 +2593,9 @@ input:checked + .toggle-slider:before {
                 const firstWeekdayIndex = firstDay.getDay(); // 0 for Sunday, 6 for Saturday
                 const daysInMonth = lastDay.getDate();
                 
-                const weekdaysContainer = document.getElementById('fixedCalendarWeekdays') || document.getElementById('fixedCalendarWeekdaysTour');
-                const contentContainer = document.getElementById('fixedCalendarContent') || document.getElementById('fixedCalendarContentTour');
-                const titleElement = document.getElementById('fixedCalendarTitle') || document.getElementById('fixedCalendarTitleTour');
+                const weekdaysContainer = document.getElementById('fixedCalendarWeekdays') || document.getElementById('fixedCalendarWeekdaysTour') || document.getElementById('fixedCalendarWeekdaysHotel');
+                const contentContainer = document.getElementById('fixedCalendarContent') || document.getElementById('fixedCalendarContentTour') || document.getElementById('fixedCalendarContentHotel');
+                const titleElement = document.getElementById('fixedCalendarTitle') || document.getElementById('fixedCalendarTitleTour') || document.getElementById('fixedCalendarTitleHotel');
                 const headerElement = this.container.closest('.fixed-calendar').querySelector('.fixed-calendar-header'); 
                 
                 if (!weekdaysContainer || !contentContainer || !titleElement) return;
@@ -2775,8 +2671,8 @@ input:checked + .toggle-slider:before {
             }
             
             attachEventListeners() {
-                const prevBtn = document.getElementById('fixedCalendarPrev') || document.getElementById('fixedCalendarPrevTour');
-                const nextBtn = document.getElementById('fixedCalendarNext') || document.getElementById('fixedCalendarNextTour');
+                const prevBtn = document.getElementById('fixedCalendarPrev') || document.getElementById('fixedCalendarPrevTour') || document.getElementById('fixedCalendarPrevHotel');
+                const nextBtn = document.getElementById('fixedCalendarNext') || document.getElementById('fixedCalendarNextTour') || document.getElementById('fixedCalendarNextHotel');
                 
                 if (prevBtn) {
                     prevBtn.onclick = () => {
@@ -2795,7 +2691,7 @@ input:checked + .toggle-slider:before {
                 }
                 
                 // Day click handler
-                const contentContainer = document.getElementById('fixedCalendarContent') || document.getElementById('fixedCalendarContentTour');
+                const contentContainer = document.getElementById('fixedCalendarContent') || document.getElementById('fixedCalendarContentTour') || document.getElementById('fixedCalendarContentHotel');
                 if (contentContainer) {
                     const days = contentContainer.querySelectorAll('div[data-date]:not(.past)');
                     days.forEach(day => {
@@ -2861,6 +2757,7 @@ input:checked + .toggle-slider:before {
         let currentAdminTab = "cars"
         let allCars = []
         let allTours = []
+        let allHotels = []
         let editingItemId = null
         let currentItemType = null
 
@@ -2934,6 +2831,9 @@ input:checked + .toggle-slider:before {
 
                 const toursSnapshot = await getDocs(collection(db, "tours"))
                 allTours = toursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+
+                const hotelsSnapshot = await getDocs(collection(db, "hotels"))
+                allHotels = hotelsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
             } catch (error) {
                 console.error("Error loading data:", error)
             }
@@ -2947,6 +2847,7 @@ async function loadAdminStats() {
             document.getElementById("totalBookingsStat").textContent = bookingsSnapshot.size
             document.getElementById("totalCarsStat").textContent = allCars.length
             document.getElementById("totalToursStat").textContent = allTours.length
+            document.getElementById("totalHotelsStat").textContent = allHotels.length
             document.getElementById("totalPostsStat").textContent = postsSnapshot.size
         } catch (error) {
             console.error("Error loading stats:", error)
@@ -2973,15 +2874,15 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             
             if (currentAdminTab === "posts") {
                 postsContainer.style.display = "block"
-                addNewItemBtn.style.display = "none" // დამალე დამატების ღილაკი პოსტებისთვის
+                addNewItemBtn.style.display = "none"
                 loadPosts()
             } else if (currentAdminTab === "customTours") {
                 customToursContainer.style.display = "block"
-                addNewItemBtn.style.display = "none" // დამალე დამატების ღილაკი custom ტურებისთვის
+                addNewItemBtn.style.display = "none"
                 loadCustomTourRequests()
             } else {
                 adminItemsContainer.style.display = "flex"
-                addNewItemBtn.style.display = "inline-flex" // აჩვენე დამატების ღილაკი
+                addNewItemBtn.style.display = "inline-flex"
                 displayAdminItems()
             }
         })
@@ -2990,10 +2891,11 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
         function displayAdminItems() {
             const container = document.getElementById("adminItemsContainer")
-            const items = currentAdminTab === "cars" ? allCars : allTours
+            const items = currentAdminTab === "cars" ? allCars : currentAdminTab === "hotels" ? allHotels : allTours
 
             if (items.length === 0) {
-                container.innerHTML = `<div class="empty-state">${currentAdminTab === "cars" ? "მანქანები" : "ტურები"} არ მოიძებნა</div>`
+                const labels = { cars: "მანქანები", tours: "ტურები", hotels: "სასტუმროები" }
+                container.innerHTML = `<div class="empty-state">${labels[currentAdminTab] || "ელემენტები"} არ მოიძებნა</div>`
                 return
             }
 
@@ -3124,7 +3026,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         <p><i class="fas fa-clock"></i> <strong>ხანგრძლივობა:</strong> ${request.duration || 'N/A'} დღე</p>
                         <p><i class="fas fa-users"></i> <strong>რაოდენობა:</strong> ${request.groupSize || 1} ადამიანი</p>
                         <p><i class="fas fa-dollar-sign"></i> <strong>შეთავაზება:</strong> ${request.suggestedPrice || 0}${request.suggestedCurrency === 'USD' ? '$' : request.suggestedCurrency === 'EUR' ? '€' : '₾'}</p>
-                        <p><i class="fas fa-calendar-plus"></i> <strong>შექმნილია:</strong> ${dateFormatted}</p>
+                        <p><i class="fas fa-calendar-plus"></i> <strong>შექმნილ���ა:</strong> ${dateFormatted}</p>
                     </div>
                     
                     <div style="margin-bottom: 1rem;">
@@ -3269,7 +3171,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.capacity} ადგილი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.rooms || 0} ოთახი</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.capacity} ადგილი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -3286,7 +3188,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             if (!confirmed) return
 
             try {
-                const collectionName = type === "cars" ? "cars" : "tours"
+                const collectionName = type === "cars" ? "cars" : type === "hotels" ? "hotels" : "tours"
                 
                 // ჯერ მივიღოთ ელემენტის მონაცემები სურათების URL-ების მისაღებად
                 const itemRef = doc(db, collectionName, itemId)
@@ -3409,7 +3311,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div class="booking-header">
                                 <div>
                                     <h3>${booking.itemName}</h3>
-                                    <p class="text-muted">${booking.itemType === "cars" ? "🚗 მანქანა" : "🗺️ ტური"}</p>
+                                    <p class="text-muted">${booking.itemType === "cars" ? "🚗 მანქანა" : booking.itemType === "hotels" ? "🏨 სასტუმრო" : "🗺️ ტური"}</p>
                                 </div>
                                 <span class="status-badge status-${booking.status}">${booking.status}</span>
                             </div>
@@ -3471,7 +3373,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     createdAt: serverTimestamp(),
                 }
 
-                if (status === "დადასტურებული") {
+                if (status === "დადასტურებუ���ი") {
                     notificationData.title = "✓ დაჯავშნა დადასტურებულია!"
                     notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტურდა ადმინის მიერ. შეგიძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
                     notificationData.type = "booking_approved"
@@ -3989,6 +3891,332 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     setupImageManagementEvents();
                 }, 100);
 
+            } else if (currentAdminTab === "hotels") {
+                const existingBookedDates = item?.bookedDates || []
+                const restrictedMode = item?.restrictedMode || false
+                const calendarMode = item?.calendarMode || 'select-unavailable'
+                
+                formFields.innerHTML = `
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-info-circle"></i> ძირითადი ინფორმაცია</h3>
+                            <div class="form-group">
+                                <label>სახელი *</label>
+                                <input type="text" id="itemName" class="input" value="${item?.name || ""}" required placeholder="მაგ: Grand Hotel Tbilisi">
+                                ${item && item.nameTranslations ? `
+                                <div class="translation-preview">
+                                    <div class="translation-item"><span class="flag">🇬🇧</span><span class="lang-label">English:</span><span class="translation-text">${item.nameTranslations.en || 'N/A'}</span></div>
+                                    <div class="translation-item"><span class="flag">🇷🇺</span><span class="lang-label">Русский:</span><span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span></div>
+                                    <div class="translation-item"><span class="flag">🇸🇦</span><span class="lang-label">العربية:</span><span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span></div>
+                                </div>
+                                ` : ''}
+                            </div>
+                            <div class="form-group">
+                                <label>აღწერა</label>
+                                <textarea id="itemDescription" class="input" rows="3" placeholder="სასტუმროს დეტალური აღწერა...">${item?.description || ""}</textarea>
+                                ${item && item.descriptionTranslations ? `
+                                <div class="translation-preview">
+                                    <div class="translation-item"><span class="flag">🇬🇧</span><span class="lang-label">English:</span><span class="translation-text">${item.descriptionTranslations.en || 'N/A'}</span></div>
+                                    <div class="translation-item"><span class="flag">🇷🇺</span><span class="lang-label">Русский:</span><span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span></div>
+                                    <div class="translation-item"><span class="flag">🇸🇦</span><span class="lang-label">العربية:</span><span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span></div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-cog"></i> დეტალები</h3>
+                            <div class="form-row">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <div class="region-checkbox-container">
+                                        <div class="region-checkbox-item">
+                                            <label>
+                                                <input type="checkbox" value="all" id="regionAllAdmin" class="region-checkbox-admin">
+                                                <span>ყველა რეგიონი (უნივერსალური)</span>
+                                            </label>
+                                        </div>
+                                        ${[
+                                            "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
+                                            "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
+                                        ].map((r) => {
+                                            const isChecked = item?.regions 
+                                                ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
+                                                : false;
+                                            return \`
+                                            <div class="region-checkbox-item">
+                                                <label>
+                                                    <input type="checkbox" value="\${r}" class="region-checkbox-admin" data-region-admin \${isChecked ? 'checked' : ''}>
+                                                    <span>\${r}</span>
+                                                </label>
+                                            </div>
+                                            \`;
+                                        }).join("")}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>ტიპი *</label>
+                                    <select id="itemType" class="select" required>
+                                        <option value="სასტუმრო" ${item?.type === "სასტუმრო" ? "selected" : ""}>სასტუმრო</option>
+                                        <option value="აპარტამენტი" ${item?.type === "აპარტამენტი" ? "selected" : ""}>აპარტამენტი</option>
+                                        <option value="კოტეჯი" ${item?.type === "კოტეჯი" ? "selected" : ""}>კოტეჯი</option>
+                                        <option value="ვილა" ${item?.type === "ვილა" ? "selected" : ""}>ვილა</option>
+                                        <option value="ჰოსტელი" ${item?.type === "ჰოსტელი" ? "selected" : ""}>ჰოსტელი</option>
+                                        <option value="გესტჰაუსი" ${item?.type === "გესტჰაუსი" ? "selected" : ""}>გესტჰაუსი</option>
+                                        <option value="სახლი" ${item?.type === "სახლი" ? "selected" : ""}>სახლი</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>ფასი (ღამეში) *</label>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="150" style="flex: 1;">
+                                        <select id="itemCurrency" class="select" style="width: 100px;">
+                                            <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
+                                            <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
+                                            <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>ოთახების რაოდენობა *</label>
+                                    <input type="number" id="itemRooms" class="input" value="${item?.rooms || ""}" required placeholder="3">
+                                </div>
+                                <div class="form-group">
+                                    <label>საძინებლების რაოდენობა *</label>
+                                    <input type="number" id="itemBedrooms" class="input" value="${item?.bedrooms || ""}" required placeholder="2">
+                                </div>
+                                <div class="form-group">
+                                    <label>სტუმრების რაოდენობა *</label>
+                                    <input type="number" id="itemGuests" class="input" value="${item?.guests || ""}" required placeholder="6">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-calendar-times"></i> დაკავებული თარიღები</h3>
+                            
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid var(--border-color);">
+                                    <input type="checkbox" id="fixedTimeToggleHotel" ${calendarMode === 'fixed-booked' ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; color: #fff; margin-bottom: 0.25rem;">
+                                            <i class="fas fa-clock"></i> ფიქსირებული დრო
+                                        </div>
+                                        <div style="font-size: 0.85rem; color: var(--text-color);">
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div id="fixedCalendarContainerHotel" style="display: ${calendarMode === 'fixed-booked' ? 'block' : 'none'};">
+                                <div class="fixed-calendar-container">
+                                    <div class="fixed-calendar-wrapper">
+                                        <div class="fixed-calendar">
+                                            <div class="fixed-calendar-header">
+                                                <span class="fixed-calendar-chev left" id="fixedCalendarPrevHotel">&#8249;</span>
+                                                <h3 id="fixedCalendarTitleHotel">Month Year</h3>
+                                                <span class="fixed-calendar-chev right" id="fixedCalendarNextHotel">&#8250;</span>
+                                            </div>
+                                            <div class="fixed-calendar-weekdays" id="fixedCalendarWeekdaysHotel"></div>
+                                            <div class="fixed-calendar-content" id="fixedCalendarContentHotel"></div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 1rem; padding: 1rem; background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px;">
+                                        <p style="color: #22c55e; font-size: 0.9rem; margin: 0;">
+                                            <i class="fas fa-info-circle"></i> დააწკაპუნეთ წითელ დღეებზე რომ გახადოთ ისინი ხელმისაწვდომი (მწვანე)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid var(--border-color);">
+                                    <input type="checkbox" id="restrictedModeToggle" ${restrictedMode ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; color: #fff; margin-bottom: 0.25rem;">
+                                            <i class="fas fa-ban"></i> სრული გათიშვა
+                                        </div>
+                                        <div style="font-size: 0.85rem; color: var(--text-color);">
+                                            როცა ჩართულია, სასტუმრო სრულად დაკავებულად გამოჩნდება
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div id="calendarSection" style="display: ${restrictedMode || calendarMode === 'fixed-booked' ? 'none' : 'block'};">
+                                <div id="hotelBookedDatesCalendar"></div>
+                            </div>
+                            
+                            <div id="restrictedMessage" style="display: ${restrictedMode ? 'block' : 'none'}; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; text-align: center;">
+                                <i class="fas fa-ban" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"></i>
+                                <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">კალენდარი გათიშულია</p>
+                                <p style="color: var(--text-color); font-size: 0.9rem;">სასტუმრო სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
+                            </div>
+                            
+                            <input type="hidden" id="hotelBookedDates" value='${JSON.stringify(existingBookedDates)}'>
+                            <input type="hidden" id="restrictedMode" value="${restrictedMode}">
+                            <input type="hidden" id="calendarMode" value="${calendarMode}">
+                        </div>
+
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-images"></i> ფოტოები</h3>
+                            <div class="form-group">
+                                <label>ატვირთეთ ახალი ფოტოები</label>
+                                <input type="file" id="itemImages" class="input" multiple accept="image/*">
+                            </div>
+                            ${item?.images && item.images.length > 0 ? `
+                            <div class="form-group">
+                                <label>არსებული ფოტოები (${item.images.length})</label>
+                                <p class="text-muted" style="margin-bottom: 0.75rem;">
+                                    <i class="fas fa-star" style="color: #ffc107;"></i> პირველი ფოტო გამოჩნდება მთავარ გვერდზე. დააწკაპუნეთ ⭐ რომ აირჩიოთ მთავარი ფოტო.
+                                </p>
+                                <div id="existingImagesContainer" class="existing-images-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem;">
+                                    ${item.images.map((img, idx) => `
+                                        <div class="existing-image-item" data-image-index="${idx}" data-image-url="${img}" style="position: relative; border-radius: 8px; overflow: hidden; border: ${idx === 0 ? '3px solid #ffc107' : '1px solid var(--border-color)'}; background: var(--light-bg);">
+                                            <img src="${img}" alt="ფოტო ${idx + 1}" style="width: 100%; height: 100px; object-fit: cover; display: block;">
+                                            <div style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 4px;">
+                                                <button type="button" class="set-main-image-btn" data-index="${idx}" style="background: ${idx === 0 ? '#ffc107' : 'rgba(0,0,0,0.7)'}; color: ${idx === 0 ? '#000' : '#fff'}; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px;" title="აირჩიე მთავარ ფოტოდ">
+                                                    ⭐
+                                                </button>
+                                                <button type="button" class="delete-image-btn" data-index="${idx}" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px;" title="წაშლა">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                            ${idx === 0 ? '<div style="position: absolute; bottom: 0; left: 0; right: 0; background: #ffc107; color: #000; text-align: center; font-size: 10px; padding: 2px;">მთავარი</div>' : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <input type="hidden" id="existingImagesData" value='${JSON.stringify(item.images)}'>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `
+                
+                setTimeout(() => {
+                    let hotelFixedCalendarInstance = null;
+                    let hotelRegularCalendarInstance = null;
+                    
+                    const calendarModeInput = document.getElementById('calendarMode');
+                    const currentCalendarMode = calendarModeInput ? calendarModeInput.value : 'select-unavailable';
+
+                    if (currentCalendarMode === 'fixed-booked') {
+                        hotelFixedCalendarInstance = new FixedCalendar({
+                            container: document.getElementById('fixedCalendarContentHotel'),
+                            bookedDates: existingBookedDates.length > 0 ? existingBookedDates : generateNext5YearsDates(),
+                            onDateToggle: (dates) => {
+                                document.getElementById('hotelBookedDates').value = JSON.stringify(dates)
+                            }
+                        })
+                        
+                        document.getElementById('fixedCalendarPrevHotel').onclick = () => { 
+                            hotelFixedCalendarInstance.currentDate.setMonth(hotelFixedCalendarInstance.currentDate.getMonth() - 1); 
+                            hotelFixedCalendarInstance.render(); 
+                            hotelFixedCalendarInstance.attachEventListeners(); 
+                        };
+                        document.getElementById('fixedCalendarNextHotel').onclick = () => { 
+                            hotelFixedCalendarInstance.currentDate.setMonth(hotelFixedCalendarInstance.currentDate.getMonth() + 1); 
+                            hotelFixedCalendarInstance.render(); 
+                            hotelFixedCalendarInstance.attachEventListeners(); 
+                        };
+                    } else if (!restrictedMode) {
+                        hotelRegularCalendarInstance = new AdminCalendar('hotelBookedDatesCalendar', {
+                            selectedDates: existingBookedDates,
+                            mode: 'booked',
+                            onDatesChange: (dates) => {
+                                document.getElementById('hotelBookedDates').value = JSON.stringify(dates)
+                            }
+                        })
+                    }
+                    
+                    const fixedTimeToggleHotel = document.getElementById('fixedTimeToggleHotel')
+                    const fixedCalendarContainerHotel = document.getElementById('fixedCalendarContainerHotel')
+                    const calendarSection = document.getElementById('calendarSection')
+                    
+                    if (fixedTimeToggleHotel) {
+                        fixedTimeToggleHotel.addEventListener('change', (e) => {
+                            const isFixed = e.target.checked
+                            
+                            if (isFixed) {
+                                if(calendarModeInput) calendarModeInput.value = 'fixed-booked';
+                                fixedCalendarContainerHotel.style.display = 'block'
+                                calendarSection.style.display = 'none'
+                                
+                                if (!hotelFixedCalendarInstance) {
+                                    const currentBookedDates = JSON.parse(document.getElementById('hotelBookedDates').value || '[]');
+                                    hotelFixedCalendarInstance = new FixedCalendar({
+                                        container: document.getElementById('fixedCalendarContentHotel'),
+                                        bookedDates: currentBookedDates.length > 0 ? currentBookedDates : generateNext5YearsDates(),
+                                        onDateToggle: (dates) => {
+                                            document.getElementById('hotelBookedDates').value = JSON.stringify(dates);
+                                        }
+                                    });
+                                    
+                                    document.getElementById('fixedCalendarPrevHotel').onclick = () => { 
+                                        hotelFixedCalendarInstance.currentDate.setMonth(hotelFixedCalendarInstance.currentDate.getMonth() - 1); 
+                                        hotelFixedCalendarInstance.render(); 
+                                        hotelFixedCalendarInstance.attachEventListeners(); 
+                                    };
+                                    document.getElementById('fixedCalendarNextHotel').onclick = () => { 
+                                        hotelFixedCalendarInstance.currentDate.setMonth(hotelFixedCalendarInstance.currentDate.getMonth() + 1); 
+                                        hotelFixedCalendarInstance.render(); 
+                                        hotelFixedCalendarInstance.attachEventListeners(); 
+                                    };
+                                }
+                            } else {
+                                if(calendarModeInput) calendarModeInput.value = 'select-unavailable';
+                                fixedCalendarContainerHotel.style.display = 'none';
+                                
+                                const restrictedToggle = document.getElementById('restrictedModeToggle');
+                                if (restrictedToggle && !restrictedToggle.checked) {
+                                    calendarSection.style.display = 'block';
+                                    
+                                    if (!hotelRegularCalendarInstance) {
+                                        const currentBookedDates = JSON.parse(document.getElementById('hotelBookedDates').value || '[]');
+                                        hotelRegularCalendarInstance = new AdminCalendar('hotelBookedDatesCalendar', {
+                                            selectedDates: currentBookedDates,
+                                            mode: 'booked',
+                                            onDatesChange: (dates) => {
+                                                document.getElementById('hotelBookedDates').value = JSON.stringify(dates);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    
+                    const toggle = document.getElementById('restrictedModeToggle')
+                    const restrictedMessage = document.getElementById('restrictedMessage')
+                    const restrictedModeInput = document.getElementById('restrictedMode')
+                    
+                    if (toggle) {
+                        toggle.addEventListener('change', (e) => {
+                            const isRestricted = e.target.checked
+                            restrictedModeInput.value = isRestricted
+                            
+                            if (isRestricted) {
+                                calendarSection.style.display = 'none';
+                                fixedCalendarContainerHotel.style.display = 'none';
+                                restrictedMessage.style.display = 'block';
+                                if(fixedTimeToggleHotel) fixedTimeToggleHotel.disabled = true;
+                            } else {
+                                restrictedMessage.style.display = 'none';
+                                if(fixedTimeToggleHotel) fixedTimeToggleHotel.disabled = false;
+                                
+                                if (fixedTimeToggleHotel && fixedTimeToggleHotel.checked) {
+                                    fixedCalendarContainerHotel.style.display = 'block';
+                                } else {
+                                    calendarSection.style.display = 'block';
+                                }
+                            }
+                        })
+                    }
+                    
+                    setupImageManagementEvents();
+                }, 100)
+
             } else {
                 const existingBookedDates = item?.bookedDates || []
                 const restrictedMode = item?.restrictedMode || false
@@ -4492,6 +4720,25 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     itemData.transmissionTranslations = transmissionTranslation;
                     itemData.colorTranslations = colorTranslation;
                     
+                } else if (currentAdminTab === "hotels") {
+                    itemData.rooms = Number.parseInt(document.getElementById("itemRooms").value)
+                    itemData.bedrooms = Number.parseInt(document.getElementById("itemBedrooms").value)
+                    itemData.guests = Number.parseInt(document.getElementById("itemGuests").value)
+                    
+                    const calendarModeInput = document.getElementById("calendarMode")
+                    if (calendarModeInput) {
+                        itemData.calendarMode = calendarModeInput.value
+                    }
+                    
+                    const bookedDatesInput = document.getElementById("hotelBookedDates")
+                    if (bookedDatesInput) {
+                        try {
+                            itemData.bookedDates = JSON.parse(bookedDatesInput.value)
+                        } catch (e) {
+                            itemData.bookedDates = []
+                        }
+                    }
+                    
                 } else {
                     itemData.duration = document.getElementById("itemDuration").value
                     itemData.capacity = Number.parseInt(document.getElementById("itemCapacity").value)
@@ -4547,7 +4794,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                 uploadButton.textContent = "შენახვა..."
 
-                const collectionName = currentAdminTab === "cars" ? "cars" : "tours"
+                const collectionName = currentAdminTab === "cars" ? "cars" : currentAdminTab === "hotels" ? "hotels" : "tours"
 
                 if (editingItemId) {
                     await updateDoc(doc(db, collectionName, editingItemId), {
@@ -4873,7 +5120,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 updateSelectedCount();
             } catch (error) {
                 console.error("Error loading posts:", error);
-                postsGrid.innerHTML = '<div class="empty-state" style="color: var(--error-color);">შეცდომა პოსტების ჩატვირთვისას</div>';
+                postsGrid.innerHTML = '<div class="empty-state" style="color: var(--error-color);">შეცდო��ა პოსტების ჩატვირთვისას</div>';
             }
         }
 
