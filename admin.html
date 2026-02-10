@@ -1921,7 +1921,7 @@ input:checked + .toggle-slider:before {
             <i class="fas fa-comments"></i> ონლაინ ჩატი
         </a>
         <button class="btn btn-secondary" data-view="adminBookings">
-            <i class="fas fa-tasks"></i> დაჯავშნის მართვა
+            <i class="fas fa-tasks"></i> დ���ჯავშნის მართვა
         </button>
         <button class="btn btn-secondary" data-view="emails">
             <i class="fas fa-envelope"></i> მაილები
@@ -2071,7 +2071,7 @@ input:checked + .toggle-slider:before {
                     </div>
                     <div class="stat-info">
                         <span class="stat-value" id="todaySubscribers">0</span>
-                        <span class="stat-label">დღეს გამოიწერა</span>
+                        <span class="stat-label">დღეს გამოი��ერა</span>
                     </div>
                 </div>
             </div>
@@ -2140,7 +2140,7 @@ input:checked + .toggle-slider:before {
     <script type="module">
         // Import Firebase modules
         import { auth, db } from "./firebase-config.js"
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"
         import {
             collection,
             addDoc,
@@ -2157,7 +2157,7 @@ input:checked + .toggle-slider:before {
             increment,
             arrayUnion,
             arrayRemove,
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js"
 
         const TRANSLATION_DICT = {
             // Car types
@@ -2205,7 +2205,7 @@ input:checked + .toggle-slider:before {
                 "ლურჯი": { en: "Blue", ru: "Синий", ar: "أزرق" },
                 "ყავისფერი": { en: "Brown", ru: "Коричневый", ar: "بني" },
                 "მწვანე": { en: "Green", ru: "Зеленый", ar: "أخضر" },
-                "ყვითელი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
+                "ყვითე���ი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
                 "ნარინჯისფერი": { en: "Orange", ru: "Оранжевый", ar: "برتقالي" },
                 "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
                 "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
@@ -2933,7 +2933,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 displayCustomTourRequests();
             } catch (error) {
                 console.error("Error loading custom tour requests:", error);
-                container.innerHTML = '<div class="empty-state">შეცდომა მონაცემების ჩატვირთვისას</div>';
+                container.innerHTML = '<div class="empty-state">��ეც��ომა მონაცემების ჩატვირთვისას</div>';
             }
         }
 
@@ -3375,7 +3375,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                 if (status === "დადასტურებუ���ი") {
                     notificationData.title = "✓ დაჯავშნა დადასტურებულია!"
-                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტურდა ადმინის მიერ. შეგიძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
+                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტურდა ადმინის მიერ. შე���იძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
                     notificationData.type = "booking_approved"
                 } else {
                     notificationData.title = "✗ დაჯავშნა უარყოფილია"
@@ -3574,7 +3574,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             "აფხაზეთი",
                                             "სამეგრელო",
                                             "რაჭა-ლეჩხუმი",
-                                            "იმერეთი",
+                                            "ი��ერეთი",
                                             "გურია",
                                             "აჭარა",
                                             "სამცხე-ჯავახეთი",
@@ -3942,14 +3942,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             const isChecked = item?.regions 
                                                 ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
                                                 : false;
-                                            return \`
+                                            return `
                                             <div class="region-checkbox-item">
                                                 <label>
-                                                    <input type="checkbox" value="\${r}" class="region-checkbox-admin" data-region-admin \${isChecked ? 'checked' : ''}>
-                                                    <span>\${r}</span>
+                                                    <input type="checkbox" value="${r}" class="region-checkbox-admin" data-region-admin ${isChecked ? 'checked' : ''}>
+                                                    <span>${r}</span>
                                                 </label>
                                             </div>
-                                            \`;
+                                            `;
                                         }).join("")}
                                     </div>
                                 </div>
@@ -4286,7 +4286,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         </div>
 
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-cog"></i> დეტალები</h3>
+                            <h3><i class="fas fa-cog"></i> დეტალე��ი</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
                                     <label>რეგიონი (რეგიონები) *</label>
@@ -4899,7 +4899,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 // Update label
                 const label = container.previousElementSibling;
                 if (label && label.tagName === 'LABEL') {
-                    label.textContent = 'არსებული ფოტოები (0)';
+                    label.textContent = 'არსებული ფოტოებ�� (0)';
                 }
                 return;
             }
@@ -5389,7 +5389,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 loadEmailSubscribers();
             } catch (error) {
                 console.error("Error deleting subscriber:", error);
-                showToast("წაშლა ვერ მოხერხდა", "error");
+                showToast("წ��შლა ვერ მოხერხდა", "error");
             }
         }
 
@@ -5446,7 +5446,7 @@ function removeHtmlExtensionFromURL() {
 // გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
 window.addEventListener('load', removeHtmlExtensionFromURL);
 
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
+// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთ��ის)
 window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
 </body>

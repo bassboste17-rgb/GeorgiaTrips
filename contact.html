@@ -1031,12 +1031,12 @@
   <div id="footer"></div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
     import { 
       getAuth, 
       onAuthStateChanged,
       signInAnonymously 
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
     import { 
       getFirestore,
       collection,
@@ -1050,7 +1050,7 @@
       onSnapshot,
       serverTimestamp,
       updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
@@ -1568,7 +1568,7 @@ function updateOfficeTranslations() {
     window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
 
-  <script src="footer.js"></script>
+  <script type="module" src="footer.js"></script>
   <script type="module" src="navbar.js"></script>
 
 </body>

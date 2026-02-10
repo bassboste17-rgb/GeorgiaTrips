@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js"
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"
 import {
   getFirestore,
   collection,
@@ -8,7 +8,7 @@ import {
   onSnapshot,
   doc,
   getDoc,
-} from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js"
 
 // Immediately set English as default if no language is saved (runs before anything else)
 ;(function() {

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
-    <title>Book Now | Cars & Tours in Georgia - Georgia Trips</title>
-    <meta name="description" content="Book your car rental or guided tour in Georgia online. Fast, easy and secure booking with best prices. Confirm your reservation in minutes." />
-    <meta name="keywords" content="book tour Georgia, book car Georgia, online booking Georgia travel, reserve tour Tbilisi, Georgia Trips booking" />
+    <title>Book Now | Hotels, Cars & Tours in Georgia - Georgia Trips</title>
+    <meta name="description" content="Book your hotel, car rental or guided tour in Georgia online. Fast, easy and secure booking with best prices. Confirm your reservation in minutes." />
+    <meta name="keywords" content="book hotel Georgia, book tour Georgia, book car Georgia, online booking Georgia travel, reserve hotel Tbilisi, Georgia Trips booking" />
     <meta name="author" content="Georgia Trips" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.georgiatrips.ge/booking" />
@@ -211,14 +211,14 @@
 
     .nav-cards {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
         animation: fadeInUp 0.6s ease-out 0.3s backwards;
         perspective: 1000px;
     }
 
     .nav-cards.has-admin {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 
     .nav-card {
@@ -253,9 +253,10 @@
     }
 
     .nav-card:nth-child(1) { animation-delay: 0s; }
-    .nav-card:nth-child(2) { animation-delay: 2s; }
-    .nav-card:nth-child(3) { animation-delay: 4s; }
-    .nav-card:nth-child(4) { animation-delay: 1s; }
+    .nav-card:nth-child(2) { animation-delay: 1.5s; }
+    .nav-card:nth-child(3) { animation-delay: 3s; }
+    .nav-card:nth-child(4) { animation-delay: 4.5s; }
+    .nav-card:nth-child(5) { animation-delay: 1s; }
 
     @keyframes cardFloat {
         0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
@@ -467,6 +468,10 @@
         .features {
             grid-template-columns: repeat(2, 1fr);
         }
+
+        .nav-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
         
         .nav-cards.has-admin {
             grid-template-columns: repeat(2, 1fr);
@@ -628,7 +633,7 @@
             </div>
             
             <h1><span data-i18n="bookingTitle">დაჯავშნის</span> <span data-i18n="bookingTitleHighlight">პლატფორმა</span></h1>
-            <p data-i18n="bookingSubtitle">დაჯავშნეთ მანქანები და ტურები საქართველოში მარტივად, სწრაფად და საუკეთესო ფასებით</p>
+            <p data-i18n="bookingSubtitle">დაჯავშნეთ სასტუმროები, მანქანები და ტურები საქართველოში მარტივად, სწრაფად და საუკეთესო ფასებით</p>
             
             <div class="nav-cards" id="navCardsContainer">
                 <a href="tours.html" class="nav-card">
@@ -642,6 +647,31 @@
                     <div class="nav-card-content">
                         <h3 data-i18n="bookingToursTitle">ტურების დაჯავშნა</h3>
                         <p data-i18n="bookingToursDesc">აირჩიეთ და დაჯავშნეთ სასურველი ტური საქართველოს ლამაზ კუთხეებში</p>
+                        <span class="nav-card-action">
+                            <span data-i18n="bookingActionBook">დაჯავშნა</span>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="hotel.html" class="nav-card">
+                    <div class="nav-card-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 21h18"/>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/>
+                            <path d="M9 7h1"/>
+                            <path d="M14 7h1"/>
+                            <path d="M9 11h1"/>
+                            <path d="M14 11h1"/>
+                            <path d="M9 15h1"/>
+                            <path d="M14 15h1"/>
+                        </svg>
+                    </div>
+                    <div class="nav-card-content">
+                        <h3 data-i18n="bookingHotelsTitle">სასტუმროს დაჯავშნა</h3>
+                        <p data-i18n="bookingHotelsDesc">აირჩიეთ და დაჯავშნეთ სასტუმრო საქართველოს ნებისმიერ კუთხეში</p>
                         <span class="nav-card-action">
                             <span data-i18n="bookingActionBook">დაჯავშნა</span>
                             <svg viewBox="0 0 24 24">

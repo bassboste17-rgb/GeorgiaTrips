@@ -3661,7 +3661,7 @@ textarea.input {
 
   <script type="module">
 import { auth, db } from "./firebase-config.js"
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"
 import {
   collection,
   addDoc,
@@ -3675,7 +3675,7 @@ import {
   increment,
   arrayUnion,
   arrayRemove,
-  } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+  } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js"
 
   // Custom Tour Modal Functions
   window.openCustomTourModal = function() {
@@ -5365,7 +5365,7 @@ window.addEventListener('popstate', removeHtmlExtensionFromURL);
     
   <div id="footer"></div>
   <script type="module" src="navbar.js"></script>
-  <script src="footer.js"></script>
+  <script type="module" src="footer.js"></script>
   <script src="translations.js"></script>
 </body>
 </html>

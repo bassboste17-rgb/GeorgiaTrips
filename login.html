@@ -7,7 +7,7 @@
     <meta name="description" content="Sign in to Georgia Trips to manage your bookings, save favorite tours, and access personalized travel recommendations." />
     <meta name="robots" content="noindex, nofollow" />
     <!-- დამატებულია navbar.css -->
-    <link rel="stylesheet" href="/pages/css/navbar.css">
+    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="addhome/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo.png">
@@ -940,7 +940,7 @@
                     <div class="error-message" id="resetEmailError"></div>
                     
                     <button type="submit" id="resetPasswordBtn">
-                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
+                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პ���რ��ლის აღდგენა</span>
                     </button>
                 </div>
 
@@ -1073,7 +1073,7 @@
 
             <!-- ტელეფონით რეგისტრაციის ფორმა - ახალი თანმიმდევრობა: სახელი -> პაროლი -> ნომერი -> კოდი -->
             <form id="phoneAuthForm" class="auth-form" novalidate>
-                <!-- ეტაპი 1: სახელის შეყვანა -->
+                <!-- ეტაპი 1: სახელის შე��ვანა -->
                 <div class="form-step active" id="phoneStep1">
                     <div class="step-indicator">
                         <div class="step active">1</div>
@@ -1274,7 +1274,7 @@
     <script src="translations.js"></script>
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { 
             getAuth, 
             createUserWithEmailAndPassword, 
@@ -1288,6 +1288,7 @@
             FacebookAuthProvider,
             RecaptchaVerifier,
             signInWithPhoneNumber,
+            initializeRecaptchaConfig,
             updateProfile,
             signOut,
             fetchSignInMethodsForEmail,
@@ -1296,7 +1297,7 @@
             browserLocalPersistence,
             setPersistence,
             updatePassword
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
         import { 
             getFirestore, 
             doc, 
@@ -1307,7 +1308,7 @@
             query,
             where,
             serverTimestamp 
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 
         // Firebase კონფიგურაცია
@@ -1327,8 +1328,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // Initialize reCAPTCHA Enterprise config for SMS toll fraud protection
+        initializeRecaptchaConfig(auth)
+            .then(() => console.log("[v0] reCAPTCHA Enterprise config initialized"))
+            .catch((err) => console.warn("[v0] reCAPTCHA Enterprise config warning:", err.message));
+
         // ===================================
-        // უსაფრთხო პაროლის hashing ფუნქციები (SHA-256)
+        // უსაფრთხო პაროლის hashing ����უნქციები (SHA-256)
         // ===================================
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -1417,6 +1423,8 @@
             'auth/quota-exceeded': 'authQuotaExceeded',
             'auth/billing-not-enabled': 'authBillingNotEnabled',
             'auth/internal-error': 'authInternalError',
+            'auth/error-code:-39': 'authSmsServiceUnavailable',
+            'auth/network-request-failed': 'authNetworkError',
             'default': 'authDefaultError'
         };
 
@@ -1771,18 +1779,32 @@
         // Initialize reCAPTCHA
         function initializeRecaptcha() {
             try {
+                // Clear existing verifier
+                if (recaptchaVerifier) {
+                    try { recaptchaVerifier.clear(); } catch(e) {}
+                    recaptchaVerifier = null;
+                }
+
+                // Replace the container DOM element entirely to avoid "already rendered" error
+                const container = document.getElementById('recaptcha-container');
+                if (container) {
+                    const newContainer = document.createElement('div');
+                    newContainer.id = 'recaptcha-container';
+                    container.parentNode.replaceChild(newContainer, container);
+                }
+
                 recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                    'size': 'normal',
+                    'size': 'invisible',
                     'callback': (response) => {
                         console.log("[reCAPTCHA] Verified");
                     },
                     'expired-callback': () => {
                         console.log("[reCAPTCHA] Expired");
-                        recaptchaVerifier.clear();
-                        initializeRecaptcha();
+                    },
+                    'error-callback': () => {
+                        console.log("[reCAPTCHA] Error callback");
                     }
                 });
-                recaptchaVerifier.render();
             } catch (error) {
                 console.error("[reCAPTCHA] Error:", error);
             }
@@ -1790,18 +1812,31 @@
 
         function initializeResetRecaptcha() {
             try {
+                if (resetRecaptchaVerifier) {
+                    try { resetRecaptchaVerifier.clear(); } catch(e) {}
+                    resetRecaptchaVerifier = null;
+                }
+
+                // Replace the container DOM element entirely to avoid "already rendered" error
+                const container = document.getElementById('reset-recaptcha-container');
+                if (container) {
+                    const newContainer = document.createElement('div');
+                    newContainer.id = 'reset-recaptcha-container';
+                    container.parentNode.replaceChild(newContainer, container);
+                }
+
                 resetRecaptchaVerifier = new RecaptchaVerifier(auth, 'reset-recaptcha-container', {
-                    'size': 'normal',
+                    'size': 'invisible',
                     'callback': (response) => {
                         console.log("[Reset reCAPTCHA] Verified");
                     },
                     'expired-callback': () => {
                         console.log("[Reset reCAPTCHA] Expired");
-                        resetRecaptchaVerifier.clear();
-                        initializeResetRecaptcha();
+                    },
+                    'error-callback': () => {
+                        console.log("[Reset reCAPTCHA] Error callback");
                     }
                 });
-                resetRecaptchaVerifier.render();
             } catch (error) {
                 console.error("[Reset reCAPTCHA] Error:", error);
             }
@@ -1849,6 +1884,11 @@
             setButtonLoading(sendOtpBtn, sendOtpBtnText, sendText);
             
             try {
+                // Ensure reCAPTCHA verifier exists
+                if (!recaptchaVerifier) {
+                    initializeRecaptcha();
+                }
+
                 confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, recaptchaVerifier);
                 console.log("[Phone] OTP sent successfully");
                 
@@ -1867,15 +1907,15 @@
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
             } catch (error) {
                 console.error("[Phone] Error sending OTP:", error);
+                console.error("[Phone] Error code:", error.code);
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
                 
-                if (recaptchaVerifier) {
-                    try { recaptchaVerifier.clear(); } catch(e) {}
-                }
+                // Reinitialize reCAPTCHA for next attempt
                 initializeRecaptcha();
                 
+                const errorKey = errorMessages[error.code] || 'codeSendFailed';
                 const errorMsg = window.languageSwitcher ? 
-                    window.languageSwitcher.translate(errorMessages[error.code] || 'codeSendFailed') : 
+                    window.languageSwitcher.translate(errorKey) : 
                     'კოდის გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.';
                 showMessage(errorMsg, "error");
             }
@@ -2038,10 +2078,7 @@
             otpInputs.forEach(input => input.value = '');
             
             // Reset reCAPTCHA
-            if (recaptchaVerifier) {
-                recaptchaVerifier.clear();
-                initializeRecaptcha();
-            }
+            initializeRecaptcha();
         });
 
         // ===================================
@@ -2078,11 +2115,16 @@
             resetPhoneData.phoneNumber = fullPhoneNumber;
             
             try {
+                // Ensure reCAPTCHA verifier exists
+                if (!resetRecaptchaVerifier) {
+                    initializeResetRecaptcha();
+                }
+
                 resetPhoneData.confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, resetRecaptchaVerifier);
                 console.log("[Reset] OTP sent successfully");
                 
                 const resetOtpSentText = window.languageSwitcher ? window.languageSwitcher.translate('otpSentToNumber') : 'SMS კოდი გაიგზავნა ნომერზე:';
-                    document.getElementById("resetOtpSentMessage").textContent = `${resetOtpSentText} ${fullPhoneNumber}`;
+                document.getElementById("resetOtpSentMessage").textContent = `${resetOtpSentText} ${fullPhoneNumber}`;
                 
                 document.getElementById('resetPhoneStep1').style.display = 'none';
                 document.getElementById('resetPhoneStep2').style.display = 'block';
@@ -2093,14 +2135,14 @@
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
             } catch (error) {
                 console.error("[Reset] Error sending OTP:", error);
+                console.error("[Reset] Error code:", error.code);
                 resetButton(sendOtpBtn, sendOtpBtnText, sendText);
                 
-                if (resetRecaptchaVerifier) {
-                    try { resetRecaptchaVerifier.clear(); } catch(e) {}
-                }
+                // Reinitialize for next attempt
                 initializeResetRecaptcha();
                 
-                showMessage(window.languageSwitcher ? window.languageSwitcher.translate('codeSendFailed') : 'კოდის გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.', "error");
+                const errorKey = errorMessages[error.code] || 'codeSendFailed';
+                showMessage(window.languageSwitcher ? window.languageSwitcher.translate(errorKey) : 'კოდის გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.', "error");
             }
         });
 
@@ -2255,7 +2297,7 @@
                     } else {
                         const errorMsg = window.languageSwitcher ? 
                             window.languageSwitcher.translate('authDefaultError') : 
-                            'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.';
+                            'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვია���ებით.';
                         showMessage(errorMsg, "error");
                     }
                 }
@@ -2349,7 +2391,7 @@
                     const userDoc = await getUserByPhone(fullPhoneNumber);
                     
                     if (!userDoc) {
-                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('userNotFoundByPhone') : 'მომხმარებელი ამ ნომრით არ მოიძებნა', "error");
+                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('userNotFoundByPhone') : 'მომხმარებელი ამ ნომრით არ მოი���ებნა', "error");
                         resetButton(loginBtn, loginBtnText, loginText);
                         return;
                     }
@@ -2418,7 +2460,7 @@
             hideError('password');
             
             const registerBtn = document.getElementById("registerBtn");
-            const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რეგისტრაცია';
+            const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რე��ისტრაცია';
             setButtonLoading(registerBtn, registerBtnText, registerText);
 
             try {
@@ -2506,7 +2548,7 @@
                 await sendPasswordResetEmail(auth, email);
                 const successMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('resetPasswordSuccess') : 
-                    'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ფოსტაზე';
+                    'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ��ოსტ��ზე';
                 showMessage(successMsg, "success");
                 
                 setTimeout(() => {

@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js"
+import { getAuth } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
@@ -1769,7 +1769,7 @@ textarea.input {
             </h2>
             <div class="warning-popup-message">
                 <p>
-                    <strong data-i18n="">Prices may vary</strong><span data-i18n="warningPopupPricesMessage"> - Please verify prices via WhatsApp or Online Chat before booking.</span>
+                    <strong>⚠</strong><span data-i18n="warningPopupPricesMessage"> - Please verify prices via WhatsApp or Online Chat before booking.</span>
                 </p>
                 <p data-i18n="warningPopupContactMessage">
                     Also, please provide correct contact information so we can reach you.
@@ -1873,7 +1873,7 @@ textarea.input {
     <div id="bookingModal" class="modal">
         <div class="modal-content booking-modal-content">
             <span class="close" id="closeBookingModal">&times;</span>
-            <h2 id="modalTitle" data-i18n="bookingModalTitle">დაჯავშნა</h2>
+            <h2 id="modalTitle" data-i18n="bookingModalTitle">დაჯ�����ვშნა</h2>
             
             <div id="modalBody"></div>
             
@@ -2388,7 +2388,7 @@ textarea.input {
 
     <script type="module">
 import { auth, db } from "./firebase-config.js"
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"
 import {
     collection,
     addDoc,
@@ -2402,7 +2402,7 @@ import {
     increment,
     arrayUnion,
     arrayRemove,
-} from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js"
 
 function showToast(message, type = "info", title = "") {
     const container = document.getElementById("toastContainer");
@@ -2526,7 +2526,11 @@ async function loadHotels() {
         setupItemsContainerEvents();
     } catch (error) {
         console.error("Error loading data:", error);
-        showToast("მონაცემების ჩატვირთვა ვერ მოხერხდა", "error");
+        const errorMsg = window.languageSwitcher?.translate("bookingLoadError") || "მონაცემების ჩატვირთვა ვერ მოხერხდა";
+        showToast(errorMsg, "error");
+        // Initialize filters even if data fails so the UI remains functional
+        updateTypeFilter();
+        setupFilters();
     }
 }
 
@@ -3397,6 +3401,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener('languageChanged', () => {
     updateTypeFilter();
+    updateRegionFilterText();
+    displayItems();
+    if (startCalendar) {
+        startCalendar.updateMonthNames();
+        startCalendar.render();
+    }
 });
 
 function removeHtmlExtensionFromURL() {
@@ -3413,7 +3423,7 @@ window.addEventListener('popstate', removeHtmlExtensionFromURL);
     
     <div id="footer"></div>
     <script type="module" src="navbar.js"></script>
-    <script src="footer.js"></script>
+    <script type="module" src="footer.js"></script>
     <script src="translations.js"></script>
 </body>
 </html>

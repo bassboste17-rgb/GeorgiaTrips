@@ -1889,7 +1889,7 @@
         <div class="auth-required-content">
             <i class="fas fa-lock"></i>
             <h2 data-i18n="postsAuthRequiredTitle">ავტორიზაცია საჭიროა</h2>
-            <p data-i18n="postsAuthRequiredDesc">პოსტებთან სრული ურთიერთქმედებისთვის (ლაიქი, კომენტარი, შენახვა) საჭიროა ავტორიზაცია. შეგიძლიათ გააგრძელოთ ნახვის რეჟიმში ან შეხვიდეთ სისტემაში.</p>
+            <p data-i18n="postsAuthRequiredDesc">პოსტებთან სრული ურთიერთქმედებისთვის (ლაიქი, კომენტარი, შენახვა) საჭიროა ავტორიზაცია. შეგიძლიათ გაა���რძელოთ ნახვის რეჟიმში ან შეხვიდეთ სისტემაში.</p>
             <div class="auth-required-buttons">
                 <button class="auth-required-btn primary" onclick="redirectToLogin()">
                     <i class="fas fa-sign-in-alt"></i> <span data-i18n="postsLogin">შესვლა</span>
@@ -2083,7 +2083,7 @@
         import { 
             onAuthStateChanged,
             signOut
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
         import { 
             collection,
             query,
@@ -2095,7 +2095,7 @@
             arrayRemove,
             increment,
             onSnapshot
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
         if (window.clearLoadingTimeout) window.clearLoadingTimeout();
 
@@ -3297,7 +3297,7 @@
     </script>
       <div id="footer"></div>
     <script type="module" src="navbar.js"></script>
-    <script src="footer.js"></script>
+    <script type="module" src="footer.js"></script>
     <script src="translations.js"></script>
 </body>
 </html>

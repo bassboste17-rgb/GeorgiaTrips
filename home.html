@@ -3097,9 +3097,9 @@
   <script type="module">
     var loadFirebase = async function() {
       var [{ initializeApp }, { getAuth, onAuthStateChanged }, { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs }] = await Promise.all([
-        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"),
-        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"),
-        import("https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js")
+        import("https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"),
+        import("https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js")
       ]);
 
       var firebaseConfig = {

@@ -6,7 +6,7 @@
     <title>Saved Posts | Georgia Trips</title>
     <meta name="robots" content="noindex, nofollow" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="navbar.css">
      <link rel="icon" type="image/x-icon" href="addhome/logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo.png">
 <link rel="icon" type="image/png" sizes="32x32" href="addhome/logo.png">
@@ -772,11 +772,11 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { 
             getAuth,
             onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
         import { 
             getFirestore,
             collection,
@@ -789,7 +789,7 @@
             arrayRemove,
             increment,
             onSnapshot
-        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
@@ -1463,7 +1463,7 @@
         }
           // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
 function removeHtmlExtensionFromURL() {
-    // შეამოწმეთ, თუ URL შეიცავს .html
+    // შეამო���მეთ, თუ URL შეიცავს .html
     if (window.location.pathname.endsWith('.html')) {
         // შექმენით ახალი URL .html-ის გარეშე
         const newPath = window.location.pathname.replace(/\.html$/, '');
@@ -1474,7 +1474,7 @@ function removeHtmlExtensionFromURL() {
     }
 }
 
-// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
+// გამოიძახეთ ������ნქცია გვერდის ჩატვირთვისას
 window.addEventListener('load', removeHtmlExtensionFromURL);
 
 // ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
