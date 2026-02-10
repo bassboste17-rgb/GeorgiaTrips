@@ -204,44 +204,60 @@
       overflow: hidden;
     }
 
-    .hero-background-desktop {
+    /* Parallax Background System */
+    .hero-bg-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
-      background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074554/lfpbxtoj33ch8tdeeaoz.png');
       background-size: cover;
-      background-position: center;
+      background-position: top;
       background-repeat: no-repeat;
+      z-index: 0;
+      animation: backgroundImage 1.6s ease-out forwards;
     }
 
-    .hero-background-mobile {
-      display: none;
+    @keyframes backgroundImage {
+      from {
+        background-position: top;
+      }
+      to {
+        background-position: 50% 14%;
+      }
     }
 
-    .hero-video-desktop {
+    /* Foreground parallax image layers - exact match to reference */
+    .hero-parallax-layer {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 110%;
-      min-height: 110%;
-      width: auto;
-      height: auto;
-      object-fit: cover;
+      bottom: -12%;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    @keyframes bottomIn {
+      from {
+        transform: translateY(200px);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .back-1 {
+      animation: bottomIn 1s ease-out forwards;
+      z-index: 3;
+    }
+
+    .back-2 {
+      animation: bottomIn 1.3s ease-out forwards;
+      z-index: 2;
+    }
+
+    .back-3 {
+      animation: bottomIn 1.5s ease-out forwards;
       z-index: 1;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .hero-video-desktop.loaded {
-      opacity: 1;
-    }
-
-    .hero-video-mobile {
-      display: none;
     }
 
     .hero-overlay {
@@ -250,14 +266,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(31, 30, 30, 0.3) 0%,
-        rgba(0, 0, 0, 0.548) 40%,
-        rgba(37, 37, 37, 0.5) 70%,
-        rgba(65, 65, 65, 0.5) 100%
-      );
-      z-index: 2;
+      background: linear-gradient(transparent 50%, rgb(0, 0, 0));
+      z-index: 4;
       pointer-events: none;
     }
 
@@ -265,19 +275,44 @@
       text-align: center;
       max-width: 900px;
       position: relative;
-      z-index: 3;
-      animation: heroFadeIn 1.2s ease-out;
+      z-index: 10;
     }
 
-    @keyframes heroFadeIn {
+    @keyframes bottomInText {
       from {
+        transform: translateY(500px);
         opacity: 0;
-        transform: translateY(30px);
       }
       to {
-        opacity: 1;
         transform: translateY(0);
+        opacity: 1;
       }
+    }
+
+    .hero-content .hero-badge {
+      animation: bottomInText 1s ease-out forwards;
+    }
+
+    .hero-content h1 {
+      animation: bottomInText 1.2s ease-out forwards;
+    }
+
+    .hero-content h2 {
+      animation: bottomInText 1.2s ease-out forwards;
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .hero-content p {
+      animation: bottomInText 1.2s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .hero-content .hero-buttons {
+      animation: bottomInText 1.2s ease-out forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
     }
 
     .hero-badge {
@@ -2021,43 +2056,26 @@
         min-height: 100vh;
       }
 
-      .hero-background-desktop {
-        display: none;
+      .hero-bg-layer {
+        background-image: url('img/bac 4.png');
       }
 
-      .hero-background-mobile {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        background-image: url('https://res.cloudinary.com/dmxmlw0ln/image/upload/v1769074277/p7hgrnwegcbzx96dpda6.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+      .hero-parallax-layer {
+        bottom: -5%;
+        width: 130%;
+        left: -15%;
       }
 
-      .hero-video-desktop {
-        display: none;
+      .back-1 {
+        bottom: -3%;
       }
 
-      .hero-video-mobile {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.8s ease;
+      .back-2 {
+        bottom: -4%;
       }
 
-      .hero-video-mobile.loaded {
-        opacity: 1;
+      .back-3 {
+        bottom: -2%;
       }
 
       .hero h1 {
@@ -2443,6 +2461,24 @@
         padding: 8rem 1rem 4rem;
       }
 
+      .hero-parallax-layer {
+        bottom: -3%;
+        width: 160%;
+        left: -30%;
+      }
+
+      .back-1 {
+        bottom: -1%;
+      }
+
+      .back-2 {
+        bottom: -2%;
+      }
+
+      .back-3 {
+        bottom: 0%;
+      }
+
       .hero h1 {
         font-size: 2rem;
       }
@@ -2521,24 +2557,13 @@
   <main>
     <!-- Hero Section -->
     <section class="hero" aria-label="Georgia Trips - Tours in Georgia Hero Section">
-      <!-- Desktop Background Photo -->
-      <div class="hero-background-desktop" role="img" aria-label="Georgia landscape - Tours in Georgia background"></div>
+      <!-- Background Image Layer (bac 4.png) -->
+      <div class="hero-bg-layer" style="background-image: url('img/bac 4.png');" role="img" aria-label="Georgia landscape background"></div>
       
-      <!-- Mobile Background Photo -->
-      <div class="hero-background-mobile" role="img" aria-label="Georgia landscape mobile - Travel Georgia background"></div>
-      
-      <!-- Desktop Video Background -->
-      <video class="hero-video-desktop" id="heroVideoDesktop" autoplay muted loop playsinline preload="auto" aria-label="Georgia Trips promo video - Tours in Georgia">
-        <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1769077521/omtj3yzbp5ou6364kwre.mp4" type="video/mp4">
-      </video>
-      
-      <!-- Mobile Video Background -->
-      <video class="hero-video-mobile" id="heroVideoMobile" autoplay muted loop playsinline preload="auto" aria-label="Georgia Trips promo video mobile - Georgia travel">
-        <source src="https://res.cloudinary.com/dmxmlw0ln/video/upload/v1769074294/amagaktrz5jkkmli1c0m.mov" type="video/mp4">
-      </video>
-      
-      <div class="hero-overlay"></div>
-      
+      <!-- Parallax Layer: bac 3.png (farthest back, behind text) -->
+      <img src="img/bac 3.png" alt="" aria-hidden="true" class="hero-parallax-layer back-3">
+
+      <!-- Hero Content (text sits between parallax layers) -->
       <div class="hero-content">
         <div class="hero-badge" data-i18n="heroBadge">
           <i class="fas fa-star" aria-hidden="true"></i> #1 Tours in Georgia
@@ -2557,6 +2582,15 @@
           </a>
         </div>
       </div>
+
+      <!-- Parallax Layer: bac 2.2.png (middle, in front of text) -->
+      <img src="img/bac 2.2.png" alt="" aria-hidden="true" class="hero-parallax-layer back-2">
+
+      <!-- Parallax Layer: bac 1.png (closest/front) -->
+      <img src="img/bac 1.png" alt="" aria-hidden="true" class="hero-parallax-layer back-1">
+
+      <!-- Dark Gradient Overlay -->
+      <div class="hero-overlay"></div>
     </section>
 
     <!-- Continuous Content Area - No Sections -->
@@ -2980,118 +3014,7 @@
   <script src="footer.js" type="module"></script>
   <script src="map.js"></script>
 
-  <!-- Video Load Detection Script - iOS Safari Compatible -->
-  <script>
-    (function() {
-      // Detect iOS
-      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      
-      // Desktop Video
-      var heroVideoDesktop = document.getElementById('heroVideoDesktop');
-      if (heroVideoDesktop) {
-        // For iOS Safari - try to play video
-        if (isIOS) {
-          heroVideoDesktop.setAttribute('webkit-playsinline', 'true');
-          heroVideoDesktop.setAttribute('x-webkit-airplay', 'allow');
-        }
-        
-        heroVideoDesktop.addEventListener('canplaythrough', function() {
-          heroVideoDesktop.classList.add('loaded');
-        });
-        
-        heroVideoDesktop.addEventListener('loadeddata', function() {
-          heroVideoDesktop.classList.add('loaded');
-          // Try to play on iOS
-          var playPromise = heroVideoDesktop.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(function() {
-              // Autoplay was prevented, show background image instead
-              heroVideoDesktop.classList.add('loaded');
-            });
-          }
-        });
-        
-        if (heroVideoDesktop.readyState >= 4) {
-          heroVideoDesktop.classList.add('loaded');
-        }
-        
-        // Fallback timeout
-        setTimeout(function() {
-          heroVideoDesktop.classList.add('loaded');
-        }, 3000);
-      }
 
-      // Mobile Video
-      var heroVideoMobile = document.getElementById('heroVideoMobile');
-      if (heroVideoMobile) {
-        // For iOS Safari - try to play video
-        if (isIOS) {
-          heroVideoMobile.setAttribute('webkit-playsinline', 'true');
-          heroVideoMobile.setAttribute('x-webkit-airplay', 'allow');
-        }
-        
-        heroVideoMobile.addEventListener('canplaythrough', function() {
-          heroVideoMobile.classList.add('loaded');
-        });
-        
-        heroVideoMobile.addEventListener('loadeddata', function() {
-          heroVideoMobile.classList.add('loaded');
-          // Try to play on iOS
-          var playPromise = heroVideoMobile.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(function() {
-              // Autoplay was prevented, show background image instead
-              heroVideoMobile.classList.add('loaded');
-            });
-          }
-        });
-        
-        if (heroVideoMobile.readyState >= 4) {
-          heroVideoMobile.classList.add('loaded');
-        }
-        
-        // Fallback timeout
-        setTimeout(function() {
-          heroVideoMobile.classList.add('loaded');
-        }, 3000);
-      }
-      
-      // Handle visibility change for iOS - resume video when page becomes visible
-      document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-          if (heroVideoDesktop && heroVideoDesktop.paused) {
-            heroVideoDesktop.play().catch(function() {});
-          }
-          if (heroVideoMobile && heroVideoMobile.paused) {
-            heroVideoMobile.play().catch(function() {});
-          }
-        }
-      });
-      
-      // Handle page show event for iOS Safari (back/forward cache)
-      window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-          if (heroVideoDesktop && heroVideoDesktop.paused) {
-            heroVideoDesktop.play().catch(function() {});
-          }
-          if (heroVideoMobile && heroVideoMobile.paused) {
-            heroVideoMobile.play().catch(function() {});
-          }
-        }
-      });
-      
-      // Touch event to enable video playback on iOS
-      document.addEventListener('touchstart', function enableVideoPlayback() {
-        if (heroVideoDesktop && heroVideoDesktop.paused) {
-          heroVideoDesktop.play().catch(function() {});
-        }
-        if (heroVideoMobile && heroVideoMobile.paused) {
-          heroVideoMobile.play().catch(function() {});
-        }
-        document.removeEventListener('touchstart', enableVideoPlayback);
-      }, { once: true, passive: true });
-    })();
-  </script>
   
   <!-- Firebase and Main App Logic -->
   <script type="module">
