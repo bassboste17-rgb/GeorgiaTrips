@@ -3271,8 +3271,12 @@ function openBookingModalDirect(item, type) {
     // Build room types info for display
     const roomTypes = item.roomTypes || [];
     const hasRoomTypes = roomTypes.length > 0;
-    const maxGuestsAvailable = item.maxGuests || (item.guests || 1);
+    // maxGuests from admin input; cap by physical room capacity so algorithm always finds a solution
+    const roomCapacityTotal = hasRoomTypes ? roomTypes.reduce((sum, rt) => sum + (rt.guests * rt.rooms), 0) : 0;
+    const adminMaxGuests = item.maxGuests || item.guests || roomCapacityTotal || 1;
+    const maxGuestsAvailable = hasRoomTypes ? Math.min(adminMaxGuests, roomCapacityTotal || adminMaxGuests) : adminMaxGuests;
     const currencySymbolBooking = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
+
     
     modalBody.innerHTML = `
         <div class="booking-item-info">
@@ -3654,7 +3658,7 @@ function openDetailModal(item) {
     const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
     const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათებლები';
-    const noDesc = ls ? ls.translate('bookingNoDescription') : '��ღწერა არ არის';
+    const noDesc = ls ? ls.translate('bookingNoDescription') : '���ღწერა არ არის';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
     const closeBtn = ls ? ls.translate('bookingDetailClose') : 'დახურვა';
     const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
@@ -3891,7 +3895,7 @@ window.changeManualRoomQty = function(index, delta) {
             currentTotalGuests += qty * roomTypes[idx].guests;
         });
         const wouldAdd = roomTypes[index].guests;
-        const maxGuests = window.currentHotelMaxGuests || 999;
+        const maxGuests = window.currentHotelMaxGuests || 1;
         if (currentTotalGuests + wouldAdd > maxGuests) return;
     }
     
@@ -4027,6 +4031,7 @@ function updateRoomAllocation() {
     if (!resultContainer || roomTypes.length === 0) return;
     
     const allocation = smartAllocateRooms(guestCount, roomTypes);
+
     const currency = window.currentBookingCurrency || '\u20BE';
     const ls = window.languageSwitcher;
     
