@@ -1638,6 +1638,76 @@ input:checked + .toggle-slider:before {
     }
 }
 
+/* Room type cards in hotel form */
+.room-type-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.room-type-card:hover {
+    border-color: var(--primary-color);
+}
+
+.room-type-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.room-type-card-header span {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.room-type-remove-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.room-type-remove-btn:hover {
+    background: #dc3545;
+    color: #fff;
+}
+
+.room-type-fields {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+
+.room-type-fields .form-group label {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.room-type-fields .form-group input {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .room-type-fields {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 /* Hotel selection for tours */
 .tour-hotels-grid {
     display: flex;
@@ -2164,7 +2234,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი���������ი</option>
+                        <option value="rejected">❌ უარყოფი�����������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -3773,6 +3843,115 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             });
         }
 
+        // Room types management for hotels
+        let roomTypeCounter = 0;
+        
+        function initRoomTypes(existingItem) {
+            const container = document.getElementById('roomTypesContainer');
+            const addBtn = document.getElementById('addRoomTypeBtn');
+            if (!container || !addBtn) return;
+            
+            container.innerHTML = '';
+            roomTypeCounter = 0;
+            
+            const existingRoomTypes = existingItem?.roomTypes || [];
+            
+            if (existingRoomTypes.length > 0) {
+                existingRoomTypes.forEach(rt => addRoomTypeCard(rt));
+            } else {
+                // Add one default card with existing single-room data or empty
+                addRoomTypeCard({
+                    price: existingItem?.pricePerDay || '',
+                    rooms: existingItem?.rooms || '',
+                    bedrooms: existingItem?.bedrooms || '',
+                    guests: existingItem?.guests || ''
+                });
+            }
+            
+            addBtn.onclick = function() {
+                addRoomTypeCard({});
+            };
+        }
+        
+        function addRoomTypeCard(data) {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return;
+            
+            roomTypeCounter++;
+            const idx = roomTypeCounter;
+            
+            const card = document.createElement('div');
+            card.className = 'room-type-card';
+            card.dataset.roomIdx = idx;
+            card.innerHTML = 
+                '<div class="room-type-card-header">' +
+                    '<span><i class="fas fa-bed"></i> ოთახი #' + idx + '</span>' +
+                    '<button type="button" class="room-type-remove-btn" title="წაშლა"><i class="fas fa-times"></i></button>' +
+                '</div>' +
+                '<div class="room-type-fields">' +
+                    '<div class="form-group">' +
+                        '<label>ფასი (ღამეში) *</label>' +
+                        '<input type="number" class="input rt-price" value="' + (data.price || '') + '" placeholder="90">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label>ოთახები *</label>' +
+                        '<input type="number" class="input rt-rooms" value="' + (data.rooms || '') + '" placeholder="1">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label>საძინებელი *</label>' +
+                        '<input type="number" class="input rt-bedrooms" value="' + (data.bedrooms || '') + '" placeholder="1">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label>სტუმრები *</label>' +
+                        '<input type="number" class="input rt-guests" value="' + (data.guests || '') + '" placeholder="2">' +
+                    '</div>' +
+                '</div>';
+            
+            container.appendChild(card);
+            
+            // Remove button handler
+            card.querySelector('.room-type-remove-btn').addEventListener('click', function() {
+                const allCards = container.querySelectorAll('.room-type-card');
+                if (allCards.length <= 1) {
+                    showNotification('მინიმუმ ერთი ოთახის ტიპი უნდა არსებობდეს', 'warning');
+                    return;
+                }
+                card.remove();
+                renumberRoomCards();
+            });
+        }
+        
+        function renumberRoomCards() {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return;
+            const cards = container.querySelectorAll('.room-type-card');
+            cards.forEach((card, i) => {
+                const header = card.querySelector('.room-type-card-header span');
+                if (header) {
+                    header.innerHTML = '<i class="fas fa-bed"></i> ოთახი #' + (i + 1);
+                }
+            });
+        }
+        
+        function collectRoomTypes() {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return [];
+            
+            const cards = container.querySelectorAll('.room-type-card');
+            const roomTypes = [];
+            cards.forEach(card => {
+                const price = parseFloat(card.querySelector('.rt-price')?.value) || 0;
+                const rooms = parseInt(card.querySelector('.rt-rooms')?.value) || 0;
+                const bedrooms = parseInt(card.querySelector('.rt-bedrooms')?.value) || 0;
+                const guests = parseInt(card.querySelector('.rt-guests')?.value) || 0;
+                
+                if (price > 0 || rooms > 0 || guests > 0) {
+                    roomTypes.push({ price, rooms, bedrooms, guests });
+                }
+            });
+            return roomTypes;
+        }
+
         function updateTourLinkedHotels() {
             const checkboxes = document.querySelectorAll('.tour-hotel-checkbox:checked');
             const hotelIds = Array.from(checkboxes).map(cb => cb.value);
@@ -4326,19 +4505,13 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>ოთახების რაოდენობა *</label>
-                                    <input type="number" id="itemRooms" class="input" value="${item?.rooms || ""}" required placeholder="3">
-                                </div>
-                                <div class="form-group">
-                                    <label>საძინებლების რაოდენობა *</label>
-                                    <input type="number" id="itemBedrooms" class="input" value="${item?.bedrooms || ""}" required placeholder="2">
-                                </div>
-                                <div class="form-group">
-                                    <label>სტუმრების რაოდენობა *</label>
-                                    <input type="number" id="itemGuests" class="input" value="${item?.guests || ""}" required placeholder="6">
-                                </div>
+                            <div class="enhanced-form-section" style="margin-top: 0; border: none; padding: 0;">
+                                <h3 style="margin-bottom: 1rem;"><i class="fas fa-door-open"></i> ოთახის ტიპები</h3>
+                                <div id="roomTypesContainer"></div>
+                                <button type="button" class="btn btn-outline" id="addRoomTypeBtn" style="margin-top: 0.75rem; width: 100%;">
+                                    <i class="fas fa-plus-circle"></i> სხვა ოთახის დამატება
+                                </button>
+                                <input type="hidden" id="roomTypesData" value='${JSON.stringify(item?.roomTypes || [])}'>
                             </div>
                         </div>
 
@@ -4444,6 +4617,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     `
                 
                 setTimeout(() => {
+                    initRoomTypes(item);
+                    
                     let hotelFixedCalendarInstance = null;
                     let hotelRegularCalendarInstance = null;
                     
@@ -4820,7 +4995,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                         <div class="enhanced-form-section" id="tourHotelsSection">
                             <h3><i class="fas fa-hotel"></i> სასტუმროების მიბმა</h3>
-                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმროები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
+                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმ��ოები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
                             <div id="tourHotelsListContainer">
                                 <p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>
                             </div>
@@ -5103,9 +5278,17 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     itemData.colorTranslations = colorTranslation;
                     
                 } else if (currentAdminTab === "hotels") {
-                    itemData.rooms = Number.parseInt(document.getElementById("itemRooms").value)
-                    itemData.bedrooms = Number.parseInt(document.getElementById("itemBedrooms").value)
-                    itemData.guests = Number.parseInt(document.getElementById("itemGuests").value)
+                    // Collect room types
+                    const roomTypes = collectRoomTypes();
+                    itemData.roomTypes = roomTypes;
+                    
+                    // Backward compatibility: set main fields from first room type
+                    if (roomTypes.length > 0) {
+                        itemData.pricePerDay = roomTypes[0].price;
+                        itemData.rooms = roomTypes[0].rooms;
+                        itemData.bedrooms = roomTypes[0].bedrooms;
+                        itemData.guests = roomTypes[0].guests;
+                    }
                     
                     const calendarModeInput = document.getElementById("calendarMode")
                     if (calendarModeInput) {
