@@ -3272,7 +3272,8 @@ function openBookingModalDirect(item, type) {
     const roomTypes = item.roomTypes || [];
     const hasRoomTypes = roomTypes.length > 0;
     // maxGuests directly from admin - the counter max is EXACTLY what admin set
-    const maxGuestsAvailable = item.maxGuests || (item.guests || 1);
+    const maxGuestsAvailable = parseInt(item.maxGuests) || parseInt(item.guests) || 1;
+    console.log("[v0] Booking modal opened:", { itemMaxGuests: item.maxGuests, itemGuests: item.guests, maxGuestsAvailable, roomTypes: roomTypes.map(r => ({guests:r.guests, rooms:r.rooms, price:r.price})) });
     const currencySymbolBooking = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
 
     
@@ -3655,7 +3656,7 @@ function openDetailModal(item) {
     const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახები';
     const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
-    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათე���ლები';
+    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათე�����ლები';
     const noDesc = ls ? ls.translate('bookingNoDescription') : '���ღწერა არ არის';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
     const closeBtn = ls ? ls.translate('bookingDetailClose') : 'დახურვა';
@@ -3840,6 +3841,7 @@ document.addEventListener("DOMContentLoaded", () => {
 window.changeGuestCount = function(delta) {
     const maxGuests = window.currentHotelMaxGuests || 1;
     const newCount = Math.max(1, Math.min(maxGuests, (window.currentGuestCount || 1) + delta));
+    console.log("[v0] changeGuestCount:", { delta, maxGuests, currentHotelMaxGuests: window.currentHotelMaxGuests, newCount });
     window.currentGuestCount = newCount;
     
     const valueEl = document.getElementById('guestCountValue');
@@ -4017,6 +4019,8 @@ function smartAllocateRooms(guestCount, roomTypes) {
     }
     
     tryAllocate(0, [], 0, 0, 0);
+    
+    console.log("[v0] smartAllocateRooms result:", { guestCount, types: types.map(t => ({guests: t.guests, price: t.price, rooms: t.rooms})), bestAllocation, bestPrice });
     
     if (!bestAllocation) return null;
     
