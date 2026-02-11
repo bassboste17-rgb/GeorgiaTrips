@@ -1638,6 +1638,91 @@ input:checked + .toggle-slider:before {
     }
 }
 
+/* Hotel selection for tours */
+.tour-hotels-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
+.tour-hotel-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--light-bg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 220px;
+    flex: 0 0 auto;
+}
+
+.tour-hotel-checkbox-item:hover {
+    border-color: var(--primary-color);
+    background: rgba(229, 56, 59, 0.08);
+}
+
+.tour-hotel-checkbox-item.selected {
+    border-color: var(--success-color);
+    background: rgba(40, 167, 69, 0.12);
+}
+
+.tour-hotel-checkbox-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.tour-hotel-checkbox-item .hotel-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.tour-hotel-checkbox-item .hotel-info .hotel-name {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tour-hotel-checkbox-item .hotel-info .hotel-meta {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-top: 2px;
+}
+
+.tour-hotel-checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--success-color);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.selected-hotels-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(40, 167, 69, 0.15);
+    border: 1px solid var(--success-color);
+    border-radius: 20px;
+    color: var(--success-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
 /* Added styles for region checkbox grid */
 .region-checkbox-container {
     display: grid;
@@ -3295,7 +3380,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         async function deleteItem(itemId, type) {
-            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დან და Firebase-დან.", "ელემენტის ���აშლა")
+            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დ���ნ და Firebase-დან.", "ელემენტის ���აშლა")
             if (!confirmed) return
 
             try {
@@ -3579,6 +3664,9 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         cb.disabled = false;
                     });
                 }
+                if (currentAdminTab !== 'cars' && currentAdminTab !== 'hotels') {
+                    loadTourHotelsForRegions(item);
+                }
             });
 
             // Handle individual region checkboxes
@@ -3587,8 +3675,124 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     if (this.checked) {
                         allCheckbox.checked = false;
                     }
+                    if (currentAdminTab !== 'cars' && currentAdminTab !== 'hotels') {
+                        loadTourHotelsForRegions(item);
+                    }
                 });
             });
+        }
+
+        function loadTourHotelsForRegions(editingItem) {
+            const container = document.getElementById('tourHotelsListContainer');
+            if (!container) return;
+
+            const allCheckbox = document.getElementById('regionAllAdmin');
+            const regionCheckboxes = document.querySelectorAll('.region-checkbox-admin[data-region-admin]');
+
+            let selectedRegions = [];
+            if (allCheckbox && allCheckbox.checked) {
+                selectedRegions = ['all'];
+            } else {
+                selectedRegions = Array.from(regionCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+            }
+
+            if (selectedRegions.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>';
+                return;
+            }
+
+            const linkedHotelsInput = document.getElementById('tourLinkedHotels');
+            let previouslyLinked = [];
+            try {
+                previouslyLinked = JSON.parse(linkedHotelsInput?.value || '[]');
+            } catch(e) {
+                previouslyLinked = [];
+            }
+
+            // Filter hotels by selected regions
+            const matchingHotels = allHotels.filter(hotel => {
+                if (selectedRegions.includes('all')) return true;
+                if (hotel.regions && Array.isArray(hotel.regions)) {
+                    if (hotel.regions.includes('all')) return true;
+                    return hotel.regions.some(r => selectedRegions.includes(r));
+                }
+                if (hotel.region) {
+                    return selectedRegions.includes(hotel.region);
+                }
+                return false;
+            });
+
+            if (matchingHotels.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">ამ რეგიონში სასტუმროები არ მოიძებნა</p>';
+                return;
+            }
+
+            const selectedCount = matchingHotels.filter(h => previouslyLinked.includes(h.id)).length;
+
+            let html = '';
+            if (selectedCount > 0) {
+                html += '<div class="selected-hotels-count"><i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ' + selectedCount + '</div>';
+            }
+            html += '<div class="tour-hotels-grid">';
+            matchingHotels.forEach(hotel => {
+                const isChecked = previouslyLinked.includes(hotel.id);
+                const imageUrl = hotel.images?.[0] || '';
+                const price = hotel.pricePerDay || 0;
+                const currency = hotel.currency === 'USD' ? '$' : hotel.currency === 'EUR' ? '\u20AC' : '\u20BE';
+                const regionNames = hotel.regions ? (Array.isArray(hotel.regions) ? hotel.regions.join(', ') : hotel.region || '') : '';
+                html += '<label class="tour-hotel-checkbox-item ' + (isChecked ? 'selected' : '') + '" data-hotel-id="' + hotel.id + '">';
+                html += '<input type="checkbox" class="tour-hotel-checkbox" value="' + hotel.id + '"' + (isChecked ? ' checked' : '') + '>';
+                if (imageUrl) {
+                    html += '<img src="' + imageUrl + '" alt="' + hotel.name + '">';
+                } else {
+                    html += '<div style="width:50px;height:50px;background:var(--border-color);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-hotel" style="color:var(--text-color);"></i></div>';
+                }
+                html += '<div class="hotel-info">';
+                html += '<div class="hotel-name">' + hotel.name + '</div>';
+                html += '<div class="hotel-meta">' + price + currency + '/\u10E6\u10D0\u10DB\u10D4 \u00B7 ' + regionNames + '</div>';
+                html += '</div></label>';
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Add event listeners to checkboxes
+            container.querySelectorAll('.tour-hotel-checkbox').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const item = this.closest('.tour-hotel-checkbox-item');
+                    if (this.checked) {
+                        item.classList.add('selected');
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                    updateTourLinkedHotels();
+                });
+            });
+        }
+
+        function updateTourLinkedHotels() {
+            const checkboxes = document.querySelectorAll('.tour-hotel-checkbox:checked');
+            const hotelIds = Array.from(checkboxes).map(cb => cb.value);
+            const input = document.getElementById('tourLinkedHotels');
+            if (input) {
+                input.value = JSON.stringify(hotelIds);
+            }
+            // Update counter
+            const container = document.getElementById('tourHotelsListContainer');
+            const countEl = container?.querySelector('.selected-hotels-count');
+            if (countEl) {
+                countEl.innerHTML = `<i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ${hotelIds.length}`;
+                countEl.style.display = hotelIds.length > 0 ? 'inline-flex' : 'none';
+            } else if (hotelIds.length > 0) {
+                const grid = container?.querySelector('.tour-hotels-grid');
+                if (grid) {
+                    const newCount = document.createElement('div');
+                    newCount.className = 'selected-hotels-count';
+                    newCount.innerHTML = `<i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ${hotelIds.length}`;
+                    grid.parentNode.insertBefore(newCount, grid);
+                }
+            }
         }
 
         function openAdminFormModal(item = null, type = null) {
@@ -4070,7 +4274,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <label>რეგიონი (რეგიონე���ი) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
@@ -4611,10 +4815,20 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             </div>
                             ` : ''}
                         </div>
+
+                        <div class="enhanced-form-section" id="tourHotelsSection">
+                            <h3><i class="fas fa-hotel"></i> სასტუმროების მიბმა</h3>
+                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმროები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
+                            <div id="tourHotelsListContainer">
+                                <p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>
+                            </div>
+                            <input type="hidden" id="tourLinkedHotels" value='${JSON.stringify(item?.linkedHotels || [])}'>
+                        </div>
                     `
                 // </CHANGE>
                 
                 setTimeout(() => {
+                    loadTourHotelsForRegions(item);
                     let tourFixedCalendarInstance = null;
                     let tourRegularCalendarInstance = null;
                     
@@ -4916,6 +5130,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     
                     const durationTranslation = await getTranslation(itemData.duration, null);
                     itemData.durationTranslations = durationTranslation;
+                    
+                    // Save linked hotels
+                    const linkedHotelsInput = document.getElementById('tourLinkedHotels');
+                    if (linkedHotelsInput) {
+                        try {
+                            itemData.linkedHotels = JSON.parse(linkedHotelsInput.value || '[]');
+                        } catch(e) {
+                            itemData.linkedHotels = [];
+                        }
+                    }
                 }
 
                 uploadButton.textContent = "ატვირთვა..."
