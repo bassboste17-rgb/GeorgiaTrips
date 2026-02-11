@@ -1638,6 +1638,91 @@ input:checked + .toggle-slider:before {
     }
 }
 
+/* Hotel selection for tours */
+.tour-hotels-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
+.tour-hotel-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--light-bg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 220px;
+    flex: 0 0 auto;
+}
+
+.tour-hotel-checkbox-item:hover {
+    border-color: var(--primary-color);
+    background: rgba(229, 56, 59, 0.08);
+}
+
+.tour-hotel-checkbox-item.selected {
+    border-color: var(--success-color);
+    background: rgba(40, 167, 69, 0.12);
+}
+
+.tour-hotel-checkbox-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.tour-hotel-checkbox-item .hotel-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.tour-hotel-checkbox-item .hotel-info .hotel-name {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tour-hotel-checkbox-item .hotel-info .hotel-meta {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-top: 2px;
+}
+
+.tour-hotel-checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--success-color);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.selected-hotels-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(40, 167, 69, 0.15);
+    border: 1px solid var(--success-color);
+    border-radius: 20px;
+    color: var(--success-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
 /* Added styles for region checkbox grid */
 .region-checkbox-container {
     display: grid;
@@ -2079,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფილი</option>
+                        <option value="rejected">❌ უარყოფი���������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -3097,7 +3182,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             };
             
             const regionTranslations = {
-                'tbilisi': 'თბილისი',
+                'tbilisi': '��ბილისი',
                 'afkhazeti': 'აფხაზეთი',
                 'achara': 'აჭარა',
                 'guria': 'გურია',
@@ -3278,7 +3363,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3>${item.name}</h3>
                             <p>${item.description || ""}</p>
                             <div class="admin-item-details">
-                                <span><i class="fas fa-map-marker-alt"></i> ${item.regions && item.regions.length > 0 ? (item.regions.includes('all') ? 'ყველა რეგიონი' : item.regions.join(', ')) : item.region}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${item.regions && item.regions.length > 0 ? (item.regions.includes('all') ? 'ყვ��ლ�� რეგიონი' : item.regions.join(', ')) : item.region}</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
@@ -3295,7 +3380,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         async function deleteItem(itemId, type) {
-            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დან და Firebase-დან.", "ელემენტის ���აშლა")
+            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დ���ნ და Firebase-დან.", "ელემენტის ���აშლა")
             if (!confirmed) return
 
             try {
@@ -3579,6 +3664,9 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         cb.disabled = false;
                     });
                 }
+                if (currentAdminTab !== 'cars' && currentAdminTab !== 'hotels') {
+                    loadTourHotelsForRegions(item);
+                }
             });
 
             // Handle individual region checkboxes
@@ -3587,8 +3675,126 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     if (this.checked) {
                         allCheckbox.checked = false;
                     }
+                    if (currentAdminTab !== 'cars' && currentAdminTab !== 'hotels') {
+                        loadTourHotelsForRegions(item);
+                    }
                 });
             });
+        }
+
+        function loadTourHotelsForRegions(editingItem) {
+            const container = document.getElementById('tourHotelsListContainer');
+            if (!container) return;
+
+            const allCheckbox = document.getElementById('regionAllAdmin');
+            const regionCheckboxes = document.querySelectorAll('.region-checkbox-admin[data-region-admin]');
+
+            let selectedRegions = [];
+            if (allCheckbox && allCheckbox.checked) {
+                selectedRegions = ['all'];
+            } else {
+                selectedRegions = Array.from(regionCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+            }
+
+            if (selectedRegions.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>';
+                return;
+            }
+
+            const linkedHotelsInput = document.getElementById('tourLinkedHotels');
+            let previouslyLinked = [];
+            try {
+                previouslyLinked = JSON.parse(linkedHotelsInput?.value || '[]');
+            } catch(e) {
+                previouslyLinked = [];
+            }
+
+            // Filter hotels by selected regions - check both 'regions' array and 'region' string
+            const matchingHotels = allHotels.filter(hotel => {
+                if (selectedRegions.includes('all')) return true;
+                // Check regions array
+                if (hotel.regions && Array.isArray(hotel.regions)) {
+                    if (hotel.regions.includes('all')) return true;
+                    return hotel.regions.some(r => selectedRegions.includes(r));
+                }
+                // Check single region string
+                if (hotel.region) {
+                    if (hotel.region === 'all') return true;
+                    return selectedRegions.includes(hotel.region);
+                }
+                return false;
+            });
+            if (matchingHotels.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">ამ რეგიონში სასტუმროები არ მოიძებნა</p>';
+                return;
+            }
+
+            const selectedCount = matchingHotels.filter(h => previouslyLinked.includes(h.id)).length;
+
+            let html = '';
+            if (selectedCount > 0) {
+                html += '<div class="selected-hotels-count"><i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ' + selectedCount + '</div>';
+            }
+            html += '<div class="tour-hotels-grid">';
+            matchingHotels.forEach(hotel => {
+                const isChecked = previouslyLinked.includes(hotel.id);
+                const imageUrl = hotel.images?.[0] || '';
+                const price = hotel.pricePerDay || 0;
+                const currency = hotel.currency === 'USD' ? '$' : hotel.currency === 'EUR' ? '\u20AC' : '\u20BE';
+                const regionNames = hotel.regions ? (Array.isArray(hotel.regions) ? hotel.regions.join(', ') : hotel.region || '') : '';
+                html += '<label class="tour-hotel-checkbox-item ' + (isChecked ? 'selected' : '') + '" data-hotel-id="' + hotel.id + '">';
+                html += '<input type="checkbox" class="tour-hotel-checkbox" value="' + hotel.id + '"' + (isChecked ? ' checked' : '') + '>';
+                if (imageUrl) {
+                    html += '<img src="' + imageUrl + '" alt="' + hotel.name + '">';
+                } else {
+                    html += '<div style="width:50px;height:50px;background:var(--border-color);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-hotel" style="color:var(--text-color);"></i></div>';
+                }
+                html += '<div class="hotel-info">';
+                html += '<div class="hotel-name">' + hotel.name + '</div>';
+                html += '<div class="hotel-meta">' + price + currency + '/\u10E6\u10D0\u10DB\u10D4 \u00B7 ' + regionNames + '</div>';
+                html += '</div></label>';
+            });
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Add event listeners to checkboxes
+            container.querySelectorAll('.tour-hotel-checkbox').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const item = this.closest('.tour-hotel-checkbox-item');
+                    if (this.checked) {
+                        item.classList.add('selected');
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                    updateTourLinkedHotels();
+                });
+            });
+        }
+
+        function updateTourLinkedHotels() {
+            const checkboxes = document.querySelectorAll('.tour-hotel-checkbox:checked');
+            const hotelIds = Array.from(checkboxes).map(cb => cb.value);
+            const input = document.getElementById('tourLinkedHotels');
+            if (input) {
+                input.value = JSON.stringify(hotelIds);
+            }
+            // Update counter
+            const container = document.getElementById('tourHotelsListContainer');
+            const countEl = container?.querySelector('.selected-hotels-count');
+            if (countEl) {
+                countEl.innerHTML = `<i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ${hotelIds.length}`;
+                countEl.style.display = hotelIds.length > 0 ? 'inline-flex' : 'none';
+            } else if (hotelIds.length > 0) {
+                const grid = container?.querySelector('.tour-hotels-grid');
+                if (grid) {
+                    const newCount = document.createElement('div');
+                    newCount.className = 'selected-hotels-count';
+                    newCount.innerHTML = `<i class="fas fa-check-circle"></i> არჩეული სასტუმროები: ${hotelIds.length}`;
+                    grid.parentNode.insertBefore(newCount, grid);
+                }
+            }
         }
 
         function openAdminFormModal(item = null, type = null) {
@@ -3774,7 +3980,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     <label>საწვავის ტიპი *</label>
                                     <select id="itemFuelType" class="select" required>
                                         <option value="ბენზინი" ${item?.fuelType === "ბენზინი" ? "selected" : ""}>ბენზინი</option>
-                                        <option value="დიზელი" ${item?.fuelType === "დიზელი" ? "selected" : ""}>დიზელი</option>
+                                        <option value="დიზელი" ${item?.fuelType === "დი��ელი" ? "selected" : ""}>დიზელი</option>
                                         <option value="ჰიბრიდი" ${item?.fuelType === "ჰიბრიდი" ? "selected" : ""}>ჰიბრიდი</option>
                                         <option value="ელექტრო" ${item?.fuelType === "ელექტრო" ? "selected" : ""}>ელექტრო</option>
                                         <option value="გაზი" ${item?.fuelType === "გაზი" ? "selected" : ""}>გაზი</option>
@@ -3834,7 +4040,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     </div>
                                     <div style="margin-top: 1rem; padding: 1rem; background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px;">
                                         <p style="color: #22c55e; font-size: 0.9rem; margin: 0;">
-                                            <i class="fas fa-info-circle"></i> დააწკაპუნეთ წითელ დღეებზე რომ გახადოთ ისინი ხელმისაწვდომი (მწვანე)
+                                            <i class="fas fa-info-circle"></i> დააწკაპუნეთ წითელ ��ღეებზე რომ გახადოთ ისინი ხელმისაწვდომი (მწვანე)
                                         </p>
                                     </div>
                                 </div>
@@ -3861,7 +4067,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div id="restrictedMessage" style="display: ${restrictedMode ? 'block' : 'none'}; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; text-align: center;">
                                 <i class="fas fa-ban" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"></i>
                                 <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">კალენდარი გათიშულია</p>
-                                <p style="color: var(--text-color); font-size: 0.9rem;">მანქანა სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
+                                <p style="color: var(--text-color); font-size: 0.9rem;">მ���ნქანა სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
                             </div>
                             
                             <input type="hidden" id="carBookedDates" value='${JSON.stringify(existingBookedDates)}'>
@@ -4061,16 +4267,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="lang-label">العربية:</span>
                                         <textarea id="descTransAr" rows="2" dir="rtl" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ar || ''}</textarea>
                                     </div>
-                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცა��იელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-cog"></i> დეტალები</h3>
+                            <h3><i class="fas fa-cog"></i> ��ეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <label>რეგიონი (რეგიონე���ი) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
@@ -4147,7 +4353,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             <i class="fas fa-clock"></i> ფიქსირებული დრო
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეე��ი
                                         </div>
                                     </div>
                                 </label>
@@ -4436,19 +4642,19 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალე��ი</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <label>რეგიონი (რეგი��ნები) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
                                                 <input type="checkbox" value="all" id="regionAllAdmin" class="region-checkbox-admin">
-                                                <span>ყველა რეგიონი (უნივერსალური)</span>
+                                                <span>ყველა რეგიონი (უნი���ერსალური)</span>
                                             </label>
                                         </div>
                                         ${[
                                             "აფხაზეთი",
                                             "სამეგრელო",
                                             "რაჭა-ლეჩხუმი",
-                                            "იმერეთი",
+                                            "���მერეთი",
                                             "გურია",
                                             "აჭარა",
                                             "სამცხე-ჯავახეთი",
@@ -4611,10 +4817,35 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             </div>
                             ` : ''}
                         </div>
+
+                        <div class="enhanced-form-section" id="tourHotelsSection">
+                            <h3><i class="fas fa-hotel"></i> სასტუმროების მიბმა</h3>
+                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმროები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
+                            <div id="tourHotelsListContainer">
+                                <p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>
+                            </div>
+                            <input type="hidden" id="tourLinkedHotels" value='${JSON.stringify(item?.linkedHotels || [])}'>
+                        </div>
                     `
                 // </CHANGE>
                 
                 setTimeout(() => {
+                    // Add region change listeners for hotel section
+                    const regionAllCb = document.getElementById('regionAllAdmin');
+                    const regionCbs = document.querySelectorAll('.region-checkbox-admin[data-region-admin]');
+                    
+                    if (regionAllCb) {
+                        regionAllCb.addEventListener('change', function() {
+                            loadTourHotelsForRegions(item);
+                        });
+                    }
+                    regionCbs.forEach(cb => {
+                        cb.addEventListener('change', function() {
+                            loadTourHotelsForRegions(item);
+                        });
+                    });
+                    
+                    loadTourHotelsForRegions(item);
                     let tourFixedCalendarInstance = null;
                     let tourRegularCalendarInstance = null;
                     
@@ -4916,6 +5147,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     
                     const durationTranslation = await getTranslation(itemData.duration, null);
                     itemData.durationTranslations = durationTranslation;
+                    
+                    // Save linked hotels
+                    const linkedHotelsInput = document.getElementById('tourLinkedHotels');
+                    if (linkedHotelsInput) {
+                        try {
+                            itemData.linkedHotels = JSON.parse(linkedHotelsInput.value || '[]');
+                        } catch(e) {
+                            itemData.linkedHotels = [];
+                        }
+                    }
                 }
 
                 uploadButton.textContent = "ატვირთვა..."
@@ -5177,7 +5418,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             }
 
             const titles = {
-                success: "წარმატება",
+                success: "წ���რმატება",
                 error: "შეცდომა",
                 warning: "გაფრთხილება",
                 info: "ინფორმაცია",
@@ -5379,7 +5620,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
             const confirmed = await showConfirm(
                 `ნამდვილად გსურთ ${selectedPostIds.size} პოსტის წაშლა? ყველა ფოტო და ვიდეო წაიშლება Cloudinary-დან.`,
-                "მრავლობითი წაშლა"
+                "მრავ��ობითი წაშლა"
             );
             if (!confirmed) return;
 
