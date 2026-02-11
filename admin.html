@@ -779,6 +779,77 @@ textarea.input {
     flex: 1;
 }
 
+.translation-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(74, 144, 226, 0.15);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 6px;
+    color: #4a90e2;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.translation-toggle-btn:hover {
+    background: rgba(74, 144, 226, 0.25);
+    border-color: rgba(74, 144, 226, 0.5);
+}
+.translation-toggle-btn i {
+    font-size: 0.75rem;
+}
+
+.translation-edit-fields {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(74, 144, 226, 0.08);
+    border: 1px dashed rgba(74, 144, 226, 0.3);
+    border-radius: 6px;
+}
+.translation-edit-fields .translation-edit-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.translation-edit-fields .translation-edit-row:last-child {
+    margin-bottom: 0;
+}
+.translation-edit-fields .flag {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+.translation-edit-fields .lang-label {
+    font-weight: 600;
+    color: #4a90e2;
+    min-width: 70px;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.translation-edit-fields input,
+.translation-edit-fields textarea {
+    flex: 1;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    background: rgba(0,0,0,0.2);
+    color: var(--text-color);
+    font-size: 0.85rem;
+}
+.translation-edit-fields textarea {
+    min-height: 50px;
+    resize: vertical;
+}
+.translation-edit-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    font-style: italic;
+}
+
 
 /* გაუმჯობესებული booking card სტილები - ფოტოები უკეთ გამოჩნდება desktop-ზე */
 .booking-card {
@@ -1921,7 +1992,7 @@ input:checked + .toggle-slider:before {
             <i class="fas fa-comments"></i> ონლაინ ჩატი
         </a>
         <button class="btn btn-secondary" data-view="adminBookings">
-            <i class="fas fa-tasks"></i> დ���ჯავშნის მართვა
+            <i class="fas fa-tasks"></i> დ�����ჯავშნის მართვა
         </button>
         <button class="btn btn-secondary" data-view="emails">
             <i class="fas fa-envelope"></i> მაილები
@@ -2071,7 +2142,7 @@ input:checked + .toggle-slider:before {
                     </div>
                     <div class="stat-info">
                         <span class="stat-value" id="todaySubscribers">0</span>
-                        <span class="stat-label">დღეს გამოი��ერა</span>
+                        <span class="stat-label">დღეს გამ��ი��ერა</span>
                     </div>
                 </div>
             </div>
@@ -2205,7 +2276,7 @@ input:checked + .toggle-slider:before {
                 "ლურჯი": { en: "Blue", ru: "Синий", ar: "أزرق" },
                 "ყავისფერი": { en: "Brown", ru: "Коричневый", ar: "بني" },
                 "მწვანე": { en: "Green", ru: "Зеленый", ar: "أخضر" },
-                "ყვითე���ი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
+                "ყვითე�����ი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
                 "ნარინჯისფერი": { en: "Orange", ru: "Оранжевый", ar: "برتقالي" },
                 "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
                 "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
@@ -2214,6 +2285,46 @@ input:checked + .toggle-slider:before {
             }
         };
         // </CHANGE>
+
+        function toggleTranslationFields(type) {
+          const container = document.getElementById(type + 'TranslationFields');
+          if (container) {
+            const isHidden = container.style.display === 'none';
+            container.style.display = isHidden ? 'block' : 'none';
+          }
+        }
+        window.toggleTranslationFields = toggleTranslationFields;
+
+        function getManualTranslations(type) {
+          const enEl = document.getElementById(type + 'TransEn');
+          const ruEl = document.getElementById(type + 'TransRu');
+          const arEl = document.getElementById(type + 'TransAr');
+          return {
+            en: enEl ? enEl.value.trim() : '',
+            ru: ruEl ? ruEl.value.trim() : '',
+            ar: arEl ? arEl.value.trim() : ''
+          };
+        }
+
+        async function getTranslationWithManual(text, fieldType, manualType) {
+          const manual = getManualTranslations(manualType);
+          const hasManualEn = manual.en !== '';
+          const hasManualRu = manual.ru !== '';
+          const hasManualAr = manual.ar !== '';
+          
+          if (hasManualEn && hasManualRu && hasManualAr) {
+            return { ka: text, en: manual.en, ru: manual.ru, ar: manual.ar };
+          }
+          
+          const autoTranslation = await getTranslation(text, fieldType);
+          
+          return {
+            ka: text,
+            en: hasManualEn ? manual.en : autoTranslation.en,
+            ru: hasManualRu ? manual.ru : autoTranslation.ru,
+            ar: hasManualAr ? manual.ar : autoTranslation.ar
+          };
+        }
 
         async function getTranslation(text, fieldType = null) {
           if (!text || text.trim() === '') {
@@ -3054,7 +3165,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <i class="fas fa-reply"></i> პასუხი
                         </a>
                         <a href="tel:${request.contactPhone}" class="btn btn-sm btn-secondary">
-                            <i class="fas fa-phone"></i> დარეკვა
+                            <i class="fas fa-phone"></i> დარ���კვა
                         </a>
                     </div>
                 </div>
@@ -3184,7 +3295,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         async function deleteItem(itemId, type) {
-            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დან და Firebase-დან.", "ელემენტის წაშლა")
+            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დან და Firebase-დან.", "ელემენტის ���აშლა")
             if (!confirmed) return
 
             try {
@@ -3247,7 +3358,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 }
 
                 if (bookings.length === 0) {
-                    container.innerHTML = '<div class="empty-state">დაჯავშნები არ მოიძებნა</div>'
+                    container.innerHTML = '<div class="empty-state">დაჯავშნები არ მოიძებ��ა</div>'
                     return
                 }
 
@@ -3375,7 +3486,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                 if (status === "დადასტურებუ���ი") {
                     notificationData.title = "✓ დაჯავშნა დადასტურებულია!"
-                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტურდა ადმინის მიერ. შე���იძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
+                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტ��რდა ადმინის მიერ. შე���იძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
                     notificationData.type = "booking_approved"
                 } else {
                     notificationData.title = "✗ დაჯავშნა უარყოფილია"
@@ -3501,48 +3612,52 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div class="form-group">
                                 <label>სახელი *</label>
                                 <input type="text" id="itemName" class="input" value="${item?.name || ""}" required placeholder="მაგ: Toyota Camry">
-                                ${item && item.nameTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('name')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="nameTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇬🇧</span>
                                         <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.nameTranslations.en || 'N/A'}</span>
+                                        <input type="text" id="nameTransEn" value="${item?.nameTranslations?.en || ''}" placeholder="ავტომატურად ითარგმნება...">
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span>
+                                        <input type="text" id="nameTransRu" value="${item?.nameTranslations?.ru || ''}" placeholder="ავტომატურად ითარგმნება...">
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇸🇦</span>
                                         <span class="lang-label">العربية:</span>
-                                        <span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span>
+                                        <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
                                     </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცა��იელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                             <div class="form-group">
                                 <label>აღწერა</label>
                                 <textarea id="itemDescription" class="input" rows="3" placeholder="მანქანის დეტალური აღწერა...">${item?.description || ""}</textarea>
-                                ${item && item.descriptionTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('desc')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="descTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇬🇧</span>
                                         <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.en || 'N/A'}</span>
+                                        <textarea id="descTransEn" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.en || ''}</textarea>
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span>
+                                        <textarea id="descTransRu" rows="2" placeholder="���ვტომატურად ითარგმნება...">${item?.descriptionTranslations?.ru || ''}</textarea>
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇸🇦</span>
                                         <span class="lang-label">العربية:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span>
+                                        <textarea id="descTransAr" rows="2" dir="rtl" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ar || ''}</textarea>
                                     </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                         </div>
 
@@ -3666,7 +3781,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>ტრანსმისია *</label>
+                                    <label>ტრანსმი��ია *</label>
                                     <select id="itemTransmission" class="select" required>
                                         <option value="ავტომატური" ${item?.transmission === "ავტომატური" ? "selected" : ""}>ავტომატური</option>
                                         <option value="მექანიკური" ${item?.transmission === "მექანიკური" ? "selected" : ""}>მექანიკური</option>
@@ -3902,24 +4017,52 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div class="form-group">
                                 <label>სახელი *</label>
                                 <input type="text" id="itemName" class="input" value="${item?.name || ""}" required placeholder="მაგ: Grand Hotel Tbilisi">
-                                ${item && item.nameTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item"><span class="flag">🇬🇧</span><span class="lang-label">English:</span><span class="translation-text">${item.nameTranslations.en || 'N/A'}</span></div>
-                                    <div class="translation-item"><span class="flag">🇷🇺</span><span class="lang-label">Русский:</span><span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span></div>
-                                    <div class="translation-item"><span class="flag">🇸🇦</span><span class="lang-label">العربية:</span><span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span></div>
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('name')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="nameTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇬🇧</span>
+                                        <span class="lang-label">English:</span>
+                                        <input type="text" id="nameTransEn" value="${item?.nameTranslations?.en || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                    </div>
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇷🇺</span>
+                                        <span class="lang-label">Русский:</span>
+                                        <input type="text" id="nameTransRu" value="${item?.nameTranslations?.ru || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                    </div>
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
+                                    </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                             <div class="form-group">
                                 <label>აღწერა</label>
                                 <textarea id="itemDescription" class="input" rows="3" placeholder="სასტუმროს დეტალური აღწერა...">${item?.description || ""}</textarea>
-                                ${item && item.descriptionTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item"><span class="flag">🇬🇧</span><span class="lang-label">English:</span><span class="translation-text">${item.descriptionTranslations.en || 'N/A'}</span></div>
-                                    <div class="translation-item"><span class="flag">🇷🇺</span><span class="lang-label">Русский:</span><span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span></div>
-                                    <div class="translation-item"><span class="flag">🇸🇦</span><span class="lang-label">العربية:</span><span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span></div>
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('desc')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="descTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇬🇧</span>
+                                        <span class="lang-label">English:</span>
+                                        <textarea id="descTransEn" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.en || ''}</textarea>
+                                    </div>
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇷🇺</span>
+                                        <span class="lang-label">Русский:</span>
+                                        <textarea id="descTransRu" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ru || ''}</textarea>
+                                    </div>
+                                    <div class="translation-edit-row">
+                                        <span class="flag">🇸🇦</span>
+                                        <span class="lang-label">العربية:</span>
+                                        <textarea id="descTransAr" rows="2" dir="rtl" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ar || ''}</textarea>
+                                    </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                         </div>
 
@@ -4228,48 +4371,52 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div class="form-group">
                                 <label>სახელი *</label>
                                 <input type="text" id="itemName" class="input" value="${item?.name || ""}" required placeholder="მაგ: კახეთის ტური">
-                                ${item && item.nameTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('name')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="nameTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇬🇧</span>
                                         <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.nameTranslations.en || 'N/A'}</span>
+                                        <input type="text" id="nameTransEn" value="${item?.nameTranslations?.en || ''}" placeholder="ავტომატურად ითარგმნება...">
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.nameTranslations.ru || 'N/A'}</span>
+                                        <input type="text" id="nameTransRu" value="${item?.nameTranslations?.ru || ''}" placeholder="ავტომატურად ითარგმნება...">
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇸🇦</span>
                                         <span class="lang-label">العربية:</span>
-                                        <span class="translation-text">${item.nameTranslations.ar || 'N/A'}</span>
+                                        <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
                                     </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                             <div class="form-group">
                                 <label>აღწერა</label>
                                 <textarea id="itemDescription" class="input" rows="3" placeholder="ტურის დეტალური აღწერა...">${item?.description || ""}</textarea>
-                                ${item && item.descriptionTranslations ? `
-                                <div class="translation-preview">
-                                    <div class="translation-item">
+                                <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('desc')">
+                                    <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                </button>
+                                <div id="descTranslationFields" class="translation-edit-fields" style="display:none;">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇬🇧</span>
                                         <span class="lang-label">English:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.en || 'N/A'}</span>
+                                        <textarea id="descTransEn" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.en || ''}</textarea>
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.ru || 'N/A'}</span>
+                                        <textarea id="descTransRu" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ru || ''}</textarea>
                                     </div>
-                                    <div class="translation-item">
+                                    <div class="translation-edit-row">
                                         <span class="flag">🇸🇦</span>
                                         <span class="lang-label">العربية:</span>
-                                        <span class="translation-text">${item.descriptionTranslations.ar || 'N/A'}</span>
+                                        <textarea id="descTransAr" rows="2" dir="rtl" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ar || ''}</textarea>
                                     </div>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
-                                ` : ''}
                             </div>
                         </div>
 
@@ -4376,7 +4523,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             <i class="fas fa-clock"></i> ფიქსირებული დრო
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღე���ბი
                                         </div>
                                     </div>
                                 </label>
@@ -4661,8 +4808,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 const regionTranslationsArray = await Promise.all(regionTranslationsPromises);
                 
                 const [nameTranslations, descTranslations, typeTranslations] = await Promise.all([
-                    getTranslation(name, null),
-                    getTranslation(description, null),
+                    getTranslationWithManual(name, null, 'name'),
+                    getTranslationWithManual(description, null, 'desc'),
                     getTranslation(type, 'types')
                 ]);
 
