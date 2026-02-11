@@ -2199,7 +2199,7 @@ input:checked + .toggle-slider:before {
             colors: {
                 "თეთრი": { en: "White", ru: "Белый", ar: "أبيض" },
                 "შავი": { en: "Black", ru: "Черный", ar: "أسود" },
-                "ნაცრისფერი": { en: "Gray", ru: "Серый", ar: "رمادي" },
+                "ნაცრისფერი": { en: "Gray", ru: "Серый", ar: "رما��ي" },
                 "ვერცხლისფერი": { en: "Silver", ru: "Серебристый", ar: "فضي" },
                 "წითელი": { en: "Red", ru: "Красный", ar: "أحمر" },
                 "ლურჯი": { en: "Blue", ru: "Синий", ar: "أزرق" },
@@ -3171,7 +3171,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.rooms || 0} ოთახი</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.capacity} ადგილი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.rooms || 0} ოთახი</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -4355,8 +4355,12 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     <input type="text" id="itemDuration" class="input" value="${item?.duration || ""}" required placeholder="მაგ: 3 დღე">
                                 </div>
                                 <div class="form-group">
+                                    <label>მინიმალური რაოდენობა *</label>
+                                    <input type="number" id="itemMinCapacity" class="input" value="${item?.minCapacity || ""}" required placeholder="1" min="1">
+                                </div>
+                                <div class="form-group">
                                     <label>მაქსიმალური რაოდენობა *</label>
-                                    <input type="number" id="itemCapacity" class="input" value="${item?.capacity || ""}" required placeholder="10">
+                                    <input type="number" id="itemCapacity" class="input" value="${item?.capacity || ""}" required placeholder="10" min="1">
                                 </div>
                             </div>
                         </div>
@@ -4741,6 +4745,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     
                 } else {
                     itemData.duration = document.getElementById("itemDuration").value
+                    itemData.minCapacity = Number.parseInt(document.getElementById("itemMinCapacity").value) || 1
                     itemData.capacity = Number.parseInt(document.getElementById("itemCapacity").value)
                     
                     const licensePlate = document.getElementById("itemLicensePlate")?.value
@@ -4922,7 +4927,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             // Update label
             const label = container.previousElementSibling?.previousElementSibling;
             if (label && label.tagName === 'LABEL') {
-                label.textContent = `არსებული ფოტოები (${images.length})`;
+                label.textContent = `არსე���ული ფოტოები (${images.length})`;
             }
             
             // Update hidden input
@@ -5266,7 +5271,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         window.deletePost = async function(postId) {
             const confirmed = await showConfirm(
                 "ნამდვილად გსურთ ამ პოსტის წაშლა? ფოტო/ვიდეო წაიშლება Cloudinary-დან.",
-                "პოსტის წაშლა"
+                "პოსტის წ���შლა"
             );
             if (!confirmed) return;
 
@@ -5446,7 +5451,7 @@ function removeHtmlExtensionFromURL() {
 // გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
 window.addEventListener('load', removeHtmlExtensionFromURL);
 
-// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთ��ის)
+// ასევე გამოიძახეთ, როცა ისტორია იც��ლება (SPA-სთ��ის)
 window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
 </body>

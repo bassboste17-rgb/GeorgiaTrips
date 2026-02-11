@@ -3040,6 +3040,18 @@ textarea.input {
         </div>
       </div>
 
+      <div id="peopleCountContainer" class="form-group" style="display: none; margin-top: 1rem;">
+        <label for="peopleCount" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.625rem; color: var(--text-primary); font-weight: 500;">
+          <i class="fas fa-users"></i> <span data-i18n="bookingPeopleCount">ადამიანების რაოდენობა</span> *
+        </label>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button type="button" id="peopleCountMinus" class="btn btn-secondary" style="width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; border-radius: 50%;">-</button>
+          <input type="number" id="peopleCount" class="input" value="1" min="1" max="1" readonly style="text-align: center; width: 80px; font-size: 1.15rem; font-weight: 700;">
+          <button type="button" id="peopleCountPlus" class="btn btn-secondary" style="width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; border-radius: 50%;">+</button>
+        </div>
+        <p id="peopleCountHint" style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);"></p>
+      </div>
+
       <div id="priceInfo" class="price-info" style="display: none;"></div>
 
       <div class="booking-user-info">
@@ -3614,11 +3626,23 @@ textarea.input {
       }
       
       selectDate(dateString) {
-        // For tours, single date selection
-        if (this.selectedDates.includes(dateString)) {
-          this.selectedDates = [];
+        if (this.multiSelect) {
+          // Multi-day selection: toggle date
+          const idx = this.selectedDates.indexOf(dateString);
+          if (idx !== -1) {
+            this.selectedDates.splice(idx, 1);
+          } else {
+            this.selectedDates.push(dateString);
+          }
+          // Sort dates chronologically
+          this.selectedDates.sort();
         } else {
-          this.selectedDates = [dateString];
+          // Single date selection
+          if (this.selectedDates.includes(dateString)) {
+            this.selectedDates = [];
+          } else {
+            this.selectedDates = [dateString];
+          }
         }
         
         this.render();
@@ -4723,10 +4747,10 @@ function createItemCard(item) {
           <span>📍 ${regionDisplay}</span>
           <span>🎯 ${translateValue(item.type, 'type')}</span>
           <span>🕒 ${duration}</span>
-          <span>👥 ${item.capacity} ${capacity}</span>
+          <span>👥 ${item.minCapacity || 1}-${item.capacity} ${capacity}</span>
         </div>
 <div class="card-footer">
-          <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</div>
+          <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}<small style="font-size:0.65em;opacity:0.7;font-weight:400;margin-left:2px">/${ls?.translate('bookingPerPersonShort') || '1 ადამ.'}</small></div>
           <button class="btn btn-sm book-btn" data-id="${item.id}">${bookBtn}</button>
         </div>
       </div>
@@ -4820,7 +4844,7 @@ function openBookingModalDirect(item, type) {
   
   const isRestricted = item.restrictedMode || false;
   
-  const perTour = ls ? ls.translate('bookingPerTour') : 'tour';
+    const perTour = ls ? ls.translate('bookingPerPersonShort') || '1 ადამ.' : '1 ადამ.';
   const fullyBookedTitle = ls ? ls.translate('bookingFullyBooked') : 'Fully Booked';
   const fullyBookedMsg = ls ? ls.translate('bookingFullyBookedMessage') : "This tour currently has no available dates";
 
@@ -4869,7 +4893,7 @@ function openBookingModalDirect(item, type) {
         <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}/${perTour}</div>
         <div class="booking-additional-specs">
           ${duration ? `<span><i class="fas fa-clock"></i> ${duration}</span>` : ''}
-          ${item.capacity ? `<span><i class="fas fa-users"></i> ${item.capacity} ${ls?.translate('bookingCapacity') || 'seats'}</span>` : ''}
+          ${item.capacity ? `<span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ${ls?.translate('bookingPeople') || 'ადამიანი'}</span>` : ''}
           ${item.route ? `<span><i class="fas fa-route"></i> ${(lang !== 'ka' && item.routeTranslations?.[lang]) ? item.routeTranslations[lang] : item.route}</span>` : ''}
         </div>
       </div>
@@ -4882,6 +4906,57 @@ function openBookingModalDirect(item, type) {
   const confirmBtn = document.getElementById("confirmBooking");
   if (confirmBtn) {
     confirmBtn.style.display = "inline-flex";
+  }
+
+  // Setup people count selector
+  const peopleContainer = document.getElementById("peopleCountContainer");
+  const peopleInput = document.getElementById("peopleCount");
+  const peopleHint = document.getElementById("peopleCountHint");
+  const minPeople = item.minCapacity || 1;
+  const maxPeople = item.capacity || 1;
+  
+  if (peopleContainer && peopleInput) {
+    peopleContainer.style.display = "block";
+    peopleInput.min = minPeople;
+    peopleInput.max = maxPeople;
+    peopleInput.value = minPeople;
+    
+    const minLabel = ls?.translate('bookingMinPeople') || 'მინ.';
+    const maxLabel = ls?.translate('bookingMaxPeople') || 'მაქს.';
+    const peopleLabel = ls?.translate('bookingPeople') || 'ადამიანი';
+    if (peopleHint) {
+      peopleHint.textContent = `${minLabel}: ${minPeople} ${peopleLabel} | ${maxLabel}: ${maxPeople} ${peopleLabel}`;
+    }
+    
+    const minusBtn = document.getElementById("peopleCountMinus");
+    const plusBtn = document.getElementById("peopleCountPlus");
+    
+    const updatePeopleButtons = () => {
+      const val = parseInt(peopleInput.value);
+      if (minusBtn) minusBtn.disabled = val <= minPeople;
+      if (plusBtn) plusBtn.disabled = val >= maxPeople;
+      updateBookingPrice();
+    };
+    
+    if (minusBtn) {
+      minusBtn.onclick = () => {
+        const val = parseInt(peopleInput.value);
+        if (val > minPeople) {
+          peopleInput.value = val - 1;
+          updatePeopleButtons();
+        }
+      };
+    }
+    if (plusBtn) {
+      plusBtn.onclick = () => {
+        const val = parseInt(peopleInput.value);
+        if (val < maxPeople) {
+          peopleInput.value = val + 1;
+          updatePeopleButtons();
+        }
+      };
+    }
+    updatePeopleButtons();
   }
 
   let tourDurationDays = null;
@@ -4898,12 +4973,12 @@ function openBookingModalDirect(item, type) {
       availableDates: item.availableDates || [],
       calendarMode: item.calendarMode || 'select-unavailable',
       restrictedMode: isRestricted,
-      multiSelect: false,
+      multiSelect: true,
       tourDuration: tourDurationDays,
       tourItem: item,
       onDateSelect: (dates) => {
         document.getElementById("startDate").value = dates[0] || "";
-        document.getElementById("endDate").value = dates[0] || "";
+        document.getElementById("endDate").value = dates[dates.length - 1] || "";
         updateBookingPrice();
       },
     });
@@ -4938,7 +5013,8 @@ function updateBookingPrice() {
     days = startCalendar.selectedDates.length || 1;
   }
 
-  const total = selectedItem.pricePerDay;
+  const peopleCount = parseInt(document.getElementById("peopleCount")?.value) || 1;
+  const total = selectedItem.pricePerDay * peopleCount * days;
   
   const formatDate = (date) => {
     if (window.languageSwitcher) {
@@ -4966,10 +5042,34 @@ const dateLabel = ls ? ls.translate('bookingPriceDate') || 'Date' : 'Date';
   const lang = ls?.getCurrentLanguage() || 'ka';
   const translatedName = (lang !== 'ka' && selectedItem.nameTranslations?.[lang]) ? selectedItem.nameTranslations[lang] : selectedItem.name;
   
+  const peopleCountVal = parseInt(document.getElementById("peopleCount")?.value) || 1;
+  const peopleLabel2 = ls ? ls.translate('bookingPeopleLabel') || 'ადამიანი' : 'ადამიანი';
+  const dayLabel = ls ? ls.translate('bookingDayLabel') || 'დღე' : 'დღე';
+  const daysLabel = ls ? ls.translate('bookingDaysLabel') || 'დღე' : 'დღე';
+  const perPersonText = ls ? ls.translate('bookingPerPersonDay') || '1 ადამ./დღე' : '1 ადამ./დღე';
+  
+  const selectedDatesFormatted = (startCalendar && startCalendar.selectedDates && startCalendar.selectedDates.length > 1) 
+    ? startCalendar.selectedDates.map(d => {
+        const dt = parseDate(d);
+        return formatDate(dt);
+      }).join(', ')
+    : startFormatted;
+  
+  let calculationHTML = '';
+  if (days > 1 && peopleCountVal > 1) {
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} x ${days} ${days === 1 ? dayLabel : daysLabel} = ${total}${currencySymbol}</p>`;
+  } else if (days > 1) {
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${days} ${daysLabel} x ${peopleCountVal} ${peopleLabel2} = ${total}${currencySymbol}</p>`;
+  } else if (peopleCountVal > 1) {
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} = ${total}${currencySymbol}</p>`;
+  }
+  
   priceInfo.innerHTML = `
     <div class="price-breakdown">
-      <p><i class="fas fa-calendar-alt"></i> ${dateLabel}: ${startFormatted}</p>
+      <p><i class="fas fa-calendar-alt"></i> ${dateLabel}: ${selectedDatesFormatted}</p>
+      ${days > 1 ? `<p><i class="fas fa-calendar-day"></i> ${ls?.translate('bookingSelectedDays') || 'არჩეული დღეები'}: ${days} ${days === 1 ? dayLabel : daysLabel}</p>` : ''}
       <p><i class="fas fa-route"></i> ${tourLabel}: ${translatedName}</p>
+      ${calculationHTML}
       <p><strong><i class="fas fa-money-bill-wave"></i> ${totalLabel}: ${total}${currencySymbol}</strong></p>
     </div>
   `;
@@ -5012,7 +5112,18 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
     days = parseTourDuration(selectedItem.duration) || 1;
   }
 
-  const totalPrice = selectedItem.pricePerDay;
+  const bookingPeopleCount = parseInt(document.getElementById("peopleCount")?.value) || 1;
+  const minPeopleRequired = selectedItem.minCapacity || 1;
+  const maxPeopleAllowed = selectedItem.capacity || 999;
+  
+  if (bookingPeopleCount < minPeopleRequired || bookingPeopleCount > maxPeopleAllowed) {
+    const ls2 = window.languageSwitcher;
+    const errMsg = ls2?.translate('bookingPeopleRangeError') || `ადამიანების რაოდენობა უნდა იყოს ${minPeopleRequired}-დან ${maxPeopleAllowed}-მდე`;
+    showToast(errMsg.replace('{min}', minPeopleRequired).replace('{max}', maxPeopleAllowed), "warning");
+    return;
+  }
+
+  const totalPrice = selectedItem.pricePerDay * bookingPeopleCount * days;
 
   const confirmBtn = document.getElementById("confirmBooking");
   const originalText = confirmBtn.textContent;
@@ -5028,8 +5139,10 @@ const bookingData = {
   itemRegion: selectedItem.region || "",
   itemRegions: selectedItem.regions || [],
   startDate,
-  endDate: startDate,
+  endDate: selectedDatesArray.length > 0 ? selectedDatesArray[selectedDatesArray.length - 1] : startDate,
   duration: days,
+  peopleCount: bookingPeopleCount,
+  pricePerPersonPerDay: selectedItem.pricePerDay,
   totalPrice: totalPrice,
   currency: selectedItem.currency || 'GEL',
   status: "მოლოდინში",
@@ -5070,7 +5183,7 @@ const bookingData = {
         await addDoc(collection(db, "notifications"), {
           userId: adminId,
           title: notificationTitle,
-          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${startDate}\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'}\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
+          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${selectedDatesArray.length > 0 ? selectedDatesArray.join(', ') : startDate} (${days} დღე)\n👥 ${bookingPeopleCount} ადამიანი\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} (${selectedItem.pricePerDay}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} x ${bookingPeopleCount} ადამ. x ${days} დღე)\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
           type: "admin_booking_request",
           read: false,
           bookingId: docRef.id,
@@ -5117,6 +5230,11 @@ const bookingData = {
     document.getElementById("contactEmail").value = '';
     document.getElementById("contactPhone").value = '';
     document.getElementById("contactDescription").value = '';
+    
+    const resetPeopleInput = document.getElementById("peopleCount");
+    if (resetPeopleInput) resetPeopleInput.value = 1;
+    const resetPeopleContainer = document.getElementById("peopleCountContainer");
+    if (resetPeopleContainer) resetPeopleContainer.style.display = "none";
     
   } catch (error) {
     console.error("Error creating booking:", error);
@@ -5198,7 +5316,7 @@ function openDetailModal(item) {
         <span class="detail-spec-icon">👥</span>
         <div class="detail-spec-text">
           <span class="detail-spec-label">${capacityLabel}</span>
-          <span class="detail-spec-value">${item.capacity}</span>
+          <span class="detail-spec-value">${item.minCapacity || 1}-${item.capacity}</span>
         </div>
       </div>
       ${route ? `
@@ -5250,7 +5368,7 @@ function openDetailModal(item) {
 <div class="detail-info">
         <div>
           <h2>${name}</h2>
-          <div class="detail-price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</div>
+          <div class="detail-price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}<small style="font-size:0.55em;opacity:0.7;font-weight:400;margin-left:3px">/${ls?.translate('bookingPerPersonShort') || '1 ადამ.'}</small></div>
         </div>
         <div class="detail-description">
           ${description || noDesc}
