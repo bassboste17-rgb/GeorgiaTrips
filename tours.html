@@ -1717,6 +1717,18 @@ textarea.input {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
+.tour-hotel-card.selected {
+    border-color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tour-hotel-card.selected .tour-hotel-card-btn {
+    background: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
 .tour-hotel-card-image {
     width: 100%;
     height: 130px;
@@ -3519,7 +3531,7 @@ textarea.input {
         region: {
           'თბილისი': 'regionTbilisi',
           'ბათუმი': 'regionBatumi',
-          'ქუთა���სი': 'regionKutaisi',
+          'ქუთა�����სი': 'regionKutaisi',
           'აფხაზეთი': 'regionAbkhazia',
           'სამეგრელო': 'regionSamegrelo',
           'იმერეთი': 'regionImereti',
@@ -5188,7 +5200,9 @@ function updateBookingPrice() {
   }
 
   const peopleCount = parseInt(document.getElementById("peopleCount")?.value) || 1;
-  const total = selectedItem.pricePerDay * peopleCount * days;
+  const tourTotal = selectedItem.pricePerDay * peopleCount * days;
+  const hotelPrice = selectedBookingHotel ? (selectedBookingHotel.pricePerDay * days) : 0;
+  const total = tourTotal + hotelPrice;
   
   const formatDate = (date) => {
     if (window.languageSwitcher) {
@@ -5231,11 +5245,18 @@ const dateLabel = ls ? ls.translate('bookingPriceDate') || 'Date' : 'Date';
   
   let calculationHTML = '';
   if (days > 1 && peopleCountVal > 1) {
-    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} x ${days} ${days === 1 ? dayLabel : daysLabel} = ${total}${currencySymbol}</p>`;
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} x ${days} ${days === 1 ? dayLabel : daysLabel} = ${tourTotal}${currencySymbol}</p>`;
   } else if (days > 1) {
-    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${days} ${daysLabel} x ${peopleCountVal} ${peopleLabel2} = ${total}${currencySymbol}</p>`;
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${days} ${daysLabel} x ${peopleCountVal} ${peopleLabel2} = ${tourTotal}${currencySymbol}</p>`;
   } else if (peopleCountVal > 1) {
-    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} = ${total}${currencySymbol}</p>`;
+    calculationHTML = `<p><i class="fas fa-calculator"></i> ${selectedItem.pricePerDay}${currencySymbol} x ${peopleCountVal} ${peopleLabel2} = ${tourTotal}${currencySymbol}</p>`;
+  }
+  
+  const hotelLabel = ls ? ls.translate('tourHotelLabel') || 'Hotel' : 'Hotel';
+  let hotelHTML = '';
+  if (selectedBookingHotel) {
+    const hotelCurrencySymbol = selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '\u20AC' : '\u20BE';
+    hotelHTML = `<p><i class="fas fa-hotel"></i> ${hotelLabel}: ${selectedBookingHotel.name} (${selectedBookingHotel.pricePerDay}${hotelCurrencySymbol} x ${days} ${days === 1 ? dayLabel : daysLabel} = ${hotelPrice}${hotelCurrencySymbol})</p>`;
   }
   
   priceInfo.innerHTML = `
@@ -5244,30 +5265,28 @@ const dateLabel = ls ? ls.translate('bookingPriceDate') || 'Date' : 'Date';
       ${days > 1 ? `<p><i class="fas fa-calendar-day"></i> ${ls?.translate('bookingSelectedDays') || 'არჩეული დღეები'}: ${days} ${days === 1 ? dayLabel : daysLabel}</p>` : ''}
       <p><i class="fas fa-route"></i> ${tourLabel}: ${translatedName}</p>
       ${calculationHTML}
+      ${hotelHTML}
       <p><strong><i class="fas fa-money-bill-wave"></i> ${totalLabel}: ${total}${currencySymbol}</strong></p>
     </div>
   `;
 }
 
+let selectedBookingHotel = null;
+
 function renderTourLinkedHotels(item) {
   const container = document.getElementById('tourLinkedHotelsContainer');
-  console.log("[v0] renderTourLinkedHotels called, container:", !!container);
-  console.log("[v0] item.linkedHotels:", JSON.stringify(item?.linkedHotels));
-  console.log("[v0] allHotelsData.length:", allHotelsData?.length);
   if (!container) return;
+  
+  selectedBookingHotel = null;
 
   const linkedHotelIds = item.linkedHotels || [];
-  console.log("[v0] linkedHotelIds:", JSON.stringify(linkedHotelIds));
   if (linkedHotelIds.length === 0) {
-    console.log("[v0] No linkedHotelIds, hiding container");
     container.style.display = 'none';
     return;
   }
 
   const linkedHotels = allHotelsData.filter(h => linkedHotelIds.includes(h.id));
-  console.log("[v0] Matched linkedHotels:", linkedHotels.length, linkedHotels.map(h => h.id + ':' + h.name));
   if (linkedHotels.length === 0) {
-    console.log("[v0] No matching hotels found in allHotelsData");
     container.style.display = 'none';
     return;
   }
@@ -5279,7 +5298,8 @@ function renderTourLinkedHotels(item) {
   const roomsLabel = ls?.translate('tourHotelRooms') || 'Room';
   const guestsLabel = ls?.translate('tourHotelGuests') || 'Guest';
   const perNightLabel = ls?.translate('tourHotelPerNight') || '/night';
-  const viewBtnLabel = ls?.translate('tourHotelBookBtn') || 'View Hotel';
+  const selectLabel = ls?.translate('tourHotelSelect') || 'Select';
+  const selectedLabel = ls?.translate('tourHotelSelected') || 'Selected';
 
   let html = '<div class="tour-hotels-section">';
   html += '<div class="tour-hotels-section-header">';
@@ -5296,7 +5316,7 @@ function renderTourLinkedHotels(item) {
     const rooms = hotel.rooms || 0;
     const guests = hotel.guests || 0;
 
-    html += '<div class="tour-hotel-card" onclick="window.open(\'hotel.html?id=' + hotel.id + '\', \'_blank\')">';
+    html += '<div class="tour-hotel-card" data-hotel-id="' + hotel.id + '" data-hotel-price="' + price + '" data-hotel-currency="' + (hotel.currency || 'GEL') + '" data-hotel-name="' + hotelName.replace(/"/g, '&quot;') + '">';
     if (imageUrl) {
       html += '<img class="tour-hotel-card-image" src="' + imageUrl + '" alt="' + hotelName + '">';
     } else {
@@ -5309,13 +5329,53 @@ function renderTourLinkedHotels(item) {
     if (guests > 0) html += '<span><i class="fas fa-users"></i> ' + guests + ' ' + guestsLabel + '</span>';
     html += '</div>';
     html += '<div class="tour-hotel-card-price">' + price + currencySymbol + perNightLabel + '</div>';
-    html += '<div class="tour-hotel-card-btn"><i class="fas fa-external-link-alt"></i> ' + viewBtnLabel + '</div>';
+    html += '<button type="button" class="tour-hotel-card-btn tour-hotel-select-btn"><i class="fas fa-plus-circle"></i> <span>' + selectLabel + '</span></button>';
     html += '</div></div>';
   });
 
   html += '</div></div>';
   container.innerHTML = html;
   container.style.display = 'block';
+
+  // Add click handlers to hotel cards
+  container.querySelectorAll('.tour-hotel-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const hotelId = this.dataset.hotelId;
+      const hotelPrice = parseFloat(this.dataset.hotelPrice) || 0;
+      const hotelCurrency = this.dataset.hotelCurrency;
+      const hotelName = this.dataset.hotelName;
+      
+      // Deselect all cards first
+      container.querySelectorAll('.tour-hotel-card').forEach(c => {
+        c.classList.remove('selected');
+        const btn = c.querySelector('.tour-hotel-select-btn');
+        if (btn) {
+          btn.innerHTML = '<i class="fas fa-plus-circle"></i> <span>' + selectLabel + '</span>';
+        }
+      });
+      
+      // If clicking the same card, deselect it
+      if (selectedBookingHotel && selectedBookingHotel.id === hotelId) {
+        selectedBookingHotel = null;
+      } else {
+        // Select this card
+        this.classList.add('selected');
+        const btn = this.querySelector('.tour-hotel-select-btn');
+        if (btn) {
+          btn.innerHTML = '<i class="fas fa-check-circle"></i> <span>' + selectedLabel + '</span>';
+        }
+        selectedBookingHotel = {
+          id: hotelId,
+          name: hotelName,
+          pricePerDay: hotelPrice,
+          currency: hotelCurrency
+        };
+      }
+      
+      // Recalculate total price
+      updateBookingPrice();
+    });
+  });
 }
 
 document.getElementById("confirmBooking")?.addEventListener("click", async () => {
@@ -5366,7 +5426,9 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
     return;
   }
 
-  const totalPrice = selectedItem.pricePerDay * bookingPeopleCount * days;
+  const tourPrice = selectedItem.pricePerDay * bookingPeopleCount * days;
+  const hotelPriceTotal = selectedBookingHotel ? (selectedBookingHotel.pricePerDay * days) : 0;
+  const totalPrice = tourPrice + hotelPriceTotal;
 
   const confirmBtn = document.getElementById("confirmBooking");
   const originalText = confirmBtn.textContent;
@@ -5386,6 +5448,7 @@ const bookingData = {
   duration: days,
   peopleCount: bookingPeopleCount,
   pricePerPersonPerDay: selectedItem.pricePerDay,
+  tourPrice: tourPrice,
   totalPrice: totalPrice,
   currency: selectedItem.currency || 'GEL',
   status: "მოლოდინში",
@@ -5406,6 +5469,17 @@ const bookingData = {
       ...( !currentUser && { isGuest: true }),
     };
 
+    // Add selected hotel info
+    if (selectedBookingHotel) {
+      bookingData.selectedHotel = {
+        id: selectedBookingHotel.id,
+        name: selectedBookingHotel.name,
+        pricePerDay: selectedBookingHotel.pricePerDay,
+        currency: selectedBookingHotel.currency,
+        totalHotelPrice: hotelPriceTotal
+      };
+    }
+
     if (startCalendar && startCalendar.selectedDates && startCalendar.selectedDates.length > 0) {
       bookingData.selectedDates = startCalendar.selectedDates;
     }
@@ -5422,11 +5496,15 @@ const bookingData = {
       
       const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
       
+      const hotelInfoText = selectedBookingHotel 
+        ? `\n🏨 ${selectedBookingHotel.name} (${selectedBookingHotel.pricePerDay}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'} x ${days} დღე = ${hotelPriceTotal}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'})`
+        : '';
+
       for (const adminId of adminUsers) {
         await addDoc(collection(db, "notifications"), {
           userId: adminId,
           title: notificationTitle,
-          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${selectedDatesArray.length > 0 ? selectedDatesArray.join(', ') : startDate} (${days} დღე)\n👥 ${bookingPeopleCount} ადამიანი\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} (${selectedItem.pricePerDay}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} x ${bookingPeopleCount} ადამ. x ${days} დღე)\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
+          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${selectedDatesArray.length > 0 ? selectedDatesArray.join(', ') : startDate} (${days} დღე)\n👥 ${bookingPeopleCount} ადამიანი${hotelInfoText}\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} (${selectedItem.pricePerDay}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} x ${bookingPeopleCount} ადამ. x ${days} დღე${selectedBookingHotel ? ' + სასტუმრო ' + hotelPriceTotal + (selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾') : ''})\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
           type: "admin_booking_request",
           read: false,
           bookingId: docRef.id,
@@ -5478,6 +5556,10 @@ const bookingData = {
     if (resetPeopleInput) resetPeopleInput.value = 1;
     const resetPeopleContainer = document.getElementById("peopleCountContainer");
     if (resetPeopleContainer) resetPeopleContainer.style.display = "none";
+    
+    selectedBookingHotel = null;
+    const hotelContainer = document.getElementById("tourLinkedHotelsContainer");
+    if (hotelContainer) { hotelContainer.innerHTML = ''; hotelContainer.style.display = 'none'; }
     
   } catch (error) {
     console.error("Error creating booking:", error);

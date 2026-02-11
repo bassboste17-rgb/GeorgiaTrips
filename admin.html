@@ -2164,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი�����ი</option>
+                        <option value="rejected">❌ უარყოფი�������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -3683,16 +3683,11 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         function loadTourHotelsForRegions(editingItem) {
-            console.log("[v0] loadTourHotelsForRegions called, currentAdminTab:", currentAdminTab);
             const container = document.getElementById('tourHotelsListContainer');
-            console.log("[v0] container found:", !!container);
             if (!container) return;
 
             const allCheckbox = document.getElementById('regionAllAdmin');
             const regionCheckboxes = document.querySelectorAll('.region-checkbox-admin[data-region-admin]');
-            console.log("[v0] allCheckbox:", !!allCheckbox, "checked:", allCheckbox?.checked);
-            console.log("[v0] regionCheckboxes count:", regionCheckboxes.length);
-            Array.from(regionCheckboxes).forEach(cb => console.log("[v0] Region cb:", cb.value, "checked:", cb.checked));
 
             let selectedRegions = [];
             if (allCheckbox && allCheckbox.checked) {
@@ -3701,12 +3696,6 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 selectedRegions = Array.from(regionCheckboxes)
                     .filter(cb => cb.checked)
                     .map(cb => cb.value);
-            }
-
-            console.log("[v0] selectedRegions:", JSON.stringify(selectedRegions));
-            console.log("[v0] allHotels.length:", allHotels.length);
-            if (allHotels.length > 0) {
-                console.log("[v0] First hotel sample:", allHotels[0].name, "regions:", JSON.stringify(allHotels[0].regions));
             }
 
             if (selectedRegions.length === 0) {
@@ -3722,19 +3711,21 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 previouslyLinked = [];
             }
 
-            // Filter hotels by selected regions
+            // Filter hotels by selected regions - check both 'regions' array and 'region' string
             const matchingHotels = allHotels.filter(hotel => {
                 if (selectedRegions.includes('all')) return true;
+                // Check regions array
                 if (hotel.regions && Array.isArray(hotel.regions)) {
                     if (hotel.regions.includes('all')) return true;
                     return hotel.regions.some(r => selectedRegions.includes(r));
                 }
+                // Check single region string
                 if (hotel.region) {
+                    if (hotel.region === 'all') return true;
                     return selectedRegions.includes(hotel.region);
                 }
                 return false;
             });
-            console.log("[v0] matchingHotels.length:", matchingHotels.length);
             if (matchingHotels.length === 0) {
                 container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">ამ რეგიონში სასტუმროები არ მოიძებნა</p>';
                 return;
@@ -4651,7 +4642,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალე��ი</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <label>რეგიონი (რეგი��ნები) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
