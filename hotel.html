@@ -1746,6 +1746,345 @@ textarea.input {
 .card-clickable {
     cursor: pointer;
 }
+
+/* Guest Selector */
+.guest-selector-section {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.guest-selector-section h3 {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.guest-selector-section h3 i {
+    color: var(--gold);
+}
+
+.guest-count-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.guest-count-control label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    min-width: 140px;
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+}
+
+.guest-counter button {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--dark-border);
+    background: var(--dark-surface);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guest-counter button:hover:not(:disabled) {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #000;
+}
+
+.guest-counter button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.guest-counter .guest-count-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Room Allocation Results */
+.room-allocation-result {
+    margin-top: 1rem;
+}
+
+.room-allocation-auto {
+    background: rgba(40, 167, 69, 0.08);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.room-allocation-auto h4 {
+    color: var(--success-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.allocation-room-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+}
+
+.allocation-room-item:hover {
+    border-color: rgba(252, 175, 21, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.allocation-room-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.allocation-room-info i {
+    color: var(--gold);
+    font-size: 1.1rem;
+}
+
+.allocation-room-info .room-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.allocation-room-info .room-detail .room-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.allocation-room-info .room-detail .room-meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.allocation-room-price {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.allocation-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(252, 175, 21, 0.1);
+    border: 1px solid rgba(252, 175, 21, 0.3);
+    border-radius: 8px;
+    margin-top: 0.75rem;
+}
+
+.allocation-total .total-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.allocation-total .total-price {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+/* Manual Room Selection */
+.room-manual-section {
+    margin-top: 1rem;
+}
+
+.room-manual-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    width: 100%;
+}
+
+.room-manual-toggle:hover {
+    border-color: rgba(252, 175, 21, 0.3);
+    background: rgba(252, 175, 21, 0.05);
+    color: var(--text-primary);
+}
+
+.room-manual-toggle i {
+    color: var(--gold);
+}
+
+.room-manual-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+}
+
+.room-type-select-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: var(--dark-card);
+    border: 2px solid var(--dark-border);
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.room-type-select-item.selected {
+    border-color: var(--gold);
+    background: rgba(252, 175, 21, 0.08);
+}
+
+.room-type-select-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.room-type-select-info .rt-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.room-type-select-info .rt-meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.room-type-select-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.room-type-select-controls .rt-price {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 0.75rem;
+}
+
+.room-type-qty-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--dark-border);
+    background: var(--dark-surface);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-type-qty-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #000;
+}
+
+.room-type-qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.no-rooms-warning {
+    padding: 1.25rem;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    color: var(--warning-color);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .guest-count-control {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .guest-count-control label {
+        min-width: unset;
+    }
+    
+    .allocation-room-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .room-type-select-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .room-type-select-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
     </style>
 </head>
 <body>
@@ -2798,6 +3137,10 @@ function createItemCard(item) {
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმარი';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
 
+    const hasRoomTypes = item.roomTypes && item.roomTypes.length > 0;
+    const startingFrom = ls ? ls.translate('hotelStartingFrom') || 'დან' : 'დან';
+    const roomTypesInfo = hasRoomTypes ? item.roomTypes.map(rt => `${rt.guests} ${guestsLabel}`).join(', ') : '';
+
     return `
         <div class="card card-clickable" data-id="${item.id}">
             <img src="${imageUrl}" alt="${name}" class="card-image">
@@ -2811,7 +3154,7 @@ function createItemCard(item) {
                 <p class="card-description">${description}</p>
                 <div class="card-details">
                     <span><i class="fas fa-map-marker-alt"></i> ${regionDisplay}</span>
-                    ${item.rooms ? `<span><i class="fas fa-door-open"></i> ${item.rooms} ${roomsLabel}</span>` : ''}
+                    ${hasRoomTypes ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes.length} ${ls ? ls.translate('hotelRoomTypes') || 'ტიპი ოთახი' : 'ტიპი ოთახი'}</span>` : (item.rooms ? `<span><i class="fas fa-door-open"></i> ${item.rooms} ${roomsLabel}</span>` : '')}
                     ${item.bedrooms ? `<span><i class="fas fa-bed"></i> ${item.bedrooms} ${bedroomsLabel}</span>` : ''}
                     ${item.guests ? `<span><i class="fas fa-users"></i> ${item.guests} ${guestsLabel}</span>` : ''}
                     ${item.type ? `<span><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</span>` : ''}
@@ -2925,13 +3268,22 @@ function openBookingModalDirect(item, type) {
         return;
     }
     
+    // Build room types info for display
+    const roomTypes = item.roomTypes || [];
+    const hasRoomTypes = roomTypes.length > 0;
+    // maxGuests directly from admin - the counter max is EXACTLY what admin set
+    const maxGuestsAvailable = parseInt(item.maxGuests) || parseInt(item.guests) || 1;
+    console.log("[v0] Booking modal opened:", { itemMaxGuests: item.maxGuests, itemGuests: item.guests, maxGuestsAvailable, roomTypes: roomTypes.map(r => ({guests:r.guests, rooms:r.rooms, price:r.price})) });
+    const currencySymbolBooking = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
+
+    
     modalBody.innerHTML = `
         <div class="booking-item-info">
             <img src="${imageUrl}" alt="${name}">
             <div class="booking-item-details">
                 <h3>${name}</h3>
                 <div class="location"><i class="fas fa-map-marker-alt"></i> ${regionModalText || 'N/A'}</div>
-                <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE'}${perNight}</div>
+                <div class="price">${item.pricePerDay}${currencySymbolBooking}${perNight}</div>
                 <div class="booking-additional-specs">
                     ${item.rooms ? `<span><i class="fas fa-door-open"></i> ${item.rooms} ${roomsLabel}</span>` : ''}
                     ${item.bedrooms ? `<span><i class="fas fa-bed"></i> ${item.bedrooms} ${bedroomsLabel}</span>` : ''}
@@ -2941,7 +3293,59 @@ function openBookingModalDirect(item, type) {
                 </div>
             </div>
         </div>
+        
+        ${hasRoomTypes ? `
+        <div class="guest-selector-section">
+            <h3><i class="fas fa-users"></i> ${ls ? ls.translate('hotelGuestCount') || 'სტუმრების რაოდენობა' : 'სტუმრების რაოდენობა'}</h3>
+            <div class="guest-count-control">
+                <label>${ls ? ls.translate('hotelHowManyGuests') || 'რამდენი სტუმარი?' : 'რამდენი სტუმარი?'}</label>
+                <div class="guest-counter">
+                    <button type="button" id="guestMinus" onclick="changeGuestCount(-1)">-</button>
+                    <span class="guest-count-value" id="guestCountValue">1</span>
+                    <button type="button" id="guestPlus" onclick="changeGuestCount(1)">+</button>
+                </div>
+            </div>
+            <div id="roomAllocationResult" class="room-allocation-result"></div>
+            <div class="room-manual-section">
+                <button type="button" class="room-manual-toggle" id="manualRoomToggle" onclick="toggleManualRoomSelection()">
+                    <i class="fas fa-sliders-h"></i> ${ls ? ls.translate('hotelManualSelect') || 'ხელით ოთახების არჩევა' : 'ხელით ოთახების არჩევა'}
+                </button>
+                <div id="manualRoomGrid" class="room-manual-grid" style="display: none;">
+                    ${roomTypes.map((rt, idx) => `
+                        <div class="room-type-select-item" data-rt-index="${idx}">
+                            <div class="room-type-select-info">
+                                <span class="rt-name"><i class="fas fa-bed"></i> ${rt.guests}-${ls ? ls.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი' : 'სტუმრიანი ოთახი'}</span>
+                                <span class="rt-meta">
+                                    <span><i class="fas fa-door-open"></i> ${rt.rooms} ${roomsLabel}</span>
+                                    <span><i class="fas fa-bed"></i> ${rt.bedrooms} ${bedroomsLabel}</span>
+                                </span>
+                            </div>
+                            <div class="room-type-select-controls">
+                                <span class="rt-price">${rt.price}${currencySymbolBooking}</span>
+                                <button type="button" class="room-type-qty-btn" onclick="changeManualRoomQty(${idx}, -1)">-</button>
+                                <span class="room-type-qty-value" id="manualQty_${idx}">0</span>
+                                <button type="button" class="room-type-qty-btn" onclick="changeManualRoomQty(${idx}, 1)">+</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <input type="hidden" id="selectedRoomAllocation" value="">
+        </div>
+        ` : ''}
     `;
+
+    // Store room types data for allocation logic
+    window.currentHotelRoomTypes = roomTypes;
+    window.currentHotelMaxGuests = maxGuestsAvailable;
+    window.currentGuestCount = 1;
+    window.isManualMode = false;
+    window.manualRoomQtys = new Array(roomTypes.length).fill(0);
+    window.currentBookingCurrency = currencySymbolBooking;
+    
+    if (hasRoomTypes) {
+        updateRoomAllocation();
+    }
 
     timesContainer.style.display = "grid";
     const confirmBtn = document.getElementById("confirmBooking");
@@ -3005,7 +3409,9 @@ function updateBookingPrice() {
         return;
     }
 
-    const total = nights * selectedItem.pricePerDay;
+    const allocationPrice = getRoomAllocationPricePerNight();
+    const pricePerNight = allocationPrice || selectedItem.pricePerDay;
+    const total = nights * pricePerNight;
     
     const formatDate = (date) => {
         if (window.languageSwitcher) {
@@ -3034,7 +3440,7 @@ function updateBookingPrice() {
     priceInfo.innerHTML = `
         <div class="price-breakdown">
             <p><i class="fas fa-calendar-alt"></i> ${checkInLabel}: ${startFormatted} &mdash; ${checkOutLabel}: ${endFormatted}</p>
-            <p><i class="fas fa-moon"></i> ${nights} ${nightsLabel} \u00D7 ${selectedItem.pricePerDay}${currencySymbol}</p>
+            <p><i class="fas fa-moon"></i> ${nights} ${nightsLabel} \u00D7 ${pricePerNight}${currencySymbol}</p>
             <p><strong><i class="fas fa-money-bill-wave"></i> ${totalLabel}: ${total}${currencySymbol}</strong></p>
         </div>
     `;
@@ -3090,7 +3496,16 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
         nights = Math.max(1, diffDays + 1);
     }
 
-    const totalPrice = nights * selectedItem.pricePerDay;
+    const allocationPricePerNight = getRoomAllocationPricePerNight();
+    const effectivePricePerNight = allocationPricePerNight || selectedItem.pricePerDay;
+    const totalPrice = nights * effectivePricePerNight;
+
+    // Collect room allocation data
+    let roomAllocationData = null;
+    const roomAllocInput = document.getElementById('selectedRoomAllocation');
+    if (roomAllocInput && roomAllocInput.value) {
+        try { roomAllocationData = JSON.parse(roomAllocInput.value); } catch(e) {}
+    }
 
     const confirmBtn = document.getElementById("confirmBooking");
     const originalText = confirmBtn.textContent;
@@ -3111,6 +3526,9 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
             checkOutTime: endTime,
             duration: nights,
             totalPrice: totalPrice,
+            pricePerNight: effectivePricePerNight,
+            guestCount: window.currentGuestCount || 1,
+            ...(roomAllocationData && { roomAllocation: roomAllocationData }),
             currency: selectedItem.currency || 'GEL',
             status: "\u10DB\u10DD\u10DA\u10DD\u10D3\u10D8\u10DC\u10E8\u10D8",
             createdAt: serverTimestamp(),
@@ -3238,12 +3656,31 @@ function openDetailModal(item) {
     const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახები';
     const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
-    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათებლები';
-    const noDesc = ls ? ls.translate('bookingNoDescription') : 'აღწერა არ არის';
+    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათე�����ლები';
+    const noDesc = ls ? ls.translate('bookingNoDescription') : '���ღწერა არ არის';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
     const closeBtn = ls ? ls.translate('bookingDetailClose') : 'დახურვა';
     const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
 
+    const detailRoomTypes = item.roomTypes || [];
+    const hasDetailRoomTypes = detailRoomTypes.length > 0;
+    const detailCurrency = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
+    
+    let roomTypesSpecHTML = '';
+    if (hasDetailRoomTypes) {
+        roomTypesSpecHTML = `
+            <div class="detail-spec" style="grid-column: 1 / -1;">
+                <span class="detail-spec-icon"><i class="fas fa-door-open" style="color: var(--gold);"></i></span>
+                <div class="detail-spec-text">
+                    <span class="detail-spec-label">${ls ? ls.translate('hotelAvailableRoomTypes') || 'ხელმისაწვდომი ოთახები' : 'ხელმისაწვდომი ოთახები'}</span>
+                    <span class="detail-spec-value" style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.25rem;">
+                        ${detailRoomTypes.map(rt => `<span style="font-size: 0.9rem;">${rt.guests} ${guestsLabel} - ${rt.rooms} ${roomsLabel} - ${rt.bedrooms} ${bedroomsLabel} (${rt.price}${detailCurrency}${perNight})</span>`).join('')}
+                    </span>
+                </div>
+            </div>
+        `;
+    }
+    
     let specsHTML = `
         <div class="detail-specs">
             <div class="detail-spec">
@@ -3262,7 +3699,7 @@ function openDetailModal(item) {
                 </div>
             </div>
             ` : ''}
-            ${item.rooms ? `
+            ${!hasDetailRoomTypes && item.rooms ? `
             <div class="detail-spec">
                 <span class="detail-spec-icon"><i class="fas fa-door-open" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
@@ -3271,7 +3708,7 @@ function openDetailModal(item) {
                 </div>
             </div>
             ` : ''}
-            ${item.bedrooms ? `
+            ${!hasDetailRoomTypes && item.bedrooms ? `
             <div class="detail-spec">
                 <span class="detail-spec-icon"><i class="fas fa-bed" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
@@ -3280,15 +3717,16 @@ function openDetailModal(item) {
                 </div>
             </div>
             ` : ''}
-            ${item.guests ? `
+            ${(item.maxGuests || item.guests) ? `
             <div class="detail-spec">
                 <span class="detail-spec-icon"><i class="fas fa-users" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
-                    <span class="detail-spec-label">${guestsLabel}</span>
-                    <span class="detail-spec-value">${item.guests}</span>
+                    <span class="detail-spec-label">${ls ? ls.translate('hotelMaxGuests') || 'მაქს. სტუმარი' : 'მაქს. სტუმარი'}</span>
+                    <span class="detail-spec-value">${item.maxGuests || item.guests}</span>
                 </div>
             </div>
             ` : ''}
+            ${roomTypesSpecHTML}
             ${features ? `
             <div class="detail-spec" style="grid-column: 1 / -1;">
                 <span class="detail-spec-icon"><i class="fas fa-star" style="color: var(--gold);"></i></span>
@@ -3398,6 +3836,287 @@ document.addEventListener("DOMContentLoaded", () => {
     
     window.setBodyScroll = setBodyScroll;
 });
+
+// ========== GUEST COUNT & ROOM ALLOCATION ==========
+window.changeGuestCount = function(delta) {
+    const maxGuests = window.currentHotelMaxGuests || 1;
+    const newCount = Math.max(1, Math.min(maxGuests, (window.currentGuestCount || 1) + delta));
+    console.log("[v0] changeGuestCount:", { delta, maxGuests, currentHotelMaxGuests: window.currentHotelMaxGuests, newCount });
+    window.currentGuestCount = newCount;
+    
+    const valueEl = document.getElementById('guestCountValue');
+    if (valueEl) valueEl.textContent = newCount;
+    
+    const minusBtn = document.getElementById('guestMinus');
+    const plusBtn = document.getElementById('guestPlus');
+    if (minusBtn) minusBtn.disabled = newCount <= 1;
+    if (plusBtn) plusBtn.disabled = newCount >= maxGuests;
+    
+    if (!window.isManualMode) {
+        updateRoomAllocation();
+    }
+    updateBookingPrice();
+};
+
+window.toggleManualRoomSelection = function() {
+    const grid = document.getElementById('manualRoomGrid');
+    if (!grid) return;
+    const isHidden = grid.style.display === 'none';
+    grid.style.display = isHidden ? 'flex' : 'none';
+    window.isManualMode = isHidden;
+    
+    if (isHidden) {
+        // Entering manual mode - reset qtys
+        window.manualRoomQtys = new Array((window.currentHotelRoomTypes || []).length).fill(0);
+        (window.currentHotelRoomTypes || []).forEach((_, idx) => {
+            const el = document.getElementById(`manualQty_${idx}`);
+            if (el) el.textContent = '0';
+        });
+        // Hide auto allocation
+        const autoResult = document.getElementById('roomAllocationResult');
+        if (autoResult) autoResult.innerHTML = '';
+    } else {
+        // Going back to auto mode
+        updateRoomAllocation();
+    }
+    updateBookingPrice();
+};
+
+window.changeManualRoomQty = function(index, delta) {
+    const roomTypes = window.currentHotelRoomTypes || [];
+    if (!roomTypes[index]) return;
+    const currentQty = window.manualRoomQtys[index] || 0;
+    
+    // Check if adding would exceed maxGuests
+    if (delta > 0) {
+        let currentTotalGuests = 0;
+        window.manualRoomQtys.forEach((qty, idx) => {
+            currentTotalGuests += qty * roomTypes[idx].guests;
+        });
+        const wouldAdd = roomTypes[index].guests;
+        const maxGuests = window.currentHotelMaxGuests || 1;
+        if (currentTotalGuests + wouldAdd > maxGuests) return;
+    }
+    
+    // Room types are unlimited - only capped by maxGuests check above
+    const newQty = Math.max(0, currentQty + delta);
+    window.manualRoomQtys[index] = newQty;
+    
+    const el = document.getElementById(`manualQty_${index}`);
+    if (el) el.textContent = newQty;
+    
+    // Update selected state
+    const item = document.querySelector(`.room-type-select-item[data-rt-index="${index}"]`);
+    if (item) item.classList.toggle('selected', newQty > 0);
+    
+    // Calculate total guests from manual selection
+    let totalGuests = 0;
+    let totalPrice = 0;
+    window.manualRoomQtys.forEach((qty, idx) => {
+        totalGuests += qty * roomTypes[idx].guests;
+        totalPrice += qty * roomTypes[idx].price;
+    });
+    
+    // Update guest count display
+    window.currentGuestCount = Math.max(1, totalGuests);
+    const valueEl = document.getElementById('guestCountValue');
+    if (valueEl) valueEl.textContent = window.currentGuestCount;
+    
+    // Show manual allocation result
+    const resultContainer = document.getElementById('roomAllocationResult');
+    if (resultContainer) {
+        const selectedRooms = [];
+        window.manualRoomQtys.forEach((qty, idx) => {
+            if (qty > 0) {
+                selectedRooms.push({ ...roomTypes[idx], quantity: qty, index: idx });
+            }
+        });
+        
+        if (selectedRooms.length > 0) {
+            const currency = window.currentBookingCurrency || '\u20BE';
+            let html = `<div class="room-allocation-auto"><h4><i class="fas fa-hand-pointer"></i> ${window.languageSwitcher?.translate('hotelManualSelection') || 'თქვენი არჩევანი'}</h4>`;
+            selectedRooms.forEach(room => {
+                html += `
+                    <div class="allocation-room-item">
+                        <div class="allocation-room-info">
+                            <i class="fas fa-bed"></i>
+                            <div class="room-detail">
+                                <span class="room-label">${room.quantity}x ${room.guests}-${window.languageSwitcher?.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი'}</span>
+                                <span class="room-meta">${room.bedrooms} ${window.languageSwitcher?.translate('hotelBedrooms') || 'საძინებელი'} | ${room.rooms} ${window.languageSwitcher?.translate('hotelAvailableRooms') || 'ხელმისაწვდომი'}</span>
+                            </div>
+                        </div>
+                        <span class="allocation-room-price">${room.quantity * room.price}${currency}</span>
+                    </div>
+                `;
+            });
+            html += `
+                <div class="allocation-total">
+                    <span class="total-label"><i class="fas fa-users"></i> ${totalGuests} ${window.languageSwitcher?.translate('hotelGuests') || 'სტუმარი'}</span>
+                    <span class="total-price">${totalPrice}${currency}/${window.languageSwitcher?.translate('hotelPerNightShort') || 'ღამე'}</span>
+                </div>
+            </div>`;
+            resultContainer.innerHTML = html;
+        } else {
+            resultContainer.innerHTML = '';
+        }
+    }
+    
+    // Save allocation to hidden input
+    saveAllocationData();
+    updateBookingPrice();
+};
+
+function smartAllocateRooms(guestCount, roomTypes) {
+    // Find the CHEAPEST combination of rooms that can fit >= guestCount
+    // Priority: 1) cheapest price, 2) least wasted capacity, 3) fewest rooms
+    const types = roomTypes.map((rt, idx) => ({ ...rt, originalIndex: idx }));
+    
+    let bestAllocation = null;
+    let bestPrice = Infinity;
+    let bestWaste = Infinity;
+    let bestRoomCount = Infinity;
+    
+    function tryAllocate(typeIndex, currentAllocation, currentCapacity, currentPrice, currentRoomCount) {
+        // If we have enough capacity, check if this is the best so far
+        if (currentCapacity >= guestCount) {
+            const waste = currentCapacity - guestCount;
+            const isBetter = 
+                currentPrice < bestPrice ||
+                (currentPrice === bestPrice && waste < bestWaste) ||
+                (currentPrice === bestPrice && waste === bestWaste && currentRoomCount < bestRoomCount);
+            if (isBetter) {
+                bestPrice = currentPrice;
+                bestWaste = waste;
+                bestRoomCount = currentRoomCount;
+                bestAllocation = [...currentAllocation];
+            }
+            // Don't return -- keep searching, there may be an even better option
+            // But prune: adding more rooms can only increase price
+            return;
+        }
+        
+        if (typeIndex >= types.length) return;
+        
+        const rt = types[typeIndex];
+        const remainingNeeded = guestCount - currentCapacity;
+        // Room types are unlimited - can use as many as needed
+        const maxOfThisType = Math.ceil(remainingNeeded / rt.guests);
+        
+        // Try from max down to 0
+        for (let qty = maxOfThisType; qty >= 0; qty--) {
+            const newPrice = currentPrice + (qty * rt.price);
+            // Prune: if already more expensive than best, skip
+            if (newPrice > bestPrice) continue;
+            
+            tryAllocate(
+                typeIndex + 1,
+                [...currentAllocation, { ...rt, quantity: qty }],
+                currentCapacity + (qty * rt.guests),
+                newPrice,
+                currentRoomCount + qty
+            );
+        }
+    }
+    
+    tryAllocate(0, [], 0, 0, 0);
+    
+    console.log("[v0] smartAllocateRooms result:", { guestCount, types: types.map(t => ({guests: t.guests, price: t.price, rooms: t.rooms})), bestAllocation, bestPrice });
+    
+    if (!bestAllocation) return null;
+    
+    return bestAllocation.filter(a => a.quantity > 0);
+}
+
+function updateRoomAllocation() {
+    const roomTypes = window.currentHotelRoomTypes || [];
+    const guestCount = window.currentGuestCount || 1;
+    const resultContainer = document.getElementById('roomAllocationResult');
+    if (!resultContainer || roomTypes.length === 0) return;
+    
+    const allocation = smartAllocateRooms(guestCount, roomTypes);
+
+    const currency = window.currentBookingCurrency || '\u20BE';
+    const ls = window.languageSwitcher;
+    
+    if (!allocation || allocation.length === 0) {
+        resultContainer.innerHTML = `
+            <div class="no-rooms-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                ${ls?.translate('hotelNoRoomCombination') || 'ამ სტუმრების რაოდენობისთვის შესაფერისი ოთახების კომბინაცია ვერ მოიძებნა'}
+            </div>
+        `;
+        return;
+    }
+    
+    let totalPrice = 0;
+    let totalGuests = 0;
+    allocation.forEach(a => {
+        totalPrice += a.quantity * a.price;
+        totalGuests += a.quantity * a.guests;
+    });
+    
+    let html = `<div class="room-allocation-auto"><h4><i class="fas fa-magic"></i> ${ls?.translate('hotelAutoAllocation') || 'რეკომენდირებული ოთახები'}</h4>`;
+    allocation.forEach(room => {
+        html += `
+            <div class="allocation-room-item">
+                <div class="allocation-room-info">
+                    <i class="fas fa-bed"></i>
+                    <div class="room-detail">
+                        <span class="room-label">${room.quantity}x ${room.guests}-${ls?.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი'}</span>
+                        <span class="room-meta">${room.bedrooms} ${ls?.translate('hotelBedrooms') || 'საძინებელი'} | ${room.price}${currency}/${ls?.translate('hotelPerNightShort') || 'ღამე'}</span>
+                    </div>
+                </div>
+                <span class="allocation-room-price">${room.quantity * room.price}${currency}</span>
+            </div>
+        `;
+    });
+    html += `
+        <div class="allocation-total">
+            <span class="total-label"><i class="fas fa-users"></i> ${totalGuests} ${ls?.translate('hotelGuests') || 'სტუმარი'}</span>
+            <span class="total-price">${totalPrice}${currency}/${ls?.translate('hotelPerNightShort') || 'ღამე'}</span>
+        </div>
+    </div>`;
+    resultContainer.innerHTML = html;
+    
+    // Save allocation
+    saveAllocationData();
+}
+
+function saveAllocationData() {
+    const roomTypes = window.currentHotelRoomTypes || [];
+    const hiddenInput = document.getElementById('selectedRoomAllocation');
+    if (!hiddenInput) return;
+    
+    let allocationData;
+    if (window.isManualMode) {
+        const rooms = [];
+        window.manualRoomQtys.forEach((qty, idx) => {
+            if (qty > 0) rooms.push({ roomTypeIndex: idx, quantity: qty, guests: roomTypes[idx].guests, price: roomTypes[idx].price });
+        });
+        allocationData = { mode: 'manual', rooms, totalGuests: window.currentGuestCount };
+    } else {
+        const allocation = smartAllocateRooms(window.currentGuestCount, roomTypes);
+        const rooms = (allocation || []).map(a => ({
+            roomTypeIndex: a.originalIndex,
+            quantity: a.quantity,
+            guests: a.guests,
+            price: a.price
+        }));
+        allocationData = { mode: 'auto', rooms, totalGuests: window.currentGuestCount };
+    }
+    hiddenInput.value = JSON.stringify(allocationData);
+}
+
+function getRoomAllocationPricePerNight() {
+    const hiddenInput = document.getElementById('selectedRoomAllocation');
+    if (!hiddenInput || !hiddenInput.value) return null;
+    try {
+        const data = JSON.parse(hiddenInput.value);
+        let total = 0;
+        data.rooms.forEach(r => total += r.quantity * r.price);
+        return total > 0 ? total : null;
+    } catch(e) { return null; }
+}
 
 window.addEventListener('languageChanged', () => {
     updateTypeFilter();
