@@ -940,7 +940,7 @@
                     <div class="error-message" id="resetEmailError"></div>
                     
                     <button type="submit" id="resetPasswordBtn">
-                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პ���რ��ლის აღდგენა</span>
+                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
                     </button>
                 </div>
 
@@ -1073,7 +1073,7 @@
 
             <!-- ტელეფონით რეგისტრაციის ფორმა - ახალი თანმიმდევრობა: სახელი -> პაროლი -> ნომერი -> კოდი -->
             <form id="phoneAuthForm" class="auth-form" novalidate>
-                <!-- ეტაპი 1: სახელის შე��ვანა -->
+                <!-- ეტაპი 1: სახელის შეყვანა -->
                 <div class="form-step active" id="phoneStep1">
                     <div class="step-indicator">
                         <div class="step active">1</div>
@@ -1334,7 +1334,7 @@
             .catch((err) => console.warn("[v0] reCAPTCHA Enterprise config warning:", err.message));
 
         // ===================================
-        // უსაფრთხო პაროლის hashing ����უნქციები (SHA-256)
+        // უსაფრთხო პაროლის hashing ფუნქციები (SHA-256)
         // ===================================
         async function hashPassword(password) {
             const encoder = new TextEncoder();
@@ -2297,7 +2297,7 @@
                     } else {
                         const errorMsg = window.languageSwitcher ? 
                             window.languageSwitcher.translate('authDefaultError') : 
-                            'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვია���ებით.';
+                            'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.';
                         showMessage(errorMsg, "error");
                     }
                 }
@@ -2391,7 +2391,7 @@
                     const userDoc = await getUserByPhone(fullPhoneNumber);
                     
                     if (!userDoc) {
-                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('userNotFoundByPhone') : 'მომხმარებელი ამ ნომრით არ მოი���ებნა', "error");
+                        showMessage(window.languageSwitcher ? window.languageSwitcher.translate('userNotFoundByPhone') : 'მომხმარებელი ამ ნომრით არ მოიძებნა', "error");
                         resetButton(loginBtn, loginBtnText, loginText);
                         return;
                     }
@@ -2460,7 +2460,7 @@
             hideError('password');
             
             const registerBtn = document.getElementById("registerBtn");
-            const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რე��ისტრაცია';
+            const registerText = window.languageSwitcher ? window.languageSwitcher.translate('register') : 'რეგისტრაცია';
             setButtonLoading(registerBtn, registerBtnText, registerText);
 
             try {
@@ -2548,7 +2548,7 @@
                 await sendPasswordResetEmail(auth, email);
                 const successMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('resetPasswordSuccess') : 
-                    'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ��ოსტ��ზე';
+                    'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ფოსტაზე';
                 showMessage(successMsg, "success");
                 
                 setTimeout(() => {

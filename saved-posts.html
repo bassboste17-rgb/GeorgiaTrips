@@ -1463,7 +1463,7 @@
         }
           // ეს ფუნქცია მოშორებს .html გაფართოებას ბრაუზერის მისამართის ზოლიდან
 function removeHtmlExtensionFromURL() {
-    // შეამო���მეთ, თუ URL შეიცავს .html
+    // შეამოწმეთ, თუ URL შეიცავს .html
     if (window.location.pathname.endsWith('.html')) {
         // შექმენით ახალი URL .html-ის გარეშე
         const newPath = window.location.pathname.replace(/\.html$/, '');
@@ -1474,7 +1474,7 @@ function removeHtmlExtensionFromURL() {
     }
 }
 
-// გამოიძახეთ ������ნქცია გვერდის ჩატვირთვისას
+// გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
 window.addEventListener('load', removeHtmlExtensionFromURL);
 
 // ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)

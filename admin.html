@@ -2077,7 +2077,7 @@ input:checked + .toggle-slider:before {
             <i class="fas fa-comments"></i> ონლაინ ჩატი
         </a>
         <button class="btn btn-secondary" data-view="adminBookings">
-            <i class="fas fa-tasks"></i> დ�����ჯავშნის მართვა
+            <i class="fas fa-tasks"></i> დაჯავშნის მართვა
         </button>
         <button class="btn btn-secondary" data-view="emails">
             <i class="fas fa-envelope"></i> მაილები
@@ -2164,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი���������������ი</option>
+                        <option value="rejected">❌ უარყოფილი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -2227,7 +2227,7 @@ input:checked + .toggle-slider:before {
                     </div>
                     <div class="stat-info">
                         <span class="stat-value" id="todaySubscribers">0</span>
-                        <span class="stat-label">დღეს გამ��ი��ერა</span>
+                        <span class="stat-label">დღეს გამოწერა</span>
                     </div>
                 </div>
             </div>
@@ -2355,18 +2355,18 @@ input:checked + .toggle-slider:before {
             colors: {
                 "თეთრი": { en: "White", ru: "Белый", ar: "أبيض" },
                 "შავი": { en: "Black", ru: "Черный", ar: "أسود" },
-                "ნაცრისფერი": { en: "Gray", ru: "Серый", ar: "رما��ي" },
+                "ნაცრისფერი": { en: "Gray", ru: "Серый", ar: "رمادي" },
                 "ვერცხლისფერი": { en: "Silver", ru: "Серебристый", ar: "فضي" },
                 "წითელი": { en: "Red", ru: "Красный", ar: "أحمر" },
                 "ლურჯი": { en: "Blue", ru: "Синий", ar: "أزرق" },
                 "ყავისფერი": { en: "Brown", ru: "Коричневый", ar: "بني" },
                 "მწვანე": { en: "Green", ru: "Зеленый", ar: "أخضر" },
-                "ყვითე�����ი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
+                "ყვითელი": { en: "Yellow", ru: "Желтый", ar: "أصفر" },
                 "ნარინჯისფერი": { en: "Orange", ru: "Оранжевый", ar: "برتقالي" },
                 "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
                 "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
                 "ვარდისფერი": { en: "Pink", ru: "Розовый", ar: "وردي" },
-                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذه��ي" }
+                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذهبي" }
             }
         };
         // </CHANGE>
@@ -2398,11 +2398,7 @@ input:checked + .toggle-slider:before {
                             <input type="number" class="input room-type-price" value="" required placeholder="90">
                         </div>
                         <div class="form-group">
-                            <label>ოთახების რაოდენობა *</label>
-                            <input type="number" class="input room-type-rooms" value="" required placeholder="3">
-                        </div>
-                        <div class="form-group">
-                            <label>საძინებლების რაოდენობა *</label>
+                            <label>საწოლების რაოდენობა *</label>
                             <input type="number" class="input room-type-bedrooms" value="" required placeholder="1">
                         </div>
                         <div class="form-group">
@@ -2459,11 +2455,10 @@ input:checked + .toggle-slider:before {
             const roomTypes = [];
             entries.forEach(entry => {
                 const price = parseFloat(entry.querySelector('.room-type-price')?.value) || 0;
-                const rooms = parseInt(entry.querySelector('.room-type-rooms')?.value) || 0;
                 const bedrooms = parseInt(entry.querySelector('.room-type-bedrooms')?.value) || 0;
                 const guests = parseInt(entry.querySelector('.room-type-guests')?.value) || 0;
-                if (price > 0 || rooms > 0 || guests > 0) {
-                    roomTypes.push({ price, rooms, bedrooms, guests });
+                if (price > 0 || bedrooms > 0 || guests > 0) {
+                    roomTypes.push({ price, rooms: bedrooms, bedrooms, guests });
                 }
             });
             return roomTypes;
@@ -2674,7 +2669,7 @@ input:checked + .toggle-slider:before {
                     ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                     : window.languageSwitcher && window.languageSwitcher.getCurrentLanguage() === 'ru'
                     ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-                    : ['ორშ', 'სამ', 'ოთხ', 'ხუ��', 'პარ', 'შაბ', 'კვი'];
+                    : ['ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ', 'კვი'];
                 
                 let calendarHTML = `
                     <div class="admin-calendar-container">
@@ -3219,7 +3214,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 displayCustomTourRequests();
             } catch (error) {
                 console.error("Error loading custom tour requests:", error);
-                container.innerHTML = '<div class="empty-state">��ეც��ომა მონაცემების ჩატვირთვისას</div>';
+                container.innerHTML = '<div class="empty-state">შეცდომა მონაცემების ჩატვირთვისას</div>';
             }
         }
 
@@ -3272,7 +3267,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             };
             
             const regionTranslations = {
-                'tbilisi': '��ბილისი',
+                'tbilisi': 'თბილისი',
                 'afkhazeti': 'აფხაზეთი',
                 'achara': 'აჭარა',
                 'guria': 'გურია',
@@ -3312,7 +3307,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         <p><i class="fas fa-clock"></i> <strong>ხანგრძლივობა:</strong> ${request.duration || 'N/A'} დღე</p>
                         <p><i class="fas fa-users"></i> <strong>რაოდენობა:</strong> ${request.groupSize || 1} ადამიანი</p>
                         <p><i class="fas fa-dollar-sign"></i> <strong>შეთავაზება:</strong> ${request.suggestedPrice || 0}${request.suggestedCurrency === 'USD' ? '$' : request.suggestedCurrency === 'EUR' ? '€' : '₾'}</p>
-                        <p><i class="fas fa-calendar-plus"></i> <strong>შექმნილ���ა:</strong> ${dateFormatted}</p>
+                        <p><i class="fas fa-calendar-plus"></i> <strong>შექმნილია:</strong> ${dateFormatted}</p>
                     </div>
                     
                     <div style="margin-bottom: 1rem;">
@@ -3340,7 +3335,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <i class="fas fa-reply"></i> პასუხი
                         </a>
                         <a href="tel:${request.contactPhone}" class="btn btn-sm btn-secondary">
-                            <i class="fas fa-phone"></i> დარ���კვა
+                            <i class="fas fa-phone"></i> დარეკვა
                         </a>
                     </div>
                 </div>
@@ -3453,11 +3448,11 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3>${item.name}</h3>
                             <p>${item.description || ""}</p>
                             <div class="admin-item-details">
-                                <span><i class="fas fa-map-marker-alt"></i> ${item.regions && item.regions.length > 0 ? (item.regions.includes('all') ? 'ყვ��ლ�� რეგიონი' : item.regions.join(', ')) : item.region}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${item.regions && item.regions.length > 0 ? (item.regions.includes('all') ? 'ყველა რეგიონი' : item.regions.join(', ')) : item.region}</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes ? item.roomTypes.length + ' ტიპი' : (item.rooms || 0) + ' ოთახი'}</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes ? item.roomTypes.length + ' ტიპი' : (item.bedrooms || 0) + ' საწოლი'}</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -3470,7 +3465,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         async function deleteItem(itemId, type) {
-            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დ���ნ და Firebase-დან.", "ელემენტის ���აშლა")
+            const confirmed = await showConfirm("დარწმუნებული ხართ? ელემენტთან ერთად წაიშლება ყველა ფოტო Cloudinary-დან და Firebase-დან.", "ელემენტის წაშლა")
             if (!confirmed) return
 
             try {
@@ -3533,7 +3528,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 }
 
                 if (bookings.length === 0) {
-                    container.innerHTML = '<div class="empty-state">დაჯავშნები არ მოიძებ��ა</div>'
+                    container.innerHTML = '<div class="empty-state">დაჯავშნები არ მოიძებნა</div>'
                     return
                 }
 
@@ -3659,9 +3654,9 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     createdAt: serverTimestamp(),
                 }
 
-                if (status === "დადასტურებუ���ი") {
+                if (status === "დადასტურებული") {
                     notificationData.title = "✓ დაჯავშნა დადასტურებულია!"
-                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტ��რდა ადმინის მიერ. შე���იძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
+                    notificationData.message = `გილოცავთ! თქვენი დაჯავშვნა "${itemName}" დადასტურდა ადმინის მიერ. შეგიძლიათ ნახოთ დეტალები "ჩემი დაჯავშნები" განყოფილებაში.`
                     notificationData.type = "booking_approved"
                 } else {
                     notificationData.title = "✗ დაჯავშნა უარყოფილია"
@@ -3927,7 +3922,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="lang-label">العربية:</span>
                                         <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
                                     </div>
-                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცა��იელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -3945,7 +3940,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     <div class="translation-edit-row">
                                         <span class="flag">🇷🇺</span>
                                         <span class="lang-label">Русский:</span>
-                                        <textarea id="descTransRu" rows="2" placeholder="���ვტომატურად ითარგმნება...">${item?.descriptionTranslations?.ru || ''}</textarea>
+                                        <textarea id="descTransRu" rows="2" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ru || ''}</textarea>
                                     </div>
                                     <div class="translation-edit-row">
                                         <span class="flag">🇸🇦</span>
@@ -3985,7 +3980,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             "აფხაზეთი",
                                             "სამეგრელო",
                                             "რაჭა-ლეჩხუმი",
-                                            "ი��ერეთი",
+                                            "იმერეთი",
                                             "გურია",
                                             "აჭარა",
                                             "სამცხე-ჯავახეთი",
@@ -4070,14 +4065,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     <label>საწვავის ტიპი *</label>
                                     <select id="itemFuelType" class="select" required>
                                         <option value="ბენზინი" ${item?.fuelType === "ბენზინი" ? "selected" : ""}>ბენზინი</option>
-                                        <option value="დიზელი" ${item?.fuelType === "დი��ელი" ? "selected" : ""}>დიზელი</option>
+                                        <option value="დიზელი" ${item?.fuelType === "დიზელი" ? "selected" : ""}>დიზელი</option>
                                         <option value="ჰიბრიდი" ${item?.fuelType === "ჰიბრიდი" ? "selected" : ""}>ჰიბრიდი</option>
                                         <option value="ელექტრო" ${item?.fuelType === "ელექტრო" ? "selected" : ""}>ელექტრო</option>
                                         <option value="გაზი" ${item?.fuelType === "გაზი" ? "selected" : ""}>გაზი</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>ტრანსმი��ია *</label>
+                                    <label>ტრანსმისია *</label>
                                     <select id="itemTransmission" class="select" required>
                                         <option value="ავტომატური" ${item?.transmission === "ავტომატური" ? "selected" : ""}>ავტომატური</option>
                                         <option value="მექანიკური" ${item?.transmission === "მექანიკური" ? "selected" : ""}>მექანიკური</option>
@@ -4130,7 +4125,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     </div>
                                     <div style="margin-top: 1rem; padding: 1rem; background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px;">
                                         <p style="color: #22c55e; font-size: 0.9rem; margin: 0;">
-                                            <i class="fas fa-info-circle"></i> დააწკაპუნეთ წითელ ��ღეებზე რომ გახადოთ ისინი ხელმისაწვდომი (მწვანე)
+                                            <i class="fas fa-info-circle"></i> დააწკაპუნეთ წითელ დღეებზე რომ გახადოთ ისინი ხელმისაწვდომი (მწვანე)
                                         </p>
                                     </div>
                                 </div>
@@ -4157,7 +4152,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div id="restrictedMessage" style="display: ${restrictedMode ? 'block' : 'none'}; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; text-align: center;">
                                 <i class="fas fa-ban" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"></i>
                                 <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">კალენდარი გათიშულია</p>
-                                <p style="color: var(--text-color); font-size: 0.9rem;">მ���ნქანა სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
+                                <p style="color: var(--text-color); font-size: 0.9rem;">მანქანა სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
                             </div>
                             
                             <input type="hidden" id="carBookedDates" value='${JSON.stringify(existingBookedDates)}'>
@@ -4357,7 +4352,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="lang-label">العربية:</span>
                                         <textarea id="descTransAr" rows="2" dir="rtl" placeholder="ავტომატურად ითარგმნება...">${item?.descriptionTranslations?.ar || ''}</textarea>
                                     </div>
-                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცა��იელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
                             </div>
                         </div>
@@ -4376,7 +4371,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         </div>
                                         ${[
                                             "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
-                                            "სამ��ხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
+                                            "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
                                         ].map((r) => {
                                             const isChecked = item?.regions 
                                                 ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
@@ -4436,11 +4431,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                         <input type="number" class="input room-type-price" value="${rt.price || ''}" required placeholder="90">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>ოთახების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-rooms" value="${rt.rooms || ''}" required placeholder="3">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <label>საწოლების რაოდენობა *</label>
                                                         <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
                                                     </div>
                                                     <div class="form-group">
@@ -4463,11 +4454,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                         <input type="number" class="input room-type-price" value="${hasOldData ? (item?.pricePerDay || '') : ''}" required placeholder="90">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>ოთახების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-rooms" value="${hasOldData ? (item?.rooms || '') : ''}" required placeholder="3">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <label>საწოლების რაოდენობა *</label>
                                                         <input type="number" class="input room-type-bedrooms" value="${hasOldData ? (item?.bedrooms || '') : ''}" required placeholder="1">
                                                     </div>
                                                     <div class="form-group">
@@ -4506,7 +4493,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             <i class="fas fa-clock"></i> ფიქსირებული დრო
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეე��ი
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
                                         </div>
                                     </div>
                                 </label>
@@ -4749,7 +4736,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="lang-label">العربية:</span>
                                         <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
                                     </div>
-                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გ��ურთ შეცვალოთ.</p>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -4792,22 +4779,22 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         </div>
 
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-cog"></i> დეტალე��ი</h3>
+                            <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგი��ნები) *</label>
+                                    <label>რეგიონი (რეგიონები) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
                                                 <input type="checkbox" value="all" id="regionAllAdmin" class="region-checkbox-admin">
-                                                <span>ყველა რეგიონი (უნი���ერსალური)</span>
+                                                <span>ყველა რეგიონი (უნივერსალური)</span>
                                             </label>
                                         </div>
                                         ${[
                                             "აფხაზეთი",
                                             "სამეგრელო",
                                             "რაჭა-ლეჩხუმი",
-                                            "���მერეთი",
+                                            "იმერეთი",
                                             "გურია",
                                             "აჭარა",
                                             "სამცხე-ჯავახეთი",
@@ -4882,7 +4869,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             <i class="fas fa-clock"></i> ფიქსირებული დრო
                                         </div>
                                         <div style="font-size: 0.85rem; color: var(--text-color);">
-                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღე���ბი
+                                            ყველა დღე დაკავებულია, ხელით დაამატეთ ხელმისაწვდომი დღეები
                                         </div>
                                     </div>
                                 </label>
@@ -4973,7 +4960,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                         <div class="enhanced-form-section" id="tourHotelsSection">
                             <h3><i class="fas fa-hotel"></i> სასტუმროების მიბმა</h3>
-                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმ��ოები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
+                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმროები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
                             <div id="tourHotelsListContainer">
                                 <p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>
                             </div>
@@ -5468,7 +5455,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 // Update label
                 const label = container.previousElementSibling;
                 if (label && label.tagName === 'LABEL') {
-                    label.textContent = 'არსებული ფოტოებ�� (0)';
+                    label.textContent = 'არსებული ფოტოები (0)';
                 }
                 return;
             }
@@ -5491,7 +5478,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             // Update label
             const label = container.previousElementSibling?.previousElementSibling;
             if (label && label.tagName === 'LABEL') {
-                label.textContent = `არსე���ული ფოტოები (${images.length})`;
+                label.textContent = `არსებული ფოტოები (${images.length})`;
             }
             
             // Update hidden input
@@ -5594,7 +5581,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             }
 
             const titles = {
-                success: "წ���რმატება",
+                success: "წარმატება",
                 error: "შეცდომა",
                 warning: "გაფრთხილება",
                 info: "ინფორმაცია",
@@ -5689,7 +5676,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 updateSelectedCount();
             } catch (error) {
                 console.error("Error loading posts:", error);
-                postsGrid.innerHTML = '<div class="empty-state" style="color: var(--error-color);">შეცდო��ა პოსტების ჩატვირთვისას</div>';
+                postsGrid.innerHTML = '<div class="empty-state" style="color: var(--error-color);">შეცდომა პოსტების ჩატვირთვისას</div>';
             }
         }
 
@@ -5796,7 +5783,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
             const confirmed = await showConfirm(
                 `ნამდვილად გსურთ ${selectedPostIds.size} პოსტის წაშლა? ყველა ფოტო და ვიდეო წაიშლება Cloudinary-დან.`,
-                "მრავ��ობითი წაშლა"
+                "მრავლობითი წაშლა"
             );
             if (!confirmed) return;
 
@@ -5835,7 +5822,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         window.deletePost = async function(postId) {
             const confirmed = await showConfirm(
                 "ნამდვილად გსურთ ამ პოსტის წაშლა? ფოტო/ვიდეო წაიშლება Cloudinary-დან.",
-                "პოსტის წ���შლა"
+                "პოსტის წაშლა"
             );
             if (!confirmed) return;
 
@@ -5958,7 +5945,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 loadEmailSubscribers();
             } catch (error) {
                 console.error("Error deleting subscriber:", error);
-                showToast("წ��შლა ვერ მოხერხდა", "error");
+                showToast("წაშლა ვერ მოხერხდა", "error");
             }
         }
 
@@ -6015,7 +6002,7 @@ function removeHtmlExtensionFromURL() {
 // გამოიძახეთ ფუნქცია გვერდის ჩატვირთვისას
 window.addEventListener('load', removeHtmlExtensionFromURL);
 
-// ასევე გამოიძახეთ, როცა ისტორია იც��ლება (SPA-სთ��ის)
+// ასევე გამოიძახეთ, როცა ისტორია იცვლება (SPA-სთვის)
 window.addEventListener('popstate', removeHtmlExtensionFromURL);
     </script>
 </body>

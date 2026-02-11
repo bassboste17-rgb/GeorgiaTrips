@@ -3524,14 +3524,14 @@ textarea.input {
         type: {
           'კულტურული': 'tourTypeCultural',
           'სათავგადასავლო': 'tourTypeSightseeing',
-          'გასტ��ონომიული': 'tourTypeGastronomic',
+          'გასტრონომიული': 'tourTypeGastronomic',
           'ისტორიული': 'tourTypeHistorical',
           'ბუნება': 'tourTypeNature'
         },
         region: {
           'თბილისი': 'regionTbilisi',
           'ბათუმი': 'regionBatumi',
-          'ქუთა�����სი': 'regionKutaisi',
+          'ქუთაისი': 'regionKutaisi',
           'აფხაზეთი': 'regionAbkhazia',
           'სამეგრელო': 'regionSamegrelo',
           'იმერეთი': 'regionImereti',
@@ -3981,7 +3981,7 @@ let customTourCalendar = null;
         ls?.translate('calendarJune') || 'ივნისი',
         ls?.translate('calendarJuly') || 'ივლისი',
         ls?.translate('calendarAugust') || 'აგვისტო',
-        ls?.translate('calendarSeptember') || 'სექ���ემბერი',
+        ls?.translate('calendarSeptember') || 'სექტემბერი',
         ls?.translate('calendarOctober') || 'ოქტომბერი',
         ls?.translate('calendarNovember') || 'ნოემბერი',
         ls?.translate('calendarDecember') || 'დეკემბერი'
@@ -4311,7 +4311,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ი���ხოვს საკუთარ ტურს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ითხოვს საკუთარ ტურს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
