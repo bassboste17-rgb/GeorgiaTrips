@@ -3519,7 +3519,7 @@ textarea.input {
         region: {
           'თბილისი': 'regionTbilisi',
           'ბათუმი': 'regionBatumi',
-          'ქუთაისი': 'regionKutaisi',
+          'ქუთა���სი': 'regionKutaisi',
           'აფხაზეთი': 'regionAbkhazia',
           'სამეგრელო': 'regionSamegrelo',
           'იმერეთი': 'regionImereti',
@@ -5251,16 +5251,23 @@ const dateLabel = ls ? ls.translate('bookingPriceDate') || 'Date' : 'Date';
 
 function renderTourLinkedHotels(item) {
   const container = document.getElementById('tourLinkedHotelsContainer');
+  console.log("[v0] renderTourLinkedHotels called, container:", !!container);
+  console.log("[v0] item.linkedHotels:", JSON.stringify(item?.linkedHotels));
+  console.log("[v0] allHotelsData.length:", allHotelsData?.length);
   if (!container) return;
 
   const linkedHotelIds = item.linkedHotels || [];
+  console.log("[v0] linkedHotelIds:", JSON.stringify(linkedHotelIds));
   if (linkedHotelIds.length === 0) {
+    console.log("[v0] No linkedHotelIds, hiding container");
     container.style.display = 'none';
     return;
   }
 
   const linkedHotels = allHotelsData.filter(h => linkedHotelIds.includes(h.id));
+  console.log("[v0] Matched linkedHotels:", linkedHotels.length, linkedHotels.map(h => h.id + ':' + h.name));
   if (linkedHotels.length === 0) {
+    console.log("[v0] No matching hotels found in allHotelsData");
     container.style.display = 'none';
     return;
   }
