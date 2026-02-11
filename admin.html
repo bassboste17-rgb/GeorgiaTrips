@@ -2164,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი�����������ი</option>
+                        <option value="rejected">❌ უარყოფი�������������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -3982,117 +3982,6 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             </label>
                                         </div>
                                         ${[
-                                            "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
-                                            "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
-                                        ].map((r) => {
-                                            const isChecked = item?.regions 
-                                                ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
-                                                : false;
-                                            return `
-                                            <div class="region-checkbox-item">
-                                                <label>
-                                                    <input type="checkbox" value="${r}" class="region-checkbox-admin" data-region-admin ${isChecked ? 'checked' : ''}>
-                                                    <span>${r}</span>
-                                                </label>
-                                            </div>
-                                            `;
-                                        }).join("")}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>ტიპი *</label>
-                                    <select id="itemType" class="select" required>
-                                        <option value="სასტუმრო" ${item?.type === "სასტუმრო" ? "selected" : ""}>სასტუმრო</option>
-                                        <option value="აპარტამენტი" ${item?.type === "აპარტამენტი" ? "selected" : ""}>აპარტამენტი</option>
-                                        <option value="კოტეჯი" ${item?.type === "კოტეჯი" ? "selected" : ""}>კოტეჯი</option>
-                                        <option value="ვილა" ${item?.type === "ვილა" ? "selected" : ""}>ვილა</option>
-                                        <option value="ჰოსტელი" ${item?.type === "ჰოსტელი" ? "selected" : ""}>ჰოსტელი</option>
-                                        <option value="გესტჰაუსი" ${item?.type === "გესტჰაუსი" ? "selected" : ""}>გესტჰაუსი</option>
-                                        <option value="სახლი" ${item?.type === "სახლი" ? "selected" : ""}>სახლი</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>ვალუტა *</label>
-                                    <select id="itemCurrency" class="select" style="width: 100%;">
-                                        <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
-                                        <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
-                                        <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="enhanced-form-section">
-                            <h3><i class="fas fa-door-open"></i> ოთახების ტიპები</h3>
-                            <p style="color: var(--text-color); font-size: 0.9rem; margin-bottom: 1rem;">
-                                დაამატეთ სხვადასხვა ტიპის ოთახები სხვადასხვა ფასით და სტუმრების რაოდენობით.
-                            </p>
-                            <div id="roomTypesContainer">
-                                ${(() => {
-                                    const roomTypes = item?.roomTypes || [];
-                                    if (roomTypes.length > 0) {
-                                        return roomTypes.map((rt, idx) => `
-                                            <div class="room-type-entry" data-room-index="${idx}" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
-                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${idx + 1}</h4>
-                                                    ${idx > 0 ? `<button type="button" class="remove-room-type-btn" onclick="removeRoomType(${idx})" style="background: rgba(220,53,69,0.2); color: #ef4444; border: 1px solid rgba(220,53,69,0.3); border-radius: 6px; padding: 0.4rem 0.8rem; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;"><i class="fas fa-trash"></i> წაშლა</button>` : ''}
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group">
-                                                        <label>ფასი (ღამეში) *</label>
-                                                        <input type="number" class="input room-type-price" value="${rt.price || ''}" required placeholder="90">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>ოთახების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-rooms" value="${rt.rooms || ''}" required placeholder="3">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>საძინებლების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>სტუმრების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-guests" value="${rt.guests || ''}" required placeholder="2">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        `).join('');
-                                    } else {
-                                        // Backwards compatibility: if old format, convert to single room type
-                                        const hasOldData = item?.pricePerDay || item?.rooms || item?.bedrooms || item?.guests;
-                                        return `
-                                            <div class="room-type-entry" data-room-index="0" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
-                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #1</h4>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group">
-                                                        <label>ფასი (ღამეში) *</label>
-                                                        <input type="number" class="input room-type-price" value="${hasOldData ? (item?.pricePerDay || '') : ''}" required placeholder="90">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>ოთახების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-rooms" value="${hasOldData ? (item?.rooms || '') : ''}" required placeholder="3">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>საძინებლების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-bedrooms" value="${hasOldData ? (item?.bedrooms || '') : ''}" required placeholder="1">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>სტუმრების რაოდენობა *</label>
-                                                        <input type="number" class="input room-type-guests" value="${hasOldData ? (item?.guests || '') : ''}" required placeholder="2">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        `;
-                                    }
-                                })()}
-                            </div>
-                            <button type="button" id="addRoomTypeBtn" onclick="addRoomType()" style="width: 100%; padding: 0.875rem; background: rgba(255,255,255,0.05); border: 2px dashed var(--border-color); border-radius: 10px; color: var(--primary-color); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                <i class="fas fa-plus-circle"></i> სხვა ოთახის დამატება
-                            </button>
-                        </div>
-                                        ${[
                                             "აფხაზეთი",
                                             "სამეგრელო",
                                             "რაჭა-ლეჩხუმი",
@@ -4474,10 +4363,10 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         </div>
 
                         <div class="enhanced-form-section">
-                            <h3><i class="fas fa-cog"></i> ��ეტალები</h3>
+                            <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონე���ი) *</label>
+                                    <label>რეგიონი (რეგიონები) *</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
@@ -4516,31 +4405,84 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>ფასი (ღამეში) *</label>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <input type="number" id="itemPrice" class="input" value="${item?.pricePerDay || ""}" required placeholder="150" style="flex: 1;">
-                                        <select id="itemCurrency" class="select" style="width: 100px;">
-                                            <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
-                                            <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
-                                            <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
-                                        </select>
-                                    </div>
+                                    <label>ვალუტა *</label>
+                                    <select id="itemCurrency" class="select" style="width: 100%;">
+                                        <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
+                                        <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
+                                        <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>ოთახების რაოდენობა *</label>
-                                    <input type="number" id="itemRooms" class="input" value="${item?.rooms || ""}" required placeholder="3">
-                                </div>
-                                <div class="form-group">
-                                    <label>საძინებლების რაოდენობა *</label>
-                                    <input type="number" id="itemBedrooms" class="input" value="${item?.bedrooms || ""}" required placeholder="2">
-                                </div>
-                                <div class="form-group">
-                                    <label>სტუმრების რაოდენობა *</label>
-                                    <input type="number" id="itemGuests" class="input" value="${item?.guests || ""}" required placeholder="6">
-                                </div>
+                        </div>
+
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-door-open"></i> ოთახების ტიპები</h3>
+                            <p style="color: var(--text-color); font-size: 0.9rem; margin-bottom: 1rem;">
+                                დაამატეთ სხვადასხვა ტიპის ოთახები სხვადასხვა ფასით და სტუმრების რაოდენობით.
+                            </p>
+                            <div id="roomTypesContainer">
+                                ${(() => {
+                                    const roomTypes = item?.roomTypes || [];
+                                    if (roomTypes.length > 0) {
+                                        return roomTypes.map((rt, idx) => `
+                                            <div class="room-type-entry" data-room-index="${idx}" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${idx + 1}</h4>
+                                                    ${idx > 0 ? `<button type="button" class="remove-room-type-btn" onclick="removeRoomType(${idx})" style="background: rgba(220,53,69,0.2); color: #ef4444; border: 1px solid rgba(220,53,69,0.3); border-radius: 6px; padding: 0.4rem 0.8rem; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;"><i class="fas fa-trash"></i> წაშლა</button>` : ''}
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group">
+                                                        <label>ფასი (ღამეში) *</label>
+                                                        <input type="number" class="input room-type-price" value="${rt.price || ''}" required placeholder="90">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ოთახების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-rooms" value="${rt.rooms || ''}" required placeholder="3">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>სტუმრების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-guests" value="${rt.guests || ''}" required placeholder="2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('');
+                                    } else {
+                                        const hasOldData = item?.pricePerDay || item?.rooms || item?.bedrooms || item?.guests;
+                                        return `
+                                            <div class="room-type-entry" data-room-index="0" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #1</h4>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group">
+                                                        <label>ფასი (ღამეში) *</label>
+                                                        <input type="number" class="input room-type-price" value="${hasOldData ? (item?.pricePerDay || '') : ''}" required placeholder="90">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ოთახების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-rooms" value="${hasOldData ? (item?.rooms || '') : ''}" required placeholder="3">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-bedrooms" value="${hasOldData ? (item?.bedrooms || '') : ''}" required placeholder="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>სტუმრების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-guests" value="${hasOldData ? (item?.guests || '') : ''}" required placeholder="2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }
+                                })()}
                             </div>
+                            <button type="button" id="addRoomTypeBtn" onclick="addRoomType()" style="width: 100%; padding: 0.875rem; background: rgba(255,255,255,0.05); border: 2px dashed var(--border-color); border-radius: 10px; color: var(--primary-color); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-plus-circle"></i> სხვა ოთახის დამატება
+                            </button>
                         </div>
 
                         <div class="enhanced-form-section">
