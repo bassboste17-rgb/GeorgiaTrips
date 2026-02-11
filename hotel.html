@@ -3271,10 +3271,8 @@ function openBookingModalDirect(item, type) {
     // Build room types info for display
     const roomTypes = item.roomTypes || [];
     const hasRoomTypes = roomTypes.length > 0;
-    // maxGuests from admin input; cap by physical room capacity so algorithm always finds a solution
-    const roomCapacityTotal = hasRoomTypes ? roomTypes.reduce((sum, rt) => sum + (rt.guests * rt.rooms), 0) : 0;
-    const adminMaxGuests = item.maxGuests || item.guests || roomCapacityTotal || 1;
-    const maxGuestsAvailable = hasRoomTypes ? Math.min(adminMaxGuests, roomCapacityTotal || adminMaxGuests) : adminMaxGuests;
+    // maxGuests directly from admin - the counter max is EXACTLY what admin set
+    const maxGuestsAvailable = item.maxGuests || (item.guests || 1);
     const currencySymbolBooking = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
 
     
