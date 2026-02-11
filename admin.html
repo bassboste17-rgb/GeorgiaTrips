@@ -2164,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი�������������ი</option>
+                        <option value="rejected">❌ უარყოფი���������������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -2674,7 +2674,7 @@ input:checked + .toggle-slider:before {
                     ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                     : window.languageSwitcher && window.languageSwitcher.getCurrentLanguage() === 'ru'
                     ? ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-                    : ['ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ', 'კვი'];
+                    : ['ორშ', 'სამ', 'ოთხ', 'ხუ��', 'პარ', 'შაბ', 'კვი'];
                 
                 let calendarHTML = `
                     <div class="admin-calendar-container">
@@ -4376,7 +4376,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         </div>
                                         ${[
                                             "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
-                                            "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
+                                            "სამ��ხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
                                         ].map((r) => {
                                             const isChecked = item?.regions 
                                                 ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
@@ -4483,6 +4483,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <button type="button" id="addRoomTypeBtn" onclick="addRoomType()" style="width: 100%; padding: 0.875rem; background: rgba(255,255,255,0.05); border: 2px dashed var(--border-color); border-radius: 10px; color: var(--primary-color); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                                 <i class="fas fa-plus-circle"></i> სხვა ოთახის დამატება
                             </button>
+
+                            <div class="form-row" style="margin-top: 1.25rem;">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label><i class="fas fa-users" style="color: var(--primary-color); margin-right: 0.4rem;"></i> მაქსიმალური სტუმრების რაოდენობა *</label>
+                                    <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.25rem 0 0.5rem;">
+                                        მომხმარებელი ვერ აირჩევს ამაზე მეტ სტუმარს დაჯავშნისას.
+                                    </p>
+                                    <input type="number" id="itemMaxGuests" class="input" value="${item?.maxGuests || ''}" required placeholder="10" min="1" style="max-width: 200px;">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="enhanced-form-section">
@@ -4739,7 +4749,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <span class="lang-label">العربية:</span>
                                         <input type="text" id="nameTransAr" value="${item?.nameTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
                                     </div>
-                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
+                                    <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გ��ურთ შეცვალოთ.</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -5257,11 +5267,21 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     }
                     itemData.roomTypes = roomTypes;
                     
+                    // Max guests from admin input
+                    const maxGuestsVal = parseInt(document.getElementById("itemMaxGuests")?.value) || 0;
+                    if (maxGuestsVal <= 0) {
+                        showToast('გთხოვთ მიუთითოთ მაქსიმალური სტუმრების რაოდენობა', 'warning');
+                        uploadButton.textContent = originalText;
+                        uploadButton.disabled = false;
+                        return;
+                    }
+                    itemData.maxGuests = maxGuestsVal;
+                    
                     // Backwards compatibility: set pricePerDay to lowest room price, and sum totals
                     itemData.pricePerDay = Math.min(...roomTypes.map(rt => rt.price));
                     itemData.rooms = roomTypes.reduce((sum, rt) => sum + rt.rooms, 0);
                     itemData.bedrooms = roomTypes.reduce((sum, rt) => sum + rt.bedrooms, 0);
-                    itemData.guests = roomTypes.reduce((sum, rt) => sum + rt.guests, 0);
+                    itemData.guests = maxGuestsVal;
                     
                     const calendarModeInput = document.getElementById("calendarMode")
                     if (calendarModeInput) {

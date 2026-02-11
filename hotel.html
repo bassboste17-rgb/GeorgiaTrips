@@ -3271,7 +3271,7 @@ function openBookingModalDirect(item, type) {
     // Build room types info for display
     const roomTypes = item.roomTypes || [];
     const hasRoomTypes = roomTypes.length > 0;
-    const maxGuestsAvailable = hasRoomTypes ? roomTypes.reduce((sum, rt) => sum + (rt.guests * rt.rooms), 0) : (item.guests || 1);
+    const maxGuestsAvailable = item.maxGuests || (item.guests || 1);
     const currencySymbolBooking = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE';
     
     modalBody.innerHTML = `
@@ -3334,6 +3334,7 @@ function openBookingModalDirect(item, type) {
 
     // Store room types data for allocation logic
     window.currentHotelRoomTypes = roomTypes;
+    window.currentHotelMaxGuests = maxGuestsAvailable;
     window.currentGuestCount = 1;
     window.isManualMode = false;
     window.manualRoomQtys = new Array(roomTypes.length).fill(0);
@@ -3713,12 +3714,12 @@ function openDetailModal(item) {
                 </div>
             </div>
             ` : ''}
-            ${item.guests ? `
+            ${(item.maxGuests || item.guests) ? `
             <div class="detail-spec">
                 <span class="detail-spec-icon"><i class="fas fa-users" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
-                    <span class="detail-spec-label">${guestsLabel}</span>
-                    <span class="detail-spec-value">${item.guests}</span>
+                    <span class="detail-spec-label">${ls ? ls.translate('hotelMaxGuests') || 'მაქს. სტუმარი' : 'მაქს. სტუმარი'}</span>
+                    <span class="detail-spec-value">${item.maxGuests || item.guests}</span>
                 </div>
             </div>
             ` : ''}
@@ -3835,8 +3836,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ========== GUEST COUNT & ROOM ALLOCATION ==========
 window.changeGuestCount = function(delta) {
-    const roomTypes = window.currentHotelRoomTypes || [];
-    const maxGuests = roomTypes.reduce((sum, rt) => sum + (rt.guests * rt.rooms), 0) || 10;
+    const maxGuests = window.currentHotelMaxGuests || 10;
     const newCount = Math.max(1, Math.min(maxGuests, (window.currentGuestCount || 1) + delta));
     window.currentGuestCount = newCount;
     
@@ -3883,6 +3883,18 @@ window.changeManualRoomQty = function(index, delta) {
     if (!roomTypes[index]) return;
     const maxAvailable = roomTypes[index].rooms;
     const currentQty = window.manualRoomQtys[index] || 0;
+    
+    // Check if adding would exceed maxGuests
+    if (delta > 0) {
+        let currentTotalGuests = 0;
+        window.manualRoomQtys.forEach((qty, idx) => {
+            currentTotalGuests += qty * roomTypes[idx].guests;
+        });
+        const wouldAdd = roomTypes[index].guests;
+        const maxGuests = window.currentHotelMaxGuests || 999;
+        if (currentTotalGuests + wouldAdd > maxGuests) return;
+    }
+    
     const newQty = Math.max(0, Math.min(maxAvailable, currentQty + delta));
     window.manualRoomQtys[index] = newQty;
     
@@ -3951,42 +3963,57 @@ window.changeManualRoomQty = function(index, delta) {
 };
 
 function smartAllocateRooms(guestCount, roomTypes) {
-    // Sort room types by guest capacity (descending) for efficient packing
-    const sortedTypes = roomTypes.map((rt, idx) => ({ ...rt, originalIndex: idx }))
-        .sort((a, b) => b.guests - a.guests);
+    // Find the CHEAPEST combination of rooms that can fit >= guestCount
+    // Priority: 1) cheapest price, 2) least wasted capacity, 3) fewest rooms
+    const types = roomTypes.map((rt, idx) => ({ ...rt, originalIndex: idx }));
     
     let bestAllocation = null;
     let bestPrice = Infinity;
+    let bestWaste = Infinity;
     let bestRoomCount = Infinity;
     
-    // Try all possible combinations using dynamic approach
-    function tryAllocate(remaining, typeIndex, currentAllocation, currentPrice, currentRoomCount) {
-        if (remaining <= 0) {
-            if (currentPrice < bestPrice || (currentPrice === bestPrice && currentRoomCount < bestRoomCount)) {
+    function tryAllocate(typeIndex, currentAllocation, currentCapacity, currentPrice, currentRoomCount) {
+        // If we have enough capacity, check if this is the best so far
+        if (currentCapacity >= guestCount) {
+            const waste = currentCapacity - guestCount;
+            const isBetter = 
+                currentPrice < bestPrice ||
+                (currentPrice === bestPrice && waste < bestWaste) ||
+                (currentPrice === bestPrice && waste === bestWaste && currentRoomCount < bestRoomCount);
+            if (isBetter) {
                 bestPrice = currentPrice;
+                bestWaste = waste;
                 bestRoomCount = currentRoomCount;
                 bestAllocation = [...currentAllocation];
             }
+            // Don't return -- keep searching, there may be an even better option
+            // But prune: adding more rooms can only increase price
             return;
         }
         
-        if (typeIndex >= sortedTypes.length) return;
+        if (typeIndex >= types.length) return;
         
-        const rt = sortedTypes[typeIndex];
-        const maxOfThisType = Math.min(rt.rooms, Math.ceil(remaining / rt.guests));
+        const rt = types[typeIndex];
+        const remainingNeeded = guestCount - currentCapacity;
+        const maxOfThisType = Math.min(rt.rooms, Math.ceil(remainingNeeded / rt.guests));
         
+        // Try from max down to 0
         for (let qty = maxOfThisType; qty >= 0; qty--) {
+            const newPrice = currentPrice + (qty * rt.price);
+            // Prune: if already more expensive than best, skip
+            if (newPrice > bestPrice) continue;
+            
             tryAllocate(
-                remaining - (qty * rt.guests),
                 typeIndex + 1,
                 [...currentAllocation, { ...rt, quantity: qty }],
-                currentPrice + (qty * rt.price),
+                currentCapacity + (qty * rt.guests),
+                newPrice,
                 currentRoomCount + qty
             );
         }
     }
     
-    tryAllocate(guestCount, 0, [], 0, 0);
+    tryAllocate(0, [], 0, 0, 0);
     
     if (!bestAllocation) return null;
     
