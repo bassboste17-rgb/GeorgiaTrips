@@ -3524,7 +3524,7 @@ textarea.input {
         type: {
           'კულტურული': 'tourTypeCultural',
           'სათავგადასავლო': 'tourTypeSightseeing',
-          'გასტრონომიული': 'tourTypeGastronomic',
+          'გასტ��ონომიული': 'tourTypeGastronomic',
           'ისტორიული': 'tourTypeHistorical',
           'ბუნება': 'tourTypeNature'
         },
@@ -4311,7 +4311,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ითხოვს საკუთარ ტურს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ი���ხოვს საკუთარ ტურს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
@@ -4443,6 +4443,7 @@ let allTours = []
 let allHotelsData = []
 let selectedItem = null
 let selectedItemType = null
+let selectedBookingHotel = null
 
 let startCalendar
 
@@ -5271,8 +5272,6 @@ const dateLabel = ls ? ls.translate('bookingPriceDate') || 'Date' : 'Date';
   `;
 }
 
-let selectedBookingHotel = null;
-
 function renderTourLinkedHotels(item) {
   const container = document.getElementById('tourLinkedHotelsContainer');
   if (!container) return;
@@ -5762,6 +5761,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (modal) {
         modal.style.display = "none";
         setBodyScroll(true);
+        selectedBookingHotel = null;
+        const hc = document.getElementById("tourLinkedHotelsContainer");
+        if (hc) { hc.innerHTML = ''; hc.style.display = 'none'; }
       }
     });
   }
@@ -5780,6 +5782,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target === bookingModal) {
       bookingModal.style.display = "none";
       setBodyScroll(true);
+      selectedBookingHotel = null;
+      const hc = document.getElementById("tourLinkedHotelsContainer");
+      if (hc) { hc.innerHTML = ''; hc.style.display = 'none'; }
     }
     
     if (event.target === detailModal) {
