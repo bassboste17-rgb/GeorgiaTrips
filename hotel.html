@@ -3654,7 +3654,7 @@ function openDetailModal(item) {
     const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
     const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათებლები';
-    const noDesc = ls ? ls.translate('bookingNoDescription') : 'აღწერა არ არის';
+    const noDesc = ls ? ls.translate('bookingNoDescription') : '��ღწერა არ არის';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
     const closeBtn = ls ? ls.translate('bookingDetailClose') : 'დახურვა';
     const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
@@ -3836,7 +3836,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ========== GUEST COUNT & ROOM ALLOCATION ==========
 window.changeGuestCount = function(delta) {
-    const maxGuests = window.currentHotelMaxGuests || 10;
+    const maxGuests = window.currentHotelMaxGuests || 1;
     const newCount = Math.max(1, Math.min(maxGuests, (window.currentGuestCount || 1) + delta));
     window.currentGuestCount = newCount;
     
