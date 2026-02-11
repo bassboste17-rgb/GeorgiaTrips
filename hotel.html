@@ -3655,7 +3655,7 @@ function openDetailModal(item) {
     const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახები';
     const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
-    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათებლები';
+    const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათე���ლები';
     const noDesc = ls ? ls.translate('bookingNoDescription') : '���ღწერა არ არის';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
     const closeBtn = ls ? ls.translate('bookingDetailClose') : 'დახურვა';
@@ -3883,7 +3883,6 @@ window.toggleManualRoomSelection = function() {
 window.changeManualRoomQty = function(index, delta) {
     const roomTypes = window.currentHotelRoomTypes || [];
     if (!roomTypes[index]) return;
-    const maxAvailable = roomTypes[index].rooms;
     const currentQty = window.manualRoomQtys[index] || 0;
     
     // Check if adding would exceed maxGuests
@@ -3897,7 +3896,8 @@ window.changeManualRoomQty = function(index, delta) {
         if (currentTotalGuests + wouldAdd > maxGuests) return;
     }
     
-    const newQty = Math.max(0, Math.min(maxAvailable, currentQty + delta));
+    // Room types are unlimited - only capped by maxGuests check above
+    const newQty = Math.max(0, currentQty + delta);
     window.manualRoomQtys[index] = newQty;
     
     const el = document.getElementById(`manualQty_${index}`);
@@ -3997,7 +3997,8 @@ function smartAllocateRooms(guestCount, roomTypes) {
         
         const rt = types[typeIndex];
         const remainingNeeded = guestCount - currentCapacity;
-        const maxOfThisType = Math.min(rt.rooms, Math.ceil(remainingNeeded / rt.guests));
+        // Room types are unlimited - can use as many as needed
+        const maxOfThisType = Math.ceil(remainingNeeded / rt.guests);
         
         // Try from max down to 0
         for (let qty = maxOfThisType; qty >= 0; qty--) {
