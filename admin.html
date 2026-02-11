@@ -2164,7 +2164,7 @@ input:checked + .toggle-slider:before {
                         <option value="">📊 ყველა სტატუსი</option>
                         <option value="pending">⏳ მოლოდინში</option>
                         <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფი���������ი</option>
+                        <option value="rejected">❌ უარყოფი�����������ი</option>
                     </select>
                 </div>
                 <div id="customToursGrid" class="admin-table"></div>
@@ -2366,7 +2366,7 @@ input:checked + .toggle-slider:before {
                 "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
                 "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
                 "ვარდისფერი": { en: "Pink", ru: "Розовый", ar: "وردي" },
-                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذهبي" }
+                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذه��ي" }
             }
         };
         // </CHANGE>
@@ -2379,6 +2379,96 @@ input:checked + .toggle-slider:before {
           }
         }
         window.toggleTranslationFields = toggleTranslationFields;
+
+        // ========== ROOM TYPE MANAGEMENT ==========
+        function addRoomType() {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return;
+            const existingEntries = container.querySelectorAll('.room-type-entry');
+            const newIndex = existingEntries.length;
+            const entryHTML = `
+                <div class="room-type-entry" data-room-index="${newIndex}" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative; animation: modalSlideIn 0.3s ease-out;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${newIndex + 1}</h4>
+                        <button type="button" class="remove-room-type-btn" onclick="removeRoomType(${newIndex})" style="background: rgba(220,53,69,0.2); color: #ef4444; border: 1px solid rgba(220,53,69,0.3); border-radius: 6px; padding: 0.4rem 0.8rem; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;"><i class="fas fa-trash"></i> წაშლა</button>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ფასი (ღამეში) *</label>
+                            <input type="number" class="input room-type-price" value="" required placeholder="90">
+                        </div>
+                        <div class="form-group">
+                            <label>ოთახების რაოდენობა *</label>
+                            <input type="number" class="input room-type-rooms" value="" required placeholder="3">
+                        </div>
+                        <div class="form-group">
+                            <label>საძინებლების რაოდენობა *</label>
+                            <input type="number" class="input room-type-bedrooms" value="" required placeholder="1">
+                        </div>
+                        <div class="form-group">
+                            <label>სტუმრების რაოდენობა *</label>
+                            <input type="number" class="input room-type-guests" value="" required placeholder="2">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', entryHTML);
+        }
+        window.addRoomType = addRoomType;
+
+        function removeRoomType(index) {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return;
+            const entries = container.querySelectorAll('.room-type-entry');
+            if (entries.length <= 1) {
+                if (typeof showToast === 'function') showToast('მინიმუმ 1 ოთახის ტიპი უნდა არსებობდეს', 'warning');
+                return;
+            }
+            const entry = container.querySelector(`.room-type-entry[data-room-index="${index}"]`);
+            if (entry) {
+                entry.style.opacity = '0';
+                entry.style.transform = 'translateX(-20px)';
+                entry.style.transition = 'all 0.3s ease';
+                setTimeout(() => {
+                    entry.remove();
+                    // Re-index remaining entries
+                    const remaining = container.querySelectorAll('.room-type-entry');
+                    remaining.forEach((el, idx) => {
+                        el.setAttribute('data-room-index', idx);
+                        const header = el.querySelector('h4');
+                        if (header) header.innerHTML = `<i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${idx + 1}`;
+                        const removeBtn = el.querySelector('.remove-room-type-btn');
+                        if (removeBtn) {
+                            if (idx === 0 && remaining.length === 1) {
+                                removeBtn.style.display = 'none';
+                            } else {
+                                removeBtn.style.display = '';
+                                removeBtn.setAttribute('onclick', `removeRoomType(${idx})`);
+                            }
+                        }
+                    });
+                }, 300);
+            }
+        }
+        window.removeRoomType = removeRoomType;
+
+        function collectRoomTypes() {
+            const container = document.getElementById('roomTypesContainer');
+            if (!container) return [];
+            const entries = container.querySelectorAll('.room-type-entry');
+            const roomTypes = [];
+            entries.forEach(entry => {
+                const price = parseFloat(entry.querySelector('.room-type-price')?.value) || 0;
+                const rooms = parseInt(entry.querySelector('.room-type-rooms')?.value) || 0;
+                const bedrooms = parseInt(entry.querySelector('.room-type-bedrooms')?.value) || 0;
+                const guests = parseInt(entry.querySelector('.room-type-guests')?.value) || 0;
+                if (price > 0 || rooms > 0 || guests > 0) {
+                    roomTypes.push({ price, rooms, bedrooms, guests });
+                }
+            });
+            return roomTypes;
+        }
+        window.collectRoomTypes = collectRoomTypes;
 
         function getManualTranslations(type) {
           const enEl = document.getElementById(type + 'TransEn');
@@ -3367,7 +3457,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.rooms || 0} ოთახი</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes ? item.roomTypes.length + ' ტიპი' : (item.rooms || 0) + ' ოთახი'}</span><span><i class="fas fa-bed"></i> ${item.bedrooms || 0} საძინებელი</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -3891,6 +3981,117 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                 <span>ყველა რეგიონი (უნივერსალური)</span>
                                             </label>
                                         </div>
+                                        ${[
+                                            "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
+                                            "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
+                                        ].map((r) => {
+                                            const isChecked = item?.regions 
+                                                ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
+                                                : false;
+                                            return `
+                                            <div class="region-checkbox-item">
+                                                <label>
+                                                    <input type="checkbox" value="${r}" class="region-checkbox-admin" data-region-admin ${isChecked ? 'checked' : ''}>
+                                                    <span>${r}</span>
+                                                </label>
+                                            </div>
+                                            `;
+                                        }).join("")}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>ტიპი *</label>
+                                    <select id="itemType" class="select" required>
+                                        <option value="სასტუმრო" ${item?.type === "სასტუმრო" ? "selected" : ""}>სასტუმრო</option>
+                                        <option value="აპარტამენტი" ${item?.type === "აპარტამენტი" ? "selected" : ""}>აპარტამენტი</option>
+                                        <option value="კოტეჯი" ${item?.type === "კოტეჯი" ? "selected" : ""}>კოტეჯი</option>
+                                        <option value="ვილა" ${item?.type === "ვილა" ? "selected" : ""}>ვილა</option>
+                                        <option value="ჰოსტელი" ${item?.type === "ჰოსტელი" ? "selected" : ""}>ჰოსტელი</option>
+                                        <option value="გესტჰაუსი" ${item?.type === "გესტჰაუსი" ? "selected" : ""}>გესტჰაუსი</option>
+                                        <option value="სახლი" ${item?.type === "სახლი" ? "selected" : ""}>სახლი</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>ვალუტა *</label>
+                                    <select id="itemCurrency" class="select" style="width: 100%;">
+                                        <option value="GEL" ${item?.currency === "GEL" || !item?.currency ? "selected" : ""}>₾ GEL</option>
+                                        <option value="USD" ${item?.currency === "USD" ? "selected" : ""}>$ USD</option>
+                                        <option value="EUR" ${item?.currency === "EUR" ? "selected" : ""}>€ EUR</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="enhanced-form-section">
+                            <h3><i class="fas fa-door-open"></i> ოთახების ტიპები</h3>
+                            <p style="color: var(--text-color); font-size: 0.9rem; margin-bottom: 1rem;">
+                                დაამატეთ სხვადასხვა ტიპის ოთახები სხვადასხვა ფასით და სტუმრების რაოდენობით.
+                            </p>
+                            <div id="roomTypesContainer">
+                                ${(() => {
+                                    const roomTypes = item?.roomTypes || [];
+                                    if (roomTypes.length > 0) {
+                                        return roomTypes.map((rt, idx) => `
+                                            <div class="room-type-entry" data-room-index="${idx}" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${idx + 1}</h4>
+                                                    ${idx > 0 ? `<button type="button" class="remove-room-type-btn" onclick="removeRoomType(${idx})" style="background: rgba(220,53,69,0.2); color: #ef4444; border: 1px solid rgba(220,53,69,0.3); border-radius: 6px; padding: 0.4rem 0.8rem; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;"><i class="fas fa-trash"></i> წაშლა</button>` : ''}
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group">
+                                                        <label>ფასი (ღამეში) *</label>
+                                                        <input type="number" class="input room-type-price" value="${rt.price || ''}" required placeholder="90">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ოთახების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-rooms" value="${rt.rooms || ''}" required placeholder="3">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>სტუმრების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-guests" value="${rt.guests || ''}" required placeholder="2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('');
+                                    } else {
+                                        // Backwards compatibility: if old format, convert to single room type
+                                        const hasOldData = item?.pricePerDay || item?.rooms || item?.bedrooms || item?.guests;
+                                        return `
+                                            <div class="room-type-entry" data-room-index="0" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; position: relative;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                                    <h4 style="color: #fff; font-size: 1rem; margin: 0;"><i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #1</h4>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group">
+                                                        <label>ფასი (ღამეში) *</label>
+                                                        <input type="number" class="input room-type-price" value="${hasOldData ? (item?.pricePerDay || '') : ''}" required placeholder="90">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ოთახების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-rooms" value="${hasOldData ? (item?.rooms || '') : ''}" required placeholder="3">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>საძინებლების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-bedrooms" value="${hasOldData ? (item?.bedrooms || '') : ''}" required placeholder="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>სტუმრების რაოდენობა *</label>
+                                                        <input type="number" class="input room-type-guests" value="${hasOldData ? (item?.guests || '') : ''}" required placeholder="2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }
+                                })()}
+                            </div>
+                            <button type="button" id="addRoomTypeBtn" onclick="addRoomType()" style="width: 100%; padding: 0.875rem; background: rgba(255,255,255,0.05); border: 2px dashed var(--border-color); border-radius: 10px; color: var(--primary-color); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <i class="fas fa-plus-circle"></i> სხვა ოთახის დამატება
+                            </button>
+                        </div>
                                         ${[
                                             "აფხაზეთი",
                                             "სამეგრელო",
@@ -4820,7 +5021,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                         <div class="enhanced-form-section" id="tourHotelsSection">
                             <h3><i class="fas fa-hotel"></i> სასტუმროების მიბმა</h3>
-                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმროები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
+                            <p class="text-muted" style="margin-bottom: 1rem;">აირჩიეთ რეგიონები ზემოთ, შემდეგ მონიშნეთ სასურველი სასტუმ��ოები რომლებიც ამ ტურთან უნდა გამოჩნდეს.</p>
                             <div id="tourHotelsListContainer">
                                 <p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>
                             </div>
@@ -5020,7 +5221,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             }
             
             const type = document.getElementById("itemType").value
-            const pricePerDay = Number.parseFloat(document.getElementById("itemPrice").value)
+            const priceInput = document.getElementById("itemPrice")
+            const pricePerDay = priceInput ? Number.parseFloat(priceInput.value) : 0
             const currency = document.getElementById("itemCurrency").value
             const imagesInput = document.getElementById("itemImages")
 
@@ -5103,9 +5305,21 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     itemData.colorTranslations = colorTranslation;
                     
                 } else if (currentAdminTab === "hotels") {
-                    itemData.rooms = Number.parseInt(document.getElementById("itemRooms").value)
-                    itemData.bedrooms = Number.parseInt(document.getElementById("itemBedrooms").value)
-                    itemData.guests = Number.parseInt(document.getElementById("itemGuests").value)
+                    // Collect room types
+                    const roomTypes = collectRoomTypes();
+                    if (roomTypes.length === 0) {
+                        showToast('გთხოვთ დაამატოთ მინიმუმ 1 ოთახის ტიპი', 'warning');
+                        uploadButton.textContent = originalText;
+                        uploadButton.disabled = false;
+                        return;
+                    }
+                    itemData.roomTypes = roomTypes;
+                    
+                    // Backwards compatibility: set pricePerDay to lowest room price, and sum totals
+                    itemData.pricePerDay = Math.min(...roomTypes.map(rt => rt.price));
+                    itemData.rooms = roomTypes.reduce((sum, rt) => sum + rt.rooms, 0);
+                    itemData.bedrooms = roomTypes.reduce((sum, rt) => sum + rt.bedrooms, 0);
+                    itemData.guests = roomTypes.reduce((sum, rt) => sum + rt.guests, 0);
                     
                     const calendarModeInput = document.getElementById("calendarMode")
                     if (calendarModeInput) {
