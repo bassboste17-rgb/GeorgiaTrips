@@ -2402,6 +2402,14 @@ input:checked + .toggle-slider:before {
                             <input type="number" class="input room-type-bedrooms" value="" required placeholder="1">
                         </div>
                         <div class="form-group">
+                            <label>დიდი საწოლი</label>
+                            <input type="number" class="input room-type-large-beds" value="" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>პატარა საწოლი</label>
+                            <input type="number" class="input room-type-small-beds" value="" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
                             <label>სტუმრების რაოდენობა *</label>
                             <input type="number" class="input room-type-guests" value="" required placeholder="2">
                         </div>
@@ -2432,7 +2440,7 @@ input:checked + .toggle-slider:before {
                     remaining.forEach((el, idx) => {
                         el.setAttribute('data-room-index', idx);
                         const header = el.querySelector('h4');
-                        if (header) header.innerHTML = `<i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>ოთახი #${idx + 1}`;
+                        if (header) header.innerHTML = `<i class="fas fa-bed" style="color: var(--primary-color); margin-right: 0.5rem;"></i>���თახი #${idx + 1}`;
                         const removeBtn = el.querySelector('.remove-room-type-btn');
                         if (removeBtn) {
                             if (idx === 0 && remaining.length === 1) {
@@ -2456,9 +2464,11 @@ input:checked + .toggle-slider:before {
             entries.forEach(entry => {
                 const price = parseFloat(entry.querySelector('.room-type-price')?.value) || 0;
                 const bedrooms = parseInt(entry.querySelector('.room-type-bedrooms')?.value) || 0;
+                const largeBeds = parseInt(entry.querySelector('.room-type-large-beds')?.value) || 0;
+                const smallBeds = parseInt(entry.querySelector('.room-type-small-beds')?.value) || 0;
                 const guests = parseInt(entry.querySelector('.room-type-guests')?.value) || 0;
                 if (price > 0 || bedrooms > 0 || guests > 0) {
-                    roomTypes.push({ price, rooms: bedrooms, bedrooms, guests });
+                    roomTypes.push({ price, rooms: bedrooms, bedrooms, largeBeds, smallBeds, guests });
                 }
             });
             return roomTypes;
@@ -3452,7 +3462,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes ? item.roomTypes.length + ' ტიპი' : (item.bedrooms || 0) + ' საწოლი'}</span><span><i class="fas fa-users"></i> ${item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `${item.roomTypes && item.roomTypes.length > 0 ? '<span><i class="fas fa-th-list"></i> ' + item.roomTypes.length + ' ტიპის ოთახი</span>' : ''}<span><i class="fas fa-bed"></i> ${item.roomTypes ? item.roomTypes.reduce((sum, rt) => sum + (rt.bedrooms || 0), 0) : (item.bedrooms || 0)} საწოლი</span>${(() => { const rts = item.roomTypes || []; const totalLarge = rts.reduce((s, r) => s + (r.largeBeds || 0), 0); const totalSmall = rts.reduce((s, r) => s + (r.smallBeds || 0), 0); let bedInfo = ''; if (totalLarge > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #4ade80;"></i> ' + totalLarge + ' დიდი</span>'; if (totalSmall > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #60a5fa;"></i> ' + totalSmall + ' პატარა</span>'; return bedInfo; })()}<span><i class="fas fa-user-friends"></i> მაქს. ${item.maxGuests || item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -4435,6 +4445,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                         <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label>დიდი საწოლი</label>
+                                                        <input type="number" class="input room-type-large-beds" value="${rt.largeBeds || ''}" placeholder="0" min="0">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>პატარა საწოლი</label>
+                                                        <input type="number" class="input room-type-small-beds" value="${rt.smallBeds || ''}" placeholder="0" min="0">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label>სტუმრების რაოდენობა *</label>
                                                         <input type="number" class="input room-type-guests" value="${rt.guests || ''}" required placeholder="2">
                                                     </div>
@@ -4456,6 +4474,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                     <div class="form-group">
                                                         <label>საწოლების რაოდენობა *</label>
                                                         <input type="number" class="input room-type-bedrooms" value="${hasOldData ? (item?.bedrooms || '') : ''}" required placeholder="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>დიდი საწოლი</label>
+                                                        <input type="number" class="input room-type-large-beds" value="${hasOldData ? (item?.largeBeds || '') : ''}" placeholder="0" min="0">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>პატარა საწოლი</label>
+                                                        <input type="number" class="input room-type-small-beds" value="${hasOldData ? (item?.smallBeds || '') : ''}" placeholder="0" min="0">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>სტუმრების რაოდენობა *</label>
@@ -4801,7 +4827,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             "შიდა ქართლი",
                                             "მცხეთა-მთიანეთი",
                                             "ქვემო ქართლი",
-                                            "კახეთი",
+                                            "კახეთ���",
                                             "თბილისი",
                                         ]
                                             .map((r) => {
@@ -5583,7 +5609,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             const titles = {
                 success: "წარმატება",
                 error: "შეცდომა",
-                warning: "გაფრთხილება",
+                warning: "გაფრთ���ილება",
                 info: "ინფორმაცია",
             }
 
@@ -5929,7 +5955,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
         window.copyEmail = function(email) {
             navigator.clipboard.writeText(email).then(() => {
-                showToast("მაილი დაკოპირდა", "success");
+                showToast("მაილი დაკოპი��და", "success");
             }).catch(() => {
                 showToast("კოპირება ვერ მოხერხდა", "error");
             });

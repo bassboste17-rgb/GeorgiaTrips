@@ -3131,15 +3131,26 @@ function createItemCard(item) {
     const typeBadge = item.type ? `<div class="hotel-type-badge"><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</div>` : '';
     
     const ls = window.languageSwitcher;
-    const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
-    const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახი';
-    const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებელი';
+    const perNight = ls ? ls.translate('hotelPerNight') : '/ღამ��';
+    const bedsLabel = ls ? ls.translate('hotelBeds') || 'საწოლი' : 'საწოლი';
+    const largeBedLabel = ls ? ls.translate('hotelLargeBed') || 'დიდი' : 'დიდი';
+    const smallBedLabel = ls ? ls.translate('hotelSmallBed') || 'პატარა' : 'პატარა';
+    const maxGuestsPrefix = ls ? ls.translate('hotelMaxGuestsPrefix') || 'მაქს.' : 'მაქს.';
+    const roomTypesCountLabel = ls ? ls.translate('hotelRoomTypesCount') || 'ტიპის ოთახი' : 'ტიპის ოთახი';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმარი';
     const bookBtn = ls ? ls.translate('bookingCardBook') : 'დაჯავშნა';
 
     const hasRoomTypes = item.roomTypes && item.roomTypes.length > 0;
     const startingFrom = ls ? ls.translate('hotelStartingFrom') || 'დან' : 'დან';
-    const roomTypesInfo = hasRoomTypes ? item.roomTypes.map(rt => `${rt.guests} ${guestsLabel}`).join(', ') : '';
+    
+    // Calculate bed totals
+    const totalBeds = hasRoomTypes ? item.roomTypes.reduce((s, rt) => s + (rt.bedrooms || 0), 0) : (item.bedrooms || 0);
+    const totalLargeBeds = hasRoomTypes ? item.roomTypes.reduce((s, rt) => s + (rt.largeBeds || 0), 0) : (item.largeBeds || 0);
+    const totalSmallBeds = hasRoomTypes ? item.roomTypes.reduce((s, rt) => s + (rt.smallBeds || 0), 0) : (item.smallBeds || 0);
+    const bedDetailParts = [];
+    if (totalLargeBeds > 0) bedDetailParts.push(`${totalLargeBeds} ${largeBedLabel}`);
+    if (totalSmallBeds > 0) bedDetailParts.push(`${totalSmallBeds} ${smallBedLabel}`);
+    const bedDetailStr = bedDetailParts.length > 0 ? ` (${bedDetailParts.join(', ')})` : '';
 
     return `
         <div class="card card-clickable" data-id="${item.id}">
@@ -3154,10 +3165,9 @@ function createItemCard(item) {
                 <p class="card-description">${description}</p>
                 <div class="card-details">
                     <span><i class="fas fa-map-marker-alt"></i> ${regionDisplay}</span>
-                    ${hasRoomTypes ? `<span><i class="fas fa-door-open"></i> ${item.roomTypes.length} ${ls ? ls.translate('hotelRoomTypes') || 'ტიპი ოთახი' : 'ტიპი ოთახი'}</span>` : (item.rooms ? `<span><i class="fas fa-door-open"></i> ${item.rooms} ${roomsLabel}</span>` : '')}
-                    ${item.bedrooms ? `<span><i class="fas fa-bed"></i> ${item.bedrooms} ${bedroomsLabel}</span>` : ''}
-                    ${item.guests ? `<span><i class="fas fa-users"></i> ${item.guests} ${guestsLabel}</span>` : ''}
                     ${item.type ? `<span><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</span>` : ''}
+                    ${hasRoomTypes ? `<span><i class="fas fa-th-list"></i> ${item.roomTypes.length} ${roomTypesCountLabel}</span>` : ''}
+                    ${(item.maxGuests || item.guests) ? `<span><i class="fas fa-user-friends"></i> ${maxGuestsPrefix} ${item.maxGuests || item.guests} ${guestsLabel}</span>` : ''}
                 </div>
                 <div class="card-footer">
                     <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE'}${perNight}</div>
@@ -3237,8 +3247,10 @@ function openBookingModalDirect(item, type) {
     const isRestricted = item.restrictedMode || false;
     
     const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
-    const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახი';
-    const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებელი';
+    const bedsLabel = ls ? ls.translate('hotelBeds') || 'საწოლი' : 'საწოლი';
+    const largeBedLabelB = ls ? ls.translate('hotelLargeBed') || 'დიდი' : 'დიდი';
+    const smallBedLabelB = ls ? ls.translate('hotelSmallBed') || 'პატარა' : 'პატარა';
+    const maxGuestsPrefixB = ls ? ls.translate('hotelMaxGuestsPrefix') || 'მაქს.' : 'მაქს.';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმარი';
     const fullyBookedTitle = ls ? ls.translate('bookingFullyBooked') : 'სრულად დაჯავშნილია';
     const fullyBookedMsg = ls ? ls.translate('hotelFullyBookedMessage') : "ამ სასტუმროს ამჟამად არ აქვს ხელმისაწვდომი თარიღები";
@@ -3285,9 +3297,8 @@ function openBookingModalDirect(item, type) {
                 <div class="location"><i class="fas fa-map-marker-alt"></i> ${regionModalText || 'N/A'}</div>
                 <div class="price">${item.pricePerDay}${currencySymbolBooking}${perNight}</div>
                 <div class="booking-additional-specs">
-                    ${item.rooms ? `<span><i class="fas fa-door-open"></i> ${item.rooms} ${roomsLabel}</span>` : ''}
-                    ${item.bedrooms ? `<span><i class="fas fa-bed"></i> ${item.bedrooms} ${bedroomsLabel}</span>` : ''}
-                    ${item.guests ? `<span><i class="fas fa-users"></i> ${item.guests} ${guestsLabel}</span>` : ''}
+                    ${item.bedrooms ? `<span><i class="fas fa-bed"></i> ${item.bedrooms} ${bedsLabel}${(() => { const parts = []; if (item.largeBeds) parts.push(item.largeBeds + ' ' + largeBedLabelB); if (item.smallBeds) parts.push(item.smallBeds + ' ' + smallBedLabelB); return parts.length ? ' (' + parts.join(', ') + ')' : ''; })()}</span>` : ''}
+                    ${(item.maxGuests || item.guests) ? `<span><i class="fas fa-user-friends"></i> ${maxGuestsPrefixB} ${item.maxGuests || item.guests} ${guestsLabel}</span>` : ''}
                     ${item.type ? `<span><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</span>` : ''}
                     ${item.features ? `<div class="booking-features"><i class="fas fa-star"></i> <span>${item.features}</span></div>` : ''}
                 </div>
@@ -3316,8 +3327,7 @@ function openBookingModalDirect(item, type) {
                             <div class="room-type-select-info">
                                 <span class="rt-name"><i class="fas fa-bed"></i> ${rt.guests}-${ls ? ls.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი' : 'სტუმრიანი ოთახი'}</span>
                                 <span class="rt-meta">
-                                    <span><i class="fas fa-door-open"></i> ${rt.rooms} ${roomsLabel}</span>
-                                    <span><i class="fas fa-bed"></i> ${rt.bedrooms} ${bedroomsLabel}</span>
+                                    <span><i class="fas fa-bed"></i> ${rt.bedrooms} ${bedsLabel}${(() => { const p = []; if (rt.largeBeds) p.push(rt.largeBeds + ' ' + largeBedLabelB); if (rt.smallBeds) p.push(rt.smallBeds + ' ' + smallBedLabelB); return p.length ? ' (' + p.join(', ') + ')' : ''; })()}</span>
                                 </span>
                             </div>
                             <div class="room-type-select-controls">
@@ -3653,8 +3663,9 @@ function openDetailModal(item) {
     const ls = window.languageSwitcher;
     const regionLabel = ls ? ls.translate('bookingDetailRegion') : 'რეგიონი';
     const typeLabel = ls ? ls.translate('hotelTypeLabel') : 'ტიპი';
-    const roomsLabel = ls ? ls.translate('hotelRooms') : 'ოთახები';
-    const bedroomsLabel = ls ? ls.translate('hotelBedrooms') : 'საძინებლები';
+    const bedsLabelDetail = ls ? ls.translate('hotelBeds') || 'საწოლები' : 'საწოლები';
+    const largeBedLabelD = ls ? ls.translate('hotelLargeBed') || 'დიდი' : 'დიდი';
+    const smallBedLabelD = ls ? ls.translate('hotelSmallBed') || 'პატარა' : 'პატარა';
     const guestsLabel = ls ? ls.translate('hotelGuests') : 'სტუმრები';
     const featuresLabel = ls ? ls.translate('bookingFeatures') : 'მახასიათებლები';
     const noDesc = ls ? ls.translate('bookingNoDescription') : 'აღწერა არ არის';
@@ -3670,11 +3681,11 @@ function openDetailModal(item) {
     if (hasDetailRoomTypes) {
         roomTypesSpecHTML = `
             <div class="detail-spec" style="grid-column: 1 / -1;">
-                <span class="detail-spec-icon"><i class="fas fa-door-open" style="color: var(--gold);"></i></span>
+                <span class="detail-spec-icon"><i class="fas fa-bed" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
                     <span class="detail-spec-label">${ls ? ls.translate('hotelAvailableRoomTypes') || 'ხელმისაწვდომი ოთახები' : 'ხელმისაწვდომი ოთახები'}</span>
                     <span class="detail-spec-value" style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.25rem;">
-                        ${detailRoomTypes.map(rt => `<span style="font-size: 0.9rem;">${rt.guests} ${guestsLabel} - ${rt.rooms} ${roomsLabel} - ${rt.bedrooms} ${bedroomsLabel} (${rt.price}${detailCurrency}${perNight})</span>`).join('')}
+                        ${detailRoomTypes.map(rt => { const bp = []; if (rt.largeBeds) bp.push(rt.largeBeds + ' ' + largeBedLabelD); if (rt.smallBeds) bp.push(rt.smallBeds + ' ' + smallBedLabelD); const bedDetail = bp.length ? ' (' + bp.join(', ') + ')' : ''; return `<span style="font-size: 0.9rem;">${rt.guests} ${guestsLabel} - ${rt.bedrooms} ${bedsLabelDetail}${bedDetail} (${rt.price}${detailCurrency}${perNight})</span>`; }).join('')}
                     </span>
                 </div>
             </div>
@@ -3699,21 +3710,12 @@ function openDetailModal(item) {
                 </div>
             </div>
             ` : ''}
-            ${!hasDetailRoomTypes && item.rooms ? `
-            <div class="detail-spec">
-                <span class="detail-spec-icon"><i class="fas fa-door-open" style="color: var(--gold);"></i></span>
-                <div class="detail-spec-text">
-                    <span class="detail-spec-label">${roomsLabel}</span>
-                    <span class="detail-spec-value">${item.rooms}</span>
-                </div>
-            </div>
-            ` : ''}
             ${!hasDetailRoomTypes && item.bedrooms ? `
             <div class="detail-spec">
                 <span class="detail-spec-icon"><i class="fas fa-bed" style="color: var(--gold);"></i></span>
                 <div class="detail-spec-text">
-                    <span class="detail-spec-label">${bedroomsLabel}</span>
-                    <span class="detail-spec-value">${item.bedrooms}</span>
+                    <span class="detail-spec-label">${bedsLabelDetail}</span>
+                    <span class="detail-spec-value">${item.bedrooms}${(() => { const p = []; if (item.largeBeds) p.push(item.largeBeds + ' ' + largeBedLabelD); if (item.smallBeds) p.push(item.smallBeds + ' ' + smallBedLabelD); return p.length ? ' (' + p.join(', ') + ')' : ''; })()}</span>
                 </div>
             </div>
             ` : ''}
@@ -3942,7 +3944,7 @@ window.changeManualRoomQty = function(index, delta) {
                             <i class="fas fa-bed"></i>
                             <div class="room-detail">
                                 <span class="room-label">${room.quantity}x ${room.guests}-${window.languageSwitcher?.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი'}</span>
-                                <span class="room-meta">${room.bedrooms} ${window.languageSwitcher?.translate('hotelBedrooms') || 'საძინებელი'} | ${room.rooms} ${window.languageSwitcher?.translate('hotelAvailableRooms') || 'ხელმისაწვდომი'}</span>
+                                <span class="room-meta">${room.bedrooms} ${window.languageSwitcher?.translate('hotelBeds') || 'საწოლი'}${(() => { const p = []; if (room.largeBeds) p.push(room.largeBeds + ' ' + (window.languageSwitcher?.translate('hotelLargeBed') || 'დიდი')); if (room.smallBeds) p.push(room.smallBeds + ' ' + (window.languageSwitcher?.translate('hotelSmallBed') || 'პატარა')); return p.length ? ' (' + p.join(', ') + ')' : ''; })()}</span>
                             </div>
                         </div>
                         <span class="allocation-room-price">${room.quantity * room.price}${currency}</span>
@@ -4063,7 +4065,7 @@ function updateRoomAllocation() {
                     <i class="fas fa-bed"></i>
                     <div class="room-detail">
                         <span class="room-label">${room.quantity}x ${room.guests}-${ls?.translate('hotelGuestRoom') || 'სტუმრიანი ოთახი'}</span>
-                        <span class="room-meta">${room.bedrooms} ${ls?.translate('hotelBedrooms') || 'საძინებელი'} | ${room.price}${currency}/${ls?.translate('hotelPerNightShort') || 'ღამე'}</span>
+                        <span class="room-meta">${room.bedrooms} ${ls?.translate('hotelBeds') || 'საწოლი'}${(() => { const p = []; if (room.largeBeds) p.push(room.largeBeds + ' ' + (ls?.translate('hotelLargeBed') || 'დიდი')); if (room.smallBeds) p.push(room.smallBeds + ' ' + (ls?.translate('hotelSmallBed') || 'პატარა')); return p.length ? ' (' + p.join(', ') + ')' : ''; })()} | ${room.price}${currency}/${ls?.translate('hotelPerNightShort') || 'ღამე'}</span>
                     </div>
                 </div>
                 <span class="allocation-room-price">${room.quantity * room.price}${currency}</span>
