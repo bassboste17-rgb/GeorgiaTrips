@@ -3165,8 +3165,8 @@ function createItemCard(item) {
                 <p class="card-description">${description}</p>
                 <div class="card-details">
                     <span><i class="fas fa-map-marker-alt"></i> ${regionDisplay}</span>
+                    ${item.type ? `<span><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</span>` : ''}
                     ${hasRoomTypes ? `<span><i class="fas fa-th-list"></i> ${item.roomTypes.length} ${roomTypesCountLabel}</span>` : ''}
-                    ${totalBeds > 0 ? `<span><i class="fas fa-bed"></i> ${totalBeds} ${bedsLabel}${bedDetailStr}</span>` : ''}
                     ${(item.maxGuests || item.guests) ? `<span><i class="fas fa-user-friends"></i> ${maxGuestsPrefix} ${item.maxGuests || item.guests} ${guestsLabel}</span>` : ''}
                 </div>
                 <div class="card-footer">
