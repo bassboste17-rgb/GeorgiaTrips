@@ -175,7 +175,7 @@ body {
     letter-spacing: -0.02em;
     line-height: 1.1;
     margin-bottom: 1rem;
-    color: var(--text-primary);
+    color: black;
     animation: fadeInUp 0.6s ease-out 0.1s backwards;
 }
 
@@ -4197,7 +4197,7 @@ let customTourCalendar = null;
       const ls = window.languageSwitcher;
       this.monthNames = [
         ls?.translate('calendarJanuary') || 'იანვარი',
-        ls?.translate('calendarFebruary') || 'თებერვალი',
+        ls?.translate('calendarFebruary') || 'თებერ���ალი',
         ls?.translate('calendarMarch') || 'მარტი',
         ls?.translate('calendarApril') || 'აპრილი',
         ls?.translate('calendarMay') || 'მაისი',
@@ -4534,7 +4534,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ითხოვს საკუთარ ტ��რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ითხოვს საკუთარ �����რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
@@ -5524,14 +5524,14 @@ function renderTourLinkedHotels(item) {
 
   const ls = window.languageSwitcher;
   const lang = ls?.getCurrentLanguage() || 'ka';
-  const sectionTitle = ls?.translate('tourLinkedHotelsTitle') || 'Hotels in this Region';
-  const sectionSubtitle = ls?.translate('tourLinkedHotelsSubtitle') || 'Choose a hotel along with the tour';
-  const roomTypesCountLabel = ls?.translate('hotelRoomTypesCount') || 'ტიპის ოთახი';
-  const maxGuestsPrefix = ls?.translate('hotelMaxGuestsPrefix') || 'მაქს.';
-  const guestsLabel = ls?.translate('tourHotelGuests') || 'სტუმარი';
-  const perNightLabel = ls?.translate('tourHotelPerNight') || '/ღამე';
-  const selectLabel = ls?.translate('tourHotelSelect') || 'არჩევა';
-  const selectedLabel = ls?.translate('tourHotelSelected') || 'არჩეულია';
+  const sectionTitle = trSafe('tourLinkedHotelsTitle', 'სასტუმროები ამ რეგიონში');
+  const sectionSubtitle = trSafe('tourLinkedHotelsSubtitle', 'აირჩიეთ სასტუმრო ტურთან ერთად');
+  const roomTypesCountLabel = trSafe('hotelRoomTypesCount', 'ტიპის ოთახი');
+  const maxGuestsPrefix = trSafe('hotelMaxGuestsPrefix', 'მაქს.');
+  const guestsLabel = trSafe('tourHotelGuests', 'სტუმარი');
+  const perNightLabel = trSafe('tourHotelPerNight', '/ღამე');
+  const selectLabel = trSafe('tourHotelSelect', 'არჩევა');
+  const selectedLabel = trSafe('tourHotelSelected', 'არჩეულია');
 
   // Get people count from the tour booking form
   const tourPeopleCount = parseInt(document.getElementById("peopleCount")?.value) || 1;
@@ -5567,7 +5567,7 @@ function renderTourLinkedHotels(item) {
     // Calculate price based on people count and room allocation
     const calcPrice = hasRoomTypes ? tourSmartAllocateRoomsTotalPrice(tourPeopleCount, hotel.roomTypes) : price;
     html += '<div class="tour-hotel-card-price" id="tourHotelCardPrice_' + hotel.id + '">' + calcPrice + currencySymbol + perNightLabel + '</div>';
-    if (hasRoomTypes && calcPrice !== price) {
+    if (hasRoomTypes) {
       html += '<div class="tour-hotel-card-price-calc" id="tourHotelCardPriceCalc_' + hotel.id + '">' + tourPeopleCount + ' ' + guestsLabel + ' - ' + trSafe('tourHotelAutoCalc', 'ავტო. გათვლა') + '</div>';
     }
     html += '<button type="button" class="tour-hotel-card-btn tour-hotel-select-btn"><i class="fas fa-plus-circle"></i> <span>' + selectLabel + '</span></button>';
@@ -5765,9 +5765,9 @@ function updateTourHotelCardPrices() {
   if (!map) return;
   const ls = window.languageSwitcher;
   const peopleCount = parseInt(document.getElementById("peopleCount")?.value) || 1;
-  const guestsLabel = ls?.translate('tourHotelGuests') !== 'tourHotelGuests' ? ls.translate('tourHotelGuests') : 'სტუმარი';
-  const perNightLabel = ls?.translate('tourHotelPerNight') !== 'tourHotelPerNight' ? ls.translate('tourHotelPerNight') : '/ღამე';
-  const autoCalcLabel = ls?.translate('tourHotelAutoCalc') !== 'tourHotelAutoCalc' ? ls.translate('tourHotelAutoCalc') : 'ავტო. გათვლა';
+  const guestsLabel = trSafe('tourHotelGuests', 'სტუმარი');
+  const perNightLabel = trSafe('tourHotelPerNight', '/ღამე');
+  const autoCalcLabel = trSafe('tourHotelAutoCalc', 'ავტო. გათვლა');
   
   Object.keys(map).forEach(hotelId => {
     const hotel = map[hotelId];
@@ -5782,9 +5782,10 @@ function updateTourHotelCardPrices() {
     }
     
     const calcEl = document.getElementById('tourHotelCardPriceCalc_' + hotelId);
-    if (hasRoomTypes && calcPrice !== price) {
+    if (hasRoomTypes) {
+      const calcText = peopleCount + ' ' + guestsLabel + ' - ' + autoCalcLabel;
       if (calcEl) {
-        calcEl.textContent = peopleCount + ' ' + guestsLabel + ' - ' + autoCalcLabel;
+        calcEl.textContent = calcText;
         calcEl.style.display = '';
       } else {
         // Create the calc hint element if it doesn't exist
@@ -5793,7 +5794,7 @@ function updateTourHotelCardPrices() {
           const newCalc = document.createElement('div');
           newCalc.className = 'tour-hotel-card-price-calc';
           newCalc.id = 'tourHotelCardPriceCalc_' + hotelId;
-          newCalc.textContent = peopleCount + ' ' + guestsLabel + ' - ' + autoCalcLabel;
+          newCalc.textContent = calcText;
           priceContainer.insertAdjacentElement('afterend', newCalc);
         }
       }
@@ -5801,6 +5802,63 @@ function updateTourHotelCardPrices() {
       calcEl.style.display = 'none';
     }
   });
+}
+
+function updateTourHotelCardLabels() {
+  const map = window.tourLinkedHotelsMap;
+  if (!map) return;
+  const ls = window.languageSwitcher;
+  const lang = ls?.getCurrentLanguage() || 'ka';
+  
+  // Update section header
+  const headerEl = document.querySelector('.tour-hotels-section-header h3');
+  const subEl = document.querySelector('.tour-hotels-section-header p');
+  if (headerEl) headerEl.textContent = trSafe('tourLinkedHotelsTitle', 'სასტუმროები ამ რეგიონში');
+  if (subEl) subEl.textContent = trSafe('tourLinkedHotelsSubtitle', 'აირჩიეთ სასტუმრო ტურთან ერთად');
+  
+  const roomTypesCountLabel = trSafe('hotelRoomTypesCount', 'ტიპის ოთახი');
+  const maxGuestsPrefix = trSafe('hotelMaxGuestsPrefix', 'მაქს.');
+  const guestsLabel = trSafe('tourHotelGuests', 'სტუმარი');
+  const selectLabel = trSafe('tourHotelSelect', 'არჩევა');
+  const selectedLabel = trSafe('tourHotelSelected', 'არჩეულია');
+  
+  document.querySelectorAll('.tour-hotel-card').forEach(card => {
+    const hotelId = card.dataset.hotelId;
+    const hotel = map[hotelId];
+    if (!hotel) return;
+    
+    const hotelName = (lang !== 'ka' && hotel.nameTranslations?.[lang]) ? hotel.nameTranslations[lang] : hotel.name;
+    const hasRoomTypes = hotel.roomTypes && hotel.roomTypes.length > 0;
+    const maxGuests = hotel.maxGuests || hotel.guests || 0;
+    const roomTypesCount = hasRoomTypes ? hotel.roomTypes.length : 0;
+    
+    // Update name
+    const nameEl = card.querySelector('.tour-hotel-card-name');
+    if (nameEl) nameEl.textContent = hotelName;
+    
+    // Update meta
+    const metaEl = card.querySelector('.tour-hotel-card-meta');
+    if (metaEl) {
+      let metaHtml = '';
+      if (roomTypesCount > 0) metaHtml += '<span><i class="fas fa-th-list"></i> ' + roomTypesCount + ' ' + roomTypesCountLabel + '</span>';
+      if (maxGuests > 0) metaHtml += '<span><i class="fas fa-user-friends"></i> ' + maxGuestsPrefix + ' ' + maxGuests + ' ' + guestsLabel + '</span>';
+      metaEl.innerHTML = metaHtml;
+    }
+    
+    // Update button text
+    const btn = card.querySelector('.tour-hotel-select-btn');
+    if (btn) {
+      const isSelected = card.classList.contains('selected');
+      btn.innerHTML = isSelected 
+        ? '<i class="fas fa-check-circle"></i> <span>' + selectedLabel + '</span>'
+        : '<i class="fas fa-plus-circle"></i> <span>' + selectLabel + '</span>';
+    }
+  });
+  
+  // If a hotel is currently selected, re-render its room details
+  if (selectedBookingHotel && selectedBookingHotel.roomTypes && selectedBookingHotel.roomTypes.length > 0 && !window.tourHotelManualMode) {
+    renderTourHotelRoomDetails(selectedBookingHotel.id, selectedBookingHotel.roomTypes, selectedBookingHotel.currency);
+  }
 }
 
 function tourSmartAllocateRooms(guestCount, roomTypes) {
@@ -6377,7 +6435,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener('languageChanged', () => {
   updateTypeFilter();
-});
+  // Re-render tour hotel cards with correct language
+  updateTourHotelCardPrices();
+  // Also update meta labels (room types count, max guests) on all hotel cards
+  updateTourHotelCardLabels();
+  });
 
 function removeHtmlExtensionFromURL() {
   if (window.location.pathname.endsWith('.html')) {
