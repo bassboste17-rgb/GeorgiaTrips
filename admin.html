@@ -3462,7 +3462,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <span><i class="fas fa-money-bill-wave"></i> ${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}</span>
                                 ${licensePlateHtml}
                                 ${withDriverHtml}
-                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `<span><i class="fas fa-bed"></i> ${item.roomTypes ? item.roomTypes.reduce((sum, rt) => sum + (rt.bedrooms || 0), 0) : (item.bedrooms || 0)} საწოლი</span>${(() => { const rts = item.roomTypes || []; const totalLarge = rts.reduce((s, r) => s + (r.largeBeds || 0), 0); const totalSmall = rts.reduce((s, r) => s + (r.smallBeds || 0), 0); let bedInfo = ''; if (totalLarge > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #4ade80;"></i> ' + totalLarge + ' დიდი</span>'; if (totalSmall > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #60a5fa;"></i> ' + totalSmall + ' პატარა</span>'; return bedInfo; })()}<span><i class="fas fa-users"></i> ${item.maxGuests || item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
+                                ${type === "cars" ? `<span><i class="fas fa-door-closed"></i> ${item.doors} კარი</span><span><i class="fas fa-users"></i> ${item.seats} ადგილი</span>` : type === "hotels" ? `${item.roomTypes && item.roomTypes.length > 0 ? '<span><i class="fas fa-th-list"></i> ' + item.roomTypes.length + ' ტიპის ოთახი</span>' : ''}<span><i class="fas fa-bed"></i> ${item.roomTypes ? item.roomTypes.reduce((sum, rt) => sum + (rt.bedrooms || 0), 0) : (item.bedrooms || 0)} საწოლი</span>${(() => { const rts = item.roomTypes || []; const totalLarge = rts.reduce((s, r) => s + (r.largeBeds || 0), 0); const totalSmall = rts.reduce((s, r) => s + (r.smallBeds || 0), 0); let bedInfo = ''; if (totalLarge > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #4ade80;"></i> ' + totalLarge + ' დიდი</span>'; if (totalSmall > 0) bedInfo += '<span><i class="fas fa-bed" style="color: #60a5fa;"></i> ' + totalSmall + ' პატარა</span>'; return bedInfo; })()}<span><i class="fas fa-user-friends"></i> მაქს. ${item.maxGuests || item.guests || 0} სტუმარი</span>` : `<span><i class="fas fa-clock"></i> ${item.duration}</span><span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ადამიანი</span>`}
                                 ${availableDatesHtml}
                             </div>
                         </div>
@@ -4827,7 +4827,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                             "შიდა ქართლი",
                                             "მცხეთა-მთიანეთი",
                                             "ქვემო ქართლი",
-                                            "კახეთი",
+                                            "კახეთ���",
                                             "თბილისი",
                                         ]
                                             .map((r) => {
@@ -5609,7 +5609,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             const titles = {
                 success: "წარმატება",
                 error: "შეცდომა",
-                warning: "გაფრთხილება",
+                warning: "გაფრთ���ილება",
                 info: "ინფორმაცია",
             }
 
