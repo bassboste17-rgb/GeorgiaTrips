@@ -55,7 +55,7 @@ body {
    NAVBAR STYLES
    ============================================ */
 
-/* Fixed navbar positioning with iOS safe area - FULLY TRANSPARENT INITIALLY */
+/* Fixed navbar positioning with iOS safe area - ALWAYS HAS BACKGROUND */
 .navbar {
   display: -webkit-box;
   display: -webkit-flex;
@@ -71,14 +71,14 @@ body {
   padding-top: 0px;
   padding-left: calc(2rem + env(safe-area-inset-left));
   padding-right: calc(2rem + env(safe-area-inset-right));
-  background-color: transparent; /* სრულად გამჭვირვალე */
+  background-color: var(--dark-bg);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   height: 70px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -87,25 +87,6 @@ body {
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* Smooth transition for scroll effect */
-  -webkit-transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Navbar with background when scrolled */
-.navbar.scrolled {
-  background-color: var(--dark-bg);
-  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Optional: Add a subtle hover effect even when transparent */
-.navbar:hover:not(.scrolled) {
-  background-color: rgba(20, 20, 20, 0.1);
-}
-
-.navbar.scrolled:hover {
-  background-color: rgba(20, 20, 20, 0.95);
 }
 
 /* Logo styles are in navbar.html inline styles */
@@ -137,7 +118,7 @@ body {
 }
 
 .nav-menu a {
-  color: #e5383b;
+  color: rgb(210, 210, 210);
   text-decoration: none;
   -webkit-transition: var(--transition);
   transition: var(--transition);
@@ -148,17 +129,7 @@ body {
 
 .nav-menu a:hover,
 .nav-menu a.active {
-  color: var(--primary-color);
-}
-
-/* When navbar has background (scrolled), nav links turn white */
-.navbar.scrolled .nav-menu a {
-  color: rgb(182, 182, 182);
-}
-
-.navbar.scrolled .nav-menu a:hover,
-.navbar.scrolled .nav-menu a.active {
-  color: var(--primary-color);
+  color: #ffffff;
 }
 
 /* iOS active state */
