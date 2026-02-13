@@ -966,8 +966,152 @@
       line-height: 1.7;
     }
 
+    /* Stats Grid */
+    .about-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 1.75rem 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .about-stat-card:hover {
+      background: rgba(252, 175, 21, 0.06);
+      border-color: rgba(252, 175, 21, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .about-stat-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .about-stat-icon i {
+      font-size: 1.25rem;
+      color: #fff;
+    }
+
+    .about-stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .about-stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Achievements */
+    .about-achievements {
+      margin-bottom: 2.5rem;
+    }
+
+    .about-achievements h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .about-achievement-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .about-achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .about-achievement-item:hover {
+      background: rgba(252, 175, 21, 0.06);
+      transform: translateX(8px);
+    }
+
+    .about-achievement-icon {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-achievement-icon i {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .about-achievement-content strong {
+      display: block;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 0.15rem;
+    }
+
+    .about-achievement-content span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Mission */
+    .about-mission {
+      background: rgba(252, 175, 21, 0.05);
+      border: 1px solid rgba(252, 175, 21, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .about-mission h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .about-mission p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
     @media (max-width: 900px) {
       .about-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -981,6 +1125,10 @@
         grid-template-columns: 1fr;
       }
 
+      .about-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .about-why-list {
         grid-template-columns: 1fr;
       }
@@ -991,6 +1139,10 @@
 
       .about-contact-container {
         padding: 1.5rem;
+      }
+
+      .about-stat-number {
+        font-size: 1.5rem;
       }
     }
 
@@ -1208,15 +1360,44 @@
     <!-- About Us Section (below map) -->
     <section class="about-in-contact" aria-label="About Us">
       <div class="about-contact-container">
+        <!-- Header -->
         <div class="about-contact-header">
           <span class="about-contact-badge">
             <i class="fas fa-users" aria-hidden="true"></i>
             <span data-i18n="aboutBadgeLabel">About Us</span>
           </span>
           <h2 data-i18n="aboutWhoAreWeTitle">Who Are We?</h2>
-          <p class="about-contact-subtitle" data-i18n="aboutWhoAreWeText">We are a small team of enthusiasts who have been offering the highest quality on Georgia's roads for years. Our priority is</p>
+          <p class="about-contact-subtitle">
+            <span data-i18n="aboutWhoAreWeText">We are a small team of enthusiasts who have been offering the highest quality on Georgia's roads for years. Our priority is</span>
+            <strong data-i18n="aboutSafety"> safety, experience</strong> <span data-i18n="aboutAnd">and</span> <strong data-i18n="aboutLocalKnowledge">local knowledge</strong> <span data-i18n="aboutWhoAreWeTextEnd">- that's what sets us apart.</span>
+          </p>
         </div>
 
+        <!-- Stats Grid -->
+        <div class="about-stats-grid">
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-car-side" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactCarsCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatTransport">Transport</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactToursCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatTours">Tours</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactBookingsCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatBookings">Bookings</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactUsersCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatUsers">Users</div>
+          </div>
+        </div>
+
+        <!-- Values Cards -->
         <div class="about-features-grid">
           <div class="about-feature-card">
             <div class="about-feature-icon"><i class="fas fa-shield-alt" aria-hidden="true"></i></div>
@@ -1240,6 +1421,7 @@
           </div>
         </div>
 
+        <!-- Why Us -->
         <div class="about-why-us">
           <h3 data-i18n="aboutWhyUsTitle">Why Us?</h3>
           <ul class="about-why-list">
@@ -1252,11 +1434,53 @@
           </ul>
         </div>
 
+        <!-- Achievements -->
+        <div class="about-achievements">
+          <h3 data-i18n="aboutAchievementsTitle">Our Achievements in Numbers</h3>
+          <div class="about-achievement-list">
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-car-side" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactCarsDetail">0</strong>
+                <span data-i18n="aboutAchievementTransport">transport units in various categories</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactToursDetail">0</strong>
+                <span data-i18n="aboutAchievementTours">exciting tours across Georgia</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactBookingsDetail">0</strong>
+                <span data-i18n="aboutAchievementBookings">successfully completed bookings</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactUsersDetail">0</strong>
+                <span data-i18n="aboutAchievementUsers">satisfied customers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote -->
         <blockquote class="about-contact-quote">
           <i class="fas fa-quote-left" aria-hidden="true" style="color: var(--gold); font-size: 1.5rem;"></i>
           <p data-i18n="aboutQuote">"Travel is not just about getting from A to B - it's an experience, and we do it best."</p>
           <i class="fas fa-quote-right" aria-hidden="true" style="color: var(--gold); font-size: 1.5rem;"></i>
         </blockquote>
+
+        <!-- Mission -->
+        <div class="about-mission">
+          <h3 data-i18n="aboutMissionTitle">Our Mission</h3>
+          <p data-i18n="aboutMissionText">Our mission is to make traveling in Georgia accessible, safe, and unforgettable for everyone. We strive to make each journey not just a trip from point A to point B, but a complete experience that reveals the beauty of Georgia.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -1349,6 +1573,73 @@
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
     const chatBadge = document.getElementById('chatBadge');
+
+    // About section - Stats counter animation
+    function animateCounter(element, target, duration = 2000) {
+      const start = 0;
+      const increment = target / (duration / 16);
+      let current = start;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current);
+        }
+      }, 16);
+    }
+
+    async function loadAboutStats() {
+      try {
+        const [carsSnap, toursSnap, bookingsSnap, usersSnap] = await Promise.all([
+          getDocs(collection(db, "cars")),
+          getDocs(collection(db, "tours")),
+          getDocs(collection(db, "bookings")),
+          getDocs(collection(db, "users"))
+        ]);
+
+        const counts = {
+          cars: carsSnap.size,
+          tours: toursSnap.size,
+          bookings: bookingsSnap.size,
+          users: usersSnap.size
+        };
+
+        // Stats grid counters
+        const statElements = [
+          { id: 'contactCarsCount', value: counts.cars },
+          { id: 'contactToursCount', value: counts.tours },
+          { id: 'contactBookingsCount', value: counts.bookings },
+          { id: 'contactUsersCount', value: counts.users },
+          { id: 'contactCarsDetail', value: counts.cars },
+          { id: 'contactToursDetail', value: counts.tours },
+          { id: 'contactBookingsDetail', value: counts.bookings },
+          { id: 'contactUsersDetail', value: counts.users }
+        ];
+
+        statElements.forEach(({ id, value }) => {
+          const el = document.getElementById(id);
+          if (el) animateCounter(el, value);
+        });
+      } catch (error) {
+        console.error('Error loading about stats:', error);
+      }
+    }
+
+    // Load stats when about section scrolls into view
+    const aboutSection = document.querySelector('.about-in-contact');
+    if (aboutSection) {
+      const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadAboutStats();
+            aboutObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      aboutObserver.observe(aboutSection);
+    }
 
 // Language change handling
   window.addEventListener('languageChanged', () => {
