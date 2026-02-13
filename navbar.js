@@ -76,21 +76,7 @@ async function getUserNameFromFirestore(userId) {
   }
 }
 
-// Navbar scroll effect - transparent at top, solid when scrolled
-function handleNavbarScroll() {
-  // Try multiple selectors to find the navbar
-  const navbar = document.querySelector('header.navbar') || 
-                 document.querySelector('.navbar') || 
-                 document.getElementById('navbar');
-  
-  if (!navbar) return;
-  
-  if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-}
+// Navbar always has background - no scroll effect needed
 
 // Load navbar
 fetch("navbar.html")
@@ -98,11 +84,7 @@ fetch("navbar.html")
   .then((data) => {
     document.getElementById("navbar").innerHTML = data
     
-    // Initial scroll check after navbar loads
-    handleNavbarScroll();
-    
-    // Add scroll listener AFTER navbar is loaded
-    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+    // Navbar always has solid background - no scroll handling needed
 
     // Check if translations.js is already loaded
     if (typeof window.translations === 'undefined' && typeof window.languageSwitcher === 'undefined') {
@@ -118,6 +100,23 @@ fetch("navbar.html")
     toggle?.addEventListener("click", () => {
       navbarRight.classList.toggle("active")
     })
+
+    // Tours dropdown toggle
+    const navDropdown = document.querySelector(".nav-dropdown")
+    const navDropdownToggle = document.querySelector(".nav-dropdown-toggle")
+    if (navDropdown && navDropdownToggle) {
+      navDropdownToggle.addEventListener("click", (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        navDropdown.classList.toggle("open")
+      })
+      // Close dropdown on outside click
+      document.addEventListener("click", (e) => {
+        if (!navDropdown.contains(e.target)) {
+          navDropdown.classList.remove("open")
+        }
+      })
+    }
 
     const authLink = document.getElementById("auth-link")
     const notificationBell = document.getElementById("notificationBell")
@@ -174,15 +173,31 @@ fetch("navbar.html")
     // Update navbar translations when language changes
     function updateNavbarTranslations() {
       if (typeof window.languageSwitcher !== "undefined") {
-        // Update nav menu items
-        const navItems = document.querySelectorAll(".nav-menu a")
-        if (navItems.length >= 5) {
-          navItems[0].textContent = window.languageSwitcher.translate("navHome")
-          navItems[1].textContent = window.languageSwitcher.translate("navPosts")
-          navItems[2].textContent = window.languageSwitcher.translate("navAbout")
-          navItems[3].textContent = window.languageSwitcher.translate("navContact")
-          navItems[4].textContent = window.languageSwitcher.translate("navBooking")
-        }
+        // Update top-level nav menu items (direct children of ul > li > a, not dropdown children)
+        const navListItems = document.querySelectorAll(".nav-menu > ul > li")
+        navListItems.forEach((li) => {
+          const link = li.querySelector(":scope > a")
+          if (!link) return
+          const key = link.getAttribute("data-i18n")
+          if (key) {
+            const translated = window.languageSwitcher.translate(key)
+            if (key === "navTours") {
+              // Keep the arrow icon inside the tours link
+              link.innerHTML = translated + ' <i class="fas fa-chevron-down nav-arrow"></i>'
+            } else {
+              link.textContent = translated
+            }
+          }
+        })
+
+        // Update dropdown sub-items
+        const dropdownItems = document.querySelectorAll(".nav-dropdown-menu a")
+        dropdownItems.forEach((a) => {
+          const key = a.getAttribute("data-i18n")
+          if (key) {
+            a.textContent = window.languageSwitcher.translate(key)
+          }
+        })
 
         // Update auth dropdown if user is logged in
         const userMenu = document.querySelector(".user-menu")

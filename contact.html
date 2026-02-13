@@ -787,6 +787,365 @@
       background: var(--text-muted);
     }
     
+    /* ============================================
+       About Us Section in Contact
+       ============================================ */
+    .about-in-contact {
+      padding: 4rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-contact-container {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-contact-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    }
+
+    .about-contact-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .about-contact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: rgba(252, 175, 21, 0.1);
+      border: 1px solid rgba(252, 175, 21, 0.3);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-contact-header h2 {
+      font-family: inherit;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .about-contact-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .about-features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .about-feature-card:hover {
+      background: rgba(252, 175, 21, 0.06);
+      border-color: rgba(252, 175, 21, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .about-feature-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(252, 175, 21, 0.1);
+      border: 1px solid rgba(252, 175, 21, 0.2);
+      border-radius: 14px;
+      color: var(--gold);
+      font-size: 1.25rem;
+      margin: 0 auto 1.25rem;
+    }
+
+    .about-feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .about-feature-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .about-why-us {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-why-us h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .about-why-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .about-why-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: rgba(252, 175, 21, 0.04);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .about-why-list li:hover {
+      background: rgba(252, 175, 21, 0.1);
+    }
+
+    .about-why-list li i {
+      color: var(--gold);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .about-contact-quote {
+      text-align: center;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .about-contact-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* Stats Grid */
+    .about-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: 1.75rem 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .about-stat-card:hover {
+      background: rgba(252, 175, 21, 0.06);
+      border-color: rgba(252, 175, 21, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .about-stat-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .about-stat-icon i {
+      font-size: 1.25rem;
+      color: #fff;
+    }
+
+    .about-stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .about-stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Achievements */
+    .about-achievements {
+      margin-bottom: 2.5rem;
+    }
+
+    .about-achievements h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .about-achievement-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .about-achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--dark-border);
+      border-left: 4px solid var(--gold);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .about-achievement-item:hover {
+      background: rgba(252, 175, 21, 0.06);
+      transform: translateX(8px);
+    }
+
+    .about-achievement-icon {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-achievement-icon i {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .about-achievement-content strong {
+      display: block;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 0.15rem;
+    }
+
+    .about-achievement-content span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Mission */
+    .about-mission {
+      background: rgba(252, 175, 21, 0.05);
+      border: 1px solid rgba(252, 175, 21, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .about-mission h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .about-mission p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .about-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-contact-container {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .about-features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-why-list {
+        grid-template-columns: 1fr;
+      }
+
+      .about-in-contact {
+        padding: 2rem 1rem;
+      }
+
+      .about-contact-container {
+        padding: 1.5rem;
+      }
+
+      .about-stat-number {
+        font-size: 1.5rem;
+      }
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       body {
@@ -997,6 +1356,133 @@
         </div>
       </div>
     </section>
+
+    <!-- About Us Section (below map) -->
+    <section class="about-in-contact" aria-label="About Us">
+      <div class="about-contact-container">
+        <!-- Header -->
+        <div class="about-contact-header">
+          <span class="about-contact-badge">
+            <i class="fas fa-users" aria-hidden="true"></i>
+            <span data-i18n="aboutBadgeLabel">About Us</span>
+          </span>
+          <h2 data-i18n="aboutWhoAreWeTitle">Who Are We?</h2>
+          <p class="about-contact-subtitle">
+            <span data-i18n="aboutWhoAreWeText">We are a small team of enthusiasts who have been offering the highest quality on Georgia's roads for years. Our priority is</span>
+            <strong data-i18n="aboutSafety"> safety, experience</strong> <span data-i18n="aboutAnd">and</span> <strong data-i18n="aboutLocalKnowledge">local knowledge</strong> <span data-i18n="aboutWhoAreWeTextEnd">- that's what sets us apart.</span>
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="about-stats-grid">
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-car-side" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactCarsCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatTransport">Transport</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactToursCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatTours">Tours</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactBookingsCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatBookings">Bookings</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="about-stat-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+            <div class="about-stat-number" id="contactUsersCount">0</div>
+            <div class="about-stat-label" data-i18n="aboutStatUsers">Users</div>
+          </div>
+        </div>
+
+        <!-- Values Cards -->
+        <div class="about-features-grid">
+          <div class="about-feature-card">
+            <div class="about-feature-icon"><i class="fas fa-shield-alt" aria-hidden="true"></i></div>
+            <h3 data-i18n="aboutValueSafetyTitle">Safety</h3>
+            <p data-i18n="aboutValueSafetyText">Your safety is our first priority. All transport undergoes regular technical inspections.</p>
+          </div>
+          <div class="about-feature-card">
+            <div class="about-feature-icon"><i class="fas fa-star" aria-hidden="true"></i></div>
+            <h3 data-i18n="aboutValueQualityTitle">Quality</h3>
+            <p data-i18n="aboutValueQualityText">We offer only high-quality service and comfortable transport.</p>
+          </div>
+          <div class="about-feature-card">
+            <div class="about-feature-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+            <h3 data-i18n="aboutValueReliabilityTitle">Reliability</h3>
+            <p data-i18n="aboutValueReliabilityText">We keep our promises and are always on time.</p>
+          </div>
+          <div class="about-feature-card">
+            <div class="about-feature-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+            <h3 data-i18n="aboutValueCareTitle">Care</h3>
+            <p data-i18n="aboutValueCareText">Each customer is special to us and we care about their comfort.</p>
+          </div>
+        </div>
+
+        <!-- Why Us -->
+        <div class="about-why-us">
+          <h3 data-i18n="aboutWhyUsTitle">Why Us?</h3>
+          <ul class="about-why-list">
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureCleanTransport">Clean and maintained transport</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureProfessionalDrivers">Professional drivers</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureRoutePrep">Precise route planning</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureFriendly">Friendly attitude</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureSupport">24/7 support</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> <span data-i18n="aboutFeatureCompetitivePrices">Competitive prices</span></li>
+          </ul>
+        </div>
+
+        <!-- Achievements -->
+        <div class="about-achievements">
+          <h3 data-i18n="aboutAchievementsTitle">Our Achievements in Numbers</h3>
+          <div class="about-achievement-list">
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-car-side" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactCarsDetail">0</strong>
+                <span data-i18n="aboutAchievementTransport">transport units in various categories</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-map-marked-alt" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactToursDetail">0</strong>
+                <span data-i18n="aboutAchievementTours">exciting tours across Georgia</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-clipboard-check" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactBookingsDetail">0</strong>
+                <span data-i18n="aboutAchievementBookings">successfully completed bookings</span>
+              </div>
+            </div>
+            <div class="about-achievement-item">
+              <div class="about-achievement-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+              <div class="about-achievement-content">
+                <strong id="contactUsersDetail">0</strong>
+                <span data-i18n="aboutAchievementUsers">satisfied customers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote -->
+        <blockquote class="about-contact-quote">
+          <i class="fas fa-quote-left" aria-hidden="true" style="color: var(--gold); font-size: 1.5rem;"></i>
+          <p data-i18n="aboutQuote">"Travel is not just about getting from A to B - it's an experience, and we do it best."</p>
+          <i class="fas fa-quote-right" aria-hidden="true" style="color: var(--gold); font-size: 1.5rem;"></i>
+        </blockquote>
+
+        <!-- Mission -->
+        <div class="about-mission">
+          <h3 data-i18n="aboutMissionTitle">Our Mission</h3>
+          <p data-i18n="aboutMissionText">Our mission is to make traveling in Georgia accessible, safe, and unforgettable for everyone. We strive to make each journey not just a trip from point A to point B, but a complete experience that reveals the beauty of Georgia.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Chat Widget -->
@@ -1087,6 +1573,73 @@
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
     const chatBadge = document.getElementById('chatBadge');
+
+    // About section - Stats counter animation
+    function animateCounter(element, target, duration = 2000) {
+      const start = 0;
+      const increment = target / (duration / 16);
+      let current = start;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current);
+        }
+      }, 16);
+    }
+
+    async function loadAboutStats() {
+      try {
+        const [carsSnap, toursSnap, bookingsSnap, usersSnap] = await Promise.all([
+          getDocs(collection(db, "cars")),
+          getDocs(collection(db, "tours")),
+          getDocs(collection(db, "bookings")),
+          getDocs(collection(db, "users"))
+        ]);
+
+        const counts = {
+          cars: carsSnap.size,
+          tours: toursSnap.size,
+          bookings: bookingsSnap.size,
+          users: usersSnap.size
+        };
+
+        // Stats grid counters
+        const statElements = [
+          { id: 'contactCarsCount', value: counts.cars },
+          { id: 'contactToursCount', value: counts.tours },
+          { id: 'contactBookingsCount', value: counts.bookings },
+          { id: 'contactUsersCount', value: counts.users },
+          { id: 'contactCarsDetail', value: counts.cars },
+          { id: 'contactToursDetail', value: counts.tours },
+          { id: 'contactBookingsDetail', value: counts.bookings },
+          { id: 'contactUsersDetail', value: counts.users }
+        ];
+
+        statElements.forEach(({ id, value }) => {
+          const el = document.getElementById(id);
+          if (el) animateCounter(el, value);
+        });
+      } catch (error) {
+        console.error('Error loading about stats:', error);
+      }
+    }
+
+    // Load stats when about section scrolls into view
+    const aboutSection = document.querySelector('.about-in-contact');
+    if (aboutSection) {
+      const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadAboutStats();
+            aboutObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      aboutObserver.observe(aboutSection);
+    }
 
 // Language change handling
   window.addEventListener('languageChanged', () => {
