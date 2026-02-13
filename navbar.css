@@ -137,7 +137,7 @@ body {
 }
 
 .nav-menu a {
-  color: #fcaf15;
+  color: #e5383b;
   text-decoration: none;
   -webkit-transition: var(--transition);
   transition: var(--transition);
