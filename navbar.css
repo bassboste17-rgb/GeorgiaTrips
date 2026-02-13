@@ -137,7 +137,7 @@ body {
 }
 
 .nav-menu a {
-  color: rgb(182, 182, 182);
+  color: #fcaf15;
   text-decoration: none;
   -webkit-transition: var(--transition);
   transition: var(--transition);
@@ -148,6 +148,16 @@ body {
 
 .nav-menu a:hover,
 .nav-menu a.active {
+  color: var(--primary-color);
+}
+
+/* When navbar has background (scrolled), nav links turn white */
+.navbar.scrolled .nav-menu a {
+  color: rgb(182, 182, 182);
+}
+
+.navbar.scrolled .nav-menu a:hover,
+.navbar.scrolled .nav-menu a.active {
   color: var(--primary-color);
 }
 
@@ -203,7 +213,7 @@ body {
 .nav-dropdown-menu a {
   display: block;
   padding: 0.75rem 1.2rem;
-  color: rgb(182, 182, 182);
+  color: rgb(182, 182, 182) !important;
   text-decoration: none;
   transition: var(--transition);
   font-size: 0.95rem;
