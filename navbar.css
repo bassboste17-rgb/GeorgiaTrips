@@ -157,6 +157,70 @@ body {
 }
 
 /* ============================================
+   Nav Dropdown (Tours)
+   ============================================ */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.nav-arrow {
+  font-size: 0.6rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-dropdown.open .nav-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--dark-bg);
+  border: 1px solid #333;
+  border-radius: var(--border-radius);
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1002;
+  margin-top: 10px;
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1.2rem;
+  color: rgb(182, 182, 182);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  border-right: 1px solid #333;
+}
+
+.nav-dropdown-menu a:last-child {
+  border-right: none;
+}
+
+.nav-dropdown-menu a:hover {
+  background-color: rgba(229, 56, 59, 0.1);
+  color: var(--primary-color);
+}
+
+/* ============================================
    Languages Section
    ============================================ */
 .languages {
@@ -899,5 +963,39 @@ html {
   .nav-menu a.active {
     background-color: rgba(229, 56, 59, 0.1);
     border-radius: var(--border-radius);
+  }
+
+  /* Mobile dropdown */
+  .nav-dropdown-menu {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 0;
+    border: none;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.03);
+    min-width: unset;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .nav-dropdown.open .nav-dropdown-menu {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .nav-dropdown-menu a {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    border-right: 1px solid #333;
+  }
+
+  .nav-dropdown-menu a:last-child {
+    border-right: none;
+  }
+
+  .nav-dropdown-toggle {
+    justify-content: center;
   }
 }
