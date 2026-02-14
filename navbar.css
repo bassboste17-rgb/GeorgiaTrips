@@ -506,16 +506,11 @@ body {
 
   .navbar {
     padding: 1rem;
-     padding-top: 0px;
+    padding-top: 0px;
     padding-left: calc(1rem + env(safe-area-inset-left));
     padding-right: calc(1rem + env(safe-area-inset-right));
     height: auto;
     min-height: 60px;
-    /* Ensure mobile navbar is also transparent initially */
-    background-color: transparent;
-  }
-
-  .navbar.scrolled {
     background-color: var(--dark-bg);
     -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -835,11 +830,8 @@ body {
 }
 
 /* ============================================
-   Scroll Performance
+   Navbar Performance
    ============================================ */
-.navbar {
-  will-change: background-color, box-shadow;
-}
 
 /* ============================================
    Navbar Logo Fix for Transparency
@@ -898,11 +890,7 @@ body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility on transparent background */
 }
 
-/* When navbar has background (scrolled), reduce shadow intensity */
-.navbar.scrolled .text-georgia,
-.navbar.scrolled .text-trips {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
+/* Navbar always has background - consistent text shadow */
 
 /* ============================================
    Smooth Scrolling Enhancement
