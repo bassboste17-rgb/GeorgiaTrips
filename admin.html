@@ -2486,23 +2486,38 @@ input:checked + .toggle-slider:before {
           };
         }
 
-        async function getTranslationWithManual(text, fieldType, manualType) {
+        async function getTranslationWithManual(text, fieldType, manualType, existingTranslations = null) {
           const manual = getManualTranslations(manualType);
           const hasManualEn = manual.en !== '';
           const hasManualRu = manual.ru !== '';
           const hasManualAr = manual.ar !== '';
           
+          // If all 3 manual fields are filled, use them directly - no auto-translate
           if (hasManualEn && hasManualRu && hasManualAr) {
             return { ka: text, en: manual.en, ru: manual.ru, ar: manual.ar };
           }
           
-          const autoTranslation = await getTranslation(text, fieldType);
+          // Check existing saved translations from Firestore (editing mode)
+          const hasExistingEn = existingTranslations && existingTranslations.en && existingTranslations.en !== '';
+          const hasExistingRu = existingTranslations && existingTranslations.ru && existingTranslations.ru !== '';
+          const hasExistingAr = existingTranslations && existingTranslations.ar && existingTranslations.ar !== '';
+          
+          // If manual + existing cover all languages, no need to auto-translate
+          const enResolved = hasManualEn || hasExistingEn;
+          const ruResolved = hasManualRu || hasExistingRu;
+          const arResolved = hasManualAr || hasExistingAr;
+          
+          let autoTranslation = null;
+          if (!enResolved || !ruResolved || !arResolved) {
+            // Only call auto-translate if truly needed
+            autoTranslation = await getTranslation(text, fieldType);
+          }
           
           return {
             ka: text,
-            en: hasManualEn ? manual.en : autoTranslation.en,
-            ru: hasManualRu ? manual.ru : autoTranslation.ru,
-            ar: hasManualAr ? manual.ar : autoTranslation.ar
+            en: hasManualEn ? manual.en : (hasExistingEn ? existingTranslations.en : (autoTranslation ? autoTranslation.en : text)),
+            ru: hasManualRu ? manual.ru : (hasExistingRu ? existingTranslations.ru : (autoTranslation ? autoTranslation.ru : text)),
+            ar: hasManualAr ? manual.ar : (hasExistingAr ? existingTranslations.ar : (autoTranslation ? autoTranslation.ar : text))
           };
         }
 
@@ -3050,6 +3065,7 @@ input:checked + .toggle-slider:before {
         let allTours = []
         let allHotels = []
         let editingItemId = null
+        let editingItemData = null  // Store full item data for existing translations
         let currentItemType = null
 
         onAuthStateChanged(auth, async (user) => {
@@ -3703,6 +3719,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         function closeAdminFormModal() {
             document.getElementById("adminFormModal").style.display = "none";
             editingItemId = null; // Reset editing item ID
+            editingItemData = null; // Reset editing item data
             currentItemType = null;
             // Clean up any lingering calendar instances if necessary
             if (window.fixedCalendarInstance) {
@@ -3894,6 +3911,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
         function openAdminFormModal(item = null, type = null) {
             editingItemId = item?.id || null
+            editingItemData = item || null  // Store full item for existing translations
             currentItemType = type || currentAdminTab
 
             const modal = document.getElementById("adminFormModal")
@@ -5205,9 +5223,13 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 
                 const regionTranslationsArray = await Promise.all(regionTranslationsPromises);
                 
+                // Pass existing saved translations so they are preserved when not manually overwritten
+                const existingNameTrans = editingItemData?.nameTranslations || null;
+                const existingDescTrans = editingItemData?.descriptionTranslations || null;
+                
                 const [nameTranslations, descTranslations, typeTranslations] = await Promise.all([
-                    getTranslationWithManual(name, null, 'name'),
-                    getTranslationWithManual(description, null, 'desc'),
+                    getTranslationWithManual(name, null, 'name', existingNameTrans),
+                    getTranslationWithManual(description, null, 'desc', existingDescTrans),
                     getTranslation(type, 'types')
                 ]);
 
@@ -5283,7 +5305,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     // Max guests from admin input
                     const maxGuestsVal = parseInt(document.getElementById("itemMaxGuests")?.value) || 0;
                     if (maxGuestsVal <= 0) {
-                        showToast('გთხოვთ მიუთითოთ მაქსიმალური სტუმრების რაოდენობა', 'warning');
+                        showToast('���თხოვთ მიუთითოთ მაქსიმალური სტუმრების რაოდენობა', 'warning');
                         uploadButton.textContent = originalText;
                         uploadButton.disabled = false;
                         return;
