@@ -3304,7 +3304,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 'racha-lechkhumi': 'რაჭა-ლეჩხუმი',
                 'samtskhe-javakheti': 'სამცხე-ჯავახეთი',
                 'shida-kartli': 'შიდა ქართლი',
-                'samegrelo-svaneti': 'სამეგრელო-ზემო სვანეთი'
+                'samegrelo-svaneti': 'სამეგრ��ლო-ზემო სვანეთი'
             };
             
             const regionsHtml = (request.regions || []).map(r => 
@@ -4094,7 +4094,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                     <select id="itemFuelType" class="select" required>
                                         <option value="ბენზინი" ${item?.fuelType === "ბენზინი" ? "selected" : ""}>ბენზინი</option>
                                         <option value="დიზელი" ${item?.fuelType === "დიზელი" ? "selected" : ""}>დიზელი</option>
-                                        <option value="ჰიბრიდი" ${item?.fuelType === "ჰიბრიდი" ? "selected" : ""}>ჰიბრიდი</option>
+                                        <option value="ჰიბრიდი" ${item?.fuelType === "���იბრიდი" ? "selected" : ""}>ჰიბრიდი</option>
                                         <option value="ელექტრო" ${item?.fuelType === "ელექტრო" ? "selected" : ""}>ელექტრო</option>
                                         <option value="გაზი" ${item?.fuelType === "გაზი" ? "selected" : ""}>გაზი</option>
                                     </select>
@@ -4463,7 +4463,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                                         <input type="number" class="input room-type-bedrooms" value="${rt.bedrooms || ''}" required placeholder="1">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>დიდი საწოლი</label>
+                                                        <label>დი��ი საწოლი</label>
                                                         <input type="number" class="input room-type-large-beds" value="${rt.largeBeds || ''}" placeholder="0" min="0">
                                                     </div>
                                                     <div class="form-group">
@@ -4890,6 +4890,27 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                 <div class="form-group">
                                     <label>ხანგრძლივობა *</label>
                                     <input type="text" id="itemDuration" class="input" value="${item?.duration || ""}" required placeholder="მაგ: 3 დღე">
+                                    <button type="button" class="translation-toggle-btn" onclick="toggleTranslationFields('duration')">
+                                        <i class="fas fa-language"></i> თარგმანების რედაქტირება
+                                    </button>
+                                    <div id="durationTranslationFields" class="translation-edit-fields" style="display:none;">
+                                        <div class="translation-edit-row">
+                                            <span class="flag">&#127468;&#127463;</span>
+                                            <span class="lang-label">English:</span>
+                                            <input type="text" id="durationTransEn" value="${item?.durationTranslations?.en || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                        </div>
+                                        <div class="translation-edit-row">
+                                            <span class="flag">&#127479;&#127482;</span>
+                                            <span class="lang-label">Русский:</span>
+                                            <input type="text" id="durationTransRu" value="${item?.durationTranslations?.ru || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                        </div>
+                                        <div class="translation-edit-row">
+                                            <span class="flag">&#127480;&#127462;</span>
+                                            <span class="lang-label">العربية:</span>
+                                            <input type="text" id="durationTransAr" value="${item?.durationTranslations?.ar || ''}" placeholder="ავტომატურად ითარგმნება..." dir="rtl">
+                                        </div>
+                                        <p class="translation-edit-hint"><i class="fas fa-info-circle"></i> ცარიელი ველები ავტომატურად ითარგმნება. შეავსეთ მხოლოდ ის, რაც გსურთ შეცვალოთ.</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>მინიმალური რაოდენობა *</label>
@@ -5356,7 +5377,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         }
                     }
                     
-                    const durationTranslation = await getTranslation(itemData.duration, null);
+                    const existingDurationTrans = editingItemData?.durationTranslations || null;
+                    const durationTranslation = await getTranslationWithManual(itemData.duration, null, 'duration', existingDurationTrans);
                     itemData.durationTranslations = durationTranslation;
                     
                     // Save linked hotels
