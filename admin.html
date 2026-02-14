@@ -2112,6 +2112,16 @@ input:checked + .toggle-slider:before {
                     <span class="admin-stat-label">სასტუმროები</span>
                 </div>
                 <div class="admin-stat-card">
+                    <i class="fas fa-globe-americas admin-stat-icon"></i>
+                    <span class="admin-stat-value" id="totalFullToursStat">0</span>
+                    <span class="admin-stat-label">სრული ტურები</span>
+                </div>
+                <div class="admin-stat-card">
+                    <i class="fas fa-plane admin-stat-icon"></i>
+                    <span class="admin-stat-value" id="totalOuterToursStat">0</span>
+                    <span class="admin-stat-label">საზღვარგარეთ</span>
+                </div>
+                <div class="admin-stat-card">
                     <i class="fas fa-newspaper admin-stat-icon"></i>
                     <span class="admin-stat-value" id="totalPostsStat">0</span>
                     <span class="admin-stat-label">პოსტები</span>
@@ -2128,8 +2138,11 @@ input:checked + .toggle-slider:before {
                 <button class="tab-btn" data-admin-tab="hotels">
                     <i class="fas fa-hotel"></i> სასტუმროები
                 </button>
-                <button class="tab-btn" data-admin-tab="customTours">
-                    <i class="fas fa-magic"></i> Custom ტურები
+                <button class="tab-btn" data-admin-tab="fullTours">
+                    <i class="fas fa-globe-americas"></i> სრული ტურები
+                </button>
+                <button class="tab-btn" data-admin-tab="outerTours">
+                    <i class="fas fa-plane"></i> საზღვარგარეთ ტურები
                 </button>
                 <button class="tab-btn" data-admin-tab="posts">
                     <i class="fas fa-newspaper"></i> პოსტები
@@ -2157,18 +2170,6 @@ input:checked + .toggle-slider:before {
                 <div class="posts-grid" id="postsGrid"></div>
             </div>
 
-            <!-- Custom Tour Requests Container -->
-            <div id="customToursContainer" style="display: none;">
-                <div class="filters" style="margin-bottom: 1.5rem;">
-                    <select id="customTourStatusFilter" class="select">
-                        <option value="">📊 ყველა სტატუსი</option>
-                        <option value="pending">⏳ მოლოდინში</option>
-                        <option value="approved">✅ დადასტურებული</option>
-                        <option value="rejected">❌ უარყოფილი</option>
-                    </select>
-                </div>
-                <div id="customToursGrid" class="admin-table"></div>
-            </div>
         </div>
     </div>
 
@@ -2180,6 +2181,24 @@ input:checked + .toggle-slider:before {
                     <i class="fas fa-arrow-left"></i> უკან
                 </button>
             </div>
+
+            <!-- Custom Tour Requests Section -->
+            <div style="margin-bottom: 2rem;">
+                <h2 style="color: #fff; margin-bottom: 1rem;"><i class="fas fa-magic" style="color: var(--primary-color);"></i> Custom ტურის მოთხოვნები</h2>
+                <div class="filters" style="margin-bottom: 1rem;">
+                    <select id="customTourStatusFilter" class="select">
+                        <option value="">ყველა სტატუსი</option>
+                        <option value="pending">მოლოდინში</option>
+                        <option value="approved">დადასტურებული</option>
+                        <option value="rejected">უარყოფილი</option>
+                    </select>
+                </div>
+                <div id="customToursGrid" class="admin-table"></div>
+            </div>
+
+            <hr style="border-color: #333; margin-bottom: 2rem;">
+
+            <h2 style="color: #fff; margin-bottom: 1rem;"><i class="fas fa-calendar-check" style="color: var(--primary-color);"></i> დაჯავშნები</h2>
 
             <div class="filters">
                 <select id="adminStatusFilter" class="select">
@@ -2661,7 +2680,7 @@ input:checked + .toggle-slider:before {
                 
                 this.monthNames = window.languageSwitcher ? window.languageSwitcher.getMonthNames() : [
                     'იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი',
-                    'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'
+                    'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბ���რი', 'დეკემბერი'
                 ];
                 
                 this.init();
@@ -3064,6 +3083,8 @@ input:checked + .toggle-slider:before {
         let allCars = []
         let allTours = []
         let allHotels = []
+        let allFullTours = []
+        let allOuterTours = []
         let editingItemId = null
         let editingItemData = null  // Store full item data for existing translations
         let currentItemType = null
@@ -3141,6 +3162,12 @@ input:checked + .toggle-slider:before {
 
                 const hotelsSnapshot = await getDocs(collection(db, "hotels"))
                 allHotels = hotelsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+
+                const fullToursSnapshot = await getDocs(collection(db, "fullTours"))
+                allFullTours = fullToursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+
+                const outerToursSnapshot = await getDocs(collection(db, "outerTours"))
+                allOuterTours = outerToursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
             } catch (error) {
                 console.error("Error loading data:", error)
             }
@@ -3155,6 +3182,8 @@ async function loadAdminStats() {
             document.getElementById("totalCarsStat").textContent = allCars.length
             document.getElementById("totalToursStat").textContent = allTours.length
             document.getElementById("totalHotelsStat").textContent = allHotels.length
+            document.getElementById("totalFullToursStat").textContent = allFullTours.length
+            document.getElementById("totalOuterToursStat").textContent = allOuterTours.length
             document.getElementById("totalPostsStat").textContent = postsSnapshot.size
         } catch (error) {
             console.error("Error loading stats:", error)
@@ -3171,22 +3200,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             // Toggle containers based on tab
             const adminItemsContainer = document.getElementById("adminItemsContainer")
             const postsContainer = document.getElementById("postsContainer")
-            const customToursContainer = document.getElementById("customToursContainer")
             const addNewItemBtn = document.getElementById("addNewItem")
             
             // Hide all containers first
             adminItemsContainer.style.display = "none"
             postsContainer.style.display = "none"
-            if (customToursContainer) customToursContainer.style.display = "none"
             
             if (currentAdminTab === "posts") {
                 postsContainer.style.display = "block"
                 addNewItemBtn.style.display = "none"
                 loadPosts()
-            } else if (currentAdminTab === "customTours") {
-                customToursContainer.style.display = "block"
-                addNewItemBtn.style.display = "none"
-                loadCustomTourRequests()
             } else {
                 adminItemsContainer.style.display = "flex"
                 addNewItemBtn.style.display = "inline-flex"
@@ -3198,10 +3221,14 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
         function displayAdminItems() {
             const container = document.getElementById("adminItemsContainer")
-            const items = currentAdminTab === "cars" ? allCars : currentAdminTab === "hotels" ? allHotels : allTours
+            const items = currentAdminTab === "cars" ? allCars 
+                : currentAdminTab === "hotels" ? allHotels 
+                : currentAdminTab === "fullTours" ? allFullTours
+                : currentAdminTab === "outerTours" ? allOuterTours
+                : allTours
 
             if (items.length === 0) {
-                const labels = { cars: "მანქანები", tours: "ტურები", hotels: "სასტუმროები" }
+                const labels = { cars: "მანქანები", tours: "ტურები", hotels: "სასტუმროები", fullTours: "სრული ტურები", outerTours: "საზღვარგარეთ ტურები" }
                 container.innerHTML = `<div class="empty-state">${labels[currentAdminTab] || "ელემენტები"} არ მოიძებნა</div>`
                 return
             }
@@ -3495,7 +3522,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             if (!confirmed) return
 
             try {
-                const collectionName = type === "cars" ? "cars" : type === "hotels" ? "hotels" : "tours"
+                const collectionName = type === "cars" ? "cars" : type === "hotels" ? "hotels" : type === "fullTours" ? "fullTours" : type === "outerTours" ? "outerTours" : "tours"
                 
                 // ჯერ მივიღოთ ელემენტის მონაცემები სურათების URL-ების მისაღებად
                 const itemRef = doc(db, collectionName, itemId)
@@ -3529,6 +3556,9 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
         }
 
         async function loadAdminBookings() {
+            // Also load custom tour requests in bookings view
+            loadCustomTourRequests()
+            
             const container = document.getElementById("admin-bookings-container")
             if (!container) {
                 console.error("Admin bookings container not found")
@@ -4054,7 +4084,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <div class="translation-edit-row">
                                             <span class="flag">&#127479;&#127482;</span>
                                             <span class="lang-label">Русский:</span>
-                                            <input type="text" id="typeTransRu" value="${item?.typeTranslations?.ru || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                            <input type="text" id="typeTransRu" value="${item?.typeTranslations?.ru || ''}" placeholder="ავტომატურად ითა��გმნება...">
                                         </div>
                                         <div class="translation-edit-row">
                                             <span class="flag">&#127480;&#127462;</span>
@@ -4682,7 +4712,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <div id="restrictedMessage" style="display: ${restrictedMode ? 'block' : 'none'}; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 8px; text-align: center;">
                                 <i class="fas fa-ban" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem;"></i>
                                 <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">კალენდარი გათიშულია</p>
-                                <p style="color: var(--text-color); font-size: 0.9rem;">სასტუმრო სრულად დაკავებულად გამოჩნდება მომხმარებლებისთვის</p>
+                                <p style="color: var(--text-color); font-size: 0.9rem;">სასტუმრო სრულად დაკავებულად გამოჩნდება მომხმარებლ���ბისთვის</p>
                             </div>
                             
                             <input type="hidden" id="hotelBookedDates" value='${JSON.stringify(existingBookedDates)}'>
@@ -4977,7 +5007,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                                         <div class="translation-edit-row">
                                             <span class="flag">&#127468;&#127463;</span>
                                             <span class="lang-label">English:</span>
-                                            <input type="text" id="typeTransEn" value="${item?.typeTranslations?.en || ''}" placeholder="ავტომატურად ითარგმნება...">
+                                            <input type="text" id="typeTransEn" value="${item?.typeTranslations?.en || ''}" placeholder="ავტომატურად ითარ���მნება...">
                                         </div>
                                         <div class="translation-edit-row">
                                             <span class="flag">&#127479;&#127482;</span>
@@ -5546,7 +5576,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                 uploadButton.textContent = "შენახვა..."
 
-                const collectionName = currentAdminTab === "cars" ? "cars" : currentAdminTab === "hotels" ? "hotels" : "tours"
+                const collectionName = currentAdminTab === "cars" ? "cars" : currentAdminTab === "hotels" ? "hotels" : currentAdminTab === "fullTours" ? "fullTours" : currentAdminTab === "outerTours" ? "outerTours" : "tours"
 
                 if (editingItemId) {
                     await updateDoc(doc(db, collectionName, editingItemId), {
