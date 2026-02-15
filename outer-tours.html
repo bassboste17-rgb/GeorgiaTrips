@@ -5033,8 +5033,8 @@ function debounce(func, wait) {
 
 function filterItems() {
   const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
-  const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
-  let regions = Array.from(regionCheckboxes).map(cb => cb.value);
+  const checkedCheckboxes = document.querySelectorAll('.region-checkbox:checked');
+  let regions = Array.from(checkedCheckboxes).map(cb => cb.value);
   
   if (regions.length === 0 || regions.includes('all')) {
     regions = ['all'];

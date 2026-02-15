@@ -2413,7 +2413,7 @@ input:checked + .toggle-slider:before {
                 "ფირუზისფერი": { en: "Turquoise", ru: "Бирюзовый", ar: "فيروزي" },
                 "იისფერი": { en: "Purple", ru: "Фиолетовый", ar: "بنفسجي" },
                 "ვარდისფერი": { en: "Pink", ru: "Розовый", ar: "وردي" },
-                "ოქროსფერი": { en: "Gold", ru: "Золотой", ar: "ذهبي" }
+                "ოქროსფე��ი": { en: "Gold", ru: "Золотой", ar: "ذهبي" }
             }
         };
         // </CHANGE>
@@ -3874,7 +3874,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             }
 
             if (selectedRegions.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...</p>';
+                const isOuter = currentAdminTab === "outerTours" || currentAdminTab === "outerHotels";
+                container.innerHTML = `<p style="color: var(--text-color); font-style: italic;">${isOuter ? 'აირჩიეთ ქვეყანა რომ ნახოთ სასტუმროები...' : 'აირჩიეთ რეგიონი რომ ნახოთ სასტუმროები...'}</p>`;
                 return;
             }
 
@@ -3886,8 +3887,9 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 previouslyLinked = [];
             }
 
-            // Filter hotels by selected regions - check both 'regions' array and 'region' string
-            const matchingHotels = allHotels.filter(hotel => {
+            // Filter hotels by selected regions - use outer hotels for outerTours/outerHotels tabs
+            const hotelsSource = (currentAdminTab === "outerTours" || currentAdminTab === "outerHotels") ? allOuterHotels : allHotels;
+            const matchingHotels = hotelsSource.filter(hotel => {
                 if (selectedRegions.includes('all')) return true;
                 // Check regions array
                 if (hotel.regions && Array.isArray(hotel.regions)) {
@@ -3902,7 +3904,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                 return false;
             });
             if (matchingHotels.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-color); font-style: italic;">ამ რეგიონში სასტუმროები არ მოიძებნა</p>';
+                const isOuter2 = currentAdminTab === "outerTours" || currentAdminTab === "outerHotels";
+                container.innerHTML = `<p style="color: var(--text-color); font-style: italic;">${isOuter2 ? 'ამ ქვეყანაში სასტუმროები არ მოიძებნა' : 'ამ რეგიონში სასტუმროები არ მოიძებნა'}</p>`;
                 return;
             }
 
@@ -4607,7 +4610,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                         <div class="enhanced-form-section">
                             <h3><i class="fas fa-door-open"></i> ოთახების ტიპები</h3>
                             <p style="color: var(--text-color); font-size: 0.9rem; margin-bottom: 1rem;">
-                                დაამატეთ სხვადასხვა ტიპის ოთახები სხვადასხვა ფასით და სტუმრების რაოდენობით.
+                                დაამატეთ სხ��ადასხვა ტიპის ოთახები სხვადასხვა ფასით და სტუმრების რაოდენობით.
                             </p>
                             <div id="roomTypesContainer">
                                 ${(() => {
@@ -5432,7 +5435,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             }
             
             if (regions.length === 0) {
-                showToast("გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი ან ყველა რეგიონი", "warning");
+                const isOuter = currentAdminTab === "outerTours" || currentAdminTab === "outerHotels";
+                showToast(isOuter ? "გთხოვთ აირჩიოთ მინიმუმ ერთი ქვეყანა ან ყველა ქვეყანა" : "გთხოვთ აირჩიოთ მინიმუმ ერთი რეგიონი ან ყველა რეგიონი", "warning");
                 return;
             }
             
