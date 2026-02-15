@@ -4197,7 +4197,7 @@ let customTourCalendar = null;
       const ls = window.languageSwitcher;
       this.monthNames = [
         ls?.translate('calendarJanuary') || 'იანვარი',
-        ls?.translate('calendarFebruary') || 'თებერ���ალი',
+        ls?.translate('calendarFebruary') || 'თებერვალი',
         ls?.translate('calendarMarch') || 'მარტი',
         ls?.translate('calendarApril') || 'აპრილი',
         ls?.translate('calendarMay') || 'მაისი',
@@ -4534,7 +4534,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ითხოვს საკუთარ �������რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ითხოვს საკუთარ ტურს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
