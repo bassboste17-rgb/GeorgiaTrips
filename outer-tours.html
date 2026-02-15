@@ -3251,83 +3251,161 @@ textarea.input {
         <input type="number" id="maxPrice" data-i18n="bookingMaxPrice" placeholder="Max price" class="input" min="0">
       </div>
       
-      <!-- Region filter -->
+      <!-- Country filter for outer tours -->
       <div class="region-filter-container">
         <button id="regionFilterButton" class="select region-filter-button">
-          <span id="regionFilterText" data-i18n="bookingAllRegions">All Regions</span>
+          <span id="regionFilterText" data-i18n="outerToursAllCountries">All Countries</span>
           <i class="fas fa-chevron-down"></i>
         </button>
         <div id="regionFilterDropdown" class="region-dropdown" style="display: none;">
           <div class="region-option">
             <label>
               <input type="checkbox" value="all" id="regionAll" class="region-checkbox">
-              <span data-i18n="bookingAllRegions">All Regions (Universal)</span>
+              <span data-i18n="outerToursAllCountries">All Countries (Universal)</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="აფხაზეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionAbkhazia">Abkhazia</span>
+              <input type="checkbox" value="თურქეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryTurkey">Turkey</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="სამეგრელო-ზემო სვანეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionSamegrelo">Samegrelo-Zemo Svaneti</span>
+              <input type="checkbox" value="სომხეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryArmenia">Armenia</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="რაჭა-ლეჩხუმი" class="region-checkbox" data-region>
-              <span data-i18n="regionRachaLechkhumi">Racha-Lechkhumi</span>
+              <input type="checkbox" value="აზერბაიჯანი" class="region-checkbox" data-region>
+              <span data-i18n="countryAzerbaijan">Azerbaijan</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="იმერეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionImereti">Imereti</span>
+              <input type="checkbox" value="რუსეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryRussia">Russia</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="გურია" class="region-checkbox" data-region>
-              <span data-i18n="regionGuria">Guria</span>
+              <input type="checkbox" value="ირანი" class="region-checkbox" data-region>
+              <span data-i18n="countryIran">Iran</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="აჭარა" class="region-checkbox" data-region>
-              <span data-i18n="regionAdjara">Adjara</span>
+              <input type="checkbox" value="საბერძნეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryGreece">Greece</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="სამცხე-ჯავახეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionSamtskheJavakheti">Samtskhe-Javakheti</span>
+              <input type="checkbox" value="ბულგარეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryBulgaria">Bulgaria</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="შიდა ქართლი" class="region-checkbox" data-region>
-              <span data-i18n="regionShidaKartli">Shida Kartli</span>
+              <input type="checkbox" value="რუმინეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryRomania">Romania</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionMtskhetaMtianeti">Mtskheta-Mtianeti</span>
+              <input type="checkbox" value="უკრაინა" class="region-checkbox" data-region>
+              <span data-i18n="countryUkraine">Ukraine</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="ქვემო ქა���თლი" class="region-checkbox" data-region>
-              <span data-i18n="regionKvemoKartli">Kvemo Kartli</span>
+              <input type="checkbox" value="ეგვიპტე" class="region-checkbox" data-region>
+              <span data-i18n="countryEgypt">Egypt</span>
             </label>
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="კახეთი" class="region-checkbox" data-region>
-              <span data-i18n="regionKakheti">Kakheti</span>
+              <input type="checkbox" value="არაბთა გაერთიანებული საამიროები" class="region-checkbox" data-region>
+              <span data-i18n="countryUAE">UAE</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ისრაელი" class="region-checkbox" data-region>
+              <span data-i18n="countryIsrael">Israel</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="იორდანია" class="region-checkbox" data-region>
+              <span data-i18n="countryJordan">Jordan</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="იტალია" class="region-checkbox" data-region>
+              <span data-i18n="countryItaly">Italy</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ესპანეთი" class="region-checkbox" data-region>
+              <span data-i18n="countrySpain">Spain</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="საფრანგეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryFrance">France</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="გერმანია" class="region-checkbox" data-region>
+              <span data-i18n="countryGermany">Germany</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ნიდერლანდები" class="region-checkbox" data-region>
+              <span data-i18n="countryNetherlands">Netherlands</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ჩეხეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryCzech">Czech Republic</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ავსტრია" class="region-checkbox" data-region>
+              <span data-i18n="countryAustria">Austria</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="შვეიცარია" class="region-checkbox" data-region>
+              <span data-i18n="countrySwitzerland">Switzerland</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="მონტენეგრო" class="region-checkbox" data-region>
+              <span data-i18n="countryMontenegro">Montenegro</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ხორვატია" class="region-checkbox" data-region>
+              <span data-i18n="countryCroatia">Croatia</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="სერბია" class="region-checkbox" data-region>
+              <span data-i18n="countrySerbia">Serbia</span>
             </label>
           </div>
         </div>
@@ -3537,7 +3615,7 @@ textarea.input {
   <button type="button" class="tour-type-btn" id="tourTypeManual" onclick="selectTourType('manual')">
   <i class="fas fa-user-edit"></i>
   <span data-i18n="customTourTypeManual">მე თვითონ</span>
-  <small style="display: block; color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.5rem;" data-i18n="customTourManualDesc">დაგეგმე შენით</small>
+  <small style="display: block; color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.5rem;" data-i18n="customTourManualDesc">დაგ���გმე შენით</small>
   </button>
   </div>
       </div>
@@ -3575,57 +3653,105 @@ textarea.input {
   </div>
   </div>
 
-          <!-- Regions Section -->
+          <!-- Countries Section (for outer tours) -->
           <div class="custom-tour-form-section">
-            <h4><i class="fas fa-map-marked-alt"></i> <span data-i18n="customTourRegions">Regions to Visit</span></h4>
+            <h4><i class="fas fa-globe"></i> <span data-i18n="outerToursCountryLabel">Countries to Visit</span></h4>
             <div class="checkbox-grid" id="regionsCheckboxGrid">
               <div class="checkbox-item">
-                <input type="checkbox" id="region_tbilisi" value="tbilisi">
-                <label for="region_tbilisi" data-i18n="postsRegionTbilisi">თბილისი</label>
+                <input type="checkbox" id="region_turkey" value="turkey">
+                <label for="region_turkey" data-i18n="countryTurkey">თ��რქეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_afkhazeti" value="afkhazeti">
-                <label for="region_afkhazeti" data-i18n="postsRegionAfkhazeti">აფხაზეთი</label>
+                <input type="checkbox" id="region_armenia" value="armenia">
+                <label for="region_armenia" data-i18n="countryArmenia">სომხეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_achara" value="achara">
-                <label for="region_achara" data-i18n="postsRegionAchara">აჭარა</label>
+                <input type="checkbox" id="region_azerbaijan" value="azerbaijan">
+                <label for="region_azerbaijan" data-i18n="countryAzerbaijan">აზერბაიჯანი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_guria" value="guria">
-                <label for="region_guria" data-i18n="postsRegionGuria">გურია</label>
+                <input type="checkbox" id="region_russia" value="russia">
+                <label for="region_russia" data-i18n="countryRussia">რუსეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_imereti" value="imereti">
-                <label for="region_imereti" data-i18n="postsRegionImereti">იმერეთი</label>
+                <input type="checkbox" id="region_iran" value="iran">
+                <label for="region_iran" data-i18n="countryIran">ირანი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_kakheti" value="kakheti">
-                <label for="region_kakheti" data-i18n="postsRegionKakheti">კახეთი</label>
+                <input type="checkbox" id="region_greece" value="greece">
+                <label for="region_greece" data-i18n="countryGreece">საბერძნეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_kvemo_kartli" value="kvemo-kartli">
-                <label for="region_kvemo_kartli" data-i18n="postsRegionKvemoKartli">ქვემო ქართლი</label>
+                <input type="checkbox" id="region_bulgaria" value="bulgaria">
+                <label for="region_bulgaria" data-i18n="countryBulgaria">ბულგარეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_mtsketa_mtianeti" value="mtsketa-mtianeti">
-                <label for="region_mtsketa_mtianeti" data-i18n="postsRegionMtskhetaMtianeti">მცხეთა-მთიანეთი</label>
+                <input type="checkbox" id="region_romania" value="romania">
+                <label for="region_romania" data-i18n="countryRomania">რუმინეთი</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_racha_lechkhumi" value="racha-lechkhumi">
-                <label for="region_racha_lechkhumi" data-i18n="postsRegionRachaLechkhumi">რაჭა-ლეჩხუმი</label>
+                <input type="checkbox" id="region_ukraine" value="ukraine">
+                <label for="region_ukraine" data-i18n="countryUkraine">უკრაინა</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_samtskhe_javakheti" value="samtskhe-javakheti">
-                <label for="region_samtskhe_javakheti" data-i18n="postsRegionSamtskheJavakheti">სამცხე-ჯავახეთი</label>
+                <input type="checkbox" id="region_egypt" value="egypt">
+                <label for="region_egypt" data-i18n="countryEgypt">ეგვიპტე</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_shida_kartli" value="shida-kartli">
-                <label for="region_shida_kartli" data-i18n="postsRegionShidaKartli">შიდა ქართლი</label>
+                <input type="checkbox" id="region_uae" value="uae">
+                <label for="region_uae" data-i18n="countryUAE">არაბთა გაერთიანებული საამიროები</label>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="region_samegrelo_svaneti" value="samegrelo-svaneti">
-                <label for="region_samegrelo_svaneti" data-i18n="postsRegionSamegreloSvaneti">სამეგრელო-ზემო სვანეთი</label>
+                <input type="checkbox" id="region_israel" value="israel">
+                <label for="region_israel" data-i18n="countryIsrael">ისრაელი</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_jordan" value="jordan">
+                <label for="region_jordan" data-i18n="countryJordan">იორდანია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_italy" value="italy">
+                <label for="region_italy" data-i18n="countryItaly">იტალია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_spain" value="spain">
+                <label for="region_spain" data-i18n="countrySpain">ესპანეთი</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_france" value="france">
+                <label for="region_france" data-i18n="countryFrance">საფრანგეთი</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_germany" value="germany">
+                <label for="region_germany" data-i18n="countryGermany">გერმანია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_netherlands" value="netherlands">
+                <label for="region_netherlands" data-i18n="countryNetherlands">ნიდერლანდები</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_czech" value="czech">
+                <label for="region_czech" data-i18n="countryCzech">ჩეხეთი</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_austria" value="austria">
+                <label for="region_austria" data-i18n="countryAustria">ავსტრია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_switzerland" value="switzerland">
+                <label for="region_switzerland" data-i18n="countrySwitzerland">შვეიცარია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_montenegro" value="montenegro">
+                <label for="region_montenegro" data-i18n="countryMontenegro">მონტენეგრო</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_croatia" value="croatia">
+                <label for="region_croatia" data-i18n="countryCroatia">ხორვატია</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="region_serbia" value="serbia">
+                <label for="region_serbia" data-i18n="countrySerbia">სერბია</label>
               </div>
             </div>
           </div>
@@ -3752,22 +3878,30 @@ textarea.input {
           'ბუნება': 'tourTypeNature'
         },
         region: {
-          'თბილისი': 'regionTbilisi',
-          'ბათუმი': 'regionBatumi',
-          'ქუთაისი': 'regionKutaisi',
-          'აფხაზეთი': 'regionAbkhazia',
-          'სამეგრელო': 'regionSamegrelo',
-          'იმერეთი': 'regionImereti',
-          'კახეთი': 'regionKakheti',
-          'გურია': 'regionGuria',
-          'აჭარა': 'regionAdjara',
-          'რაჭა': 'regionRacha',
-          'სვანეთი': 'regionSvaneti',
-          'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
-          'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
-          'შიდა ქართლი': 'regionShidaKartli',
-          'ქვემო ქართლი': 'regionKvemoKartli',
-          'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi'
+          'თურქეთი': 'countryTurkey',
+          'სომხეთი': 'countryArmenia',
+          'აზერბაიჯანი': 'countryAzerbaijan',
+          'რუსეთი': 'countryRussia',
+          'ირანი': 'countryIran',
+          'საბერძნეთი': 'countryGreece',
+          'ბულგარეთი': 'countryBulgaria',
+          'რუმინეთი': 'countryRomania',
+          'უკრაინა': 'countryUkraine',
+          'ეგვიპტე': 'countryEgypt',
+          'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+          'ისრაელი': 'countryIsrael',
+          'იორდანია': 'countryJordan',
+          'იტალია': 'countryItaly',
+          'ესპანეთი': 'countrySpain',
+          'საფრანგეთი': 'countryFrance',
+          'გერმანია': 'countryGermany',
+          'ნიდერლანდები': 'countryNetherlands',
+          'ჩეხეთი': 'countryCzech',
+          'ავსტრია': 'countryAustria',
+          'შვეიცარია': 'countrySwitzerland',
+          'მონტენეგრო': 'countryMontenegro',
+          'ხორვატია': 'countryCroatia',
+          'სერბია': 'countrySerbia'
         }
       };
       
@@ -3792,23 +3926,32 @@ textarea.input {
     // Helper function to get translation key for region names
     function getRegionTranslationKey(regionValue) {
       const regionMap = {
-        'აფხაზეთი': 'regionAbkhazia',
-        'აჭარა': 'regionAdjara',
-        'გურია': 'regionGuria',
-        'იმერეთი': 'regionImereti',
-        'კახეთი': 'regionKakheti',
-        'ქვემო ქართლი': 'regionKvemoKartli',
-        'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
-        'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
-        'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
-        'შიდა ქართლი': 'regionShidaKartli',
-        'სამეგრელო-ზემო სვანეთი': 'regionSamegrelo',
-        'სამეგრელო': 'regionSamegrelo',
-        'თბილისი': 'regionTbilisi',
-        'სვანეთი': 'regionSvaneti',
-        'რაჭა': 'regionRacha'
+        'თურქეთი': 'countryTurkey',
+        'სომხეთი': 'countryArmenia',
+        'აზერბაიჯანი': 'countryAzerbaijan',
+        'რუსეთი': 'countryRussia',
+        'ირანი': 'countryIran',
+        'საბერძნეთი': 'countryGreece',
+        'ბულგარეთი': 'countryBulgaria',
+        'რუმინეთი': 'countryRomania',
+        'უკრაინა': 'countryUkraine',
+        'ეგვიპტე': 'countryEgypt',
+        'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+        'ისრაელი': 'countryIsrael',
+        'იორდანია': 'countryJordan',
+        'იტალია': 'countryItaly',
+        'ესპანეთი': 'countrySpain',
+        'საფრანგეთი': 'countryFrance',
+        'გერმანია': 'countryGermany',
+        'ნიდერლანდები': 'countryNetherlands',
+        'ჩეხეთი': 'countryCzech',
+        'ავსტრია': 'countryAustria',
+        'შვეიცარია': 'countrySwitzerland',
+        'მონტენეგრო': 'countryMontenegro',
+        'ხორვატია': 'countryCroatia',
+        'სერბია': 'countrySerbia'
       };
-      return regionMap[regionValue] || `region${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
+      return regionMap[regionValue] || `country${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
     }
 
     class AvailabilityCalendar {
@@ -4199,7 +4342,7 @@ let customTourCalendar = null;
         ls?.translate('calendarJanuary') || 'იანვარი',
         ls?.translate('calendarFebruary') || 'თებერ���ალი',
         ls?.translate('calendarMarch') || 'მარტი',
-        ls?.translate('calendarApril') || 'აპრილი',
+        ls?.translate('calendarApril') || '���პრილი',
         ls?.translate('calendarMay') || 'მაისი',
         ls?.translate('calendarJune') || 'ივნისი',
         ls?.translate('calendarJuly') || 'ივლისი',
@@ -4766,7 +4909,9 @@ async function loadTours() {
     setupItemsContainerEvents()
   } catch (error) {
     console.error("Error loading data:", error)
-    showToast("Failed to load data", "error")
+    const ls = window.languageSwitcher;
+    const msg = ls ? ls.t("failedToLoadData") : "Failed to load data";
+    showToast(msg, "error")
   }
 }
 
@@ -4838,18 +4983,18 @@ function updateRegionFilterText() {
   const ls = window.languageSwitcher;
   
   if (regionAll && regionAll.checked) {
-    regionFilterText.textContent = ls ? ls.translate('bookingAllRegions') : 'All Regions';
+    regionFilterText.textContent = ls ? ls.translate('outerToursAllCountries') : 'All Countries';
     return;
   }
   
   if (regionCheckboxes.length === 0) {
-    regionFilterText.textContent = ls ? ls.translate('bookingAllRegions') : 'All Regions';
+    regionFilterText.textContent = ls ? ls.translate('outerToursAllCountries') : 'All Countries';
   } else if (regionCheckboxes.length === 1) {
     const regionValue = regionCheckboxes[0].value;
     const regionLabel = translateValue(regionValue, 'region');
     regionFilterText.textContent = regionLabel;
   } else {
-    const selectedText = ls ? ls.translate('bookingRegionSelected') : 'regions selected';
+    const selectedText = ls ? ls.translate('bookingRegionSelected') : 'countries selected';
     regionFilterText.textContent = `${regionCheckboxes.length} ${selectedText}`;
   }
 }
@@ -4888,8 +5033,8 @@ function debounce(func, wait) {
 
 function filterItems() {
   const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
-  const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
-  let regions = Array.from(regionCheckboxes).map(cb => cb.value);
+  const checkedCheckboxes = document.querySelectorAll('.region-checkbox:checked');
+  let regions = Array.from(checkedCheckboxes).map(cb => cb.value);
   
   if (regions.length === 0 || regions.includes('all')) {
     regions = ['all'];
@@ -5103,7 +5248,7 @@ function createItemCard(item) {
   
   let regionDisplay = '';
   if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-    regionDisplay = window.languageSwitcher?.translate('bookingAllRegions') || 'All Regions (Universal)';
+    regionDisplay = window.languageSwitcher?.translate('outerToursAllCountries') || 'All Countries (Universal)';
   } else if (Array.isArray(item.regions) && item.regions.length > 0) {
     if (item.regions.length === 1) {
       const translationKey = getRegionTranslationKey(item.regions[0]);
@@ -5218,7 +5363,7 @@ function openBookingModalDirect(item, type) {
   
   let regionModalText = '';
   if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-    regionModalText = window.languageSwitcher?.translate('bookingAllRegions') || 'All Regions (Universal)';
+    regionModalText = window.languageSwitcher?.translate('outerToursAllCountries') || 'All Countries (Universal)';
   } else if (Array.isArray(item.regions) && item.regions.length > 0) {
     regionModalText = item.regions.map(region => {
       const translationKey = getRegionTranslationKey(region);
@@ -6221,7 +6366,7 @@ function openDetailModal(item) {
   
   let regionDetailText = '';
   if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-    regionDetailText = window.languageSwitcher?.translate('bookingAllRegions') || 'All Regions (Universal)';
+    regionDetailText = window.languageSwitcher?.translate('outerToursAllCountries') || 'All Countries (Universal)';
   } else if (Array.isArray(item.regions) && item.regions.length > 0) {
     regionDetailText = item.regions.map(region => {
       const translationKey = getRegionTranslationKey(region);
