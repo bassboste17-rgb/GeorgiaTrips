@@ -2136,7 +2136,10 @@ input:checked + .toggle-slider:before {
                     <i class="fas fa-map-marked-alt"></i> ტურები
                 </button>
                 <button class="tab-btn" data-admin-tab="hotels">
-                    <i class="fas fa-hotel"></i> სასტუმროები
+                    <i class="fas fa-hotel"></i> შიდა სასტუმროები
+                </button>
+                <button class="tab-btn" data-admin-tab="outerHotels">
+                    <i class="fas fa-globe"></i> გარე სასტუმროები
                 </button>
                 <button class="tab-btn" data-admin-tab="fullTours">
                     <i class="fas fa-globe-americas"></i> სრული ტურები
@@ -3110,6 +3113,7 @@ input:checked + .toggle-slider:before {
         let allHotels = []
         let allFullTours = []
         let allOuterTours = []
+        let allOuterHotels = []
         let editingItemId = null
         let editingItemData = null  // Store full item data for existing translations
         let currentItemType = null
@@ -3193,6 +3197,9 @@ input:checked + .toggle-slider:before {
 
                 const outerToursSnapshot = await getDocs(collection(db, "outerTours"))
                 allOuterTours = outerToursSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
+
+                const outerHotelsSnapshot = await getDocs(collection(db, "outerHotels"))
+                allOuterHotels = outerHotelsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() || null }))
             } catch (error) {
                 console.error("Error loading data:", error)
             }
@@ -3248,12 +3255,13 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             const container = document.getElementById("adminItemsContainer")
             const items = currentAdminTab === "cars" ? allCars 
                 : currentAdminTab === "hotels" ? allHotels 
+                : currentAdminTab === "outerHotels" ? allOuterHotels
                 : currentAdminTab === "fullTours" ? allFullTours
                 : currentAdminTab === "outerTours" ? allOuterTours
                 : allTours
 
             if (items.length === 0) {
-                const labels = { cars: "მანქანები", tours: "ტურები", hotels: "სასტუმროები", fullTours: "სრული ტურები", outerTours: "საზღვარგარეთ ტურები" }
+                const labels = { cars: "მანქანები", tours: "ტურები", hotels: "შიდა სასტუმროები", outerHotels: "გარე სასტუმროები", fullTours: "სრული ტურები", outerTours: "საზღვარგარეთ ტურები" }
                 container.innerHTML = `<div class="empty-state">${labels[currentAdminTab] || "ელემენტები"} არ მოიძებნა</div>`
                 return
             }
@@ -3547,7 +3555,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
             if (!confirmed) return
 
             try {
-                const collectionName = type === "cars" ? "cars" : type === "hotels" ? "hotels" : type === "fullTours" ? "fullTours" : type === "outerTours" ? "outerTours" : "tours"
+                const collectionName = type === "cars" ? "cars" : type === "hotels" ? "hotels" : type === "outerHotels" ? "outerHotels" : type === "fullTours" ? "fullTours" : type === "outerTours" ? "outerTours" : "tours"
                 
                 // ჯერ მივიღოთ ელემენტის მონაცემები სურათების URL-ების მისაღებად
                 const itemRef = doc(db, collectionName, itemId)
@@ -4456,7 +4464,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                     setupImageManagementEvents();
                 }, 100);
 
-            } else if (currentAdminTab === "hotels") {
+            } else if (currentAdminTab === "hotels" || currentAdminTab === "outerHotels") {
                 const existingBookedDates = item?.bookedDates || []
                 const restrictedMode = item?.restrictedMode || false
                 const calendarMode = item?.calendarMode || 'select-unavailable'
@@ -4520,18 +4528,24 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>რეგიონი (რეგიონები) *</label>
+                                    <label>${currentAdminTab === "outerHotels" ? "ქვეყანა (ქვეყნები) *" : "რეგიონი (რეგიონები) *"}</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
                                                 <input type="checkbox" value="all" id="regionAllAdmin" class="region-checkbox-admin">
-                                                <span>ყველა რეგიონი (უნივერსალური)</span>
+                                                <span>${currentAdminTab === "outerHotels" ? "ყველა ქვეყანა (უნივერსალური)" : "ყველა რეგიონი (უნივერსალური)"}</span>
                                             </label>
                                         </div>
-                                        ${[
+                                        ${(currentAdminTab === "outerHotels" ? [
+                                            "თურქეთი","სომხეთი","აზერბაიჯანი","რუსეთი","ირანი",
+                                            "საბერძნეთი","ბულგარეთი","რუმინეთი","უკრაინა","ეგვიპტე",
+                                            "არაბთა გაერთიანებული საამიროები","ისრაელი","იორდანია",
+                                            "იტალია","ესპანეთი","საფრანგეთი","გერმანია","ნიდერლანდები",
+                                            "ჩეხეთი","ავსტრია","შვეიცარია","მონტენეგრო","ხორვატია","სერბია",
+                                        ] : [
                                             "აფხაზეთი","სამეგრელო","რაჭა-ლეჩხუმი","იმერეთი","გურია","აჭარა",
                                             "სამცხე-ჯავახეთი","შიდა ქართლი","მცხეთა-მთიანეთი","ქვემო ქართლი","კახეთი","თბილისი",
-                                        ].map((r) => {
+                                        ]).map((r) => {
                                             const isChecked = item?.regions 
                                                 ? (Array.isArray(item.regions) ? item.regions.includes(r) : item.region === r)
                                                 : false;
@@ -4978,7 +4992,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
                             <h3><i class="fas fa-cog"></i> დეტალები</h3>
                             <div class="form-row">
                                 <div class="form-group" style="grid-column: 1 / -1;">
-                                    <label>${currentAdminTab === "outerTours" ? "ქვეყანა (ქვეყნები) *" : "რეგიონი (რეგიონები) *"}</label>
+                                    <label>${currentAdminTab === "outerTours" ? "ქვეყანა (ქვეყნები) *" : "რეგიონი (რეგ���ონები) *"}</label>
                                     <div class="region-checkbox-container">
                                         <div class="region-checkbox-item">
                                             <label>
@@ -5626,7 +5640,7 @@ document.querySelectorAll("[data-admin-tab]").forEach((btn) => {
 
                 uploadButton.textContent = "შენ��ხვა..."
 
-                const collectionName = currentAdminTab === "cars" ? "cars" : currentAdminTab === "hotels" ? "hotels" : currentAdminTab === "fullTours" ? "fullTours" : currentAdminTab === "outerTours" ? "outerTours" : "tours"
+                const collectionName = currentAdminTab === "cars" ? "cars" : currentAdminTab === "hotels" ? "hotels" : currentAdminTab === "outerHotels" ? "outerHotels" : currentAdminTab === "fullTours" ? "fullTours" : currentAdminTab === "outerTours" ? "outerTours" : "tours"
 
                 if (editingItemId) {
                     await updateDoc(doc(db, collectionName, editingItemId), {

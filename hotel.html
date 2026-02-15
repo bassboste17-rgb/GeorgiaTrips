@@ -1743,6 +1743,58 @@ textarea.input {
     }
 }
 
+/* Hotel Type Tabs */
+.hotel-type-tabs {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease-out 0.25s backwards;
+}
+
+.hotel-type-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--dark-border);
+    border-radius: 100px;
+    background: var(--dark-card);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.hotel-type-tab:hover {
+    border-color: rgba(252, 175, 21, 0.4);
+    color: var(--text-primary);
+    background: rgba(252, 175, 21, 0.05);
+}
+
+.hotel-type-tab.active {
+    background: rgba(252, 175, 21, 0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.hotel-type-tab i {
+    font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+    .hotel-type-tabs {
+        gap: 0.5rem;
+    }
+    .hotel-type-tab {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
 .card-clickable {
     cursor: pointer;
 }
@@ -2143,6 +2195,16 @@ textarea.input {
             <h1 data-i18n="hotelsHeroTitle">სასტუმროების დაჯავშნა</h1>
             <p data-i18n="hotelsHeroSubtitle">აირჩიეთ საუკეთესო სასტუმრო თქვენი მოგზაურობისთვის საქართველოში</p>
             
+            <!-- Hotel Type Tabs -->
+            <div class="hotel-type-tabs">
+                <button class="hotel-type-tab active" data-hotel-tab="inner" onclick="switchHotelTab('inner')">
+                    <i class="fas fa-home"></i> <span data-i18n="hotelTabInner">შიდა სასტუმრო</span>
+                </button>
+                <button class="hotel-type-tab" data-hotel-tab="outer" onclick="switchHotelTab('outer')">
+                    <i class="fas fa-globe"></i> <span data-i18n="hotelTabOuter">გარე სასტუმრო</span>
+                </button>
+            </div>
+
             <div class="hero-actions">
                 <a href="cars.html" class="btn btn-secondary">
                     <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">მანქანები</span>
@@ -2172,23 +2234,59 @@ textarea.input {
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div id="regionFilterDropdown" class="region-dropdown" style="display: none;">
-                    <div class="region-option">
-                        <label>
-                            <input type="checkbox" value="all" id="regionAll" class="region-checkbox">
-                            <span data-i18n="bookingAllRegions">ყველა რეგიონი (უნივერსალური)</span>
-                        </label>
+                    <!-- Inner hotel regions (Georgian regions) -->
+                    <div id="innerRegionsContainer">
+                        <div class="region-option">
+                            <label>
+                                <input type="checkbox" value="all" id="regionAll" class="region-checkbox">
+                                <span data-i18n="bookingAllRegions">ყველა რეგიონი (უნივერსალური)</span>
+                            </label>
+                        </div>
+                        <div class="region-option"><label><input type="checkbox" value="თბილისი" class="region-checkbox" data-region><span data-i18n="regionTbilisi">თბილისი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="აჭარა" class="region-checkbox" data-region><span data-i18n="regionAdjara">აჭარა</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="იმერეთი" class="region-checkbox" data-region><span data-i18n="regionImereti">იმერეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="კახეთი" class="region-checkbox" data-region><span data-i18n="regionKakheti">კახეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="სამეგრელო-ზემო სვანეთი" class="region-checkbox" data-region><span data-i18n="regionSamegrelo">სამეგრელო-ზემო სვანეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="რაჭა-ლეჩხუმი" class="region-checkbox" data-region><span data-i18n="regionRachaLechkhumi">რაჭა-ლეჩხუმი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="გურია" class="region-checkbox" data-region><span data-i18n="regionGuria">გურია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="სამცხე-ჯავახეთი" class="region-checkbox" data-region><span data-i18n="regionSamtskheJavakheti">სამცხე-ჯავახეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="შიდა ქართლი" class="region-checkbox" data-region><span data-i18n="regionShidaKartli">შიდა ქართლი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region><span data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ქვემო ქართლი" class="region-checkbox" data-region><span data-i18n="regionKvemoKartli">ქვემო ქართლი</span></label></div>
                     </div>
-                    <div class="region-option"><label><input type="checkbox" value="თბილისი" class="region-checkbox" data-region><span data-i18n="regionTbilisi">თბილისი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="აჭარა" class="region-checkbox" data-region><span data-i18n="regionAdjara">აჭარა</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="იმერეთი" class="region-checkbox" data-region><span data-i18n="regionImereti">იმერეთი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="კახეთი" class="region-checkbox" data-region><span data-i18n="regionKakheti">კახეთი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="სამეგრელო-ზემო სვანეთი" class="region-checkbox" data-region><span data-i18n="regionSamegrelo">სამეგრელო-ზემო სვანეთი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="რაჭა-ლეჩხუმი" class="region-checkbox" data-region><span data-i18n="regionRachaLechkhumi">რაჭა-ლეჩხუმი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="გურია" class="region-checkbox" data-region><span data-i18n="regionGuria">გურია</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="სამცხე-ჯავახეთი" class="region-checkbox" data-region><span data-i18n="regionSamtskheJavakheti">სამცხე-ჯავახეთი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="შიდა ქართლი" class="region-checkbox" data-region><span data-i18n="regionShidaKartli">შიდა ქართლი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="მცხეთა-მთიანეთი" class="region-checkbox" data-region><span data-i18n="regionMtskhetaMtianeti">მცხეთა-მთიანეთი</span></label></div>
-                    <div class="region-option"><label><input type="checkbox" value="ქვემო ქართლი" class="region-checkbox" data-region><span data-i18n="regionKvemoKartli">ქვემო ქართლი</span></label></div>
+                    <!-- Outer hotel countries -->
+                    <div id="outerRegionsContainer" style="display: none;">
+                        <div class="region-option">
+                            <label>
+                                <input type="checkbox" value="all" id="regionAllOuter" class="region-checkbox-outer">
+                                <span data-i18n="outerToursAllCountries">ყველა ქვეყანა (უნივერსალური)</span>
+                            </label>
+                        </div>
+                        <div class="region-option"><label><input type="checkbox" value="თურქეთი" class="region-checkbox-outer" data-region><span data-i18n="countryTurkey">თურქეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="სომხეთი" class="region-checkbox-outer" data-region><span data-i18n="countryArmenia">სომხეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="აზერბაიჯანი" class="region-checkbox-outer" data-region><span data-i18n="countryAzerbaijan">აზერბაიჯანი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="რუსეთი" class="region-checkbox-outer" data-region><span data-i18n="countryRussia">რუსეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ირანი" class="region-checkbox-outer" data-region><span data-i18n="countryIran">ირანი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="საბერძნეთი" class="region-checkbox-outer" data-region><span data-i18n="countryGreece">საბერძნეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ბულგარეთი" class="region-checkbox-outer" data-region><span data-i18n="countryBulgaria">ბულგარეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="რუმინეთი" class="region-checkbox-outer" data-region><span data-i18n="countryRomania">რუმინეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="უკრაინა" class="region-checkbox-outer" data-region><span data-i18n="countryUkraine">უკრაინა</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ეგვიპტე" class="region-checkbox-outer" data-region><span data-i18n="countryEgypt">ეგვიპტე</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="არაბთა გაერთიანებული საამიროები" class="region-checkbox-outer" data-region><span data-i18n="countryUAE">არაბთა გაერთიანებული საამიროები</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ისრაელი" class="region-checkbox-outer" data-region><span data-i18n="countryIsrael">ისრაელი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="იორდანია" class="region-checkbox-outer" data-region><span data-i18n="countryJordan">იორდანია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="იტალია" class="region-checkbox-outer" data-region><span data-i18n="countryItaly">იტალია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ესპანეთი" class="region-checkbox-outer" data-region><span data-i18n="countrySpain">ესპანეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="საფრანგეთი" class="region-checkbox-outer" data-region><span data-i18n="countryFrance">საფრანგეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="გერმანია" class="region-checkbox-outer" data-region><span data-i18n="countryGermany">გერმანია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ნიდერლანდები" class="region-checkbox-outer" data-region><span data-i18n="countryNetherlands">ნიდერლანდები</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ჩეხეთი" class="region-checkbox-outer" data-region><span data-i18n="countryCzech">ჩეხეთი</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ავსტრია" class="region-checkbox-outer" data-region><span data-i18n="countryAustria">ავსტრია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="შვეიცარია" class="region-checkbox-outer" data-region><span data-i18n="countrySwitzerland">შვეიცარია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="მონტენეგრო" class="region-checkbox-outer" data-region><span data-i18n="countryMontenegro">მონტენეგრო</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="ხორვატია" class="region-checkbox-outer" data-region><span data-i18n="countryCroatia">ხორვატია</span></label></div>
+                        <div class="region-option"><label><input type="checkbox" value="სერბია" class="region-checkbox-outer" data-region><span data-i18n="countrySerbia">სერბია</span></label></div>
+                    </div>
                 </div>
             </div>
 
@@ -2377,7 +2475,7 @@ textarea.input {
                 'სახლი': 'hotelTypeHouse',
                 'კოტეჯი': 'hotelTypeCottage',
                 'ჰოსტელი': 'hotelTypeHostel',
-                'გესტჰაუსი': 'hotelTypeGuesthouse',
+                '��ესტჰაუსი': 'hotelTypeGuesthouse',
                 'ვილა': 'hotelTypeVilla'
             },
             region: {
@@ -2846,10 +2944,46 @@ onAuthStateChanged(auth, async (user) => {
     loadHotels();
 });
 
+let currentHotelTab = 'inner'; // 'inner' or 'outer'
+let allOuterHotels = [];
+let filtersInitialized = false;
+
+function switchHotelTab(tab) {
+    currentHotelTab = tab;
+    // Update tab buttons
+    document.querySelectorAll('.hotel-type-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.hotelTab === tab);
+    });
+    // Toggle region containers
+    const innerContainer = document.getElementById('innerRegionsContainer');
+    const outerContainer = document.getElementById('outerRegionsContainer');
+    if (innerContainer) innerContainer.style.display = tab === 'inner' ? '' : 'none';
+    if (outerContainer) outerContainer.style.display = tab === 'outer' ? '' : 'none';
+    // Reset all checkboxes
+    document.querySelectorAll('.region-checkbox, .region-checkbox-outer').forEach(cb => cb.checked = false);
+    // Update filter text
+    updateRegionFilterText();
+    // Re-display items
+    displayItems();
+}
+
 async function loadHotels() {
     try {
-        const hotelsSnapshot = await getDocs(collection(db, "hotels"));
+        const [hotelsSnapshot, outerHotelsSnapshot] = await Promise.all([
+            getDocs(collection(db, "hotels")),
+            getDocs(collection(db, "outerHotels"))
+        ]);
         allHotels = hotelsSnapshot.docs.map((doc) => {
+            const data = doc.data();
+            return { 
+                id: doc.id, 
+                ...data, 
+                createdAt: data.createdAt?.toDate() || null,
+                _searchName: data.name?.toLowerCase() || '',
+                _searchDesc: data.description?.toLowerCase() || ''
+            };
+        });
+        allOuterHotels = outerHotelsSnapshot.docs.map((doc) => {
             const data = doc.data();
             return { 
                 id: doc.id, 
@@ -2861,15 +2995,20 @@ async function loadHotels() {
         });
         updateTypeFilter();
         displayItems();
-        setupFilters();
-        setupItemsContainerEvents();
+        if (!filtersInitialized) {
+            setupFilters();
+            setupItemsContainerEvents();
+            filtersInitialized = true;
+        }
     } catch (error) {
         console.error("Error loading data:", error);
         const errorMsg = window.languageSwitcher?.translate("bookingLoadError") || "მონაცემების ჩატვირთვა ვერ მოხერხდა";
         showToast(errorMsg, "error");
-        // Initialize filters even if data fails so the UI remains functional
         updateTypeFilter();
-        setupFilters();
+        if (!filtersInitialized) {
+            setupFilters();
+            filtersInitialized = true;
+        }
     }
 }
 
@@ -2903,6 +3042,7 @@ function setupFilters() {
         });
     }
 
+    // Inner region checkboxes
     const regionCheckboxes = document.querySelectorAll('.region-checkbox');
     regionCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
@@ -2916,26 +3056,49 @@ function setupFilters() {
             filterItems();
         });
     });
+
+    // Outer country checkboxes
+    const outerCheckboxes = document.querySelectorAll('.region-checkbox-outer');
+    outerCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const regionAllOuter = document.getElementById('regionAllOuter');
+            if (e.target.value === 'all') {
+                if (e.target.checked) outerCheckboxes.forEach(cb => { if (cb.value !== 'all') cb.checked = false; });
+            } else {
+                if (e.target.checked && regionAllOuter) regionAllOuter.checked = false;
+            }
+            updateRegionFilterText();
+            filterItems();
+        });
+    });
 }
 
 function updateRegionFilterText() {
-    const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
     const regionFilterText = document.getElementById('regionFilterText');
-    const regionAll = document.getElementById('regionAll');
     const ls = window.languageSwitcher;
-    
-    if (regionAll && regionAll.checked) {
-        regionFilterText.textContent = ls ? ls.translate('bookingAllRegions') : 'ყველა რეგიონი';
-        return;
-    }
-    if (regionCheckboxes.length === 0) {
-        regionFilterText.textContent = ls ? ls.translate('bookingAllRegions') : 'ყველა რეგიონი';
-    } else if (regionCheckboxes.length === 1) {
-        const regionValue = regionCheckboxes[0].value;
-        regionFilterText.textContent = translateValue(regionValue, 'region');
+
+    if (currentHotelTab === 'outer') {
+        const outerChecked = document.querySelectorAll('.region-checkbox-outer:checked');
+        const regionAllOuter = document.getElementById('regionAllOuter');
+        if ((regionAllOuter && regionAllOuter.checked) || outerChecked.length === 0) {
+            regionFilterText.textContent = ls ? ls.translate('outerToursAllCountries') : 'ყველა ქვეყანა';
+        } else if (outerChecked.length === 1) {
+            regionFilterText.textContent = translateValue(outerChecked[0].value, 'region');
+        } else {
+            const selectedText = ls ? ls.translate('bookingRegionSelected') : 'არჩეულია';
+            regionFilterText.textContent = `${outerChecked.length} ${selectedText}`;
+        }
     } else {
-        const selectedText = ls ? ls.translate('bookingRegionSelected') : 'რეგიონი არჩეულია';
-        regionFilterText.textContent = `${regionCheckboxes.length} ${selectedText}`;
+        const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
+        const regionAll = document.getElementById('regionAll');
+        if ((regionAll && regionAll.checked) || regionCheckboxes.length === 0) {
+            regionFilterText.textContent = ls ? ls.translate('bookingAllRegions') : 'ყველა რეგიონი';
+        } else if (regionCheckboxes.length === 1) {
+            regionFilterText.textContent = translateValue(regionCheckboxes[0].value, 'region');
+        } else {
+            const selectedText = ls ? ls.translate('bookingRegionSelected') : 'რეგიონი არჩეულია';
+            regionFilterText.textContent = `${regionCheckboxes.length} ${selectedText}`;
+        }
     }
 }
 
@@ -2971,8 +3134,14 @@ function debounce(func, wait) {
 
 function filterItems() {
     const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
-    const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
-    let regions = Array.from(regionCheckboxes).map(cb => cb.value);
+    let regions;
+    if (currentHotelTab === 'outer') {
+        const outerChecked = document.querySelectorAll('.region-checkbox-outer:checked');
+        regions = Array.from(outerChecked).map(cb => cb.value);
+    } else {
+        const regionCheckboxes = document.querySelectorAll('.region-checkbox:checked');
+        regions = Array.from(regionCheckboxes).map(cb => cb.value);
+    }
     if (regions.length === 0 || regions.includes('all')) regions = ['all'];
 
     const type = document.getElementById("typeFilter")?.value || "";
@@ -2980,7 +3149,7 @@ function filterItems() {
     const minPrice = parseFloat(document.getElementById("minPrice")?.value) || 0;
     const maxPrice = parseFloat(document.getElementById("maxPrice")?.value) || Infinity;
 
-    let filtered = [...allHotels];
+    let filtered = currentHotelTab === 'outer' ? [...allOuterHotels] : [...allHotels];
 
     if (searchTerm) {
         filtered = filtered.filter((item) => (item._searchName?.includes(searchTerm) || item._searchDesc?.includes(searchTerm)));
@@ -3018,7 +3187,7 @@ let currentDisplayedItems = [];
 function displayItems(itemsToDisplay) {
     const container = document.getElementById("itemsContainer");
     if (!container) return;
-    const items = itemsToDisplay || allHotels;
+    const items = itemsToDisplay || (currentHotelTab === 'outer' ? allOuterHotels : allHotels);
     currentDisplayedItems = items;
 
     if (items.length === 0) {
