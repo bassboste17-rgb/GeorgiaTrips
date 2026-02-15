@@ -17,6 +17,16 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
     
+    match /outerTours/{tourId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    match /fullTours/{tourId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
     // Hotels collection - required for hotel.html and admin.html
     match /hotels/{hotelId} {
       allow read: if true;
