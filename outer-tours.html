@@ -3251,19 +3251,165 @@ textarea.input {
         <input type="number" id="maxPrice" data-i18n="bookingMaxPrice" placeholder="Max price" class="input" min="0">
       </div>
       
-      <!-- Region filter -->
+      <!-- Country filter for outer tours -->
       <div class="region-filter-container">
         <button id="regionFilterButton" class="select region-filter-button">
-          <span id="regionFilterText" data-i18n="bookingAllRegions">All Regions</span>
+          <span id="regionFilterText" data-i18n="outerToursAllCountries">All Countries</span>
           <i class="fas fa-chevron-down"></i>
         </button>
         <div id="regionFilterDropdown" class="region-dropdown" style="display: none;">
           <div class="region-option">
             <label>
               <input type="checkbox" value="all" id="regionAll" class="region-checkbox">
-              <span data-i18n="bookingAllRegions">All Regions (Universal)</span>
+              <span data-i18n="outerToursAllCountries">All Countries (Universal)</span>
             </label>
           </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="თურქეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryTurkey">Turkey</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="სომხეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryArmenia">Armenia</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="აზერბაიჯანი" class="region-checkbox" data-region>
+              <span data-i18n="countryAzerbaijan">Azerbaijan</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="რუსეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryRussia">Russia</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ირანი" class="region-checkbox" data-region>
+              <span data-i18n="countryIran">Iran</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="საბერძნეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryGreece">Greece</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ბულგარეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryBulgaria">Bulgaria</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="რუმინეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryRomania">Romania</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="უკრაინა" class="region-checkbox" data-region>
+              <span data-i18n="countryUkraine">Ukraine</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ეგვიპტე" class="region-checkbox" data-region>
+              <span data-i18n="countryEgypt">Egypt</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="არაბთა გაერთიანებული საამიროები" class="region-checkbox" data-region>
+              <span data-i18n="countryUAE">UAE</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ისრაელი" class="region-checkbox" data-region>
+              <span data-i18n="countryIsrael">Israel</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="იორდანია" class="region-checkbox" data-region>
+              <span data-i18n="countryJordan">Jordan</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="იტალია" class="region-checkbox" data-region>
+              <span data-i18n="countryItaly">Italy</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ესპანეთი" class="region-checkbox" data-region>
+              <span data-i18n="countrySpain">Spain</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="საფრანგეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryFrance">France</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="გერმანია" class="region-checkbox" data-region>
+              <span data-i18n="countryGermany">Germany</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ნიდერლანდები" class="region-checkbox" data-region>
+              <span data-i18n="countryNetherlands">Netherlands</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ჩეხეთი" class="region-checkbox" data-region>
+              <span data-i18n="countryCzech">Czech Republic</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ავსტრია" class="region-checkbox" data-region>
+              <span data-i18n="countryAustria">Austria</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="შვეიცარია" class="region-checkbox" data-region>
+              <span data-i18n="countrySwitzerland">Switzerland</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="მონტენეგრო" class="region-checkbox" data-region>
+              <span data-i18n="countryMontenegro">Montenegro</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="ხორვატია" class="region-checkbox" data-region>
+              <span data-i18n="countryCroatia">Croatia</span>
+            </label>
+          </div>
+          <div class="region-option">
+            <label>
+              <input type="checkbox" value="სერბია" class="region-checkbox" data-region>
+              <span data-i18n="countrySerbia">Serbia</span>
+            </label>
+          </div>
+        </div>
+      </div>
           <div class="region-option">
             <label>
               <input type="checkbox" value="აფხაზეთი" class="region-checkbox" data-region>
@@ -4199,7 +4345,7 @@ let customTourCalendar = null;
         ls?.translate('calendarJanuary') || 'იანვარი',
         ls?.translate('calendarFebruary') || 'თებერ���ალი',
         ls?.translate('calendarMarch') || 'მარტი',
-        ls?.translate('calendarApril') || 'აპრილი',
+        ls?.translate('calendarApril') || '���პრილი',
         ls?.translate('calendarMay') || 'მაისი',
         ls?.translate('calendarJune') || 'ივნისი',
         ls?.translate('calendarJuly') || 'ივლისი',
@@ -4766,7 +4912,9 @@ async function loadTours() {
     setupItemsContainerEvents()
   } catch (error) {
     console.error("Error loading data:", error)
-    showToast("Failed to load data", "error")
+    const ls = window.languageSwitcher;
+    const msg = ls ? ls.t("failedToLoadData") : "Failed to load data";
+    showToast(msg, "error")
   }
 }
 
