@@ -2494,7 +2494,32 @@ textarea.input {
                 'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
                 'შიდა ქართლი': 'regionShidaKartli',
                 'ქვემო ქართლი': 'regionKvemoKartli',
-                'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi'
+                'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
+                // Countries
+                'თურქეთი': 'countryTurkey',
+                'სომხეთი': 'countryArmenia',
+                'აზერბაიჯანი': 'countryAzerbaijan',
+                'რუსეთი': 'countryRussia',
+                'ირანი': 'countryIran',
+                'საბერძნეთი': 'countryGreece',
+                'ბულგარეთი': 'countryBulgaria',
+                'რუმინეთი': 'countryRomania',
+                'უკრაინა': 'countryUkraine',
+                'ეგვიპტე': 'countryEgypt',
+                'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+                'ისრაელი': 'countryIsrael',
+                'იორდანია': 'countryJordan',
+                'იტალია': 'countryItaly',
+                'ესპანეთი': 'countrySpain',
+                'საფრანგეთი': 'countryFrance',
+                'გერმანია': 'countryGermany',
+                'ნიდერლანდები': 'countryNetherlands',
+                'ჩეხეთი': 'countryCzech',
+                'ავსტრია': 'countryAustria',
+                'შვეიცარია': 'countrySwitzerland',
+                'მონტენეგრო': 'countryMontenegro',
+                'ხორვატია': 'countryCroatia',
+                'სერბია': 'countrySerbia'
             }
         };
         
@@ -2514,6 +2539,7 @@ textarea.input {
 
     function getRegionTranslationKey(regionValue) {
         const regionMap = {
+            // Georgian regions
             'აფხაზეთი': 'regionAbkhazia',
             'აჭარა': 'regionAdjara',
             'გურია': 'regionGuria',
@@ -2528,9 +2554,34 @@ textarea.input {
             'სამეგრელო': 'regionSamegrelo',
             'თბილისი': 'regionTbilisi',
             'სვანეთი': 'regionSvaneti',
-            'რაჭა': 'regionRacha'
+            'რაჭა': 'regionRacha',
+            // Countries
+            'თურქეთი': 'countryTurkey',
+            'სომხეთი': 'countryArmenia',
+            'აზერბაიჯანი': 'countryAzerbaijan',
+            'რუსეთი': 'countryRussia',
+            'ირანი': 'countryIran',
+            'საბერძნეთი': 'countryGreece',
+            'ბულგარეთი': 'countryBulgaria',
+            'რუმინეთი': 'countryRomania',
+            'უკრაინა': 'countryUkraine',
+            'ეგვიპტე': 'countryEgypt',
+            'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+            'ისრაელი': 'countryIsrael',
+            'იორდანია': 'countryJordan',
+            'იტალია': 'countryItaly',
+            'ესპანეთი': 'countrySpain',
+            'საფრანგეთი': 'countryFrance',
+            'გერმანია': 'countryGermany',
+            'ნიდერლანდები': 'countryNetherlands',
+            'ჩეხეთი': 'countryCzech',
+            'ავსტრია': 'countryAustria',
+            'შვეიცარია': 'countrySwitzerland',
+            'მონტენეგრო': 'countryMontenegro',
+            'ხორვატია': 'countryCroatia',
+            'სერბია': 'countrySerbia'
         };
-        return regionMap[regionValue] || `region${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
+        return regionMap[regionValue] || regionValue;
     }
 
     class AvailabilityCalendar {
@@ -3275,8 +3326,9 @@ function createItemCard(item) {
     const description = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || "");
     
     let regionDisplay = '';
+    const allLabel = currentHotelTab === 'outer' ? (window.languageSwitcher?.translate('outerToursAllCountries') || 'ყველა ქვეყანა') : (window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი');
     if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-        regionDisplay = window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი';
+        regionDisplay = allLabel;
     } else if (Array.isArray(item.regions) && item.regions.length > 0) {
         if (item.regions.length === 1) {
             const translationKey = getRegionTranslationKey(item.regions[0]);
@@ -3390,8 +3442,9 @@ function openBookingModalDirect(item, type) {
     const name = (lang !== 'ka' && item.nameTranslations?.[lang]) ? item.nameTranslations[lang] : item.name;
     
     let regionModalText = '';
+    const allModalLabel = currentHotelTab === 'outer' ? (window.languageSwitcher?.translate('outerToursAllCountries') || 'ყველა ქვეყანა') : (window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი');
     if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-        regionModalText = window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი';
+        regionModalText = allModalLabel;
     } else if (Array.isArray(item.regions) && item.regions.length > 0) {
         regionModalText = item.regions.map(region => {
             const translationKey = getRegionTranslationKey(region);
@@ -3660,7 +3713,7 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
     const start = parseDate(startDate);
     const end = parseDate(endDate);
     if (end < start) {
-        showToast(window.languageSwitcher?.translate('bookingToastEndDateAfter') || "გასვლის თარიღი უნდა იყოს შესვლის თარიღის შემდეგ", "warning");
+        showToast(window.languageSwitcher?.translate('bookingToastEndDateAfter') || "���ასვლის თარიღი უნდა იყოს შესვლის თარიღის შემდეგ", "warning");
         return;
     }
 
@@ -3809,8 +3862,9 @@ function openDetailModal(item) {
     const name = (lang !== 'ka' && item.nameTranslations?.[lang]) ? item.nameTranslations[lang] : item.name;
     
     let regionDetailText = '';
+    const allDetailLabel = currentHotelTab === 'outer' ? (window.languageSwitcher?.translate('outerToursAllCountries') || 'ყველა ქვეყანა') : (window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი');
     if (item.region === 'all' || (Array.isArray(item.regions) && item.regions.includes('all'))) {
-        regionDetailText = window.languageSwitcher?.translate('bookingAllRegions') || 'ყველა რეგიონი';
+        regionDetailText = allDetailLabel;
     } else if (Array.isArray(item.regions) && item.regions.length > 0) {
         regionDetailText = item.regions.map(region => {
             const translationKey = getRegionTranslationKey(region);

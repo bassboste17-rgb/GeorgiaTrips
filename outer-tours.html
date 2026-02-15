@@ -3878,22 +3878,30 @@ textarea.input {
           'ბუნება': 'tourTypeNature'
         },
         region: {
-          'თბილისი': 'regionTbilisi',
-          'ბათუმი': 'regionBatumi',
-          'ქუთაისი': 'regionKutaisi',
-          'აფხაზეთი': 'regionAbkhazia',
-          'სამეგრელო': 'regionSamegrelo',
-          'იმერეთი': 'regionImereti',
-          'კახეთი': 'regionKakheti',
-          'გურია': 'regionGuria',
-          'აჭარა': 'regionAdjara',
-          'რაჭა': 'regionRacha',
-          'სვანეთი': 'regionSvaneti',
-          'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
-          'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
-          'შიდა ქართლი': 'regionShidaKartli',
-          'ქვემო ქართლი': 'regionKvemoKartli',
-          'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi'
+          'თურქეთი': 'countryTurkey',
+          'სომხეთი': 'countryArmenia',
+          'აზერბაიჯანი': 'countryAzerbaijan',
+          'რუსეთი': 'countryRussia',
+          'ირანი': 'countryIran',
+          'საბერძნეთი': 'countryGreece',
+          'ბულგარეთი': 'countryBulgaria',
+          'რუმინეთი': 'countryRomania',
+          'უკრაინა': 'countryUkraine',
+          'ეგვიპტე': 'countryEgypt',
+          'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+          'ისრაელი': 'countryIsrael',
+          'იორდანია': 'countryJordan',
+          'იტალია': 'countryItaly',
+          'ესპანეთი': 'countrySpain',
+          'საფრანგეთი': 'countryFrance',
+          'გერმანია': 'countryGermany',
+          'ნიდერლანდები': 'countryNetherlands',
+          'ჩეხეთი': 'countryCzech',
+          'ავსტრია': 'countryAustria',
+          'შვეიცარია': 'countrySwitzerland',
+          'მონტენეგრო': 'countryMontenegro',
+          'ხორვატია': 'countryCroatia',
+          'სერბია': 'countrySerbia'
         }
       };
       
@@ -3918,23 +3926,32 @@ textarea.input {
     // Helper function to get translation key for region names
     function getRegionTranslationKey(regionValue) {
       const regionMap = {
-        'აფხაზეთი': 'regionAbkhazia',
-        'აჭარა': 'regionAdjara',
-        'გურია': 'regionGuria',
-        'იმერეთი': 'regionImereti',
-        'კახეთი': 'regionKakheti',
-        'ქვემო ქართლი': 'regionKvemoKartli',
-        'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
-        'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
-        'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
-        'შიდა ქართლი': 'regionShidaKartli',
-        'სამეგრელო-ზემო სვა��ეთი': 'regionSamegrelo',
-        'სამეგრელო': 'regionSamegrelo',
-        'თბილისი': 'regionTbilisi',
-        'სვანეთი': 'regionSvaneti',
-        'რაჭა': 'regionRacha'
+        'თურქეთი': 'countryTurkey',
+        'სომხეთი': 'countryArmenia',
+        'აზერბაიჯანი': 'countryAzerbaijan',
+        'რუსეთი': 'countryRussia',
+        'ირანი': 'countryIran',
+        'საბერძნეთი': 'countryGreece',
+        'ბულგარეთი': 'countryBulgaria',
+        'რუმინეთი': 'countryRomania',
+        'უკრაინა': 'countryUkraine',
+        'ეგვიპტე': 'countryEgypt',
+        'არაბთა გაერთიანებული საამიროები': 'countryUAE',
+        'ისრაელი': 'countryIsrael',
+        'იორდანია': 'countryJordan',
+        'იტალია': 'countryItaly',
+        'ესპანეთი': 'countrySpain',
+        'საფრანგეთი': 'countryFrance',
+        'გერმანია': 'countryGermany',
+        'ნიდერლანდები': 'countryNetherlands',
+        'ჩეხეთი': 'countryCzech',
+        'ავსტრია': 'countryAustria',
+        'შვეიცარია': 'countrySwitzerland',
+        'მონტენეგრო': 'countryMontenegro',
+        'ხორვატია': 'countryCroatia',
+        'სერბია': 'countrySerbia'
       };
-      return regionMap[regionValue] || `region${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
+      return regionMap[regionValue] || `country${regionValue.charAt(0).toUpperCase() + regionValue.slice(1)}`;
     }
 
     class AvailabilityCalendar {
