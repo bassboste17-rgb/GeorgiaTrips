@@ -940,7 +940,7 @@
                     <div class="error-message" id="resetEmailError"></div>
                     
                     <button type="submit" id="resetPasswordBtn">
-                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პ���როლის აღდგენა</span>
+                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პ�����როლის აღდგენა</span>
                     </button>
                 </div>
 
@@ -2516,6 +2516,8 @@
 
                 try {
                     // გაგზავნა default Firebase settings-ით (არ საჭიროებს authorized domain-ს)
+                    console.log("[v0] Sending verification email to:", userEmail);
+                    console.log("[v0] User state - uid:", user.uid, "email:", user.email, "emailVerified:", user.emailVerified);
                     await sendEmailVerification(user);
                     console.log("[v0] Verification email sent successfully to:", userEmail);
                     
@@ -2524,11 +2526,19 @@
                         'რეგისტრაცია წარმატებულია! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა დასადასტურებლად. შეამოწმეთ spam ფოლდერიც!';
                     showMessage(successMsg, "success");
                 } catch (emailError) {
-                    console.error("[v0] Error sending verification email:", emailError.code, emailError.message);
+                    console.error("[v0] Error sending verification email:", emailError.code, emailError.message, emailError);
                     const warningMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('registrationSuccessEmailFailed') : 
                         'რეგისტრაცია წარმატებულია, მაგრამ დამადასტურებელი ემაილის გაგზავნა ვერ მოხერხდა. გთხოვთ სცადოთ შესვლა და აირჩიოთ "ხელახლა გაგზავნა".';
                     showMessage(warningMsg, "success");
+                }
+                
+                // რეგისტრაციის შემდეგ sign out - user-მა ჯერ ელ. ფოსტა უნდა დაადასტუროს
+                try {
+                    await signOut(auth);
+                    console.log("[v0] User signed out after registration");
+                } catch (signOutError) {
+                    console.warn("[v0] Sign out after registration failed:", signOutError);
                 }
                 
                 setTimeout(() => {
