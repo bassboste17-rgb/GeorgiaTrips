@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Georgia Trips Admin</title>
+    <meta name="description" content="Georgia Trips Admin Panel">
+    <meta name="theme-color" content="#dc3545">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GT Admin">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #dc3545;
+            --primary-dark: #b02a37;
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface2: #1a1a1a;
+            --surface3: #222;
+            --border: #2a2a2a;
+            --text: #e0e0e0;
+            --text-dim: #888;
+            --success: #28a745;
+            --warning: #ffc107;
+            --error: #dc3545;
+            --blue: #00aeff;
+            --radius: 14px;
+            --radius-sm: 10px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100dvh;
+            overflow-x: hidden;
+            padding-top: var(--safe-top);
+        }
+
+        /* LOGIN */
+        .login-screen {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100dvh; padding: 2rem;
+        }
+        .login-logo { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
+        .login-logo span { color: var(--primary); }
+        .login-sub { color: var(--text-dim); margin-bottom: 2rem; font-size: 0.9rem; }
+        .login-form { width: 100%; max-width: 360px; }
+        .login-form input {
+            width: 100%; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: #fff; font-size: 1rem; margin-bottom: 12px; outline: none;
+        }
+        .login-form input:focus { border-color: var(--primary); }
+        .login-form button {
+            width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none;
+            border-radius: var(--radius-sm); font-size: 1rem; font-weight: 600; cursor: pointer;
+        }
+        .login-form button:active { background: var(--primary-dark); }
+        .login-error { color: var(--error); font-size: 0.85rem; margin-top: 8px; text-align: center; }
+
+        /* MAIN APP */
+        .app { display: none; flex-direction: column; min-height: 100dvh; }
+        .app.active { display: flex; }
+
+        /* TOP BAR */
+        .top-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+            padding-top: calc(12px + var(--safe-top));
+        }
+        .top-bar h1 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .top-bar h1 span { color: var(--primary); }
+        .top-bar-actions { display: flex; gap: 8px; }
+        .top-bar-btn {
+            width: 38px; height: 38px; border-radius: 50%; background: var(--surface2);
+            border: 1px solid var(--border); color: var(--text); display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 0.9rem; position: relative;
+        }
+        .top-bar-btn:active { background: var(--surface3); }
+        .notif-badge {
+            position: absolute; top: -2px; right: -2px; width: 18px; height: 18px;
+            background: var(--primary); color: #fff; border-radius: 50%; font-size: 0.65rem;
+            display: none; align-items: center; justify-content: center; font-weight: 700;
+        }
+        .notif-badge.show { display: flex; }
+
+        /* CONTENT */
+        .content { flex: 1; padding-bottom: 80px; overflow-y: auto; }
+
+        /* TAB PAGES */
+        .tab-page { display: none; padding: 16px; }
+        .tab-page.active { display: block; }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            display: flex; background: var(--surface); border-top: 1px solid var(--border);
+            z-index: 100; padding-bottom: var(--safe-bottom);
+        }
+        .nav-item {
+            flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0;
+            color: var(--text-dim); font-size: 0.7rem; cursor: pointer; gap: 4px;
+            transition: color 0.2s; position: relative;
+        }
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item .nav-badge {
+            position: absolute; top: 4px; right: calc(50% - 20px); width: 16px; height: 16px;
+            background: var(--primary); color: #fff; border-radius: 50%; font-size: 0.6rem;
+            display: none; align-items: center; justify-content: center; font-weight: 700;
+        }
+        .nav-item .nav-badge.show { display: flex; }
+
+        /* SECTION HEADERS */
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .section-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .section-count {
+            background: var(--surface2); color: var(--text-dim); padding: 4px 10px;
+            border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--border);
+        }
+
+        /* FILTER BAR */
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+        .filter-btn {
+            padding: 8px 14px; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 20px; color: var(--text-dim); font-size: 0.8rem; white-space: nowrap; cursor: pointer;
+        }
+        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        /* BOOKING CARDS */
+        .booking-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            margin-bottom: 12px; overflow: hidden;
+        }
+        .booking-card-img {
+            width: 100%; height: 160px; object-fit: cover; display: block;
+        }
+        .booking-card-body { padding: 14px; }
+        .booking-card-top {
+            display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px;
+        }
+        .booking-item-name { font-weight: 700; color: #fff; font-size: 1rem; }
+        .booking-item-type { color: var(--text-dim); font-size: 0.8rem; margin-top: 2px; }
+        .status-badge {
+            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-pending { background: rgba(255,193,7,0.15); color: var(--warning); }
+        .status-confirmed { background: rgba(40,167,69,0.15); color: var(--success); }
+        .status-cancelled { background: rgba(220,53,69,0.15); color: var(--error); }
+
+        .booking-user {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+            padding: 10px; background: var(--surface2); border-radius: var(--radius-sm);
+        }
+        .booking-avatar {
+            width: 40px; height: 40px; border-radius: 50%; background: var(--primary);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; flex-shrink: 0;
+        }
+        .booking-user-info { flex: 1; min-width: 0; }
+        .booking-user-name { font-weight: 600; color: #fff; font-size: 0.9rem; }
+        .booking-user-contact { color: var(--text-dim); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .booking-details-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+        }
+        .detail-item {
+            padding: 8px 10px; background: var(--surface2); border-radius: 8px;
+        }
+        .detail-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-value { font-size: 0.85rem; color: #fff; font-weight: 600; margin-top: 2px; }
+
+        .booking-actions { display: flex; gap: 8px; }
+        .btn {
+            flex: 1; padding: 10px; border: none; border-radius: var(--radius-sm);
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center;
+        }
+        .btn-confirm { background: var(--success); color: #fff; }
+        .btn-reject { background: var(--surface2); color: var(--error); border: 1px solid rgba(220,53,69,0.3); }
+        .btn-confirm:active { opacity: 0.8; }
+        .btn-reject:active { opacity: 0.8; }
+
+        /* CUSTOM TOUR CARD */
+        .custom-tour-card {
+            background: var(--surface); border: 1px solid rgba(220,53,69,0.2); border-radius: var(--radius);
+            padding: 14px; margin-bottom: 12px;
+        }
+        .custom-tour-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+        }
+        .custom-tour-label { font-weight: 700; color: var(--primary); font-size: 0.9rem; }
+        .custom-tour-regions { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+        .region-tag {
+            padding: 4px 10px; background: rgba(0,174,255,0.1); color: var(--blue);
+            border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(0,174,255,0.2);
+        }
+        .custom-tour-route {
+            background: var(--surface2); padding: 10px; border-radius: 8px;
+            border-left: 3px solid var(--primary); margin: 10px 0;
+            font-size: 0.85rem; color: var(--text); line-height: 1.5;
+        }
+        .custom-tour-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .btn-sm {
+            padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+            border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-approve { background: var(--success); color: #fff; }
+        .btn-reject-sm { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); }
+        .btn-call { background: var(--surface2); color: var(--blue); border: 1px solid rgba(0,174,255,0.2); }
+        .btn-delete-sm { background: var(--surface2); color: var(--error); border: 1px solid rgba(220,53,69,0.2); }
+
+        /* CHAT */
+        .chat-list-item {
+            display: flex; align-items: center; gap: 12px; padding: 14px;
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            margin-bottom: 8px; cursor: pointer;
+        }
+        .chat-list-item:active { background: var(--surface2); }
+        .chat-list-item.has-new { border-color: var(--primary); }
+        .chat-avatar {
+            width: 44px; height: 44px; border-radius: 50%; background: var(--surface3);
+            color: var(--blue); display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.1rem; flex-shrink: 0;
+        }
+        .chat-list-info { flex: 1; min-width: 0; }
+        .chat-list-top { display: flex; align-items: center; justify-content: space-between; }
+        .chat-list-name { font-weight: 600; color: #fff; font-size: 0.9rem; }
+        .chat-list-time { font-size: 0.75rem; color: var(--text-dim); }
+        .chat-list-preview { font-size: 0.8rem; color: var(--text-dim); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+        .dot-active { background: var(--success); }
+        .dot-assigned { background: var(--warning); }
+        .dot-closed { background: var(--text-dim); }
+
+        /* CHAT CONVERSATION */
+        .chat-view { display: none; flex-direction: column; height: calc(100dvh - 60px); }
+        .chat-view.active { display: flex; }
+        .chat-view-header {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            background: var(--surface); border-bottom: 1px solid var(--border);
+        }
+        .chat-back-btn {
+            width: 36px; height: 36px; border-radius: 50%; background: var(--surface2);
+            border: 1px solid var(--border); color: var(--text); display: flex; align-items: center;
+            justify-content: center; cursor: pointer;
+        }
+        .chat-view-name { font-weight: 700; color: #fff; font-size: 1rem; }
+        .chat-view-status { font-size: 0.8rem; }
+        .chat-view-actions { margin-left: auto; display: flex; gap: 8px; }
+        .chat-action-btn {
+            padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;
+            border: 1px solid var(--border); background: var(--surface2); color: var(--text-dim); cursor: pointer;
+        }
+        .chat-action-btn.take { border-color: rgba(40,167,69,0.3); color: var(--success); }
+        .chat-action-btn.close-chat { border-color: rgba(220,53,69,0.3); color: var(--error); }
+
+        .messages-container {
+            flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px;
+        }
+        .message {
+            max-width: 82%; padding: 10px 14px; border-radius: 16px;
+            font-size: 0.9rem; line-height: 1.45; word-wrap: break-word;
+        }
+        .message.user { align-self: flex-start; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-bottom-left-radius: 4px; }
+        .message.admin { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+        .message.system { align-self: center; background: var(--surface2); color: var(--text-dim); font-size: 0.8rem; padding: 6px 14px; border-radius: 20px; }
+        .msg-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .msg-sender { font-weight: 600; font-size: 0.8rem; }
+        .msg-time { font-size: 0.7rem; opacity: 0.7; }
+
+        .chat-input-bar {
+            display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+            background: var(--surface); border-top: 1px solid var(--border);
+            padding-bottom: calc(10px + var(--safe-bottom));
+        }
+        .chat-input-bar input {
+            flex: 1; padding: 12px 16px; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 24px; color: #fff; font-size: 0.9rem; outline: none;
+        }
+        .chat-input-bar input:focus { border-color: var(--primary); }
+        .send-btn {
+            width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+            border: none; color: #fff; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0;
+        }
+        .send-btn:disabled { background: var(--surface3); color: var(--text-dim); }
+
+        /* EMPTY STATE */
+        .empty-state {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 3rem 1rem; color: var(--text-dim); text-align: center;
+        }
+        .empty-state i { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4; }
+        .empty-state p { font-size: 0.9rem; }
+
+        /* LOADING */
+        .loading { text-align: center; padding: 2rem; color: var(--text-dim); }
+        .spinner {
+            display: inline-block; width: 28px; height: 28px; border: 3px solid var(--border);
+            border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* TOAST */
+        .toast-container {
+            position: fixed; top: calc(20px + var(--safe-top)); left: 50%; transform: translateX(-50%);
+            z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+        }
+        .toast {
+            padding: 12px 20px; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600;
+            animation: slideDown 0.3s ease; pointer-events: auto; text-align: center;
+            max-width: 320px;
+        }
+        .toast.success { background: var(--success); color: #fff; }
+        .toast.error { background: var(--error); color: #fff; }
+        .toast.info { background: var(--blue); color: #fff; }
+        @keyframes slideDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
+
+        /* TABS */
+        .tabs { display: flex; gap: 0; background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); }
+        .tab-btn { flex: 1; padding: 10px; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-dim); cursor: pointer; }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+
+        /* PULL TO REFRESH */
+        .pull-indicator {
+            text-align: center; padding: 12px; color: var(--text-dim); font-size: 0.8rem;
+            display: none;
+        }
+
+        /* LICENSE PLATE */
+        .license-plate {
+            display: inline-block; padding: 4px 10px; background: rgba(0,0,0,0.3);
+            border-radius: 20px; font-weight: 700; border: 1px solid var(--border);
+            font-size: 0.8rem; margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-logo">Georgia <span>Trips</span></div>
+    <p class="login-sub">Admin Panel</p>
+    <div class="login-form">
+        <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+        <button id="loginBtn">Login</button>
+        <p class="login-error" id="loginError"></p>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app" id="mainApp">
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <h1>Georgia <span>Trips</span></h1>
+        <div class="top-bar-actions">
+            <button class="top-bar-btn" id="notifBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notif-badge" id="notifBadge">0</span>
+            </button>
+            <button class="top-bar-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+        <!-- BOOKINGS PAGE -->
+        <div class="tab-page active" id="bookingsPage">
+            <div class="tabs" id="bookingTabs">
+                <div class="tab-btn active" data-tab="bookings">Bookings</div>
+                <div class="tab-btn" data-tab="custom">Custom Tours</div>
+            </div>
+
+            <!-- Bookings List -->
+            <div id="bookingsContent">
+                <div class="filter-bar" id="statusFilter">
+                    <div class="filter-btn active" data-filter="">All</div>
+                    <div class="filter-btn" data-filter="pending">Pending</div>
+                    <div class="filter-btn" data-filter="confirmed">Confirmed</div>
+                    <div class="filter-btn" data-filter="cancelled">Cancelled</div>
+                </div>
+                <div id="bookingsList">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Custom Tours List -->
+            <div id="customToursContent" style="display:none">
+                <div class="filter-bar" id="customStatusFilter">
+                    <div class="filter-btn active" data-filter="">All</div>
+                    <div class="filter-btn" data-filter="pending">Pending</div>
+                    <div class="filter-btn" data-filter="approved">Approved</div>
+                    <div class="filter-btn" data-filter="rejected">Rejected</div>
+                </div>
+                <div id="customToursList">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAT PAGE -->
+        <div class="tab-page" id="chatPage">
+            <!-- Chat List View -->
+            <div id="chatListView">
+                <div class="filter-bar" id="chatFilter">
+                    <div class="filter-btn active" data-filter="all">All</div>
+                    <div class="filter-btn" data-filter="active">Active</div>
+                    <div class="filter-btn" data-filter="assigned">Assigned</div>
+                    <div class="filter-btn" data-filter="closed">Closed</div>
+                </div>
+                <div id="chatsList">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Chat Conversation View -->
+            <div class="chat-view" id="chatConversation">
+                <div class="chat-view-header">
+                    <button class="chat-back-btn" id="chatBackBtn"><i class="fas fa-arrow-left"></i></button>
+                    <div>
+                        <div class="chat-view-name" id="chatViewName"></div>
+                        <div class="chat-view-status" id="chatViewStatus"></div>
+                    </div>
+                    <div class="chat-view-actions">
+                        <button class="chat-action-btn take" id="takeChatBtn"><i class="fas fa-hand-paper"></i></button>
+                        <button class="chat-action-btn close-chat" id="closeChatBtn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="messages-container" id="messagesContainer"></div>
+                <div class="chat-input-bar">
+                    <input type="text" id="chatInput" placeholder="Message..." maxlength="500" disabled>
+                    <button class="send-btn" id="sendBtn" disabled><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav" id="bottomNav">
+        <div class="nav-item active" data-page="bookingsPage">
+            <i class="fas fa-calendar-check"></i>
+            <span>Bookings</span>
+            <span class="nav-badge" id="bookingBadge">0</span>
+        </div>
+        <div class="nav-item" data-page="chatPage">
+            <i class="fas fa-comments"></i>
+            <span>Chat</span>
+            <span class="nav-badge" id="chatBadge">0</span>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, getDocs, doc, getDoc, updateDoc, addDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
+    authDomain: "rentime-e201e.firebaseapp.com",
+    projectId: "rentime-e201e",
+    storageBucket: "rentime-e201e.firebasestorage.app",
+    messagingSenderId: "420054668757",
+    appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ===== STATE =====
+let currentUser = null;
+let allBookings = [];
+let allCustomTours = [];
+let currentBookingFilter = '';
+let currentCustomFilter = '';
+let currentChatFilter = 'all';
+let currentChatId = null;
+let chatsUnsubscribe = null;
+let messagesUnsubscribe = null;
+let bookingsUnsubscribe = null;
+let newBookingCount = 0;
+let newChatCount = 0;
+let lastKnownBookingIds = new Set();
+let lastKnownChatMessageCounts = {};
+
+const adminId = 'admin_pwa';
+const adminName = 'Admin';
+
+// ===== TOAST =====
+function showToast(msg, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = msg;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// ===== NOTIFICATION SOUND =====
+function playNotificationSound() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+        oscillator.frequency.setValueAtTime(1100, audioCtx.currentTime + 0.1);
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + 0.2);
+        gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.4);
+    } catch (e) {}
+}
+
+// ===== AUTH =====
+document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    errorEl.textContent = '';
+    if (!email || !pass) { errorEl.textContent = 'Fill all fields'; return; }
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+    } catch (e) {
+        errorEl.textContent = 'Invalid credentials';
+    }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    if (confirm('Log out?')) {
+        cleanup();
+        await signOut(auth);
+    }
+});
+
+onAuthStateChanged(auth, user => {
+    if (user) {
+        currentUser = user;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainApp').classList.add('active');
+        initApp();
+    } else {
+        currentUser = null;
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('mainApp').classList.remove('active');
+        cleanup();
+    }
+});
+
+function cleanup() {
+    if (chatsUnsubscribe) chatsUnsubscribe();
+    if (messagesUnsubscribe) messagesUnsubscribe();
+    if (bookingsUnsubscribe) bookingsUnsubscribe();
+    chatsUnsubscribe = null;
+    messagesUnsubscribe = null;
+    bookingsUnsubscribe = null;
+}
+
+// ===== INIT APP =====
+function initApp() {
+    loadBookings();
+    loadChats();
+    registerServiceWorker();
+}
+
+// ===== NAVIGATION =====
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
+
+        // Reset chat view when switching to chat
+        if (page === 'chatPage') {
+            document.getElementById('chatListView').style.display = 'block';
+            document.getElementById('chatConversation').classList.remove('active');
+            document.getElementById('bottomNav').style.display = 'flex';
+            newChatCount = 0;
+            updateBadge('chatBadge', 0);
+        }
+        if (page === 'bookingsPage') {
+            newBookingCount = 0;
+            updateBadge('bookingBadge', 0);
+        }
+    });
+});
+
+// ===== BOOKING TABS =====
+document.querySelectorAll('#bookingTabs .tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#bookingTabs .tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.dataset.tab;
+        document.getElementById('bookingsContent').style.display = tab === 'bookings' ? 'block' : 'none';
+        document.getElementById('customToursContent').style.display = tab === 'custom' ? 'block' : 'none';
+    });
+});
+
+// ===== FILTERS =====
+document.querySelectorAll('#statusFilter .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#statusFilter .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentBookingFilter = btn.dataset.filter;
+        renderBookings();
+    });
+});
+document.querySelectorAll('#customStatusFilter .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#customStatusFilter .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCustomFilter = btn.dataset.filter;
+        renderCustomTours();
+    });
+});
+document.querySelectorAll('#chatFilter .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#chatFilter .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentChatFilter = btn.dataset.filter;
+        renderChats();
+    });
+});
+
+// ===== LOAD BOOKINGS (REAL-TIME) =====
+let allChatsData = [];
+
+function loadBookings() {
+    const q = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
+    bookingsUnsubscribe = onSnapshot(q, snapshot => {
+        const newIds = new Set();
+        const bookings = [];
+        const customs = [];
+
+        snapshot.forEach(docSnap => {
+            const data = { id: docSnap.id, ...docSnap.data() };
+            newIds.add(docSnap.id);
+            if (data.type === 'custom_tour_request') {
+                customs.push(data);
+            } else {
+                bookings.push(data);
+            }
+        });
+
+        // Check for new bookings
+        if (lastKnownBookingIds.size > 0) {
+            const brandNew = [...newIds].filter(id => !lastKnownBookingIds.has(id));
+            if (brandNew.length > 0) {
+                newBookingCount += brandNew.length;
+                updateBadge('bookingBadge', newBookingCount);
+                playNotificationSound();
+                showToast('New booking received!', 'success');
+                sendLocalNotification('New Booking', 'You have a new booking to review');
+            }
+        }
+        lastKnownBookingIds = newIds;
+
+        allBookings = bookings;
+        allCustomTours = customs;
+        renderBookings();
+        renderCustomTours();
+    });
+}
+
+// ===== RENDER BOOKINGS =====
+function renderBookings() {
+    const container = document.getElementById('bookingsList');
+    let filtered = allBookings;
+
+    if (currentBookingFilter) {
+        const statusMap = { 'pending': 'pending', 'confirmed': 'confirmed', 'cancelled': 'cancelled' };
+        const georgianMap = { 'pending': 'მოლოდინში', 'confirmed': 'დადასტურებული', 'cancelled': 'გაუქმებული' };
+        filtered = allBookings.filter(b => b.status === georgianMap[currentBookingFilter] || b.status === currentBookingFilter);
+    }
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No bookings found</p></div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map(b => {
+        const name = b.contactName || b.userEmail || 'User';
+        const initial = name.charAt(0).toUpperCase();
+        const statusClass = b.status === 'დადასტურებული' || b.status === 'confirmed' ? 'status-confirmed'
+            : b.status === 'გაუქმებული' || b.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+        const statusText = b.status || 'pending';
+        const typeLabel = b.itemType === 'cars' ? 'Car' : b.itemType === 'hotels' ? 'Hotel' : 'Tour';
+        const imgHtml = b.itemImage ? `<img class="booking-card-img" src="${b.itemImage}" alt="${b.itemName}">` : '';
+        const plateHtml = b.licensePlate ? `<div class="license-plate"><i class="fas fa-id-card" style="color:var(--primary);margin-right:4px"></i>${b.licensePlate}</div>` : '';
+        const isPending = b.status === 'მოლოდინში' || b.status === 'pending';
+        const actionsHtml = isPending ? `
+            <div class="booking-actions">
+                <button class="btn btn-confirm" onclick="window._confirmBooking('${b.id}','${b.userId}','${(b.itemName||'').replace(/'/g,"\\'")}','${(b.itemImage||'').replace(/'/g,"\\'")}')"><i class="fas fa-check"></i> Confirm</button>
+                <button class="btn btn-reject" onclick="window._rejectBooking('${b.id}','${b.userId}','${(b.itemName||'').replace(/'/g,"\\'")}','${(b.itemImage||'').replace(/'/g,"\\'")}')"><i class="fas fa-times"></i> Reject</button>
+            </div>` : '';
+
+        return `
+            <div class="booking-card">
+                ${imgHtml}
+                <div class="booking-card-body">
+                    <div class="booking-card-top">
+                        <div>
+                            <div class="booking-item-name">${b.itemName || 'N/A'}</div>
+                            <div class="booking-item-type">${typeLabel}</div>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="booking-user">
+                        <div class="booking-avatar">${initial}</div>
+                        <div class="booking-user-info">
+                            <div class="booking-user-name">${name} ${b.contactSurname || ''}</div>
+                            <div class="booking-user-contact">${b.contactEmail || b.userEmail || ''}</div>
+                            ${b.contactPhone ? `<div class="booking-user-contact"><i class="fas fa-phone" style="margin-right:4px"></i>${b.contactPhone}</div>` : ''}
+                        </div>
+                    </div>
+                    ${plateHtml}
+                    <div class="booking-details-grid">
+                        <div class="detail-item"><div class="detail-label">Start</div><div class="detail-value">${b.startDate || 'N/A'}</div></div>
+                        <div class="detail-item"><div class="detail-label">End</div><div class="detail-value">${b.endDate || 'N/A'}</div></div>
+                        <div class="detail-item"><div class="detail-label">Duration</div><div class="detail-value">${b.duration || 'N/A'} days</div></div>
+                        <div class="detail-item"><div class="detail-label">Price</div><div class="detail-value">${b.totalPrice || 0}${b.currency === 'USD' ? '$' : b.currency === 'EUR' ? '&euro;' : '&#8382;'}</div></div>
+                    </div>
+                    ${b.contactDescription ? `<div style="padding:8px 10px;background:var(--surface2);border-radius:8px;font-size:0.85rem;margin-bottom:12px;color:var(--text)">${b.contactDescription}</div>` : ''}
+                    ${actionsHtml}
+                </div>
+            </div>`;
+    }).join('');
+}
+
+// ===== RENDER CUSTOM TOURS =====
+const tourTypeMap = { 'cultural':'Cultural','adventure':'Adventure','gastronomic':'Gastronomic','historical':'Historical','nature':'Nature' };
+const regionMap = { 'tbilisi':'Tbilisi','afkhazeti':'Afkhazeti','achara':'Adjara','guria':'Guria','imereti':'Imereti','kakheti':'Kakheti','kvemo-kartli':'Kvemo Kartli','mtsketa-mtianeti':'Mtskheta-Mtianeti','racha-lechkhumi':'Racha-Lechkhumi','samtskhe-javakheti':'Samtskhe-Javakheti','shida-kartli':'Shida Kartli','samegrelo-svaneti':'Samegrelo-Svaneti' };
+
+function renderCustomTours() {
+    const container = document.getElementById('customToursList');
+    let filtered = allCustomTours;
+    if (currentCustomFilter) {
+        filtered = allCustomTours.filter(r => r.status === currentCustomFilter);
+    }
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-magic"></i><p>No custom tour requests</p></div>';
+        return;
+    }
+    container.innerHTML = filtered.map(r => {
+        const statusClass = r.status === 'approved' ? 'status-confirmed' : r.status === 'rejected' ? 'status-cancelled' : 'status-pending';
+        const statusText = r.status || 'pending';
+        const regionsHtml = (r.regions || []).map(rg => `<span class="region-tag">${regionMap[rg] || rg}</span>`).join('');
+        const routeHtml = r.routeDescription ? `<div class="custom-tour-route">${r.routeDescription}</div>` : '';
+        const isPending = r.status === 'pending' || !r.status;
+        const actionsHtml = isPending ? `
+            <button class="btn-sm btn-approve" onclick="window._approveCustom('${r.id}')"><i class="fas fa-check"></i> Approve</button>
+            <button class="btn-sm btn-reject-sm" onclick="window._rejectCustom('${r.id}')"><i class="fas fa-times"></i> Reject</button>` : '';
+
+        return `
+            <div class="custom-tour-card">
+                <div class="custom-tour-header">
+                    <span class="custom-tour-label"><i class="fas fa-magic"></i> Custom Tour</span>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                </div>
+                <div class="booking-user">
+                    <div class="booking-avatar">${(r.contactName||'U').charAt(0).toUpperCase()}</div>
+                    <div class="booking-user-info">
+                        <div class="booking-user-name">${r.contactName || 'N/A'}</div>
+                        <div class="booking-user-contact">${r.contactEmail || 'N/A'}</div>
+                        ${r.contactPhone ? `<div class="booking-user-contact">${r.contactPhone}</div>` : ''}
+                    </div>
+                </div>
+                <div class="booking-details-grid">
+                    <div class="detail-item"><div class="detail-label">Type</div><div class="detail-value">${tourTypeMap[r.tourType] || r.tourType || 'N/A'}</div></div>
+                    <div class="detail-item"><div class="detail-label">Duration</div><div class="detail-value">${r.duration || 'N/A'} days</div></div>
+                    <div class="detail-item"><div class="detail-label">Group</div><div class="detail-value">${r.groupSize || 1} people</div></div>
+                    <div class="detail-item"><div class="detail-label">Budget</div><div class="detail-value">${r.suggestedPrice || 0}${r.suggestedCurrency === 'USD' ? '$' : r.suggestedCurrency === 'EUR' ? '&euro;' : '&#8382;'}</div></div>
+                </div>
+                ${regionsHtml ? `<div class="custom-tour-regions">${regionsHtml}</div>` : ''}
+                ${routeHtml}
+                <div class="custom-tour-actions">
+                    ${actionsHtml}
+                    ${r.contactPhone ? `<a href="tel:${r.contactPhone}" class="btn-sm btn-call"><i class="fas fa-phone"></i> Call</a>` : ''}
+                    <button class="btn-sm btn-delete-sm" onclick="window._deleteCustom('${r.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+// ===== BOOKING ACTIONS =====
+window._confirmBooking = async (id, userId, itemName, itemImage) => {
+    if (!confirm('Confirm this booking?')) return;
+    try {
+        await updateDoc(doc(db, "bookings", id), { status: 'დადასტურებული', updatedAt: serverTimestamp(), updatedBy: currentUser.uid });
+        await addDoc(collection(db, "notifications"), {
+            userId, bookingId: id, read: false, createdAt: serverTimestamp(),
+            title: 'Booking Confirmed!', message: `Your booking "${itemName}" has been confirmed.`, type: 'booking_approved'
+        });
+        showToast('Booking confirmed', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+};
+window._rejectBooking = async (id, userId, itemName, itemImage) => {
+    if (!confirm('Reject this booking?')) return;
+    try {
+        await updateDoc(doc(db, "bookings", id), { status: 'გაუქმებული', updatedAt: serverTimestamp(), updatedBy: currentUser.uid });
+        await addDoc(collection(db, "notifications"), {
+            userId, bookingId: id, read: false, createdAt: serverTimestamp(),
+            title: 'Booking Rejected', message: `Your booking "${itemName}" has been rejected.`, type: 'booking_rejected'
+        });
+        showToast('Booking rejected', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+};
+window._approveCustom = async (id) => {
+    if (!confirm('Approve this request?')) return;
+    try {
+        await updateDoc(doc(db, "bookings", id), { status: 'approved', updatedAt: serverTimestamp() });
+        showToast('Approved', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+};
+window._rejectCustom = async (id) => {
+    if (!confirm('Reject this request?')) return;
+    try {
+        await updateDoc(doc(db, "bookings", id), { status: 'rejected', updatedAt: serverTimestamp() });
+        showToast('Rejected', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+};
+window._deleteCustom = async (id) => {
+    if (!confirm('Delete this request?')) return;
+    try {
+        await deleteDoc(doc(db, "bookings", id));
+        showToast('Deleted', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+};
+
+// ===== LOAD CHATS (REAL-TIME) =====
+function loadChats() {
+    if (chatsUnsubscribe) chatsUnsubscribe();
+    const q = query(collection(db, "chats"), orderBy("lastMessageAt", "desc"));
+    chatsUnsubscribe = onSnapshot(q, snapshot => {
+        allChatsData = [];
+        snapshot.forEach(docSnap => {
+            allChatsData.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        renderChats();
+    });
+}
+
+function renderChats() {
+    const container = document.getElementById('chatsList');
+    let filtered = currentChatFilter === 'all' ? allChatsData : allChatsData.filter(c => c.status === currentChatFilter);
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-comments"></i><p>No chats</p></div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map(c => {
+        const name = c.userName || 'Unknown';
+        const initial = name.charAt(0).toUpperCase();
+        const dotClass = c.status === 'active' ? 'dot-active' : c.status === 'assigned' ? 'dot-assigned' : 'dot-closed';
+        const time = c.lastMessageAt ? formatTime(c.lastMessageAt) : '';
+        return `
+            <div class="chat-list-item" onclick="window._openChat('${c.id}')">
+                <div class="chat-avatar">${initial}</div>
+                <div class="chat-list-info">
+                    <div class="chat-list-top">
+                        <span class="chat-list-name"><span class="chat-status-dot ${dotClass}"></span>${name}</span>
+                        <span class="chat-list-time">${time}</span>
+                    </div>
+                    <div class="chat-list-preview">${c.lastMessage || 'No messages'}</div>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+// ===== OPEN CHAT =====
+window._openChat = (chatId) => {
+    currentChatId = chatId;
+    const chat = allChatsData.find(c => c.id === chatId);
+    if (!chat) return;
+
+    document.getElementById('chatListView').style.display = 'none';
+    document.getElementById('chatConversation').classList.add('active');
+    document.getElementById('bottomNav').style.display = 'none';
+
+    document.getElementById('chatViewName').textContent = chat.userName || 'Unknown';
+    const statusEl = document.getElementById('chatViewStatus');
+    statusEl.textContent = chat.status || 'active';
+    statusEl.style.color = chat.status === 'active' ? 'var(--success)' : chat.status === 'assigned' ? 'var(--warning)' : 'var(--text-dim)';
+
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const canType = chat.status === 'assigned';
+    chatInput.disabled = !canType;
+    sendBtn.disabled = !canType;
+
+    document.getElementById('takeChatBtn').style.display = chat.status === 'active' ? 'inline-flex' : 'none';
+    document.getElementById('closeChatBtn').style.display = chat.status !== 'closed' ? 'inline-flex' : 'none';
+
+    loadMessages(chatId);
+};
+
+// ===== LOAD MESSAGES =====
+function loadMessages(chatId) {
+    if (messagesUnsubscribe) messagesUnsubscribe();
+    const messagesRef = collection(db, "chats", chatId, "messages");
+    const q = query(messagesRef, orderBy("timestamp", "asc"));
+    messagesUnsubscribe = onSnapshot(q, snapshot => {
+        const container = document.getElementById('messagesContainer');
+        container.innerHTML = '';
+        snapshot.forEach(docSnap => {
+            const msg = docSnap.data();
+            const div = document.createElement('div');
+            div.className = `message ${msg.senderType || 'user'}`;
+            const time = msg.timestamp ? formatTime(msg.timestamp) : '';
+            if (msg.senderType === 'system') {
+                div.innerHTML = `<div>${msg.text}</div>`;
+            } else {
+                div.innerHTML = `
+                    <div class="msg-header">
+                        <span class="msg-sender">${msg.senderName || 'Unknown'}</span>
+                        <span class="msg-time">${time}</span>
+                    </div>
+                    <div>${msg.text}</div>`;
+            }
+            container.appendChild(div);
+        });
+        container.scrollTop = container.scrollHeight;
+    });
+}
+
+// ===== CHAT BACK =====
+document.getElementById('chatBackBtn').addEventListener('click', () => {
+    if (messagesUnsubscribe) messagesUnsubscribe();
+    currentChatId = null;
+    document.getElementById('chatListView').style.display = 'block';
+    document.getElementById('chatConversation').classList.remove('active');
+    document.getElementById('bottomNav').style.display = 'flex';
+});
+
+// ===== TAKE CHAT =====
+document.getElementById('takeChatBtn').addEventListener('click', async () => {
+    if (!currentChatId) return;
+    try {
+        await updateDoc(doc(db, "chats", currentChatId), {
+            status: 'assigned', adminId, adminName, assignedAt: serverTimestamp()
+        });
+        await addDoc(collection(db, "chats", currentChatId, "messages"), {
+            text: `${adminName} joined the conversation.`, senderType: 'system',
+            senderId: adminId, senderName: 'System', timestamp: serverTimestamp()
+        });
+        document.getElementById('chatInput').disabled = false;
+        document.getElementById('sendBtn').disabled = false;
+        document.getElementById('takeChatBtn').style.display = 'none';
+        document.getElementById('chatViewStatus').textContent = 'assigned';
+        document.getElementById('chatViewStatus').style.color = 'var(--warning)';
+        showToast('Chat taken', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+});
+
+// ===== CLOSE CHAT =====
+document.getElementById('closeChatBtn').addEventListener('click', async () => {
+    if (!currentChatId || !confirm('Close this chat?')) return;
+    try {
+        await updateDoc(doc(db, "chats", currentChatId), {
+            status: 'closed', closedBy: adminId, closedAt: serverTimestamp()
+        });
+        await addDoc(collection(db, "chats", currentChatId, "messages"), {
+            text: `Chat closed by ${adminName}.`, senderType: 'system',
+            senderId: adminId, senderName: 'System', timestamp: serverTimestamp()
+        });
+        document.getElementById('chatInput').disabled = true;
+        document.getElementById('sendBtn').disabled = true;
+        document.getElementById('closeChatBtn').style.display = 'none';
+        document.getElementById('chatViewStatus').textContent = 'closed';
+        document.getElementById('chatViewStatus').style.color = 'var(--text-dim)';
+        showToast('Chat closed', 'success');
+    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+});
+
+// ===== SEND MESSAGE =====
+document.getElementById('sendBtn').addEventListener('click', sendMessage);
+document.getElementById('chatInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+});
+document.getElementById('chatInput').addEventListener('input', () => {
+    document.getElementById('sendBtn').disabled = document.getElementById('chatInput').value.trim().length === 0;
+});
+
+async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text || !currentChatId) return;
+    input.value = '';
+    document.getElementById('sendBtn').disabled = true;
+    try {
+        await addDoc(collection(db, "chats", currentChatId, "messages"), {
+            text, senderType: 'admin', senderId: adminId, senderName: adminName, timestamp: serverTimestamp()
+        });
+        await updateDoc(doc(db, "chats", currentChatId), {
+            lastMessage: text, lastMessageBy: 'admin', lastMessageAt: serverTimestamp()
+        });
+    } catch (e) { showToast('Send failed', 'error'); }
+    input.focus();
+}
+
+// ===== UTILITIES =====
+function formatTime(ts) {
+    let date;
+    if (ts && ts.toDate) date = ts.toDate();
+    else if (ts instanceof Date) date = ts;
+    else if (typeof ts === 'number') date = new Date(ts);
+    else if (typeof ts === 'string') date = new Date(ts);
+    else return '';
+
+    const now = new Date();
+    const diff = Math.floor((now - date) / 60000);
+    if (diff < 1) return 'now';
+    if (diff < 60) return diff + 'm';
+    if (diff < 1440) return Math.floor(diff / 60) + 'h';
+    if (diff < 10080) return Math.floor(diff / 1440) + 'd';
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function updateBadge(id, count) {
+    const el = document.getElementById(id);
+    if (count > 0) { el.textContent = count; el.classList.add('show'); }
+    else { el.classList.remove('show'); }
+}
+
+function sendLocalNotification(title, body) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, { body, icon: '/pwa/icons/icon-192.jpg', vibrate: [300, 100, 300] });
+    }
+}
+
+// ===== SERVICE WORKER + NOTIFICATIONS =====
+async function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        try {
+            await navigator.serviceWorker.register('/pwa/sw.js');
+        } catch (e) {}
+    }
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}
+</script>
+</body>
+</html>
