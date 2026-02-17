@@ -2475,7 +2475,7 @@ textarea.input {
                 'სახლი': 'hotelTypeHouse',
                 'კოტეჯი': 'hotelTypeCottage',
                 'ჰოსტელი': 'hotelTypeHostel',
-                'გესტჰაუსი': 'hotelTypeGuesthouse',
+                '��ესტჰაუსი': 'hotelTypeGuesthouse',
                 'ვილა': 'hotelTypeVilla'
             },
             region: {
@@ -3352,7 +3352,7 @@ function createItemCard(item) {
     const typeBadge = item.type ? `<div class="hotel-type-badge"><i class="fas fa-hotel"></i> ${translateValue(item.type, 'hotelType')}</div>` : '';
     
     const ls = window.languageSwitcher;
-    const perNight = ls ? ls.translate('hotelPerNight') : '/ღამე';
+    const perNight = ls ? ls.translate('hotelPerNight') : '/ღამ��';
     const bedsLabel = ls ? ls.translate('hotelBeds') || 'საწოლი' : 'საწოლი';
     const largeBedLabel = ls ? ls.translate('hotelLargeBed') || 'დიდი' : 'დიდი';
     const smallBedLabel = ls ? ls.translate('hotelSmallBed') || 'პატარა' : 'პატარა';
@@ -3713,7 +3713,7 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
     const start = parseDate(startDate);
     const end = parseDate(endDate);
     if (end < start) {
-        showToast(window.languageSwitcher?.translate('bookingToastEndDateAfter') || "გასვლის თარიღი უნდა იყოს შესვლის თარიღის შემდეგ", "warning");
+        showToast(window.languageSwitcher?.translate('bookingToastEndDateAfter') || "���ასვლის თარიღი უნდა იყოს შესვლის თარიღის შემდეგ", "warning");
         return;
     }
 
