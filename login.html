@@ -940,7 +940,7 @@
                     <div class="error-message" id="resetEmailError"></div>
                     
                     <button type="submit" id="resetPasswordBtn">
-                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პაროლის აღდგენა</span>
+                        <span id="resetPasswordBtnText" data-i18n="resetPassword">პ���როლის აღდგენა</span>
                     </button>
                 </div>
 
@@ -1398,6 +1398,7 @@
         const resetPasswordBtnText = document.getElementById("resetPasswordBtnText");
 
         let unverifiedUser = null;
+        let unverifiedUserPassword = null; // პაროლის შენახვა resend-ისთვის
         let currentLoginMethod = 'email'; // 'email' or 'phone'
 
         const errorMessages = {
@@ -2274,15 +2275,26 @@
 
         // Resend verification email
         document.getElementById("resendVerification").addEventListener("click", async () => {
-            if (unverifiedUser) {
+            if (unverifiedUser && unverifiedUser.email) {
+                const resendBtn = document.getElementById("resendVerification");
+                resendBtn.disabled = true;
+                resendBtn.textContent = '...';
+                
                 try {
-                    // ჯერ ხელახლა შევიყვანოთ მომხმარებელი რომ token განახლდეს
-                    // unverifiedUser შეიძლება stale იყოს signOut-ის შემდეგ
                     const email = unverifiedUser.email;
-                    console.log("[v0] Attempting to resend verification to:", email);
+                    console.log("[v0] Resend: re-signing in user:", email);
                     
-                    // გაგზავნა default Firebase settings-ით
-                    await sendEmailVerification(unverifiedUser);
+                    // ხელახლა sign-in გავაკეთოთ რომ ახალი, ვალიდური user reference მივიღოთ
+                    // signOut-ის შემდეგ ძველი reference-ი აღარ მუშაობს
+                    const freshCredential = await signInWithEmailAndPassword(auth, email, unverifiedUserPassword);
+                    const freshUser = freshCredential.user;
+                    
+                    console.log("[v0] Resend: re-signed in, sending verification email...");
+                    await sendEmailVerification(freshUser);
+                    
+                    // ისევ signOut გავაკეთოთ
+                    await signOut(auth);
+                    
                     const successMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('verificationEmailSent') : 
                         'დამადასტურებელი ემაილი გაიგზავნა! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა და spam ფოლდერი.';
@@ -2290,6 +2302,9 @@
                     console.log("[v0] Verification email resent successfully to:", email);
                 } catch (error) {
                     console.error("[v0] Error resending verification email:", error.code, error.message);
+                    // signOut-ის try - თუ sign-in მოხდა მაგრამ email ვერ გაიგზავნა
+                    try { await signOut(auth); } catch(e) {}
+                    
                     if (error.code === 'auth/too-many-requests') {
                         const errorMsg = window.languageSwitcher ? 
                             window.languageSwitcher.translate('authTooManyRequests') : 
@@ -2301,9 +2316,19 @@
                             'დაფიქსირდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.';
                         showMessage(errorMsg, "error");
                     }
+                } finally {
+                    resendBtn.disabled = false;
+                    const resendText = window.languageSwitcher ? 
+                        window.languageSwitcher.translate('resendVerification') : 
+                        'ხელახლა გაგზავნა';
+                    resendBtn.textContent = resendText;
                 }
             } else {
-                console.warn("[v0] No unverified user reference available for resend");
+                console.warn("[v0] No unverified user data available for resend");
+                const errorMsg = window.languageSwitcher ? 
+                    window.languageSwitcher.translate('authDefaultError') : 
+                    'გთხოვთ ხელახლა სცადოთ შესვლა და შემდეგ "ხელახლა გაგზავნა".';
+                showMessage(errorMsg, "error");
             }
         });
 
@@ -2338,12 +2363,13 @@
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     
                     if (!userCredential.user.emailVerified) {
-                        // შევინახოთ user reference resend-ისთვის ᲡᲐᲜᲐᲛ sign out გავაკეთებთ
+                        // შევინახოთ მონაცემები resend-ისთვის
                         unverifiedUser = userCredential.user;
-                        console.log("[v0] User not verified:", email, "- keeping reference for resend");
+                        unverifiedUserPassword = password;
+                        console.log("[v0] User not verified:", email);
                         
-                        // არ გავაკეთოთ signOut სანამ user reference გვჭირდება resend-ისთვის
-                        // signOut გააუქმებს user token-ს და sendEmailVerification ვერ იმუშავებს
+                        // signOut გავაკეთოთ რომ unverified user-მა ვერ შევიდეს სისტემაში
+                        await signOut(auth);
                         
                         verificationNotice.style.display = "block";
                         const verifyMsg = window.languageSwitcher ? 
@@ -2405,7 +2431,7 @@
                     
                     const userData = userDoc.data();
                     
-                    // შევამოწმოთ პაროლი
+                    // შევამოწ���ოთ პაროლი
                     if (!userData.hasPassword || !userData.passwordHash) {
                         showMessage(window.languageSwitcher ? window.languageSwitcher.translate('accountNoPassword') : 'ამ ანგარიშს არ აქვს პაროლი. გთხოვთ აღადგინოთ პაროლი.', "error");
                         resetButton(loginBtn, loginBtnText, loginText);
