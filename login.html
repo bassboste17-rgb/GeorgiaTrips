@@ -2276,19 +2276,20 @@
         document.getElementById("resendVerification").addEventListener("click", async () => {
             if (unverifiedUser) {
                 try {
-                    const actionCodeSettings = {
-                        url: window.location.origin + '/login.html',
-                        handleCodeInApp: false
-                    };
+                    // ჯერ ხელახლა შევიყვანოთ მომხმარებელი რომ token განახლდეს
+                    // unverifiedUser შეიძლება stale იყოს signOut-ის შემდეგ
+                    const email = unverifiedUser.email;
+                    console.log("[v0] Attempting to resend verification to:", email);
                     
-                    await sendEmailVerification(unverifiedUser, actionCodeSettings);
+                    // გაგზავნა default Firebase settings-ით
+                    await sendEmailVerification(unverifiedUser);
                     const successMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('verificationEmailSent') : 
                         'დამადასტურებელი ემაილი გაიგზავნა! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა და spam ფოლდერი.';
                     showMessage(successMsg, "success");
-                    console.log("Verification email sent successfully to:", unverifiedUser.email);
+                    console.log("[v0] Verification email resent successfully to:", email);
                 } catch (error) {
-                    console.error("Error sending verification email:", error);
+                    console.error("[v0] Error resending verification email:", error.code, error.message);
                     if (error.code === 'auth/too-many-requests') {
                         const errorMsg = window.languageSwitcher ? 
                             window.languageSwitcher.translate('authTooManyRequests') : 
@@ -2301,6 +2302,8 @@
                         showMessage(errorMsg, "error");
                     }
                 }
+            } else {
+                console.warn("[v0] No unverified user reference available for resend");
             }
         });
 
@@ -2335,8 +2338,12 @@
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     
                     if (!userCredential.user.emailVerified) {
+                        // შევინახოთ user reference resend-ისთვის ᲡᲐᲜᲐᲛ sign out გავაკეთებთ
                         unverifiedUser = userCredential.user;
-                        await signOut(auth);
+                        console.log("[v0] User not verified:", email, "- keeping reference for resend");
+                        
+                        // არ გავაკეთოთ signOut სანამ user reference გვჭირდება resend-ისთვის
+                        // signOut გააუქმებს user token-ს და sendEmailVerification ვერ იმუშავებს
                         
                         verificationNotice.style.display = "block";
                         const verifyMsg = window.languageSwitcher ? 
@@ -2481,21 +2488,17 @@
                     provider: 'email'
                 });
 
-                const actionCodeSettings = {
-                    url: window.location.origin + '/login.html',
-                    handleCodeInApp: false
-                };
-
                 try {
-                    await sendEmailVerification(user, actionCodeSettings);
-                    console.log("Verification email sent successfully to:", userEmail);
+                    // გაგზავნა default Firebase settings-ით (არ საჭიროებს authorized domain-ს)
+                    await sendEmailVerification(user);
+                    console.log("[v0] Verification email sent successfully to:", userEmail);
                     
                     const successMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('registrationSuccess') : 
                         'რეგისტრაცია წარმატებულია! გთხოვთ შეამოწმოთ თქვენი ელ. ფოსტა დასადასტურებლად. შეამოწმეთ spam ფოლდერიც!';
                     showMessage(successMsg, "success");
                 } catch (emailError) {
-                    console.error("Error sending verification email:", emailError);
+                    console.error("[v0] Error sending verification email:", emailError.code, emailError.message);
                     const warningMsg = window.languageSwitcher ? 
                         window.languageSwitcher.translate('registrationSuccessEmailFailed') : 
                         'რეგისტრაცია წარმატებულია, მაგრამ დამადასტურებელი ემაილის გაგზავნა ვერ მოხერხდა. გთხოვთ სცადოთ შესვლა და აირჩიოთ "ხელახლა გაგზავნა".';
@@ -2545,7 +2548,9 @@
             setButtonLoading(resetPasswordBtn, resetPasswordBtnText, resetText);
 
             try {
+                console.log("[v0] Sending password reset email to:", email);
                 await sendPasswordResetEmail(auth, email);
+                console.log("[v0] Password reset email sent successfully to:", email);
                 const successMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate('resetPasswordSuccess') : 
                     'პაროლის აღდგენის ბმული გამოიგზავნა თქვენს ელ. ფოსტაზე';
@@ -2559,7 +2564,7 @@
                 
                 resetButton(resetPasswordBtn, resetPasswordBtnText, resetText);
             } catch (error) {
-                console.error("Password reset error:", error);
+                console.error("[v0] Password reset error:", error.code, error.message);
                 const errorMsg = window.languageSwitcher ? 
                     window.languageSwitcher.translate(errorMessages[error.code] || errorMessages['default']) : 
                     error.message;

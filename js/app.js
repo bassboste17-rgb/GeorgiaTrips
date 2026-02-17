@@ -2,7 +2,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBBybpmsrByBZtwThfCd3u0pfHFjEL2ap0",
   authDomain: "rentime-e201e.firebaseapp.com",
   projectId: "rentime-e201e",
-  storageBucket: "rentime-e201e.appspot.com",
+  storageBucket: "rentime-e201e.firebasestorage.app",
   messagingSenderId: "420054668757",
   appId: "1:420054668757:web:0accf1d8b9d621fd94195c",
   measurementId: "G-DGWLG9P1ZB"
