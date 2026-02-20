@@ -501,8 +501,8 @@ let newChatCount = 0;
 let lastKnownBookingIds = new Set();
 let lastKnownChatMessageCounts = {};
 
-const adminId = 'admin_pwa';
-const adminName = 'Admin';
+let adminId = '';
+let adminName = 'Admin';
 
 // ===== TOAST =====
 function showToast(msg, type = 'info') {
@@ -540,7 +540,14 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
     errorEl.textContent = '';
     if (!email || !pass) { errorEl.textContent = 'Fill all fields'; return; }
     try {
-        await signInWithEmailAndPassword(auth, email, pass);
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
+        // Check admin role from Firestore users collection
+        const userDoc = await getDoc(doc(db, "users", cred.user.uid));
+        if (!userDoc.exists() || userDoc.data().isAdmin !== true) {
+            await signOut(auth);
+            errorEl.textContent = 'Access denied. Admin only.';
+            return;
+        }
     } catch (e) {
         errorEl.textContent = 'Invalid credentials';
     }
@@ -553,14 +560,30 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     }
 });
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
-        currentUser = user;
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('mainApp').classList.add('active');
-        initApp();
+        try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (!userDoc.exists() || userDoc.data().isAdmin !== true) {
+                await signOut(auth);
+                document.getElementById('loginError').textContent = 'Access denied. Admin only.';
+                return;
+            }
+            const userData = userDoc.data();
+            currentUser = user;
+            adminId = user.uid;
+            adminName = userData.displayName || userData.name || user.displayName || 'Admin';
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainApp').classList.add('active');
+            initApp();
+        } catch (e) {
+            await signOut(auth);
+            document.getElementById('loginError').textContent = 'Error checking permissions.';
+        }
     } else {
         currentUser = null;
+        adminId = '';
+        adminName = 'Admin';
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('mainApp').classList.remove('active');
         cleanup();
@@ -691,7 +714,7 @@ function renderBookings() {
 
     if (currentBookingFilter) {
         const statusMap = { 'pending': 'pending', 'confirmed': 'confirmed', 'cancelled': 'cancelled' };
-        const georgianMap = { 'pending': 'მოლოდინში', 'confirmed': 'დადასტურებული', 'cancelled': 'გაუქმებული' };
+        const georgianMap = { 'pending': 'მოლოდინში', 'confirmed': 'დადასტუ��ებული', 'cancelled': 'გაუქმებული' };
         filtered = allBookings.filter(b => b.status === georgianMap[currentBookingFilter] || b.status === currentBookingFilter);
     }
 
