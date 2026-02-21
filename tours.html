@@ -344,9 +344,9 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(252, 175, 21, 0.12);
-    border-color: rgba(252, 175, 21, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 40px rgba(252, 175, 21, 0.08);
+    border-color: rgba(252, 175, 21, 0.25);
 }
 
 /* Card Image Wrapper */
@@ -364,13 +364,13 @@ body {
 }
 
 .card:hover .card-image-wrap img {
-    transform: scale(1.08);
+    transform: scale(1.1);
 }
 
 .card-image-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
     pointer-events: none;
 }
 
@@ -465,6 +465,42 @@ body {
     overflow: hidden;
 }
 
+/* Card Rating Stars */
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.card-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.card-stars i {
+    font-size: 0.8rem;
+}
+
+.card-stars i.filled {
+    color: var(--gold);
+}
+
+.card-stars i.empty {
+    color: var(--dark-border);
+}
+
+.card-rating-number {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.card-review-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
 /* Card Details Chips */
 .card-details {
     display: flex;
@@ -506,6 +542,31 @@ body {
     padding-top: 1rem;
 }
 
+/* Price Group */
+.price-group {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.price-old {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.price-current {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+}
+
+.price-per {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
 .card-stats {
     display: flex;
     gap: 0.5rem;
@@ -520,7 +581,7 @@ body {
 }
 
 .card:nth-child(1) { animation-delay: 0s; }
-.card:nth-child(2) { animation-delay: 0.06s; }
+.card:nth-child(2) { animation-delay: 0.08s; }
 .card:nth-child(3) { animation-delay: 0.12s; }
 .card:nth-child(4) { animation-delay: 0.18s; }
 .card:nth-child(5) { animation-delay: 0.24s; }
@@ -530,49 +591,38 @@ body {
     position: absolute;
     top: 12px;
     right: 12px;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(255,255,255,0.15);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: none;
     color: #fff;
     cursor: pointer;
-    transition: var(--transition);
+    transition: transform 0.2s, background-color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.85rem;
-    font-weight: 600;
     z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .popularity-btn:hover {
-    background: rgba(0, 0, 0, 0.85);
-    border-color: var(--gold);
+    background: rgba(255,255,255,0.25);
     transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(252, 175, 21, 0.3);
 }
 
 .popularity-btn.liked {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    border-color: var(--gold);
-}
-
-.popularity-btn.liked:hover {
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
-    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
-}
-
-.popularity-btn i {
-    font-size: 1.05rem;
-    transition: var(--transition);
+    background: rgba(255,255,255,0.2);
 }
 
 .popularity-btn.liked i {
-    color: #fff;
+    color: #ef4444;
     animation: heartBeat 0.4s ease;
+}
+
+.popularity-btn:not(.liked) i {
+    color: rgba(255,255,255,0.8);
 }
 
 @keyframes heartBeat {
@@ -3017,6 +3067,23 @@ textarea.input {
         height: 180px;
     }
     
+    .card-rating {
+        gap: 6px;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-stars i {
+        font-size: 0.7rem;
+    }
+
+    .card-rating-number {
+        font-size: 0.8rem;
+    }
+
+    .card-review-count {
+        font-size: 0.7rem;
+    }
+    
     .card-details {
         gap: 0.4rem;
         margin-bottom: 0.75rem;
@@ -3029,6 +3096,14 @@ textarea.input {
     
     .card-footer {
         padding-top: 0.75rem;
+    }
+    
+    .price-current {
+        font-size: 1.15rem;
+    }
+
+    .price-old {
+        font-size: 0.8rem;
     }
     
     .price {
@@ -5346,6 +5421,16 @@ function createItemCard(item) {
   const bookBtn = ls ? ls.translate('bookingCardBook') : 'Book';
 
   const typeDisplay = translateValue(item.type, 'type');
+
+  // Generate star rating
+  const rating = item.rating || 4.8;
+  const reviewCount = item.reviewCount || item.likes || 0;
+  const starsHtml = Array.from({ length: 5 }, (_, i) => 
+    `<i class="fas fa-star ${i < Math.floor(rating) ? 'filled' : 'empty'}"></i>`
+  ).join('');
+
+  const currencySymbol = item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾';
+  const perPersonText = ls?.translate('toursPerPerson') || '/person';
   
   return `
     <div class="card card-clickable" data-id="${item.id}">
@@ -5368,11 +5453,20 @@ function createItemCard(item) {
         </div>
         <h3 class="card-title">${name}</h3>
         <p class="card-description">${description}</p>
+        <div class="card-rating">
+          <div class="card-stars">${starsHtml}</div>
+          <span class="card-rating-number">${rating.toFixed ? rating.toFixed(1) : rating}</span>
+          <span class="card-review-count">(${reviewCount})</span>
+        </div>
         <div class="card-details">
           <span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ${capacity}</span>
         </div>
         <div class="card-footer">
-          <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}<small style="font-size:0.6em;opacity:0.7;font-weight:400;margin-left:2px">/${ls?.translate('bookingPerPersonShort') || '1 ადამ.'}</small></div>
+          <div class="price-group">
+            ${item.originalPrice ? `<span class="price-old">${item.originalPrice}${currencySymbol}</span>` : ''}
+            <span class="price-current">${item.pricePerDay}${currencySymbol}</span>
+            <span class="price-per">${perPersonText}</span>
+          </div>
           <button class="btn btn-sm book-btn" data-id="${item.id}">${bookBtn}</button>
         </div>
       </div>
