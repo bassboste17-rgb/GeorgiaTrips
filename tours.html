@@ -38,22 +38,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Colors from booking.html */
+    /* Colors - softer dark theme, easier on eyes */
     --gold: #fcaf15;
-    --gold-light: #fcaf15;
-    --gold-dark: #fcaf15;
-    --dark-bg: #151515;
-    --dark-surface: #1a1a1a;
-    --dark-card: #222222;
-    --dark-border: #333333;
-    --text-primary: #ffffff;
-    --text-secondary: #c0c0c0;
-    --text-muted: #888888;
+    --gold-light: #fcc54d;
+    --gold-dark: #e59e0b;
+    --dark-bg: #1c1f26;
+    --dark-surface: #232730;
+    --dark-card: #2a2e38;
+    --dark-border: #3a3f4b;
+    --text-primary: #e8e6e3;
+    --text-secondary: #a9a6a1;
+    --text-muted: #7a7772;
     --primary-color: #fcaf15;
     --primary-dark: #b61a1d;
-    --secondary-color: #151515;
-    --text-color: #c0c0c0;
-    --light-bg: #222222;
+    --secondary-color: #1c1f26;
+    --text-color: #a9a6a1;
+    --light-bg: #2a2e38;
     --success-color: #28a745;
     --error-color: #dc3545;
     --warning-color: #ffc107;
@@ -175,7 +175,7 @@ body {
     letter-spacing: -0.02em;
     line-height: 1.1;
     margin-bottom: 1rem;
-    color: black;
+    color: var(--text-primary);
     animation: fadeInUp 0.6s ease-out 0.1s backwards;
 }
 
@@ -3320,7 +3320,7 @@ textarea.input {
           </div>
           <div class="region-option">
             <label>
-              <input type="checkbox" value="ქვემო ქართლი" class="region-checkbox" data-region>
+              <input type="checkbox" value="ქვემო ქა��თლი" class="region-checkbox" data-region>
               <span data-i18n="regionKvemoKartli">Kvemo Kartli</span>
             </label>
           </div>
@@ -4534,7 +4534,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ითხოვს საკუთარ �����რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ითხოვს საკუთარ �������რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
