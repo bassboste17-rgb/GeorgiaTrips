@@ -97,6 +97,41 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+    position: relative;
+}
+
+/* Ambient background - warm, easy on eyes */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        /* Soft warm radial glow top-left */
+        radial-gradient(ellipse 80% 60% at 10% 10%, rgba(252, 175, 21, 0.06) 0%, transparent 60%),
+        /* Subtle cool accent bottom-right */
+        radial-gradient(ellipse 70% 50% at 90% 85%, rgba(56, 114, 168, 0.05) 0%, transparent 55%),
+        /* Very faint center warmth */
+        radial-gradient(ellipse 60% 60% at 50% 50%, rgba(252, 175, 21, 0.025) 0%, transparent 70%);
+}
+
+/* Subtle dot grid pattern for texture */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
 }
 
 .container {
@@ -2230,7 +2265,7 @@ textarea.input {
             'კახეთი': 'regionKakheti',
             'ქვემო ქართლი': 'regionKvemoKartli',
             'მცხეთა-მთიანეთი': 'regionMtskhetaMtianeti',
-            'რაჭა-ლეჩხუმი': 'regionRachaLechkhumi',
+            'რა���ა-ლეჩხუმი': 'regionRachaLechkhumi',
             'სამცხე-ჯავახეთი': 'regionSamtskheJavakheti',
             'შიდა ქართლი': 'regionShidaKartli',
             'სამეგრელო-ზემო სვანეთი': 'regionSamegrelo',
@@ -3549,7 +3584,7 @@ const bookingData = {
         }
 
         const userNotificationTitle = window.languageSwitcher?.translate("bookingNotificationRequestSent") || "📋 დაჯავშნის მოთხოვნა გაგზავნილია";
-        let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || "თქვენი დაჯავშნის მოთხოვნა \"{itemName}\"-ზე ({startDate} - {endDate}) გაგზავნილია ადმინისტრატორთან. ელოდება დადასტურებას.";
+        let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || "თქვენი დაჯავშნის მოთხოვნა \"{itemName}\"-ზე ({startDate} - {endDate}) გაგზავნილია ად��ინისტრატორთან. ელოდება დადასტურებას.";
         
         userNotificationMsg = userNotificationMsg.replace("{itemName}", selectedItem.name).replace("{startDate}", startDate).replace("{endDate}", endDate);
         
