@@ -2368,13 +2368,7 @@ textarea.input {
     accent-color: var(--gold);
 }
 
-/* Custom Tour Card Styles */
-.custom-tour-card {
-    background: linear-gradient(135deg, rgba(252, 175, 21, 0.15) 0%, var(--dark-card) 100%);
-    border: 2px dashed var(--gold);
-    position: relative;
-    overflow: hidden;
-}
+
 
 .custom-tour-card::before {
     content: '';
@@ -3332,14 +3326,17 @@ textarea.input {
             </div>
             <h1 data-i18n="heroTitleFullTours">Full Tour Packages</h1>
             <p data-i18n="heroSubtitleFullTours">Comprehensive multi-day tours across Georgia. Complete packages with transport, guides, and accommodation.</p>
-      <div class="hero-actions">
-        <a href="cars.html" class="btn btn-secondary">
-          <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">Cars</span>
-        </a>
-        <a href="booking.html" class="btn btn-secondary">
-          <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">Back</span>
-        </a>
-      </div>
+<div class="hero-actions">
+    <a href="cars.html" class="btn btn-secondary">
+    <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">Cars</span>
+    </a>
+    <a href="hotel.html" class="btn btn-secondary">
+    <i class="fas fa-hotel"></i> <span data-i18n="bookingTabHotels">Hotels</span>
+    </a>
+    <a href="booking.html" class="btn btn-secondary">
+    <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">Back</span>
+    </a>
+    </div>
     </section>
 
     <div class="fulltours-content-wrapper">
@@ -5069,21 +5066,16 @@ function displayItems(itemsToDisplay) {
 
   const items = itemsToDisplay || allTours
   currentDisplayedItems = items;
-
-  // Create custom tour card HTML
-  const ls = window.languageSwitcher;
-  const customTourCardHTML = createCustomTourCard();
-
+  
   if (items.length === 0) {
-    const notFoundText = window.languageSwitcher?.translate("bookingNotFound") || "No data found";
-    container.innerHTML = customTourCardHTML + `<div class="empty-state">${notFoundText}</div>`
-    return
+  const notFoundText = window.languageSwitcher?.translate("bookingNotFound") || "No data found";
+  container.innerHTML = `<div class="empty-state">${notFoundText}</div>`
+  return
   }
-
+  
   const fragment = document.createDocumentFragment();
   const tempDiv = document.createElement('div');
-  // Add custom tour card first, then regular items
-  tempDiv.innerHTML = customTourCardHTML + items.map((item) => createItemCard(item)).join("");
+  tempDiv.innerHTML = items.map((item) => createItemCard(item)).join("");
   
   while (tempDiv.firstChild) {
     fragment.appendChild(tempDiv.firstChild);
@@ -5093,25 +5085,7 @@ function displayItems(itemsToDisplay) {
   container.appendChild(fragment);
 }
 
-function createCustomTourCard() {
-  const ls = window.languageSwitcher;
-  const title = ls?.translate('customTourCardTitle') || 'შექმენი მოგზაურობა შენ თვითონ';
-  const subtitle = ls?.translate('customTourCardSubtitle') || 'დაგეგმე შენი იდეალური ტური';
-  const btnText = ls?.translate('customTourCardBtn') || 'დაიწყე დაგეგმვა';
 
-  return `
-    <div class="card custom-tour-card" onclick="openCustomTourModal()" style="cursor: pointer;">
-      <div class="custom-tour-content">
-        <i class="fas fa-magic custom-tour-icon"></i>
-        <h3>${title}</h3>
-        <p>${subtitle}</p>
-        <button class="btn" style="margin-top: 1rem;">
-          <i class="fas fa-plus"></i> ${btnText}
-        </button>
-      </div>
-    </div>
-  `;
-}
 
 function setupItemsContainerEvents() {
   const container = document.getElementById("itemsContainer");

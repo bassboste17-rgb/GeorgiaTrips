@@ -160,6 +160,11 @@ body {
     z-index: 0;
 }
 
+.hero > *:not(.hero-overlay) {
+    position: relative;
+    z-index: 1;
+}
+
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -3474,14 +3479,18 @@ textarea.input {
     <section class="hero">
       <div class="hero-overlay"></div>
       <div style="position: relative; max-width: 800px; margin: 0 auto; z-index: 1;">
-        <div class="hero-badge">
-          <span data-i18n="heroBadgeTours">Discover Georgia</span>
-        </div>
+<div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    <span data-i18n="heroBadgeTours">Discover Georgia</span>
+    </div>
         <h1 data-i18n="heroTitleTours">Explore Amazing Tours</h1>
         <p data-i18n="heroSubtitleTours">Discover the beauty of Georgia with our curated tour experiences. From mountains to wine regions.</p>
         <div class="hero-actions">
-          <a href="cars.html" class="btn">
+          <a href="cars.html" class="btn btn-secondary">
             <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">Cars</span>
+          </a>
+          <a href="hotel.html" class="btn btn-secondary">
+            <i class="fas fa-hotel"></i> <span data-i18n="bookingTabHotels">Hotels</span>
           </a>
           <a href="booking.html" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">Back</span>

@@ -160,6 +160,11 @@ body {
     z-index: 0;
 }
 
+.hero > *:not(.hero-overlay) {
+    position: relative;
+    z-index: 1;
+}
+
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -2430,21 +2435,25 @@ textarea.input {
         <section class="hero">
             <div class="hero-overlay"></div>
             <div style="position: relative; max-width: 800px; margin: 0 auto; z-index: 1;">
-                <div class="hero-badge">
-                    <span data-i18n="carsHeroBadge">ხელმისაწვდომია 24/7</span>
-                </div>
+<div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    <span data-i18n="carsHeroBadge">ხელმისაწვდომია 24/7</span>
+    </div>
                 
                 <h1 data-i18n="carsHeroTitle">მანქანების დაჯავშნა</h1>
                 <p data-i18n="carsHeroSubtitle">აირჩიეთ საუკეთესო მანქანა თქვენი მოგზაურობისთვის საქართველოში</p>
                 
-                <div class="hero-actions">
-                    <a href="tours.html" class="btn">
-                        <i class="fas fa-map-marked-alt"></i> <span data-i18n="bookingTabTours">ტურები</span>
-                    </a>
-                    <a href="booking.html" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">უკან</span>
-                    </a>
-                </div>
+        <div class="hero-actions">
+          <a href="tours.html" class="btn btn-secondary">
+            <i class="fas fa-map-marked-alt"></i> <span data-i18n="bookingTabTours">ტურები</span>
+          </a>
+          <a href="hotel.html" class="btn btn-secondary">
+            <i class="fas fa-hotel"></i> <span data-i18n="bookingTabHotels">სასტუმროები</span>
+          </a>
+          <a href="booking.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">უკან</span>
+          </a>
+        </div>
             </div>
         </section>
 
@@ -3974,7 +3983,7 @@ function updateBookingPrice() {
     }
 
     if (end < start) {
-        const warningText = window.languageSwitcher?.translate('bookingToastEndDateAfter') || 'დასრულების თარიღი უნდა იყოს დაწყების თარიღის შემდეგ';
+        const warningText = window.languageSwitcher?.translate('bookingToastEndDateAfter') || 'დასრულების თარიღი უნდა იყოს დაწყების თარ��ღის შემდეგ';
         priceInfo.style.display = "block";
         priceInfo.innerHTML = `<p class="warning-text"><i class="fas fa-exclamation-triangle"></i>${warningText}</p>`;
         priceInfo.style.background = "transparent";
