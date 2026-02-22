@@ -33,6 +33,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="addhome/logo.png">
     <link rel="stylesheet" href="footer.css">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
     <style>
 /* Google Fonts - Inter for readability */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -42,34 +45,38 @@
     --gold: #fcaf15;
     --gold-light: #fcaf15;
     --gold-dark: #fcaf15;
-    --dark-bg: #151515;
-    --dark-surface: #1a1a1a;
-    --dark-card: #222222;
-    --dark-border: #333333;
-    --text-primary: #ffffff;
-    --text-secondary: #c0c0c0;
-    --text-muted: #888888;
+    --dark-bg: #faf8f5;
+    --dark-surface: #f5f0eb;
+    --dark-card: #ffffff;
+    --dark-border: #e7e5e4;
+    --text-primary: #1c1917;
+    --text-secondary: #44403c;
+    --text-muted: #979797;
     --primary-color: #fcaf15;
     --primary-dark: #b61a1d;
-    --secondary-color: #151515;
-    --text-color: #c0c0c0;
-    --light-bg: #222222;
+    --secondary-color: #faf8f5;
+    --text-color: #44403c;
+    --light-bg: #f5f0eb;
     --success-color: #28a745;
-    --error-color: #dc3545;
+    --error-color: #ef4444;
     --warning-color: #ffc107;
     --info-color: #17a2b8;
-    --border-radius: 16px;
-    --radius: 16px;
-    --radius-sm: 12px;
+    --border-radius: 12px;
+    --radius: 12px;
+    --radius-sm: 10px;
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Font - Inter same as booking.html */
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Font - DM Sans + DM Serif Display */
+    --font-main: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'DM Serif Display', 'Inter', serif;
     
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+    /* Extra tourtest tokens */
+    --accent: #d97706;
+    --muted: #a8a29e;
 }
 
 * {
@@ -87,8 +94,8 @@ html {
 
 body {
     font-family: var(--font-main);
-    background: var(--dark-bg);
-    color: var(--text-primary);
+    background: black;
+    color: black;
     line-height: 1.6;
     min-height: 100vh;
     min-height: 100dvh;
@@ -100,46 +107,73 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0;
     position: relative;
     z-index: 1;
+}
+
+.tours-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 24px;
 }
 
 /* Hero Section */
 .hero {
     text-align: center;
-    padding: 4rem 0 3rem;
+    padding: 80px 24px;
     position: relative;
+    overflow: hidden;
+    background: url('https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1600&q=80') center center / cover no-repeat;
+}
+
+.hero > .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
 }
 
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 50px;
-    background: linear-gradient(to bottom, transparent, var(--gold));
+    top: -80px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    border: 40px solid rgba(255,255,255,0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    width: 240px;
+    height: 240px;
+    border: 30px solid rgba(255,255,255,0.03);
+    border-radius: 50%;
+    z-index: 0;
 }
 
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(252, 175, 21, 0.1);
-    border: 1px solid rgba(252, 175, 21, 0.3);
+    background: rgba(255,255,255,0.15);
+    border: none;
     border-radius: 100px;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.75rem;
+    padding: 6px 18px;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    margin-top: 1.5rem;
+    letter-spacing: 0.5px;
+    color: #faf8f5;
+    margin-bottom: 16px;
+    margin-top: 50px;
     animation: fadeInUp 0.6s ease-out;
 }
 
@@ -170,39 +204,67 @@ body {
 
 .hero h1 {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 600;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 400;
     letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-    color: black;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: #faf8f5;
     animation: fadeInUp 0.6s ease-out 0.1s backwards;
+    text-wrap: balance;
 }
 
 .hero p {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    font-weight: 300;
+    font-size: 18px;
+    color: rgba(250,248,245,0.8);
+    max-width: 640px;
+    margin: 0 auto 32px;
+    font-weight: 400;
+    line-height: 1.6;
     animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
 
 .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
     animation: fadeInUp 0.6s ease-out 0.3s backwards;
 }
 
+.hero-actions .btn {
+    background-color: #ffffff;
+    color: var(--gold);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    border: none;
+}
+
+.hero-actions .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.hero-actions .btn-secondary {
+    background-color: transparent;
+    color: #faf8f5;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: none;
+}
+
+.hero-actions .btn-secondary:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.5);
+    box-shadow: none;
+    transform: none;
+}
+
 /* Filters */
 .filters {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    gap: 8px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
-    padding: 1.5rem;
+    padding: 1.25rem;
     background: var(--dark-card);
     border-radius: var(--radius);
     border: 1px solid var(--dark-border);
@@ -230,7 +292,7 @@ body {
 
 .input,
 .select {
-    background: var(--dark-surface);
+    background: var(--dark-card);
     border: 1px solid var(--dark-border);
     border-radius: var(--radius-sm);
     padding: 0.875rem 1.25rem;
@@ -248,7 +310,7 @@ body {
 .select:focus {
     outline: none;
     border-color: var(--gold);
-    background: var(--dark-surface);
+    background: var(--dark-card);
     box-shadow: 0 0 0 3px rgba(252, 175, 21, 0.15);
 }
 
@@ -257,7 +319,7 @@ body {
 }
 
 .select option {
-    background: var(--dark-bg);
+    background: var(--dark-card);
     color: var(--text-primary);
     padding: 0.5rem;
 }
@@ -265,9 +327,16 @@ body {
 /* Items Grid */
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
+    gap: 24px;
+    grid-template-columns: 1fr;
     animation: fadeInUp 0.6s ease-out 0.5s backwards;
+}
+
+@media (min-width: 640px) {
+    .items-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .items-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* Card Styles */
@@ -276,67 +345,112 @@ body {
     border: 1px solid var(--dark-border);
     border-radius: var(--radius);
     overflow: hidden;
-    transition: var(--transition);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(252, 175, 21, 0.15);
-    border-color: rgba(252, 175, 21, 0.3);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--dark-border);
+}
+
+.card-image-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
 }
 
 .card-image {
     width: 100%;
     height: 220px;
     object-fit: cover;
-    transition: var(--transition);
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: blur(1.5px);
 }
 
 .card:hover .card-image {
-    transform: scale(1.05);
+    transform: scale(1.1);
+    filter: blur(0px);
+}
+
+.card-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,25,23,0.5), transparent);
+    pointer-events: none;
 }
 
 .card-content {
-    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
 }
 
 .card-content h3 {
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: -0.3px;
     font-family: var(--font-heading);
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
 }
 
 .card-description {
     color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    font-size: 14px;
+    margin-bottom: 16px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    line-height: 1.6;
+}
+
+.card-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.card-location svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--gold);
+    fill: none;
+}
+
+.card-location span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .card-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.625rem;
-    margin-bottom: 1.25rem;
+    gap: 0.5rem;
+    margin-bottom: 16px;
     font-size: 0.875rem;
 }
 
 .card-details span {
     background: var(--dark-surface);
-    padding: 0.375rem 0.75rem;
+    padding: 4px 10px;
     border-radius: 8px;
     border: 1px solid var(--dark-border);
     transition: var(--transition);
     color: var(--text-secondary);
+    font-size: 12px;
 }
 
 .card-details span:hover {
@@ -345,10 +459,11 @@ body {
 }
 
 .card-footer {
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 16px;
     border-top: 1px solid var(--dark-border);
 }
 
@@ -360,52 +475,89 @@ body {
     color: var(--text-secondary);
 }
 
+/* Popularity / Like button - new style */
 .popularity-btn {
     position: absolute;
     top: 12px;
     right: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff;
-    padding: 0.625rem 0.875rem;
-    border-radius: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.8);
+    backdrop-filter: blur(8px);
+    border: none;
     cursor: pointer;
-    transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
     z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
+    padding: 0;
+    gap: 0;
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: var(--text-muted);
+}
+
+.popularity-btn span {
+    display: none;
 }
 
 .popularity-btn:hover {
-    background: rgba(0, 0, 0, 0.95);
-    border-color: var(--gold);
-    transform: scale(1.08);
-    box-shadow: 0 6px 16px rgba(252, 175, 21, 0.3);
+    background-color: #ffffff;
+    transform: scale(1.1);
+    border-color: transparent;
+    box-shadow: none;
 }
 
 .popularity-btn.liked {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    border-color: var(--gold);
+    background-color: rgba(255,255,255,0.9);
+    border-color: transparent;
 }
 
 .popularity-btn.liked:hover {
-    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
-    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
+    background-color: #ffffff;
+    box-shadow: none;
 }
 
 .popularity-btn i {
-    font-size: 1.05rem;
-    transition: var(--transition);
+    font-size: 16px;
+    transition: all 0.2s;
 }
 
 .popularity-btn.liked i {
-    color: #fff;
-    animation: heartBeat 0.4s ease;
+    color: var(--error-color);
+}
+
+.popularity-btn:not(.liked) i {
+    color: var(--text-muted);
+}
+
+/* Duration badge on card image */
+.card-duration {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    padding: 4px 12px;
+    border-radius: 999px;
+    z-index: 5;
+}
+
+.card-duration i {
+    font-size: 12px;
+    color: var(--gold);
+}
+
+.card-duration span {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 @keyframes heartBeat {
@@ -420,58 +572,60 @@ body {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff;
-    padding: 0.625rem 0.875rem;
-    border-radius: 24px;
-    font-size: 0.9rem;
+    background-color: white;
+    color: #1c1917;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
     font-weight: 600;
     z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
 .license-plate-badge i {
-    font-size: 1.05rem;
+    font-size: 0.85rem;
 }
 
 .price {
     color: var(--gold);
-    font-size: 1.35rem;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.5px;
 }
 
+.price small {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+}
+
 /* Button styles */
 .btn {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    color: #fff;
+    background: var(--gold);
+    color: #faf8f5;
     border: none;
-    border-radius: var(--radius-sm);
-    padding: 0.875rem 1.75rem;
-    font-size: 0.95rem;
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    font-size: 14px;
     font-weight: 600;
     font-family: var(--font-main);
     cursor: pointer;
-    transition: var(--transition);
+    transition: opacity 0.2s, box-shadow 0.2s, transform 0.15s;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 12px rgba(252, 175, 21, 0.3);
+    box-shadow: none;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(252, 175, 21, 0.4);
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(252, 175, 21, 0.3);
 }
 
 .btn:active {
-    transform: translateY(0);
+    transform: scale(0.95);
 }
 
 .btn-secondary {
@@ -484,7 +638,8 @@ body {
 .btn-secondary:hover {
     background: var(--dark-surface);
     border-color: var(--gold);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
+    opacity: 1;
 }
 
 .btn-danger {
@@ -508,7 +663,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
     z-index: 1000;
     align-items: center;
@@ -517,7 +672,7 @@ body {
 }
 
 .modal-content {
-    background: var(--dark-card);
+    background: #ffffff;
     border: 1px solid var(--dark-border);
     border-radius: var(--radius);
     padding: 2.5rem;
@@ -528,6 +683,7 @@ body {
     position: relative;
     animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
 }
 
 @keyframes modalSlideIn {
@@ -562,7 +718,7 @@ body {
 }
 
 .warning-popup-content {
-    background: var(--dark-card);
+    background: #ffffff;
     border: 2px solid var(--warning-color);
     border-radius: var(--radius);
     padding: 2.5rem;
@@ -570,7 +726,8 @@ body {
     width: 100%;
     position: relative;
     animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 0 40px rgba(255, 193, 7, 0.3), var(--shadow-lg);
+    box-shadow: 0 0 40px rgba(255, 193, 7, 0.15), var(--shadow-lg);
+    color: var(--text-primary);
 }
 
 .warning-popup-close {
@@ -588,7 +745,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border: 1px solid var(--dark-border);
 }
 
@@ -795,7 +952,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     z-index: 9999;
 }
 
@@ -937,7 +1094,7 @@ textarea.input {
 
 .empty-state {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 80px 24px;
     font-size: 1.15rem;
     color: var(--text-secondary);
     background: var(--dark-card);
@@ -963,7 +1120,7 @@ textarea.input {
 }
 
 .toast {
-    background: var(--dark-card);
+    background: #ffffff;
     backdrop-filter: blur(12px);
     border: 1px solid var(--dark-border);
     border-radius: var(--radius);
@@ -2218,6 +2375,11 @@ textarea.input {
     align-items: center;
     cursor: pointer;
     text-align: left;
+    color: #000000;
+}
+
+.region-filter-button span {
+    color: #000000;
 }
 
 .region-dropdown {
@@ -2251,6 +2413,12 @@ textarea.input {
     gap: 10px;
     cursor: pointer;
     width: 100%;
+    color: #000000;
+}
+
+.region-option label span {
+    color: #000000;
+    font-weight: 500;
 }
 
 .region-checkbox {
@@ -2262,7 +2430,7 @@ textarea.input {
 
 /* Custom Tour Card Styles */
 .custom-tour-card {
-    background: linear-gradient(135deg, rgba(252, 175, 21, 0.15) 0%, var(--dark-card) 100%);
+    background: linear-gradient(135deg, rgba(252, 175, 21, 0.08) 0%, #ffffff 100%);
     border: 2px dashed var(--gold);
     position: relative;
     overflow: hidden;
@@ -2275,7 +2443,7 @@ textarea.input {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(252, 175, 21, 0.1) 50%, transparent 70%);
+    background: linear-gradient(45deg, transparent 30%, rgba(252, 175, 21, 0.05) 50%, transparent 70%);
     animation: shimmer 3s infinite;
 }
 
@@ -2542,20 +2710,24 @@ textarea.input {
     }
     
     .container {
-        padding: 0.75rem;
+        padding: 0;
         max-width: 100vw;
     }
 
+    .tours-content-wrapper {
+        padding: 24px 16px;
+    }
+
     .hero {
-        padding: 2rem 0 1.5rem;
+        padding: 48px 16px;
     }
 
     .hero h1 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     .hero p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .hero-actions {
@@ -2571,7 +2743,7 @@ textarea.input {
 
     .items-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 16px;
     }
 
     .filters {
@@ -2845,7 +3017,7 @@ textarea.input {
     }
     
     .card-image {
-        height: 180px;
+        height: 250px;
     }
     
     .card-details {
@@ -2963,25 +3135,30 @@ textarea.input {
     }
     
     .container {
-        padding: 0.5rem;
+        padding: 0;
+    }
+
+    .tours-content-wrapper {
+        padding: 16px 12px;
     }
 
     .hero {
-        padding: 1.5rem 0 1rem;
+        padding: 40px 12px;
     }
 
     .hero::before {
-        height: 30px;
+        width: 200px;
+        height: 200px;
+        border-width: 25px;
     }
 
     .hero-badge {
-        font-size: 0.65rem;
-        padding: 0.4rem 1rem;
-        margin-top: 1rem;
+        font-size: 12px;
+        padding: 4px 14px;
     }
 
     .hero h1 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
     }
 
     .hero p {
@@ -3029,7 +3206,7 @@ textarea.input {
     }
     
     .card-image {
-        height: 160px;
+        height: 250px;
     }
     
     .card-details span {
@@ -3176,6 +3353,75 @@ textarea.input {
         font-size: 1.15rem;
     }
 }
+
+/* Card animations */
+@keyframes cardFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: cardFadeInUp 0.4s ease both;
+}
+
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.08s; }
+.card:nth-child(3) { animation-delay: 0.16s; }
+.card:nth-child(4) { animation-delay: 0.24s; }
+.card:nth-child(5) { animation-delay: 0.32s; }
+.card:nth-child(6) { animation-delay: 0.4s; }
+.card:nth-child(7) { animation-delay: 0.48s; }
+.card:nth-child(8) { animation-delay: 0.56s; }
+.card:nth-child(9) { animation-delay: 0.64s; }
+
+/* Tours section header */
+.tours-header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+    .tours-header {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+}
+
+.tours-header h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(26px, 4vw, 36px);
+    color: var(--text-primary);
+    text-wrap: balance;
+}
+
+.tours-header p {
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--dark-surface);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--dark-border);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
     </style>
 </head>
 <body>
@@ -3226,22 +3472,25 @@ textarea.input {
   <div class="container">
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        <span data-i18n="heroBadgeTours">Discover Georgia</span>
-      </div>
-      <h1 data-i18n="heroTitleTours">Explore Amazing Tours</h1>
-      <p data-i18n="heroSubtitleTours">Discover the beauty of Georgia with our curated tour experiences. From mountains to wine regions.</p>
-      <div class="hero-actions">
-        <a href="cars.html" class="btn btn-secondary">
-          <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">Cars</span>
-        </a>
-        <a href="booking.html" class="btn btn-secondary">
-          <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">Back</span>
-        </a>
+      <div class="hero-overlay"></div>
+      <div style="position: relative; max-width: 800px; margin: 0 auto; z-index: 1;">
+        <div class="hero-badge">
+          <span data-i18n="heroBadgeTours">Discover Georgia</span>
+        </div>
+        <h1 data-i18n="heroTitleTours">Explore Amazing Tours</h1>
+        <p data-i18n="heroSubtitleTours">Discover the beauty of Georgia with our curated tour experiences. From mountains to wine regions.</p>
+        <div class="hero-actions">
+          <a href="cars.html" class="btn">
+            <i class="fas fa-car"></i> <span data-i18n="bookingTabCars">Cars</span>
+          </a>
+          <a href="booking.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="bookingBackBtn">Back</span>
+          </a>
+        </div>
       </div>
     </section>
 
+    <div class="tours-content-wrapper">
     <div class="filters">
       <input type="text" id="searchInput" data-i18n="bookingSearchPlaceholder" placeholder="Search..." class="input">
       
@@ -3347,6 +3596,7 @@ textarea.input {
     </div>
 
     <div id="itemsContainer" class="items-grid"></div>
+    </div>
   </div>
 
   <div id="bookingModal" class="modal">
@@ -4534,7 +4784,7 @@ suggestedPrice: parseFloat(document.getElementById('customTourPrice')?.value) ||
               await addDoc(collection(db, "notifications"), {
                 userId: adminId,
                 title: "🗺️ ახალი Custom Tour მოთხოვნა",
-                message: `${customTourData.contactName} ითხოვს საკუთარ �����რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
+                message: `${customTourData.contactName} ითხოვს საკუთარ �������რს\n📍 რეგიონები: ${selectedRegions.join(', ')}\n📅 თარიღი: ${customTourData.startDate}\n👥 რაოდენობა: ${customTourData.groupSize}\n💰 შეთავაზება: ${customTourData.suggestedPrice}₾\n📧 ${customTourData.contactEmail}\n📱 ${customTourData.contactPhone}`,
                 type: "custom_tour_request",
                 read: false,
                 createdAt: serverTimestamp(),
@@ -5128,33 +5378,40 @@ function createItemCard(item) {
   const heartIcon = isLiked ? "fas fa-heart" : "far fa-heart"
 
   const tourLicensePlateBadge = item.licensePlate 
-    ? `<div class="license-plate-badge"><i class="fas fa-hashtag"></i> ${item.licensePlate}</div>` 
+    ? `<span class="license-plate-badge"><i class="fas fa-hashtag"></i> ${item.licensePlate}</span>` 
     : '';
   
   const ls = window.languageSwitcher;
-  const durationLabel = ls ? ls.translate('bookingDuration') : 'Duration';
   const capacity = ls ? ls.translate('bookingCapacity') : 'seats';
   const bookBtn = ls ? ls.translate('bookingCardBook') : 'Book';
 
   return `
     <div class="card card-clickable" data-id="${item.id}">
-      <img src="${imageUrl}" alt="${name}" class="card-image">
-      ${tourLicensePlateBadge}
-      <button class="popularity-btn ${likeClass}" data-id="${item.id}" title="${ls ? ls.translate('bookingLikeBtn') : 'Like'}">
-        <i class="${heartIcon}"></i>
-        <span>${item.likes || 0}</span>
-      </button>
+      <div class="card-image-wrap">
+        <img src="${imageUrl}" alt="${name}" class="card-image" crossorigin="anonymous">
+        <div class="card-image-overlay"></div>
+        ${tourLicensePlateBadge}
+        <button class="popularity-btn ${likeClass}" data-id="${item.id}" title="${ls ? ls.translate('bookingLikeBtn') : 'Like'}">
+          <i class="${heartIcon}"></i>
+        </button>
+        ${duration ? `<div class="card-duration"><i class="fas fa-clock"></i><span>${duration}</span></div>` : ''}
+      </div>
       <div class="card-content">
+        <div class="card-location">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" width="14" height="14" fill="none" stroke="currentColor" style="stroke: var(--gold);">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span>${regionDisplay}</span>
+        </div>
         <h3>${name}</h3>
         <p class="card-description">${description}</p>
         <div class="card-details">
-          <span>📍 ${regionDisplay}</span>
-          <span>🎯 ${translateValue(item.type, 'type')}</span>
-          <span>🕒 ${duration}</span>
-          <span>👥 ${item.minCapacity || 1}-${item.capacity} ${capacity}</span>
+          <span>${translateValue(item.type, 'type')}</span>
+          <span><i class="fas fa-users" style="font-size:10px;margin-right:3px;color:var(--gold);"></i>${item.minCapacity || 1}-${item.capacity} ${capacity}</span>
         </div>
-<div class="card-footer">
-          <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}<small style="font-size:0.65em;opacity:0.7;font-weight:400;margin-left:2px">/${ls?.translate('bookingPerPersonShort') || '1 ადამ.'}</small></div>
+        <div class="card-footer">
+          <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}<small style="font-size:0.55em;opacity:0.7;font-weight:400;margin-left:2px">/${ls?.translate('bookingPerPersonShort') || '1 ადამ.'}</small></div>
           <button class="btn btn-sm book-btn" data-id="${item.id}">${bookBtn}</button>
         </div>
       </div>
