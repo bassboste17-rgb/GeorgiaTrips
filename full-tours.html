@@ -4759,9 +4759,15 @@ function showConfirm(message, title = "Confirmation") {
   })
 }
 
-let currentUser = null
-let isAdmin = false
-let allTours = []
+  // =============================================
+  // STRIPE PAYMENT BACKEND URL
+  // Change this to your deployed backend server URL
+  // =============================================
+  const STRIPE_BACKEND_URL = 'https://your-server-url.com';
+
+  let currentUser = null
+  let isAdmin = false
+  let allTours = []
 let allHotelsData = []
 let selectedItem = null
 let selectedItemType = null
@@ -6141,7 +6147,7 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
   const confirmBtn = document.getElementById("confirmBooking");
   const originalText = confirmBtn.textContent;
   confirmBtn.disabled = true
-  confirmBtn.textContent = window.languageSwitcher?.translate("bookingLoading") || "Loading...";
+  confirmBtn.textContent = window.languageSwitcher?.translate("bookingRedirectingToPayment") || "Redirecting to payment...";
 
   try {
 const bookingData = {
@@ -6201,87 +6207,63 @@ const bookingData = {
       bookingData.selectedDates = startCalendar.selectedDates;
     }
 
-    const docRef = await addDoc(collection(db, "bookings"), bookingData);
+    // =============================================
+    // STRIPE CHECKOUT: Send booking data to backend
+    // =============================================
+    const checkoutPayload = {
+      itemType: bookingData.itemType,
+      itemId: bookingData.itemId,
+      itemName: bookingData.itemName,
+      itemImage: bookingData.itemImage,
+      itemRegion: bookingData.itemRegion,
+      itemRegions: bookingData.itemRegions,
+      startDate: bookingData.startDate,
+      endDate: bookingData.endDate,
+      duration: bookingData.duration,
+      peopleCount: bookingData.peopleCount,
+      pricePerPersonPerDay: bookingData.pricePerPersonPerDay,
+      tourPrice: bookingData.tourPrice,
+      totalPrice: bookingData.totalPrice,
+      currency: bookingData.currency,
+      contactName: bookingData.contactName,
+      contactSurname: bookingData.contactSurname,
+      contactEmail: bookingData.contactEmail,
+      contactPhone: bookingData.contactPhone,
+      contactDescription: bookingData.contactDescription,
+      userId: currentUser?.uid || '',
+      userEmail: currentUser?.email || '',
+      isGuest: !currentUser,
+      selectedHotel: bookingData.selectedHotel || null,
+      selectedDates: bookingData.selectedDates || selectedDatesArray || [],
+    };
 
-    try {
-      const usersSnapshot = await getDocs(collection(db, "users"));
-      const adminUsers = usersSnapshot.docs.filter((doc) => doc.data().isAdmin === true).map((doc) => doc.id);
-
-      const notificationTitle = window.languageSwitcher?.translate("bookingNotificationNewRequest") || "🔔 New Booking Request";
-      const requestFromText = window.languageSwitcher?.translate("bookingNotificationRequestFrom") || "requests booking:";
-      const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || "Go to Booking Management to confirm or decline.";
-      
-      const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
-      
-      const notifHotelPricePerDay = selectedBookingHotel ? (selectedBookingHotel.calculatedPricePerDay != null ? selectedBookingHotel.calculatedPricePerDay : selectedBookingHotel.pricePerDay) : 0;
-      const hotelInfoText = selectedBookingHotel 
-        ? `\n🏨 ${selectedBookingHotel.name} (${notifHotelPricePerDay}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'} x ${days} დღე = ${hotelPriceTotal}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'})`
-        : '';
-
-      for (const adminId of adminUsers) {
-        await addDoc(collection(db, "notifications"), {
-          userId: adminId,
-          title: notificationTitle,
-          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${selectedDatesArray.length > 0 ? selectedDatesArray.join(', ') : startDate} (${days} დღე)\n👥 ${bookingPeopleCount} ადამიანი${hotelInfoText}\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} (${selectedItem.pricePerDay}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} x ${bookingPeopleCount} ადამ. x ${days} დღე${selectedBookingHotel ? ' + სასტუმრო ' + hotelPriceTotal + (selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾') : ''})\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
-          type: "admin_booking_request",
-          read: false,
-          bookingId: docRef.id,
-          createdAt: serverTimestamp(),
-        });
-      }
-    } catch (adminNotifError) {
-      console.error("Error creating admin notifications:", adminNotifError);
-    }
-
-    const userNotificationTitle = window.languageSwitcher?.translate("bookingNotificationRequestSent") || "📋 Booking Request Sent";
-    let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || "Your booking request for \"{itemName}\" ({startDate}) has been sent to admin. Waiting for confirmation.";
-    
-    userNotificationMsg = userNotificationMsg.replace("{itemName}", selectedItem.name).replace("{startDate}", startDate).replace("{endDate}", startDate);
-    
-    await addDoc(collection(db, 'notifications'), {
-      userId: currentUser?.uid || null,
-      title: userNotificationTitle,
-      message: userNotificationMsg,
-      type: 'booking_request_sent',
-      read: false,
-      bookingId: docRef.id,
-      createdAt: serverTimestamp()
+    const response = await fetch(`${STRIPE_BACKEND_URL}/create-checkout-session`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(checkoutPayload),
     });
 
-    showToast(
-      window.languageSwitcher?.translate("bookingSubmittedMessage") || "Booking request sent successfully! You will receive a notification once admin confirms.",
-      "success",
-      window.languageSwitcher?.translate("bookingSubmittedTitle") || "Booking Sent",
-    );
-    document.getElementById("bookingModal").style.display = "none";
-    if (window.setBodyScroll) window.setBodyScroll(true);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || 'Failed to create payment session');
+    }
 
-    const priceInfo = document.getElementById("priceInfo");
-    if (priceInfo) priceInfo.style.display = "none";
-    if (priceInfo) priceInfo.innerHTML = "";
-    
-    document.getElementById("startDate").value = "";
-    document.getElementById("endDate").value = "";
-    if (startCalendar) startCalendar.clearSelection();
+    const { url } = await response.json();
 
-    document.getElementById("contactName").value = '';
-    document.getElementById("contactSurname").value = '';
-    document.getElementById("contactEmail").value = '';
-    document.getElementById("contactPhone").value = '';
-    document.getElementById("contactDescription").value = '';
-    
-    const resetPeopleInput = document.getElementById("peopleCount");
-    if (resetPeopleInput) resetPeopleInput.value = 1;
-    const resetPeopleContainer = document.getElementById("peopleCountContainer");
-    if (resetPeopleContainer) resetPeopleContainer.style.display = "none";
-    
-    selectedBookingHotel = null;
-    const hotelContainer = document.getElementById("tourLinkedHotelsContainer");
-    if (hotelContainer) { hotelContainer.innerHTML = ''; hotelContainer.style.display = 'none'; }
+    if (url) {
+      // Redirect to Stripe Checkout
+      window.location.href = url;
+    } else {
+      throw new Error('No checkout URL received from server');
+    }
     
   } catch (error) {
-    console.error("Error creating booking:", error);
-    showToast("Error saving booking", "error", "Booking Error");
+    console.error("Error creating payment session:", error);
+    showToast(
+      window.languageSwitcher?.translate('bookingPaymentError') || "Payment error: " + error.message,
+      "error",
+      window.languageSwitcher?.translate('bookingPaymentErrorTitle') || "Payment Error"
+    );
   } finally {
     confirmBtn.textContent = originalText;
     confirmBtn.disabled = false;

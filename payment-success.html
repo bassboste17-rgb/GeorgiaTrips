@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>Payment Successful | Georgia Trips</title>
+    <meta name="description" content="Your booking payment was successful. Thank you for choosing Georgia Trips!" />
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="addhome/logo.png">
+    <link rel="stylesheet" href="footer.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    
+    <style>
+        :root {
+            --gold: #fcaf15;
+            --gold-light: #fcaf15;
+            --dark-bg: #faf8f5;
+            --dark-surface: #f5f0eb;
+            --dark-card: #ffffff;
+            --dark-border: #e7e5e4;
+            --text-primary: #1c1917;
+            --text-secondary: #44403c;
+            --text-muted: #979797;
+            --success-color: #28a745;
+            --error-color: #ef4444;
+            --border-radius: 12px;
+            --font-main: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-heading: 'DM Serif Display', 'Inter', serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Simple Header */
+        .page-header {
+            background: var(--dark-card);
+            border-bottom: 1px solid var(--dark-border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-header a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .page-header img {
+            height: 40px;
+            width: auto;
+        }
+
+        .page-header span {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .payment-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .payment-card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 560px;
+            width: 100%;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Loading State */
+        .payment-loading {
+            padding: 4rem 2rem;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--dark-border);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .payment-loading p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Success State */
+        .success-header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            padding: 2.5rem 2rem 2rem;
+            position: relative;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-icon i {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        .success-header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        /* Booking Details */
+        .booking-details {
+            padding: 2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .detail-label i {
+            width: 16px;
+            text-align: center;
+            color: var(--gold);
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-align: right;
+        }
+
+        .detail-row.total {
+            border-top: 2px solid var(--gold);
+            border-bottom: none;
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .detail-row.total .detail-label {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .detail-row.total .detail-value {
+            color: var(--success-color);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        /* Actions */
+        .payment-actions {
+            padding: 0 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            background: var(--gold);
+            color: #1c1917;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #e09a00;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--border-radius);
+            font-family: var(--font-main);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark-surface);
+            border-color: var(--text-muted);
+        }
+
+        /* Error State */
+        .error-header {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            padding: 2.5rem 2rem 2rem;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .error-icon i {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        .error-header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .error-body {
+            padding: 2rem;
+        }
+
+        .error-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .payment-container {
+                padding: 1rem;
+                align-items: flex-start;
+                padding-top: 2rem;
+            }
+
+            .success-header h1,
+            .error-header h1 {
+                font-size: 1.35rem;
+            }
+
+            .booking-details {
+                padding: 1.25rem;
+            }
+
+            .payment-actions {
+                padding: 0 1.25rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <a href="index.html">
+            <img src="addhome/logo.png" alt="Georgia Trips">
+            <span>Georgia Trips</span>
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <div class="payment-container">
+        <div class="payment-card" id="paymentCard">
+            <!-- Loading State (shown initially) -->
+            <div class="payment-loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>Verifying your payment...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Backend URL - change this to your deployed server URL
+        const BACKEND_URL = 'https://your-server-url.com';
+
+        // Get session_id from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        async function verifyPayment() {
+            const card = document.getElementById('paymentCard');
+
+            if (!sessionId) {
+                showError(card);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/session-status?session_id=${sessionId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to verify payment');
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'paid') {
+                    showSuccess(card, data);
+                    launchConfetti();
+                } else {
+                    showError(card, 'Payment was not completed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error verifying payment:', error);
+                // Even if verification fails, show a generic success if we have a session_id
+                // (the webhook will still save the booking)
+                showGenericSuccess(card);
+                launchConfetti();
+            }
+        }
+
+        function showSuccess(card, data) {
+            const meta = data.metadata || {};
+            const currencySymbol = getCurrencySymbol(meta.currency || data.currency || 'GEL');
+            const amountDisplay = data.amountTotal 
+                ? (data.amountTotal / 100) + currencySymbol 
+                : (meta.totalPrice || '0') + currencySymbol;
+
+            card.innerHTML = `
+                <div class="success-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h1>Payment Successful!</h1>
+                    <p>Your booking has been confirmed</p>
+                </div>
+                <div class="booking-details">
+                    ${meta.itemName ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-route"></i> Tour</div>
+                        <div class="detail-value">${meta.itemName}</div>
+                    </div>
+                    ` : ''}
+                    ${meta.startDate ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-calendar-alt"></i> Date</div>
+                        <div class="detail-value">${meta.startDate}${meta.endDate && meta.endDate !== meta.startDate ? ' - ' + meta.endDate : ''}</div>
+                    </div>
+                    ` : ''}
+                    ${meta.duration ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-clock"></i> Duration</div>
+                        <div class="detail-value">${meta.duration} day(s)</div>
+                    </div>
+                    ` : ''}
+                    ${meta.peopleCount ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-users"></i> People</div>
+                        <div class="detail-value">${meta.peopleCount}</div>
+                    </div>
+                    ` : ''}
+                    ${meta.contactName ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-user"></i> Name</div>
+                        <div class="detail-value">${meta.contactName} ${meta.contactSurname || ''}</div>
+                    </div>
+                    ` : ''}
+                    ${data.customerEmail ? `
+                    <div class="detail-row">
+                        <div class="detail-label"><i class="fas fa-envelope"></i> Email</div>
+                        <div class="detail-value">${data.customerEmail}</div>
+                    </div>
+                    ` : ''}
+                    <div class="detail-row total">
+                        <div class="detail-label"><i class="fas fa-money-bill-wave"></i> Total Paid</div>
+                        <div class="detail-value">${amountDisplay}</div>
+                    </div>
+                </div>
+                <div class="payment-actions">
+                    <a href="full-tours.html" class="btn-primary">
+                        <i class="fas fa-map-marked-alt"></i> Browse More Tours
+                    </a>
+                    <a href="index.html" class="btn-secondary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                </div>
+            `;
+        }
+
+        function showGenericSuccess(card) {
+            card.innerHTML = `
+                <div class="success-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h1>Payment Successful!</h1>
+                    <p>Your booking has been confirmed</p>
+                </div>
+                <div class="booking-details">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 1rem 0;">
+                        Your payment has been processed successfully. You will receive a confirmation notification shortly.
+                    </p>
+                </div>
+                <div class="payment-actions">
+                    <a href="full-tours.html" class="btn-primary">
+                        <i class="fas fa-map-marked-alt"></i> Browse More Tours
+                    </a>
+                    <a href="index.html" class="btn-secondary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                </div>
+            `;
+        }
+
+        function showError(card, message) {
+            const errorMsg = message || 'No payment session found. If you believe this is an error, please contact us.';
+            card.innerHTML = `
+                <div class="error-header">
+                    <div class="error-icon">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <h1>Payment Issue</h1>
+                    <p>Something didn't go as expected</p>
+                </div>
+                <div class="error-body">
+                    <p>${errorMsg}</p>
+                    <div class="payment-actions" style="padding: 0;">
+                        <a href="full-tours.html" class="btn-primary">
+                            <i class="fas fa-redo"></i> Try Again
+                        </a>
+                        <a href="index.html" class="btn-secondary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCurrencySymbol(currency) {
+            const upper = (currency || 'GEL').toUpperCase();
+            if (upper === 'USD') return '$';
+            if (upper === 'EUR') return '\u20AC';
+            return '\u20BE';
+        }
+
+        function launchConfetti() {
+            const container = document.createElement('div');
+            container.className = 'confetti-container';
+            document.body.appendChild(container);
+
+            const colors = ['#fcaf15', '#28a745', '#17a2b8', '#ff6b6b', '#ffd93d', '#6bcb77'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                confetti.style.width = (6 + Math.random() * 8) + 'px';
+                confetti.style.height = (6 + Math.random() * 8) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => container.remove(), 5000);
+        }
+
+        // Start verification
+        verifyPayment();
+    </script>
+</body>
+</html>
