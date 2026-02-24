@@ -3680,8 +3680,8 @@ textarea.input {
       </div>
 
       <button id="confirmBooking" class="btn" style="display: flex !important; visibility: visible !important; opacity: 1 !important;">
-        <i class="fas fa-check-circle"></i>
-        <span data-i18n="bookingConfirmBtn">Confirm Booking</span>
+  <i class="fas fa-credit-card"></i>
+  <span data-i18n="bookingConfirmBtn">Pay & Book Now</span>
       </button>
     </div>
   </div>
@@ -6340,7 +6340,8 @@ const bookingData = {
   tourPrice: tourPrice,
   totalPrice: totalPrice,
   currency: selectedItem.currency || 'GEL',
-  status: "მოლოდინში",
+  status: "awaiting_payment",
+  paymentStatus: "pending",
       createdAt: serverTimestamp(),
       contactName: contactName,
       contactSurname: contactSurname,
@@ -6384,26 +6385,54 @@ const bookingData = {
 
     const docRef = await addDoc(collection(db, "bookings"), bookingData);
 
+    // --- Stripe Checkout Integration ---
+    confirmBtn.textContent = window.languageSwitcher?.translate("bookingRedirectingPayment") || "Redirecting to payment...";
+
+    let priceInUSD = totalPrice;
+    const itemCurrency = selectedItem.currency || 'GEL';
+    if (itemCurrency === 'GEL') {
+      priceInUSD = Math.round(totalPrice * 0.37 * 100) / 100;
+    } else if (itemCurrency === 'EUR') {
+      priceInUSD = Math.round(totalPrice * 1.08 * 100) / 100;
+    }
+
+    const endDateFinal = selectedDatesArray.length > 0 ? selectedDatesArray[selectedDatesArray.length - 1] : startDate;
+
+    const stripeResponse = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        itemName: selectedItem.name,
+        itemType: 'tours',
+        totalPrice: priceInUSD,
+        currency: itemCurrency,
+        bookingId: docRef.id,
+        customerEmail: contactEmail,
+        startDate: startDate,
+        endDate: endDateFinal,
+        duration: days,
+      }),
+    });
+
+    const stripeData = await stripeResponse.json();
+
+    if (!stripeResponse.ok || !stripeData.url) {
+      throw new Error(stripeData.error || 'Failed to create payment session');
+    }
+
+    await updateDoc(doc(db, "bookings", docRef.id), {
+      stripeSessionId: stripeData.sessionId,
+    });
+
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
       const adminUsers = usersSnapshot.docs.filter((doc) => doc.data().isAdmin === true).map((doc) => doc.id);
-
-      const notificationTitle = window.languageSwitcher?.translate("bookingNotificationNewRequest") || "🔔 New Booking Request";
-      const requestFromText = window.languageSwitcher?.translate("bookingNotificationRequestFrom") || "requests booking:";
-      const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || "Go to Booking Management to confirm or decline.";
-      
       const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
-      
-      const notifHotelPricePerDay = selectedBookingHotel ? (selectedBookingHotel.calculatedPricePerDay != null ? selectedBookingHotel.calculatedPricePerDay : selectedBookingHotel.pricePerDay) : 0;
-      const hotelInfoText = selectedBookingHotel 
-        ? `\n🏨 ${selectedBookingHotel.name} (${notifHotelPricePerDay}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'} x ${days} დღე = ${hotelPriceTotal}${selectedBookingHotel.currency === 'USD' ? '$' : selectedBookingHotel.currency === 'EUR' ? '€' : '₾'})`
-        : '';
-
       for (const adminId of adminUsers) {
         await addDoc(collection(db, "notifications"), {
           userId: adminId,
-          title: notificationTitle,
-          message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${selectedDatesArray.length > 0 ? selectedDatesArray.join(', ') : startDate} (${days} დღე)\n👥 ${bookingPeopleCount} ადამიანი${hotelInfoText}\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} (${selectedItem.pricePerDay}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'} x ${bookingPeopleCount} ადამ. x ${days} დღე${selectedBookingHotel ? ' + სასტუმრო ' + hotelPriceTotal + (selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾') : ''})\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
+          title: "New Tour Booking - Awaiting Payment",
+          message: `${userIdentifier} booked:\n"${selectedItem.name}"\n${startDate} (${days} days)\n${bookingPeopleCount} people\n$${priceInUSD} USD\n${contactEmail}\n${contactPhone}\n\nPayment pending via Stripe.`,
           type: "admin_booking_request",
           read: false,
           bookingId: docRef.id,
@@ -6414,55 +6443,37 @@ const bookingData = {
       console.error("Error creating admin notifications:", adminNotifError);
     }
 
-    const userNotificationTitle = window.languageSwitcher?.translate("bookingNotificationRequestSent") || "📋 Booking Request Sent";
-    let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || "Your booking request for \"{itemName}\" ({startDate}) has been sent to admin. Waiting for confirmation.";
-    
-    userNotificationMsg = userNotificationMsg.replace("{itemName}", selectedItem.name).replace("{startDate}", startDate).replace("{endDate}", startDate);
-    
-    await addDoc(collection(db, 'notifications'), {
-      userId: currentUser?.uid || null,
-      title: userNotificationTitle,
-      message: userNotificationMsg,
-      type: 'booking_request_sent',
-      read: false,
-      bookingId: docRef.id,
-      createdAt: serverTimestamp()
-    });
-
-    showToast(
-      window.languageSwitcher?.translate("bookingSubmittedMessage") || "Booking request sent successfully! You will receive a notification once admin confirms.",
-      "success",
-      window.languageSwitcher?.translate("bookingSubmittedTitle") || "Booking Sent",
-    );
     document.getElementById("bookingModal").style.display = "none";
     if (window.setBodyScroll) window.setBodyScroll(true);
 
     const priceInfo = document.getElementById("priceInfo");
     if (priceInfo) priceInfo.style.display = "none";
     if (priceInfo) priceInfo.innerHTML = "";
-    
     document.getElementById("startDate").value = "";
     document.getElementById("endDate").value = "";
     if (startCalendar) startCalendar.clearSelection();
-
     document.getElementById("contactName").value = '';
     document.getElementById("contactSurname").value = '';
     document.getElementById("contactEmail").value = '';
     document.getElementById("contactPhone").value = '';
     document.getElementById("contactDescription").value = '';
-    
     const resetPeopleInput = document.getElementById("peopleCount");
     if (resetPeopleInput) resetPeopleInput.value = 1;
     const resetPeopleContainer = document.getElementById("peopleCountContainer");
     if (resetPeopleContainer) resetPeopleContainer.style.display = "none";
-    
     selectedBookingHotel = null;
     const hotelContainer = document.getElementById("tourLinkedHotelsContainer");
     if (hotelContainer) { hotelContainer.innerHTML = ''; hotelContainer.style.display = 'none'; }
+
+    window.location.href = stripeData.url;
     
   } catch (error) {
     console.error("Error creating booking:", error);
-    showToast("Error saving booking", "error", "Booking Error");
+    showToast(
+      window.languageSwitcher?.translate("bookingPaymentError") || "Payment session could not be created. Please try again.",
+      "error",
+      window.languageSwitcher?.translate("bookingPaymentErrorTitle") || "Payment Error"
+    );
   } finally {
     confirmBtn.textContent = originalText;
     confirmBtn.disabled = false;

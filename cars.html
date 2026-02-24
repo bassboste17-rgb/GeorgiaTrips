@@ -2489,7 +2489,7 @@ textarea.input {
                     <div class="region-option">
                         <label>
                             <input type="checkbox" value="სამეგრელო-ზემო სვანეთი" class="region-checkbox" data-region>
-                            <span data-i18n="regionSamegrelo">სამეგრელო-ზემო სვანეთი</span>
+                            <span data-i18n="regionSamegrelo">სა��ეგრელო-ზემო სვანეთი</span>
                         </label>
                     </div>
                     <div class="region-option">
@@ -2689,8 +2689,8 @@ textarea.input {
             </div>
 
             <button id="confirmBooking" class="btn" style="width: 100%;">
-                <i class="fas fa-check-circle"></i>
-                <span data-i18n="bookingConfirmBtn">დაჯავშნის დადასტურება</span>
+                <i class="fas fa-credit-card"></i>
+                <span data-i18n="bookingConfirmBtn">Pay & Book Now</span>
             </button>
         </div>
     </div>
@@ -4097,7 +4097,8 @@ const bookingData = {
             duration: days,
             totalPrice: totalPrice,
             currency: selectedItem.currency || 'GEL',
-            status: "მოლოდინში",
+            status: "awaiting_payment",
+            paymentStatus: "pending",
             createdAt: serverTimestamp(),
             contactName: contactName,
             contactSurname: contactSurname,
@@ -4125,21 +4126,58 @@ const bookingData = {
 
         const docRef = await addDoc(collection(db, "bookings"), bookingData);
 
+        // --- Stripe Checkout Integration ---
+        confirmBtn.textContent = window.languageSwitcher?.translate("bookingRedirectingPayment") || "Redirecting to payment...";
+
+        // Convert price to USD for Stripe
+        let priceInUSD = totalPrice;
+        const itemCurrency = selectedItem.currency || 'GEL';
+        // If original currency is GEL, convert at approximate rate (user should adjust)
+        if (itemCurrency === 'GEL') {
+            priceInUSD = Math.round(totalPrice * 0.37 * 100) / 100; // approximate GEL->USD
+        } else if (itemCurrency === 'EUR') {
+            priceInUSD = Math.round(totalPrice * 1.08 * 100) / 100; // approximate EUR->USD
+        }
+
+        const stripeResponse = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                itemName: selectedItem.name,
+                itemType: 'cars',
+                totalPrice: priceInUSD,
+                currency: itemCurrency,
+                bookingId: docRef.id,
+                customerEmail: contactEmail,
+                startDate: startDate,
+                endDate: endDate,
+                duration: days,
+            }),
+        });
+
+        const stripeData = await stripeResponse.json();
+
+        if (!stripeResponse.ok || !stripeData.url) {
+            throw new Error(stripeData.error || 'Failed to create payment session');
+        }
+
+        // Save Stripe session ID to booking
+        await updateDoc(doc(db, "bookings", docRef.id), {
+            stripeSessionId: stripeData.sessionId,
+        });
+
+        // Send admin notification about new booking (awaiting payment)
         try {
             const usersSnapshot = await getDocs(collection(db, "users"));
             const adminUsers = usersSnapshot.docs.filter((doc) => doc.data().isAdmin === true).map((doc) => doc.id);
 
-            const notificationTitle = window.languageSwitcher?.translate("bookingNotificationNewRequest") || "🔔 ახალი დაჯავშნის მოთხოვნა";
-            const requestFromText = window.languageSwitcher?.translate("bookingNotificationRequestFrom") || "ითხოვს დაჯავშნას:";
-            const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || "გადადით დაჯავშნის მართვაზე დასადასტურებლად ან უარსაყოფად.";
-            
             const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
             
             for (const adminId of adminUsers) {
                 await addDoc(collection(db, "notifications"), {
                     userId: adminId,
-                    title: notificationTitle,
-                    message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n📅 ${startDate} - ${endDate}\n💰 ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '€' : '₾'}\n📧 ${contactEmail}\n📱 ${contactPhone}\n\n${goToManageText}`,
+                    title: "New Booking - Awaiting Payment",
+                    message: `${userIdentifier} booked:\n"${selectedItem.name}"\n${startDate} - ${endDate}\n$${priceInUSD} USD\n${contactEmail}\n${contactPhone}\n\nPayment pending via Stripe.`,
                     type: "admin_booking_request",
                     read: false,
                     bookingId: docRef.id,
@@ -4150,48 +4188,35 @@ const bookingData = {
             console.error("Error creating admin notifications:", adminNotifError);
         }
 
-        const userNotificationTitle = window.languageSwitcher?.translate("bookingNotificationRequestSent") || "📋 დაჯავშნის მოთხოვნა გაგზავნილია";
-        let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || "თქვენი დაჯავშნის მოთხოვნა \"{itemName}\"-ზე ({startDate} - {endDate}) გაგზავნილია ადმინისტრატორთან. ელოდება დადასტურებას.";
-        
-        userNotificationMsg = userNotificationMsg.replace("{itemName}", selectedItem.name).replace("{startDate}", startDate).replace("{endDate}", endDate);
-        
-        await addDoc(collection(db, 'notifications'), {
-            userId: currentUser?.uid || null,
-            title: userNotificationTitle,
-            message: userNotificationMsg,
-            type: 'booking_request_sent',
-            read: false,
-            bookingId: docRef.id,
-            createdAt: serverTimestamp()
-        });
-
-        showToast(
-            window.languageSwitcher?.translate("bookingSubmittedMessage") || "დაჯავშნის მოთხოვნა წარმატებით გაიგზავნა! მიიღებთ შეტყობინებას ადმინისტრატორის დადასტურების შემდეგ.",
-            "success",
-            window.languageSwitcher?.translate("bookingSubmittedTitle") || "დაჯავშნა გაგზავნილია",
-        );
+        // Close modal and redirect to Stripe
         document.getElementById("bookingModal").style.display = "none";
         if (window.setBodyScroll) window.setBodyScroll(true);
 
+        // Reset form fields
         const priceInfo = document.getElementById("priceInfo");
         if (priceInfo) priceInfo.style.display = "none";
         if (priceInfo) priceInfo.innerHTML = "";
-        
         document.getElementById("startDate").value = "";
         document.getElementById("endDate").value = "";
         document.getElementById("startTime").value = "";
         document.getElementById("endTime").value = "";
         if (startCalendar) startCalendar.clearSelection();
-
         document.getElementById("contactName").value = '';
         document.getElementById("contactSurname").value = '';
         document.getElementById("contactEmail").value = '';
         document.getElementById("contactPhone").value = '';
         document.getElementById("contactDescription").value = '';
+
+        // Redirect to Stripe Checkout
+        window.location.href = stripeData.url;
         
     } catch (error) {
         console.error("Error creating booking:", error);
-        showToast("დაჯავშნის შენახვა ვერ მოხერხდა", "error", "დაჯავშნის შეცდომა");
+        showToast(
+            window.languageSwitcher?.translate("bookingPaymentError") || "Payment session could not be created. Please try again.",
+            "error",
+            window.languageSwitcher?.translate("bookingPaymentErrorTitle") || "Payment Error"
+        );
     } finally {
         confirmBtn.textContent = originalText;
         confirmBtn.disabled = false;

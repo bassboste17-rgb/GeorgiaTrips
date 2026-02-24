@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Payment Successful - Georgia Trips</title>
+    <meta name="description" content="Your payment was successful. Thank you for booking with Georgia Trips." />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo.png">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <style>
+:root {
+    --gold: #fcaf15;
+    --dark-bg: #faf8f5;
+    --dark-card: #ffffff;
+    --dark-border: #e7e5e4;
+    --text-primary: #1c1917;
+    --text-secondary: #44403c;
+    --success-color: #28a745;
+    --font-main: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'DM Serif Display', 'Inter', serif;
+    --radius: 12px;
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-main);
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-result-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.payment-result-card {
+    background: var(--dark-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--dark-border);
+    box-shadow: var(--shadow-lg);
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 36px;
+}
+
+.result-icon.success {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.result-title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.result-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.result-details {
+    background: var(--dark-bg);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+    text-align: left;
+}
+
+.result-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.result-detail-row:not(:last-child) {
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.result-detail-label {
+    color: var(--text-secondary);
+}
+
+.result-detail-value {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.result-detail-value.status-paid {
+    color: var(--success-color);
+}
+
+.result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-main);
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--gold);
+    color: #1c1917;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 175, 21, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--dark-border);
+}
+
+.btn-secondary:hover {
+    background: var(--dark-bg);
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--dark-border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .payment-result-card {
+        padding: 32px 24px;
+    }
+    .result-title {
+        font-size: 24px;
+    }
+    .result-actions {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="payment-result-container">
+        <div class="payment-result-card" id="resultCard">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Verifying payment...</p>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script type="module">
+    import { db } from './firebase-config.js';
+    import { doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js';
+
+    async function verifyAndUpdatePayment() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        const bookingId = urlParams.get('booking_id');
+
+        const card = document.getElementById('resultCard');
+
+        if (!sessionId || !bookingId) {
+            card.innerHTML = `
+                <div class="result-icon success" style="background: rgba(239,68,68,0.1); color: #ef4444;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h1 class="result-title">Invalid Link</h1>
+                <p class="result-description">This payment link appears to be invalid or expired.</p>
+                <div class="result-actions">
+                    <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Go Home</a>
+                </div>
+            `;
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId }),
+            });
+
+            const data = await response.json();
+
+            if (data.paymentStatus === 'paid') {
+                // Update booking status in Firestore
+                try {
+                    await updateDoc(doc(db, 'bookings', bookingId), {
+                        status: 'paid',
+                        paymentStatus: 'paid',
+                        stripeSessionId: sessionId,
+                        paidAt: serverTimestamp(),
+                        paidAmount: data.amountTotal / 100,
+                        paidCurrency: data.currency,
+                    });
+                } catch (fbError) {
+                    console.error('Firestore update error:', fbError);
+                }
+
+                const amountDisplay = data.amountTotal ? `$${(data.amountTotal / 100).toFixed(2)}` : '';
+
+                card.innerHTML = `
+                    <div class="result-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h1 class="result-title">Payment Successful!</h1>
+                    <p class="result-description">
+                        Thank you for your booking! Your payment has been processed successfully. 
+                        You will receive a confirmation notification shortly.
+                    </p>
+                    <div class="result-details">
+                        <div class="result-detail-row">
+                            <span class="result-detail-label">Booking ID</span>
+                            <span class="result-detail-value">${bookingId.substring(0, 8)}...</span>
+                        </div>
+                        ${amountDisplay ? `
+                        <div class="result-detail-row">
+                            <span class="result-detail-label">Amount Paid</span>
+                            <span class="result-detail-value">${amountDisplay}</span>
+                        </div>
+                        ` : ''}
+                        <div class="result-detail-row">
+                            <span class="result-detail-label">Status</span>
+                            <span class="result-detail-value status-paid">Paid</span>
+                        </div>
+                    </div>
+                    <div class="result-actions">
+                        <a href="/mybookings.html" class="btn btn-primary"><i class="fas fa-list"></i> My Bookings</a>
+                        <a href="/" class="btn btn-secondary"><i class="fas fa-home"></i> Go Home</a>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div class="result-icon success" style="background: rgba(255,193,7,0.1); color: #ffc107;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h1 class="result-title">Payment Pending</h1>
+                    <p class="result-description">Your payment is still being processed. Please check back in a few moments.</p>
+                    <div class="result-actions">
+                        <a href="/mybookings.html" class="btn btn-primary"><i class="fas fa-list"></i> My Bookings</a>
+                        <a href="/" class="btn btn-secondary"><i class="fas fa-home"></i> Go Home</a>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Payment verification error:', error);
+            card.innerHTML = `
+                <div class="result-icon success" style="background: rgba(239,68,68,0.1); color: #ef4444;">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h1 class="result-title">Verification Error</h1>
+                <p class="result-description">We could not verify your payment at this time. Please check your bookings page or contact support.</p>
+                <div class="result-actions">
+                    <a href="/mybookings.html" class="btn btn-primary"><i class="fas fa-list"></i> My Bookings</a>
+                    <a href="/" class="btn btn-secondary"><i class="fas fa-home"></i> Go Home</a>
+                </div>
+            `;
+        }
+    }
+
+    verifyAndUpdatePayment();
+    </script>
+
+    <script type="module" src="navbar.js"></script>
+    <script type="module" src="footer.js"></script>
+    <script src="translations.js"></script>
+</body>
+</html>

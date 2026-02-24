@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Payment Cancelled - Georgia Trips</title>
+    <meta name="description" content="Your payment was cancelled. You can try again or contact us for help." />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="addhome/logo.png">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <style>
+:root {
+    --gold: #fcaf15;
+    --dark-bg: #faf8f5;
+    --dark-card: #ffffff;
+    --dark-border: #e7e5e4;
+    --text-primary: #1c1917;
+    --text-secondary: #44403c;
+    --error-color: #ef4444;
+    --font-main: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'DM Serif Display', 'Inter', serif;
+    --radius: 12px;
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-main);
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-result-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.payment-result-card {
+    background: var(--dark-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--dark-border);
+    box-shadow: var(--shadow-lg);
+    padding: 48px 40px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 36px;
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error-color);
+}
+
+.result-title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.result-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-main);
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--gold);
+    color: #1c1917;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 175, 21, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--dark-border);
+}
+
+.btn-secondary:hover {
+    background: var(--dark-bg);
+}
+
+@media (max-width: 480px) {
+    .payment-result-card {
+        padding: 32px 24px;
+    }
+    .result-title {
+        font-size: 24px;
+    }
+    .result-actions {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="payment-result-container">
+        <div class="payment-result-card">
+            <div class="result-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h1 class="result-title">Payment Cancelled</h1>
+            <p class="result-description">
+                Your payment was cancelled and you have not been charged. 
+                Your booking has been saved and you can try paying again from your bookings page.
+            </p>
+            <div class="result-actions">
+                <a href="/mybookings.html" class="btn btn-primary"><i class="fas fa-list"></i> My Bookings</a>
+                <a href="/" class="btn btn-secondary"><i class="fas fa-home"></i> Go Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script type="module">
+    import { db } from './firebase-config.js';
+    import { doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js';
+
+    // Update booking status to cancelled if bookingId is provided
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get('booking_id');
+    
+    if (bookingId) {
+        try {
+            await updateDoc(doc(db, 'bookings', bookingId), {
+                status: 'payment_cancelled',
+                paymentStatus: 'cancelled',
+                paymentCancelledAt: serverTimestamp(),
+            });
+        } catch (err) {
+            console.error('Error updating cancelled booking:', err);
+        }
+    }
+    </script>
+
+    <script type="module" src="navbar.js"></script>
+    <script type="module" src="footer.js"></script>
+    <script src="translations.js"></script>
+</body>
+</html>

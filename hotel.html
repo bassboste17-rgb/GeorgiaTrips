@@ -2547,10 +2547,10 @@ textarea.input {
                 </div>
             </div>
 
-            <button id="confirmBooking" class="btn" style="width: 100%;">
-                <i class="fas fa-check-circle"></i>
-                <span data-i18n="bookingConfirmBtn">დაჯავშნის დადასტურება</span>
-            </button>
+ <button id="confirmBooking" class="btn" style="width: 100%;">
+  <i class="fas fa-credit-card"></i>
+  <span data-i18n="bookingConfirmBtn">Pay & Book Now</span>
+  </button>
         </div>
     </div>
 
@@ -2619,7 +2619,7 @@ textarea.input {
                 'ბათუმი': 'regionBatumi',
                 'ქუთაისი': 'regionKutaisi',
                 'აფხაზეთი': 'regionAbkhazia',
-                'სამეგრელო': 'regionSamegrelo',
+                'სამ��გრელო': 'regionSamegrelo',
                 'იმერეთი': 'regionImereti',
                 'კახეთი': 'regionKakheti',
                 'გურია': 'regionGuria',
@@ -2707,7 +2707,7 @@ textarea.input {
             'იორდანია': 'countryJordan',
             'იტალია': 'countryItaly',
             'ესპანეთი': 'countrySpain',
-            'საფრანგეთი': 'countryFrance',
+            'საფ��ანგეთი': 'countryFrance',
             'გერმანია': 'countryGermany',
             'ნიდერლანდები': 'countryNetherlands',
             'ჩეხეთი': 'countryCzech',
@@ -3901,7 +3901,8 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
             guestCount: window.currentGuestCount || 1,
             ...(roomAllocationData && { roomAllocation: roomAllocationData }),
             currency: selectedItem.currency || 'GEL',
-            status: "\u10DB\u10DD\u10DA\u10DD\u10D3\u10D8\u10DC\u10E8\u10D8",
+            status: "awaiting_payment",
+            paymentStatus: "pending",
             createdAt: serverTimestamp(),
             contactName: contactName,
             contactSurname: contactSurname,
@@ -3925,21 +3926,52 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
 
         const docRef = await addDoc(collection(db, "bookings"), bookingData);
 
+        // --- Stripe Checkout Integration ---
+        confirmBtn.textContent = window.languageSwitcher?.translate("bookingRedirectingPayment") || "Redirecting to payment...";
+
+        let priceInUSD = totalPrice;
+        const itemCurrency = selectedItem.currency || 'GEL';
+        if (itemCurrency === 'GEL') {
+            priceInUSD = Math.round(totalPrice * 0.37 * 100) / 100;
+        } else if (itemCurrency === 'EUR') {
+            priceInUSD = Math.round(totalPrice * 1.08 * 100) / 100;
+        }
+
+        const stripeResponse = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                itemName: selectedItem.name,
+                itemType: 'hotels',
+                totalPrice: priceInUSD,
+                currency: itemCurrency,
+                bookingId: docRef.id,
+                customerEmail: contactEmail,
+                startDate: startDate,
+                endDate: endDate,
+                duration: nights,
+            }),
+        });
+
+        const stripeData = await stripeResponse.json();
+
+        if (!stripeResponse.ok || !stripeData.url) {
+            throw new Error(stripeData.error || 'Failed to create payment session');
+        }
+
+        await updateDoc(doc(db, "bookings", docRef.id), {
+            stripeSessionId: stripeData.sessionId,
+        });
+
         try {
             const usersSnapshot = await getDocs(collection(db, "users"));
             const adminUsers = usersSnapshot.docs.filter((doc) => doc.data().isAdmin === true).map((doc) => doc.id);
-
-            const notificationTitle = window.languageSwitcher?.translate("bookingNotificationNewRequest") || "\u{1F514} ახალი დაჯავშნის მოთხოვნა";
-            const requestFromText = window.languageSwitcher?.translate("bookingNotificationRequestFrom") || "ითხოვს დაჯავშნას:";
-            const goToManageText = window.languageSwitcher?.translate("bookingNotificationGoToManage") || "გადადით დაჯავშნის მართვაზე დასადასტურებლად ან უარსაყოფად.";
-            
             const userIdentifier = currentUser?.email || `${contactName} ${contactSurname} (${contactEmail})`;
-            
             for (const adminId of adminUsers) {
                 await addDoc(collection(db, "notifications"), {
                     userId: adminId,
-                    title: notificationTitle,
-                    message: `${userIdentifier} ${requestFromText}\n"${selectedItem.name}"\n\u{1F4C5} ${startDate} - ${endDate}\n\u{1F4B0} ${totalPrice}${selectedItem.currency === 'USD' ? '$' : selectedItem.currency === 'EUR' ? '\u20AC' : '\u20BE'}\n\u{1F4E7} ${contactEmail}\n\u{1F4F1} ${contactPhone}\n\n${goToManageText}`,
+                    title: "New Hotel Booking - Awaiting Payment",
+                    message: `${userIdentifier} booked:\n"${selectedItem.name}"\n${startDate} - ${endDate}\n$${priceInUSD} USD\n${contactEmail}\n${contactPhone}\n\nPayment pending via Stripe.`,
                     type: "admin_booking_request",
                     read: false,
                     bookingId: docRef.id,
@@ -3950,25 +3982,6 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
             console.error("Error creating admin notifications:", adminNotifError);
         }
 
-        const userNotificationTitle = window.languageSwitcher?.translate("bookingNotificationRequestSent") || "\u{1F4CB} დაჯავშნის მოთხოვნა გაგზავნილია";
-        let userNotificationMsg = window.languageSwitcher?.translate("bookingNotificationRequestSentMsg") || 'თქვენი დაჯავშნის მოთხოვნა "{itemName}"-ზე ({startDate} - {endDate}) გაგზავნილია ადმინისტრატორთან. ელოდება დადასტურებას.';
-        userNotificationMsg = userNotificationMsg.replace("{itemName}", selectedItem.name).replace("{startDate}", startDate).replace("{endDate}", endDate);
-        
-        await addDoc(collection(db, 'notifications'), {
-            userId: currentUser?.uid || null,
-            title: userNotificationTitle,
-            message: userNotificationMsg,
-            type: 'booking_request_sent',
-            read: false,
-            bookingId: docRef.id,
-            createdAt: serverTimestamp()
-        });
-
-        showToast(
-            window.languageSwitcher?.translate("bookingSubmittedMessage") || "დაჯავშნის მოთხოვნა წარმატებით გაიგზავნა!",
-            "success",
-            window.languageSwitcher?.translate("bookingSubmittedTitle") || "დაჯავშნა გაგზავნილია",
-        );
         document.getElementById("bookingModal").style.display = "none";
         if (window.setBodyScroll) window.setBodyScroll(true);
 
@@ -3983,10 +3996,16 @@ document.getElementById("confirmBooking")?.addEventListener("click", async () =>
         document.getElementById("contactEmail").value = '';
         document.getElementById("contactPhone").value = '';
         document.getElementById("contactDescription").value = '';
+
+        window.location.href = stripeData.url;
         
     } catch (error) {
         console.error("Error creating booking:", error);
-        showToast("დაჯავშნის შენახვა ვერ მოხერხდა", "error", "დაჯავშნის შეცდომა");
+        showToast(
+            window.languageSwitcher?.translate("bookingPaymentError") || "Payment session could not be created. Please try again.",
+            "error",
+            window.languageSwitcher?.translate("bookingPaymentErrorTitle") || "Payment Error"
+        );
     } finally {
         confirmBtn.textContent = originalText;
         confirmBtn.disabled = false;

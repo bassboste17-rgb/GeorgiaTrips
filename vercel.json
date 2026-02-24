@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/cars", "destination": "/cars.html" },
+    { "source": "/tours", "destination": "/tours.html" },
+    { "source": "/hotel", "destination": "/hotel.html" },
+    { "source": "/full-tours", "destination": "/full-tours.html" },
+    { "source": "/outer-tours", "destination": "/outer-tours.html" },
+    { "source": "/booking", "destination": "/booking.html" },
+    { "source": "/payment-success", "destination": "/payment-success.html" },
+    { "source": "/payment-cancel", "destination": "/payment-cancel.html" }
+  ]
+}
