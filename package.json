@@ -1,11 +1,12 @@
 {
   "name": "twilio-sms-auth-server",
   "version": "1.0.0",
-  "description": "Backend server for Twilio SMS/WhatsApp authentication",
+  "type": "module",
+  "description": "Backend server for Twilio SMS/WhatsApp authentication and Stripe payments",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
