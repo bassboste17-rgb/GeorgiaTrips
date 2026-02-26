@@ -1364,6 +1364,178 @@ textarea.input {
     max-width: 800px;
 }
 
+/* Enhanced Booking Item Header */
+.booking-item-header {
+    margin-bottom: 1.5rem;
+}
+
+.booking-item-gallery {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.booking-item-gallery .booking-main-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--dark-border);
+}
+
+.booking-gallery-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: thin;
+}
+
+.booking-gallery-thumbs img {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.booking-gallery-thumbs img:hover,
+.booking-gallery-thumbs img.active {
+    border-color: var(--gold);
+    opacity: 1;
+}
+
+.booking-gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.booking-gallery-nav:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.booking-gallery-nav.prev { left: 8px; }
+.booking-gallery-nav.next { right: 8px; }
+
+.booking-item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.booking-item-meta h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.booking-item-meta .location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.booking-item-meta .location i {
+    color: var(--gold);
+}
+
+.booking-item-meta .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.booking-item-description {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: var(--dark-surface);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--dark-border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.booking-item-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.booking-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--dark-surface);
+    border-radius: 8px;
+    border: 1px solid var(--dark-border);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.booking-spec-item i {
+    color: var(--gold);
+    font-size: 0.85rem;
+    width: 16px;
+    text-align: center;
+}
+
+.booking-spec-item.with-driver {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #10b981;
+    font-weight: 600;
+}
+
+.booking-spec-item.with-driver i {
+    color: #10b981;
+}
+
+@media (max-width: 600px) {
+    .booking-item-gallery .booking-main-image {
+        height: 170px;
+    }
+    .booking-item-meta h3 {
+        font-size: 1.25rem;
+    }
+    .booking-item-specs-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 .booking-dates-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -2441,7 +2613,7 @@ textarea.input {
     </div>
                 
                 <h1 data-i18n="carsHeroTitle">მანქანების დაჯავშნა</h1>
-                <p data-i18n="carsHeroSubtitle">აირჩიეთ საუკეთესო მანქანა თქვენი მოგზაურობისთვის საქართველოში</p>
+                <p data-i18n="carsHeroSubtitle">��ირჩიეთ საუკეთესო მანქანა თქვენი მოგზაურობისთვის საქართველოში</p>
                 
         <div class="hero-actions">
           <a href="tours.html" class="btn btn-secondary">
@@ -3632,7 +3804,7 @@ function setupItemsContainerEvents() {
         if (card) {
             const itemId = card.dataset.id;
             const item = currentDisplayedItems.find((i) => i.id === itemId);
-            if (item) openDetailModal(item);
+            if (item) openBookingModal(item, "cars");
         }
     });
 }
@@ -3798,6 +3970,23 @@ window.bookFromDetail = () => {
     openBookingModal(selectedItem, "cars")
 }
 
+window.bookingImageIndex = 0;
+window.changeBookingImage = (dir) => {
+    if (!selectedItem?.images?.length) return;
+    const images = selectedItem.images;
+    window.bookingImageIndex = (window.bookingImageIndex + dir + images.length) % images.length;
+    const mainImg = document.getElementById("bookingMainImage");
+    if (mainImg) mainImg.src = images[window.bookingImageIndex];
+    document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === window.bookingImageIndex));
+};
+window.setBookingImage = (index) => {
+    if (!selectedItem?.images?.length) return;
+    window.bookingImageIndex = index;
+    const mainImg = document.getElementById("bookingMainImage");
+    if (mainImg) mainImg.src = selectedItem.images[index];
+    document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === index));
+};
+
 window.closeDetailModal = () => {
     document.getElementById("detailModal").style.display = "none"
     if (window.setBodyScroll) window.setBodyScroll(true);
@@ -3818,6 +4007,7 @@ async function openBookingModal(item, type) {
 function openBookingModalDirect(item, type) {
     selectedItem = item
     selectedItemType = type
+    window.bookingImageIndex = 0;
 
     const lang = window.languageSwitcher?.getCurrentLanguage() || 'ka';
     
@@ -3900,27 +4090,37 @@ function openBookingModalDirect(item, type) {
         return;
     }
     
+    const allImages = item.images || [];
+    const descriptionText = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || '');
+    
     modalBody.innerHTML = `
-        <div class="booking-item-info">
-            <img src="${imageUrl}" alt="${name}">
-            <div class="booking-item-details">
+        <div class="booking-item-header">
+            ${allImages.length > 0 ? `
+            <div class="booking-item-gallery">
+                ${allImages.length > 1 ? `<button class="booking-gallery-nav prev" onclick="changeBookingImage(-1)">&lsaquo;</button>` : ''}
+                <img src="${imageUrl}" alt="${name}" class="booking-main-image" id="bookingMainImage">
+                ${allImages.length > 1 ? `<button class="booking-gallery-nav next" onclick="changeBookingImage(1)">&rsaquo;</button>` : ''}
+                ${allImages.length > 1 ? `
+                <div class="booking-gallery-thumbs">
+                    ${allImages.map((img, i) => `<img src="${img}" alt="${name}" class="${i === 0 ? 'active' : ''}" onclick="setBookingImage(${i})">`).join('')}
+                </div>` : ''}
+            </div>` : ''}
+            <div class="booking-item-meta">
                 <h3>${name}</h3>
                 ${licensePlateHtml}
-<div class="location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    ${regionModalText || 'N/A'}
-                </div>
-                <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}/${perDay}</div>
-                <div class="booking-additional-specs">
-                    ${item.fuelType ? `<span><i class="fas fa-gas-pump"></i> ${translatedFuelType}</span>` : ''}
-                    ${item.transmission ? `<span><i class="fas fa-cog"></i> ${translatedTransmission}</span>` : ''}
-                    ${item.year ? `<span><i class="fas fa-calendar"></i> ${item.year}</span>` : ''}
-                    ${item.color ? `<span><i class="fas fa-palette"></i> ${translatedColor}</span>` : ''}
-                    ${item.engineCapacity ? `<span><i class="fas fa-tachometer-alt"></i> ${item.engineCapacity}L</span>` : ''}
-                    ${item.withDriver ? `<span class="with-driver"><i class="fas fa-user-tie"></i> ${withDriver}</span>` : ''}
-                    ${item.features ? `<div class="booking-features"><i class="fas fa-star"></i> <span>${item.features}</span></div>` : ''}
-                </div>
+                <div class="location"><i class="fas fa-map-marker-alt"></i> ${regionModalText || 'N/A'}</div>
+                <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE'}/${perDay}</div>
             </div>
+            <div class="booking-item-specs-grid">
+                ${item.fuelType ? `<div class="booking-spec-item"><i class="fas fa-gas-pump"></i> ${translatedFuelType}</div>` : ''}
+                ${item.transmission ? `<div class="booking-spec-item"><i class="fas fa-cog"></i> ${translatedTransmission}</div>` : ''}
+                ${item.year ? `<div class="booking-spec-item"><i class="fas fa-calendar"></i> ${item.year}</div>` : ''}
+                ${item.color ? `<div class="booking-spec-item"><i class="fas fa-palette"></i> ${translatedColor}</div>` : ''}
+                ${item.engineCapacity ? `<div class="booking-spec-item"><i class="fas fa-tachometer-alt"></i> ${item.engineCapacity}L</div>` : ''}
+                ${item.withDriver ? `<div class="booking-spec-item with-driver"><i class="fas fa-user-tie"></i> ${withDriver}</div>` : ''}
+            </div>
+            ${descriptionText ? `<div class="booking-item-description">${descriptionText}</div>` : ''}
+            ${item.features ? `<div class="booking-additional-specs" style="margin-top:0.75rem;"><i class="fas fa-star" style="color:var(--gold);"></i> <span style="flex:1;line-height:1.4;color:var(--text-secondary);">${item.features}</span></div>` : ''}
         </div>
     `
 

@@ -1512,6 +1512,167 @@ textarea.input {
     max-width: 800px;
 }
 
+/* Enhanced Booking Item Header */
+.booking-item-header {
+    margin-bottom: 1.5rem;
+}
+
+.booking-item-gallery {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.booking-item-gallery .booking-main-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--dark-border);
+}
+
+.booking-gallery-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: thin;
+}
+
+.booking-gallery-thumbs img {
+    width: 56px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.booking-gallery-thumbs img:hover,
+.booking-gallery-thumbs img.active {
+    border-color: var(--gold);
+    opacity: 1;
+}
+
+.booking-gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.booking-gallery-nav:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.booking-gallery-nav.prev { left: 8px; }
+.booking-gallery-nav.next { right: 8px; }
+
+.booking-item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.booking-item-meta h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.booking-item-meta .location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.booking-item-meta .location i {
+    color: var(--gold);
+}
+
+.booking-item-meta .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.booking-item-description {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: var(--dark-surface);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--dark-border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.booking-item-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.booking-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--dark-surface);
+    border-radius: 8px;
+    border: 1px solid var(--dark-border);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.booking-spec-item i {
+    color: var(--gold);
+    font-size: 0.85rem;
+    width: 16px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .booking-item-gallery .booking-main-image {
+        height: 170px;
+    }
+    .booking-item-meta h3 {
+        font-size: 1.25rem;
+    }
+    .booking-item-specs-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 /* Booking dates grid */
 .booking-dates-grid {
     display: grid;
@@ -5297,7 +5458,7 @@ function setupItemsContainerEvents() {
     if (card) {
       const itemId = card.dataset.id;
       const item = currentDisplayedItems.find((i) => i.id === itemId);
-      if (item) openDetailModal(item);
+      if (item) openBookingModal(item, "tours");
     }
   });
 }
@@ -5456,6 +5617,23 @@ window.bookFromDetail = () => {
   openBookingModal(selectedItem, "tours")
 }
 
+window.bookingImageIndex = 0;
+window.changeBookingImage = (dir) => {
+  if (!selectedItem?.images?.length) return;
+  const images = selectedItem.images;
+  window.bookingImageIndex = (window.bookingImageIndex + dir + images.length) % images.length;
+  const mainImg = document.getElementById("bookingMainImage");
+  if (mainImg) mainImg.src = images[window.bookingImageIndex];
+  document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === window.bookingImageIndex));
+};
+window.setBookingImage = (index) => {
+  if (!selectedItem?.images?.length) return;
+  window.bookingImageIndex = index;
+  const mainImg = document.getElementById("bookingMainImage");
+  if (mainImg) mainImg.src = selectedItem.images[index];
+  document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === index));
+};
+
 window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
   if (window.setBodyScroll) window.setBodyScroll(true);
@@ -5476,6 +5654,7 @@ async function openBookingModal(item, type) {
 function openBookingModalDirect(item, type) {
   selectedItem = item
   selectedItemType = type
+  window.bookingImageIndex = 0;
 
   const lang = window.languageSwitcher?.getCurrentLanguage() || 'ka';
   
@@ -5554,22 +5733,33 @@ function openBookingModalDirect(item, type) {
     return;
   }
   
+  const allImages = item.images || [];
+  const descriptionText = (lang !== 'ka' && item.descriptionTranslations?.[lang]) ? item.descriptionTranslations[lang] : (item.description || '');
+  const routeText = item.route ? ((lang !== 'ka' && item.routeTranslations?.[lang]) ? item.routeTranslations[lang] : item.route) : '';
+  
   modalBody.innerHTML = `
-    <div class="booking-item-info">
-      <img src="${imageUrl}" alt="${translatedItemName}">
-      <div class="booking-item-details">
+    <div class="booking-item-header">
+      ${allImages.length > 0 ? `
+      <div class="booking-item-gallery">
+        ${allImages.length > 1 ? `<button class="booking-gallery-nav prev" onclick="changeBookingImage(-1)">&lsaquo;</button>` : ''}
+        <img src="${imageUrl}" alt="${translatedItemName}" class="booking-main-image" id="bookingMainImage">
+        ${allImages.length > 1 ? `<button class="booking-gallery-nav next" onclick="changeBookingImage(1)">&rsaquo;</button>` : ''}
+        ${allImages.length > 1 ? `
+        <div class="booking-gallery-thumbs">
+          ${allImages.map((img, i) => `<img src="${img}" alt="${translatedItemName}" class="${i === 0 ? 'active' : ''}" onclick="setBookingImage(${i})">`).join('')}
+        </div>` : ''}
+      </div>` : ''}
+      <div class="booking-item-meta">
         <h3>${translatedItemName}</h3>
-<div class="location">
-          <i class="fas fa-map-marker-alt"></i>
-          ${regionModalText || 'N/A'}
-        </div>
-        <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '€' : '₾'}/${perTour}</div>
-        <div class="booking-additional-specs">
-          ${duration ? `<span><i class="fas fa-clock"></i> ${duration}</span>` : ''}
-          ${item.capacity ? `<span><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ${ls?.translate('bookingPeople') || 'ადამიანი'}</span>` : ''}
-          ${item.route ? `<span><i class="fas fa-route"></i> ${(lang !== 'ka' && item.routeTranslations?.[lang]) ? item.routeTranslations[lang] : item.route}</span>` : ''}
-        </div>
+        <div class="location"><i class="fas fa-map-marker-alt"></i> ${regionModalText || 'N/A'}</div>
+        <div class="price">${item.pricePerDay}${item.currency === 'USD' ? '$' : item.currency === 'EUR' ? '\u20AC' : '\u20BE'}/${perTour}</div>
       </div>
+      <div class="booking-item-specs-grid">
+        ${duration ? `<div class="booking-spec-item"><i class="fas fa-clock"></i> ${duration}</div>` : ''}
+        ${item.capacity ? `<div class="booking-spec-item"><i class="fas fa-users"></i> ${item.minCapacity || 1}-${item.capacity} ${ls?.translate('bookingPeople') || '\u10D0\u10D3\u10D0\u10DB\u10D8\u10D0\u10DC\u10D8'}</div>` : ''}
+        ${routeText ? `<div class="booking-spec-item"><i class="fas fa-route"></i> ${routeText}</div>` : ''}
+      </div>
+      ${descriptionText ? `<div class="booking-item-description">${descriptionText}</div>` : ''}
     </div>
   `
 
