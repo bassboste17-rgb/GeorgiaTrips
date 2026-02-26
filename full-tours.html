@@ -1474,11 +1474,17 @@ textarea.input {
 
 .booking-item-gallery .booking-main-image {
     width: 100%;
-    height: 220px;
+    height: 330px;
     object-fit: cover;
     display: block;
     border-radius: var(--radius-sm);
     border: 1px solid var(--dark-border);
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.booking-item-gallery .booking-main-image:hover {
+    opacity: 0.9;
 }
 
 .booking-gallery-thumbs {
@@ -1610,7 +1616,7 @@ textarea.input {
 
 @media (max-width: 600px) {
     .booking-item-gallery .booking-main-image {
-        height: 170px;
+        height: 240px;
     }
     .booking-item-meta h3 {
         font-size: 1.25rem;
@@ -1618,6 +1624,105 @@ textarea.input {
     .booking-item-specs-grid {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+/* Fullscreen Image Lightbox */
+.image-lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: zoom-out;
+}
+
+.image-lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-lightbox-overlay img {
+    max-width: 92vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+.image-lightbox-overlay.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 100001;
+}
+
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 100001;
+}
+
+.lightbox-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-nav.prev { left: 20px; }
+.lightbox-nav.next { right: 20px; }
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
 }
 
 /* Booking dates grid */
@@ -5125,7 +5230,7 @@ function updateTypeFilter() {
 
   const tourTypes = [
     { value: 'კულტურული', key: 'tourTypeCultural' },
-    { value: 'სათავგადასავლო', key: 'tourTypeSightseeing' },
+    { value: 'სათავგადასავლ���', key: 'tourTypeSightseeing' },
     { value: 'გასტრონომიული', key: 'tourTypeGastronomic' },
     { value: 'ისტორიული', key: 'tourTypeHistorical' },
     { value: 'ბუნება', key: 'tourTypeNature' }
@@ -5433,6 +5538,7 @@ window.bookFromDetail = () => {
 }
 
 window.bookingImageIndex = 0;
+window.lightboxImageIndex = 0;
 window.changeBookingImage = (dir) => {
   if (!selectedItem?.images?.length) return;
   const images = selectedItem.images;
@@ -5448,6 +5554,43 @@ window.setBookingImage = (index) => {
   if (mainImg) mainImg.src = selectedItem.images[index];
   document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === index));
 };
+window.openImageLightbox = (index) => {
+  if (!selectedItem?.images?.length) return;
+  window.lightboxImageIndex = index || 0;
+  const overlay = document.getElementById("imageLightbox");
+  const img = document.getElementById("lightboxImage");
+  const counter = document.getElementById("lightboxCounter");
+  if (!overlay || !img) return;
+  img.src = selectedItem.images[window.lightboxImageIndex];
+  if (counter) counter.textContent = (window.lightboxImageIndex + 1) + ' / ' + selectedItem.images.length;
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+};
+window.closeImageLightbox = () => {
+  const overlay = document.getElementById("imageLightbox");
+  if (overlay) overlay.classList.remove("active");
+  document.body.style.overflow = "";
+};
+window.changeLightboxImage = (dir) => {
+  if (!selectedItem?.images?.length) return;
+  const images = selectedItem.images;
+  window.lightboxImageIndex = (window.lightboxImageIndex + dir + images.length) % images.length;
+  const img = document.getElementById("lightboxImage");
+  const counter = document.getElementById("lightboxCounter");
+  if (img) img.src = images[window.lightboxImageIndex];
+  if (counter) counter.textContent = (window.lightboxImageIndex + 1) + ' / ' + images.length;
+  window.bookingImageIndex = window.lightboxImageIndex;
+  const mainImg = document.getElementById("bookingMainImage");
+  if (mainImg) mainImg.src = images[window.lightboxImageIndex];
+  document.querySelectorAll(".booking-gallery-thumbs img").forEach((t, i) => t.classList.toggle("active", i === window.lightboxImageIndex));
+};
+document.addEventListener("keydown", (e) => {
+  const overlay = document.getElementById("imageLightbox");
+  if (!overlay?.classList.contains("active")) return;
+  if (e.key === "Escape") window.closeImageLightbox();
+  if (e.key === "ArrowLeft") window.changeLightboxImage(-1);
+  if (e.key === "ArrowRight") window.changeLightboxImage(1);
+});
 
 window.closeDetailModal = () => {
   document.getElementById("detailModal").style.display = "none"
@@ -5557,7 +5700,7 @@ function openBookingModalDirect(item, type) {
       ${allImages.length > 0 ? `
       <div class="booking-item-gallery">
         ${allImages.length > 1 ? `<button class="booking-gallery-nav prev" onclick="changeBookingImage(-1)">&lsaquo;</button>` : ''}
-        <img src="${imageUrl}" alt="${translatedItemName}" class="booking-main-image" id="bookingMainImage">
+        <img src="${imageUrl}" alt="${translatedItemName}" class="booking-main-image" id="bookingMainImage" onclick="openImageLightbox(window.bookingImageIndex)">
         ${allImages.length > 1 ? `<button class="booking-gallery-nav next" onclick="changeBookingImage(1)">&rsaquo;</button>` : ''}
         ${allImages.length > 1 ? `
         <div class="booking-gallery-thumbs">
@@ -5797,7 +5940,7 @@ function renderTourLinkedHotels(item) {
   const lang = ls?.getCurrentLanguage() || 'ka';
   const sectionTitle = trSafe('tourLinkedHotelsTitle', 'სასტუმროები ამ რეგიონში');
   const sectionSubtitle = trSafe('tourLinkedHotelsSubtitle', 'აირჩიეთ სასტუმრო ტურთან ერთად');
-  const roomTypesCountLabel = trSafe('hotelRoomTypesCount', 'ტიპის ოთახი');
+  const roomTypesCountLabel = trSafe('hotelRoomTypesCount', 'ტიპის ოთახ��');
   const maxGuestsPrefix = trSafe('hotelMaxGuestsPrefix', 'მაქს.');
   const guestsLabel = trSafe('tourHotelGuests', 'სტუმარი');
   const perNightLabel = trSafe('tourHotelPerNight', '/ღამე');
@@ -6724,9 +6867,17 @@ window.addEventListener('load', removeHtmlExtensionFromURL);
 window.addEventListener('popstate', removeHtmlExtensionFromURL);
   </script>
     
-  <div id="footer"></div>
-  <script type="module" src="navbar.js"></script>
-  <script type="module" src="footer.js"></script>
-  <script src="translations.js"></script>
+    <div id="imageLightbox" class="image-lightbox-overlay" onclick="if(event.target===this)closeImageLightbox()">
+        <button class="lightbox-close" onclick="closeImageLightbox()">&times;</button>
+        <button class="lightbox-nav prev" onclick="event.stopPropagation();changeLightboxImage(-1)">&lsaquo;</button>
+        <img id="lightboxImage" src="" alt="Fullscreen image" onclick="event.stopPropagation()">
+        <button class="lightbox-nav next" onclick="event.stopPropagation();changeLightboxImage(1)">&rsaquo;</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <div id="footer"></div>
+    <script type="module" src="navbar.js"></script>
+    <script type="module" src="footer.js"></script>
+    <script src="translations.js"></script>
 </body>
 </html>
