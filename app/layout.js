@@ -50,7 +50,7 @@ const notoArabic = Noto_Sans_Arabic({
   adjustFontFallback: true,
 });
 
-import { SOCIAL_PROFILES, FAQS_BY_LANG } from "./lib/shared";
+import { SOCIAL_PROFILES } from "./lib/shared";
 import { SITE_URL, getCanonicalUrl, getAlternateLanguages, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
 
 export const viewport = {
@@ -62,11 +62,27 @@ export const viewport = {
 
 export async function generateMetadata() {
   const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
-  const storedLang = cookieStore.get("gt_language")?.value || "ka";
-  const lang = SUPPORTED_LANGUAGES.includes(storedLang) ? storedLang : "ka";
-  const currentPath = requestHeaders.get("x-georgiatrips-path") || `/${lang}`;
-  const canonicalUrl = getCanonicalUrl(currentPath, lang);
-  const alternateLanguages = getAlternateLanguages(currentPath);
+  const headerLang = requestHeaders.get("x-georgiatrips-locale");
+  const currentPath = requestHeaders.get("x-georgiatrips-path") || "";
+  const pathParts = currentPath.split("/").filter(Boolean);
+  const pathLang = pathParts[0];
+  const storedLang = cookieStore.get("gt_language")?.value;
+
+  // The URL locale is 100% authoritative:
+  // 1. Explicit locale from x-georgiatrips-locale (set by proxy from URL prefix)
+  // 2. Explicit locale in x-georgiatrips-path prefix
+  // 3. Cookie storedLang only when URL has no explicit locale
+  // 4. Default "ka"
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang)
+    ? headerLang
+    : (pathLang && SUPPORTED_LANGUAGES.includes(pathLang))
+      ? pathLang
+      : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
+        ? storedLang
+        : "ka";
+  const finalPath = currentPath || `/${lang}`;
+  const canonicalUrl = getCanonicalUrl(finalPath, lang);
+  const alternateLanguages = getAlternateLanguages(finalPath);
 
   const metaByLang = {
     ka: {
@@ -76,8 +92,6 @@ export async function generateMetadata() {
       },
       description:
         "აღმოაჩინე საქართველო უმაღლესი კომფორტით. ერთდღიანი და მრავალდღიანი ტურები ბათუმში, თბილისში, ყაზბეგში, მარტვილში, კახეთსა და სვანეთში. VIP ტრანსპორტი, გამოცდილი გიდები და 24/7 მხარდაჭერა.",
-      keywords:
-        "ტურები საქართველოში, ტურები ბათუმში, ტურები თბილისიდან, ყაზბეგის ტური, კახეთის ღვინის ტური, მარტვილის კანიონი, პრომეთეს მღვიმე, სვანეთის ტური, ტრანსფერი საქართველოში, მძღოლი საქართველოში, VIP ტურები, GeorgiaTrips",
       locale: "ka_GE",
       ogTitle: "GeorgiaTrips — პრემიუმ ტურები და ექსკურსიები საქართველოში",
       ogDesc: "აღმოაჩინე კავკასიის სილამაზე კომფორტით. VIP მომსახურება, ინდივიდუალური და ჯგუფური ტურები.",
@@ -89,8 +103,6 @@ export async function generateMetadata() {
       },
       description:
         "Discover Georgia in comfort and luxury. Best day trips and multi-day tours from Batumi, Tbilisi, Kazbegi, Martvili Canyon, Kakheti wine region, and Svaneti. VIP transport, certified guides, 24/7 WhatsApp booking.",
-      keywords:
-        "Georgia tours, tours in Georgia, Batumi day trips, Tbilisi private tours, Kazbegi day tour, Kakheti wine tour, Martvili canyon tour, Prometheus cave, Svaneti 4x4 tour, Kutaisi airport transfers to Gudauri, private driver Georgia, Georgia travel agency, GeorgiaTrips, Halal tours Georgia",
       locale: "en_US",
       ogTitle: "GeorgiaTrips — Premium Tours & Guided Excursions in Georgia",
       ogDesc: "Discover the beauty of the Caucasus with comfort and luxury. VIP service, private & group tours, airport transfers.",
@@ -102,8 +114,6 @@ export async function generateMetadata() {
       },
       description:
         "Откройте для себя Грузию с максимальным комфортом. Однодневные и многодневные экскурсии из Батуми и Тбилиси: Казбеги, Кахетия, каньон Мартвили, Сванетия. VIP транспорт, русскоязычные гиды, трансферы 24/7.",
-      keywords:
-        "туры по Грузии, экскурсии из Батуми, экскурсии в Тбилиси, тур в Казбеги, винный тур в Кахетию, каньон Мартвили, пещера Прометея, трансфер из аэропорта Кутаиси в Гудаури, индивидуальный гид Грузия, аренда авто с водителем Грузия, GeorgiaTrips",
       locale: "ru_RU",
       ogTitle: "GeorgiaTrips — Премиум туры и экскурсии по Грузии",
       ogDesc: "Откройте для себя красоту Кавказа с комфортом. VIP сервис, индивидуальные и групповые туры, трансферы.",
@@ -115,8 +125,6 @@ export async function generateMetadata() {
       },
       description:
         "Gürcistan'ı üstün konforla keşfedin. Batum çıkışlı günübirlik turlar, Tiflis, Kazbegi, Kaheti şarap turları ve Martvili kanyonu. Türkçe rehberler, VIP transferler ve 7/24 destek.",
-      keywords:
-        "Gürcistan turları, Batum günübirlik turlar, Batum çıkışlı geziler, Tiflis turu, Kazbegi turu, Kaheti şarap turu, Martvili kanyonu, Kutaisi havalimanı transferi, Gürcistan Türkçe rehber, Gürcistan özel şoför, Batum transfer, GeorgiaTrips",
       locale: "tr_TR",
       ogTitle: "GeorgiaTrips — Gürcistan'da Premium Turlar ve Geziler",
       ogDesc: "Kafkasya'nın güzelliklerini konfor ve lüksle keşfedin. VIP hizmet, özel ve grup turları, havaalanı transferleri.",
@@ -128,8 +136,6 @@ export async function generateMetadata() {
       },
       description:
         "اكتشف جمال وسحر جورجيا بأعلى درجات الراحة والفخامة. جولات يومية مميزة من باتومي وتبليسي: كازبيجي، قوداوري، برجومي، كاخيتي، ومارتفيلي. سيارات خاصة VIP، سائقون محترفون، فنادق ومطاعم حلال، ودعم 24/7.",
-      keywords:
-        "رحلات جورجيا, جولات سياحية في جورجيا, سائق خاص في جورجيا, جولات باتومي اليومية, جولات تبليسي, كازبيجي وقوداوري, برجومي وباكورياني, رحلات عائلية جورجيا, فنادق حلال جورجيا, توصيل مطار كوتايسي, مرشد سياحي جورجيا, GeorgiaTrips",
       locale: "ar_SA",
       ogTitle: "GeorgiaTrips — جولات سياحية فاخرة في جورجيا",
       ogDesc: "اكتشف سحر القوقاز مع خدمات VIP وجولات سياحية خاصة وجماعية مصممة خصيصاً للعائلات مع سيارة وسائق خاص.",
@@ -140,35 +146,14 @@ export async function generateMetadata() {
 
   return {
     metadataBase: new URL(SITE_URL),
-    icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-        { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-      ],
-      shortcut: "/favicon.ico",
-      apple: [
-        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-      ],
-      other: [
-        {
-          rel: "apple-touch-icon-precomposed",
-          url: "/apple-touch-icon-precomposed.png",
-        },
-      ],
-    },
     manifest: "/manifest.json",
+    icons: {
+      icon: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
+    },
     title: curr.title,
     description: curr.description,
-    keywords: curr.keywords,
-    authors: [
-      { name: "GeorgiaTrips", url: SITE_URL },
-      { name: "Manuchar Lominadze", url: "https://www.instagram.com/lominadzee10/" },
-    ],
-    creator: "Manuchar Lominadze (@lominadzee10)",
+    authors: [{ name: "GeorgiaTrips", url: SITE_URL }],
     publisher: "GeorgiaTrips",
     alternates: {
       canonical: canonicalUrl,
@@ -203,10 +188,6 @@ export async function generateMetadata() {
         "facebook-domain-verification": "ef9kax36lazdya98y738pn5e10ny2e",
       },
     },
-    other: {
-      "facebook-domain-verification": "ef9kax36lazdya98y738pn5e10ny2e",
-      "developer": "Manuchar Lominadze (https://www.instagram.com/lominadzee10/)",
-    },
     robots: {
       index: true,
       follow: true,
@@ -221,9 +202,7 @@ export async function generateMetadata() {
   };
 }
 
-function buildStructuredData(lang = "ka") {
-  const faqs = FAQS_BY_LANG[lang] || FAQS_BY_LANG.ka || [];
-
+function buildStructuredData(htmlLang = "ka") {
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -241,13 +220,6 @@ function buildStructuredData(lang = "ka") {
         priceRange: "$$",
         currenciesAccepted: "GEL, USD, EUR",
         paymentAccepted: "Cash, Credit Card, Bank Transfer, Online Payment",
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "4.9",
-          reviewCount: "128",
-          bestRating: "5",
-          worstRating: "1",
-        },
         areaServed: [
           { "@type": "Country", name: "Georgia" },
           { "@type": "AdministrativeArea", name: "Adjara" },
@@ -277,50 +249,37 @@ function buildStructuredData(lang = "ka") {
         publisher: {
           "@id": `${SITE_URL}/#organization`,
         },
-        creator: {
-          "@type": "Person",
-          "@id": "https://www.instagram.com/lominadzee10/#person",
-          name: "Manuchar Lominadze",
-          url: "https://www.instagram.com/lominadzee10/",
-          sameAs: ["https://www.instagram.com/lominadzee10/"],
-          jobTitle: "Lead Full-Stack Web Developer & UI/UX Designer",
-        },
         potentialAction: {
           "@type": "SearchAction",
-          target: `${SITE_URL}/ka/tours?search={search_term_string}`,
+          target: `${SITE_URL}/${htmlLang}/tours?search={search_term_string}`,
           "query-input": "required name=search_term_string",
         },
         inLanguage: ["ka", "en", "ru", "tr", "ar"],
-      },
-      {
-        "@type": "Person",
-        "@id": "https://www.instagram.com/lominadzee10/#person",
-        name: "Manuchar Lominadze",
-        url: "https://www.instagram.com/lominadzee10/",
-        sameAs: ["https://www.instagram.com/lominadzee10/"],
-        jobTitle: "Lead Full-Stack Web Developer & UI/UX Designer",
-        knowsAbout: ["Full-Stack Web Development", "Next.js", "React", "UI/UX Engineering", "Search Engine Optimization (SEO)"],
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${SITE_URL}/#faq`,
-        mainEntity: faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.q,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.a,
-          },
-        })),
       },
     ],
   };
 }
 
 export default async function RootLayout({ children }) {
-  const cookieStore = await cookies();
-  const storedLang = cookieStore.get("gt_language")?.value || "ka";
-  const htmlLang = ["ka", "en", "ru", "tr", "ar"].includes(storedLang) ? storedLang : "ka";
+  const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
+  const headerLang = requestHeaders.get("x-georgiatrips-locale");
+  const currentPath = requestHeaders.get("x-georgiatrips-path") || "";
+  const pathParts = currentPath.split("/").filter(Boolean);
+  const pathLang = pathParts[0];
+  const storedLang = cookieStore.get("gt_language")?.value;
+
+  // The URL locale is 100% authoritative:
+  // 1. Explicit locale from x-georgiatrips-locale (set by proxy from URL prefix)
+  // 2. Explicit locale in x-georgiatrips-path prefix
+  // 3. Cookie storedLang only when URL has no explicit locale
+  // 4. Default "ka"
+  const htmlLang = SUPPORTED_LANGUAGES.includes(headerLang)
+    ? headerLang
+    : (pathLang && SUPPORTED_LANGUAGES.includes(pathLang))
+      ? pathLang
+      : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
+        ? storedLang
+        : "ka";
   const htmlDir = isRtlLanguage(htmlLang) ? "rtl" : "ltr";
   const jsonLd = buildStructuredData(htmlLang);
 
@@ -331,13 +290,6 @@ export default async function RootLayout({ children }) {
       className={`${notoGeorgian.variable} ${notoSerifGeorgian.variable} ${playfair.variable} ${notoArabic.variable}`}
     >
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://georgiatripsge.firebaseapp.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://firestore.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
@@ -387,13 +339,13 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <LanguageProvider initialLang={htmlLang}>
-          <Suspense fallback={null}>
-            <DocumentTitleManager />
-          </Suspense>
           <CurrencyProvider>
             <AuthProvider>
               <CouponProvider>
                 {children}
+                <Suspense fallback={null}>
+                  <DocumentTitleManager />
+                </Suspense>
                 <Suspense fallback={null}>
                   <AnalyticsTracker />
                 </Suspense>

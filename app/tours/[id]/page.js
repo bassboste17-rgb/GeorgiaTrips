@@ -1,39 +1,49 @@
 import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
 import { asLocalizedText } from "../../lib/toursFirestore";
 import { getCachedTourById, getCachedTours, getCachedPlaces, serializeForClient } from "../../lib/server/cachedData";
-import { SITE_URL, getCanonicalUrl, getAlternateLanguages } from "../../lib/siteConfig";
+import { headers } from "next/headers";
+import { SITE_URL, getCanonicalUrl, getAlternateLanguages, LANGUAGE_LOCALES, SUPPORTED_LANGUAGES } from "../../lib/siteConfig";
 import TourDetailClient from "../../components/tours/TourDetailClient";
 import "./tourDetail.css";
 
+const NOT_FOUND_TITLES = {
+  ka: "ტური ვერ მოიძებნა",
+  en: "Tour Not Found",
+  ru: "Тур не найден",
+  tr: "Tur Bulunamadı",
+  ar: "لم يتم العثور على الجولة",
+};
+
 export async function generateMetadata({ params }) {
-  const resolvedParams = await params;
+  const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const tourId = resolvedParams?.id;
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
 
   const tour = await getCachedTourById(tourId);
 
   if (!tour) {
-    return {
-      title: "ტური ვერ მოიძებნა | GeorgiaTrips.ge",
-      description: "მოთხოვნილი ტური ვერ მოიძებნა.",
-    };
+    notFound();
   }
 
-  const titleKa = asLocalizedText(tour.title, "ka") || "ტური საქართველოში";
-  const descKa = asLocalizedText(tour.desc, "ka") || "საუკეთესო ტური საქართველოში GeorgiaTrips-თან ერთად.";
+  const tourTitle = asLocalizedText(tour.title, lang) || asLocalizedText(tour.title, "ka") || "Tour";
+  const tourDesc = asLocalizedText(tour.desc, lang) || asLocalizedText(tour.desc, "ka") || "GeorgiaTrips";
   const imgUrl = tour.img || `${SITE_URL}/hero.webp`;
-  const tourCanonical = getCanonicalUrl(`/tours/${tourId}`, "ka");
+  const tourCanonical = getCanonicalUrl(`/tours/${tourId}`, lang);
   const alternateLanguages = getAlternateLanguages(`/tours/${tourId}`);
+  const locale = LANGUAGE_LOCALES[lang] || "ka_GE";
 
   return {
-    title: `${titleKa} | GeorgiaTrips.ge`,
-    description: descKa,
+    title: tourTitle,
+    description: tourDesc,
     alternates: {
       canonical: tourCanonical,
       languages: alternateLanguages,
     },
     openGraph: {
-      title: `${titleKa} — GeorgiaTrips`,
-      description: descKa,
+      title: `${tourTitle} — GeorgiaTrips`,
+      description: tourDesc,
       url: tourCanonical,
       siteName: "GeorgiaTrips",
       images: [
@@ -41,24 +51,47 @@ export async function generateMetadata({ params }) {
           url: imgUrl,
           width: 1200,
           height: 630,
-          alt: titleKa,
+          alt: tourTitle,
         },
       ],
-      locale: "ka_GE",
+      locale,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${titleKa} — GeorgiaTrips`,
-      description: descKa,
+      title: `${tourTitle} — GeorgiaTrips`,
+      description: tourDesc,
       images: [imgUrl],
     },
   };
 }
 
+const BREADCRUMB_LABELS = {
+  ka: { home: "მთავარი", tours: "ტურები" },
+  en: { home: "Home", tours: "Tours" },
+  ru: { home: "Главная", tours: "Туры" },
+  tr: { home: "Ana Sayfa", tours: "Turlar" },
+  ar: { home: "الرئيسية", tours: "الجولات" },
+};
+
+function getValidNumericPrice(tour) {
+  if (!tour) return null;
+  const candidates = [tour.priceGroup, tour.pricePrivate, tour.price, tour.pricePerPerson];
+  for (const val of candidates) {
+    if (typeof val === "number" && !isNaN(val) && val > 0) return val;
+    if (typeof val === "string") {
+      const num = parseFloat(val.replace(/[^0-9.]/g, ""));
+      if (!isNaN(num) && num > 0) return num;
+    }
+  }
+  return null;
+}
+
 export default async function TourDetailPage({ params }) {
-  const resolvedParams = await params;
+  const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const tourId = resolvedParams?.id;
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
 
   const [rawTour, allTours, places] = await Promise.all([
     getCachedTourById(tourId),
@@ -66,45 +99,83 @@ export default async function TourDetailPage({ params }) {
     getCachedPlaces(),
   ]);
 
+  if (!rawTour) {
+    notFound();
+  }
+
   const cleanTour = serializeForClient(rawTour);
   const cleanAllTours = serializeForClient(allTours);
   const cleanPlaces = serializeForClient(places);
 
-  // Generate JSON-LD TouristTrip Schema for Google Search Snippets
-  const titleKa = rawTour ? asLocalizedText(rawTour.title, "ka") || "ტური საქართველოში" : "ტური";
-  const descKa = rawTour ? asLocalizedText(rawTour.desc, "ka") || "" : "";
+  // Generate localized JSON-LD TouristTrip & BreadcrumbList Schema for Google Search Snippets
+  const tourTitle = asLocalizedText(rawTour.title, lang) || asLocalizedText(rawTour.title, "ka") || "Tour";
+  const tourDesc = asLocalizedText(rawTour.desc, lang) || asLocalizedText(rawTour.desc, "ka") || "";
+  const tourUrl = `${SITE_URL}/${lang}/tours/${encodeURIComponent(tourId)}`;
+  const bLabels = BREADCRUMB_LABELS[lang] || BREADCRUMB_LABELS.ka;
+  const validPrice = getValidNumericPrice(rawTour);
 
-  const jsonLd = rawTour
-    ? {
-        "@context": "https://schema.org",
-        "@type": "TouristTrip",
-        "name": titleKa,
-        "description": descKa,
-        "image": rawTour.img || `${SITE_URL}/hero.webp`,
-        "touristType": ["Adventure", "Cultural", "Sightseeing"],
-        "offers": {
-          "@type": "Offer",
-          "price": rawTour.priceGroup || rawTour.pricePrivate || 0,
-          "priceCurrency": "GEL",
-          "availability": "https://schema.org/InStock",
-          "validFrom": new Date().toISOString().split("T")[0],
-        },
-        "provider": {
-          "@type": "TravelAgency",
-          "name": "GeorgiaTrips",
-          "url": SITE_URL,
-        },
-      }
-    : null;
+  const touristTripSchema = {
+    "@type": "TouristTrip",
+    "@id": `${tourUrl}#trip`,
+    "name": tourTitle,
+    "description": tourDesc,
+    "url": tourUrl,
+    "image": rawTour.img || `${SITE_URL}/hero.webp`,
+    "inLanguage": lang,
+    "touristType": ["Adventure", "Cultural", "Sightseeing"],
+    "provider": {
+      "@type": "TravelAgency",
+      "name": "GeorgiaTrips",
+      "url": SITE_URL,
+    },
+  };
+
+  if (validPrice !== null) {
+    touristTripSchema.offers = {
+      "@type": "Offer",
+      "price": validPrice,
+      "priceCurrency": "GEL",
+      "availability": "https://schema.org/InStock",
+      "url": tourUrl,
+    };
+  }
+
+  const breadcrumbsSchema = {
+    "@type": "BreadcrumbList",
+    "@id": `${tourUrl}#breadcrumbs`,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": bLabels.home,
+        "item": `${SITE_URL}/${lang}`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": bLabels.tours,
+        "item": `${SITE_URL}/${lang}/tours`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": tourTitle,
+        "item": tourUrl,
+      },
+    ],
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [touristTripSchema, breadcrumbsSchema],
+  };
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Suspense fallback={<div style={{ padding: "4rem", textAlign: "center", color: "#0d233a" }}>...</div>}>
         <TourDetailClient
           initialTour={cleanTour}

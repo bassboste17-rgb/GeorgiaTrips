@@ -5,6 +5,7 @@ import Image from "next/image";
 // ============================================================
 export const WA_NUMBER = "995504220020";
 export const WA_LINK = `https://wa.me/${WA_NUMBER}`;
+export const PHONE_NUMBER = "+995504220020";
 export const PHONE_DISPLAY = "+995 504 22 00 20";
 export const TELEGRAM_HANDLE = "+995504220020";
 export const TELEGRAM_LINK = `https://t.me/${TELEGRAM_HANDLE}`;

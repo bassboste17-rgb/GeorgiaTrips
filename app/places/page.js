@@ -1,43 +1,96 @@
 import React, { Suspense } from "react";
+import "./places.css";
+import PlacesCatalogClient from "../components/places/PlacesCatalogClient";
 import { getCachedPlaces } from "../lib/server/cachedData";
 import { asLocalizedText } from "../lib/toursFirestore";
-import { SITE_URL, getCanonicalUrl, getAlternateLanguages } from "../lib/siteConfig";
-import PlacesCatalogClient from "../components/places/PlacesCatalogClient";
-import "./places.css";
+import { headers } from "next/headers";
+import { SITE_URL, getCanonicalUrl, getAlternateLanguages, LANGUAGE_LOCALES, SUPPORTED_LANGUAGES } from "../lib/siteConfig";
 
-export const metadata = {
-  title: "ღირსშესანიშნაობები საქართველოში | GeorgiaTrips.ge",
-  description: "საქართველოს ულამაზესი ადგილები, კულტურული და ბუნებრივი ძეგლები — ყაზბეგი, სვანეთი, მარტვილი, ვარძია, უფლისციხე, პრომეთეს მღვიმე და სხვა.",
-  alternates: {
-    canonical: getCanonicalUrl("/places", "ka"),
-    languages: getAlternateLanguages("/places"),
+const PLACES_META = {
+  ka: {
+    title: "ღირსშესანიშნაობები საქართველოში",
+    description: "საქართველოს ულამაზესი ადგილები, კულტურული და ბუნებრივი ძეგლები — ყაზბეგი, სვანეთი, მარტვილი, ვარძია, უფლისციხე, პრომეთეს მღვიმე და სხვა.",
   },
-  openGraph: {
-    title: "ღირსშესანიშნაობები საქართველოში — GeorgiaTrips",
-    description: "აღმოაჩინეთ საქართველოს უნიკალური ბუნება და ისტორიული ძეგლები.",
-    url: getCanonicalUrl("/places", "ka"),
-    siteName: "GeorgiaTrips",
-    images: [
-      {
-        url: "/tbilisi.webp",
-        width: 1200,
-        height: 630,
-        alt: "ღირსშესანიშნაობები საქართველოში",
-      },
-    ],
-    locale: "ka_GE",
-    type: "website",
+  en: {
+    title: "Top Attractions & Places to Visit in Georgia",
+    description: "Explore the most beautiful landmarks, national parks, and historic places in Georgia — Kazbegi, Martvili Canyon, Prometheus Cave, Vardzia, and Svaneti.",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "ღირსშესანიშნაობები საქართველოში — GeorgiaTrips",
-    description: "საქართველოს ულამაზესი ადგილები და ტურისტული ატრაქციები.",
-    images: ["/tbilisi.webp"],
+  ru: {
+    title: "Главные достопримечательности и красивые места Грузии",
+    description: "Узнайте о лучших достопримечательностях Грузии: Казбеги, каньон Мартвили, пещера Прометея, Вардзия, Сванетия и старый Тбилиси.",
+  },
+  tr: {
+    title: "Gürcistan'da Gezilecek En İyi Yerler ve Tarihi Mekanlar",
+    description: "Gürcistan'ın en güzel turistik yerleri, kanyonları, tarihi kaleleri ve doğal güzellikleri.",
+  },
+  ar: {
+    title: "أفضل المعالم والأماكن السياحية في جورجيا",
+    description: "اكتشف أجمل الأماكن السياحية والمعالم التاريخية والطبيعية في جورجيا.",
   },
 };
 
+export async function generateMetadata() {
+  const reqHeaders = await headers();
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const meta = PLACES_META[lang] || PLACES_META.ka;
+  const canonicalUrl = getCanonicalUrl("/places", lang);
+  const alternateLanguages = getAlternateLanguages("/places");
+  const locale = LANGUAGE_LOCALES[lang] || "ka_GE";
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: alternateLanguages,
+    },
+    openGraph: {
+      title: `${meta.title} — GeorgiaTrips`,
+      description: meta.description,
+      url: canonicalUrl,
+      siteName: "GeorgiaTrips",
+      images: [
+        {
+          url: "/tbilisi.webp",
+          width: 1200,
+          height: 630,
+          alt: meta.title,
+        },
+      ],
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${meta.title} — GeorgiaTrips`,
+      description: meta.description,
+      images: ["/tbilisi.webp"],
+    },
+  };
+}
+
+const BREADCRUMB_LABELS = {
+  ka: { home: "მთავარი", places: "ღირსშესანიშნაობები" },
+  en: { home: "Home", places: "Attractions" },
+  ru: { home: "Главная", places: "Достопримечательности" },
+  tr: { home: "Ana Sayfa", places: "Gezilecek Yerler" },
+  ar: { home: "الرئيسية", places: "المعالم السياحية" },
+};
+
+const PLACES_LIST_NAMES = {
+  ka: "საქართველოს ღირსშესანიშნაობები — GeorgiaTrips",
+  en: "Top Attractions & Places to Visit in Georgia — GeorgiaTrips",
+  ru: "Главные достопримечательности Грузии — GeorgiaTrips",
+  tr: "Gürcistan'da Gezilecek Yerler — GeorgiaTrips",
+  ar: "أفضل المعالم السياحية في جورجيا — GeorgiaTrips",
+};
+
 export default async function PlacesPage() {
-  const places = await getCachedPlaces();
+  const [places, reqHeaders] = await Promise.all([getCachedPlaces(), headers()]);
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const bLabels = BREADCRUMB_LABELS[lang] || BREADCRUMB_LABELS.ka;
 
   // Schema.org JSON-LD BreadcrumbList & ItemList
   const placesJsonLd = {
@@ -45,35 +98,35 @@ export default async function PlacesPage() {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "@id": `${SITE_URL}/ka/places#breadcrumbs`,
+        "@id": `${SITE_URL}/${lang}/places#breadcrumbs`,
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
-            "name": "მთავარი",
-            "item": `${SITE_URL}/ka`,
+            "name": bLabels.home,
+            "item": `${SITE_URL}/${lang}`,
           },
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "ღირსშესანიშნაობები",
-            "item": `${SITE_URL}/ka/places`,
+            "name": bLabels.places,
+            "item": `${SITE_URL}/${lang}/places`,
           },
         ],
       },
       {
         "@type": "ItemList",
-        "@id": `${SITE_URL}/ka/places#list`,
-        "name": "Top Attractions and Places to Visit in Georgia",
+        "@id": `${SITE_URL}/${lang}/places#list`,
+        "name": PLACES_LIST_NAMES[lang] || PLACES_LIST_NAMES.ka,
         "itemListElement": (places || []).slice(0, 30).map((place, idx) => ({
           "@type": "ListItem",
           "position": idx + 1,
           "item": {
             "@type": "TouristAttraction",
-            "name": asLocalizedText(place.title, "ka") || place.title,
-            "description": asLocalizedText(place.desc, "ka") || place.desc,
+            "name": asLocalizedText(place.title, lang) || asLocalizedText(place.title, "ka") || place.title,
+            "description": asLocalizedText(place.desc, lang) || asLocalizedText(place.desc, "ka") || place.desc,
             "image": place.img || `${SITE_URL}/tbilisi.webp`,
-            "url": `${SITE_URL}/ka/places/${place.id}`,
+            "url": `${SITE_URL}/${lang}/places/${encodeURIComponent(place.id)}`,
           },
         })),
       },

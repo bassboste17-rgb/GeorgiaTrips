@@ -1,42 +1,54 @@
 import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
 import { getCachedPlaces } from "../../lib/server/cachedData";
 import { asLocalizedText } from "../../lib/toursFirestore";
+import { headers } from "next/headers";
 import { formatRegionName } from "../../lib/placesMeta";
-import { SITE_URL, getCanonicalUrl, getAlternateLanguages } from "../../lib/siteConfig";
+import { SITE_URL, getCanonicalUrl, getAlternateLanguages, LANGUAGE_LOCALES, SUPPORTED_LANGUAGES } from "../../lib/siteConfig";
 import PlaceDetailClient from "../../components/places/PlaceDetailClient";
 import "../places.css";
 
+const NOT_FOUND_PLACES = {
+  ka: "ადგილი ვერ მოიძებნა",
+  en: "Attraction Not Found",
+  ru: "Достопримечательность не найдена",
+  tr: "Gezilecek Yer Bulunamadı",
+  ar: "لم يتم العثور على المعلم",
+};
+
 export async function generateMetadata({ params }) {
-  const resolvedParams = await params;
+  const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const placeId = resolvedParams?.id;
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
 
   const places = await getCachedPlaces();
   const place = (places || []).find((p) => p.id === placeId);
 
   if (!place) {
-    return {
-      title: "ადგილი ვერ მოიძებნა | GeorgiaTrips.ge",
-      description: "მოთხოვნილი ლოკაცია ვერ მოიძებნა.",
-    };
+    notFound();
   }
 
-  const titleKa = asLocalizedText(place.title, "ka") || "ღირსშესანიშნაობა საქართველოში";
-  const descKa = asLocalizedText(place.desc, "ka") || "აღმოაჩინეთ საქართველოს ულამაზესი ადგილები GeorgiaTrips-თან ერთად.";
-  const regionKa = formatRegionName(asLocalizedText(place.region, "ka"), "ka");
+  const title = asLocalizedText(place.title, lang) || asLocalizedText(place.title, "ka") || "Attraction";
+  const desc = asLocalizedText(place.desc, lang) || asLocalizedText(place.desc, "ka") || "";
+  const rawRegion = asLocalizedText(place.region, lang) || asLocalizedText(place.region, "ka") || "";
+  const region = rawRegion ? formatRegionName(rawRegion, lang) : "";
+  const fullTitle = region ? `${title} (${region})` : title;
   const imgUrl = place.img || `${SITE_URL}/hero.webp`;
-  const placeCanonical = getCanonicalUrl(`/places/${placeId}`, "ka");
+  const placeCanonical = getCanonicalUrl(`/places/${placeId}`, lang);
   const alternateLanguages = getAlternateLanguages(`/places/${placeId}`);
+  const locale = LANGUAGE_LOCALES[lang] || "ka_GE";
 
   return {
-    title: `${titleKa} (${regionKa}) | GeorgiaTrips.ge`,
-    description: descKa.slice(0, 160),
+    title: fullTitle,
+    description: desc.slice(0, 160),
     alternates: {
       canonical: placeCanonical,
       languages: alternateLanguages,
     },
     openGraph: {
-      title: `${titleKa} — ${regionKa}`,
-      description: descKa.slice(0, 200),
+      title: `${fullTitle} — GeorgiaTrips`,
+      description: desc.slice(0, 200),
       url: placeCanonical,
       siteName: "GeorgiaTrips",
       images: [
@@ -44,55 +56,100 @@ export async function generateMetadata({ params }) {
           url: imgUrl,
           width: 1200,
           height: 630,
-          alt: titleKa,
+          alt: title,
         },
       ],
-      locale: "ka_GE",
+      locale,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${titleKa} — ${regionKa}`,
-      description: descKa.slice(0, 160),
+      title: `${fullTitle} — GeorgiaTrips`,
+      description: desc.slice(0, 160),
       images: [imgUrl],
     },
   };
 }
 
+const BREADCRUMB_LABELS = {
+  ka: { home: "მთავარი", places: "ადგილები" },
+  en: { home: "Home", places: "Attractions" },
+  ru: { home: "Главная", places: "Места" },
+  tr: { home: "Ana Sayfa", places: "Gezilecek Yerler" },
+  ar: { home: "الرئيسية", places: "الأماكن" },
+};
+
 export default async function PlaceDetailPage({ params }) {
-  const resolvedParams = await params;
+  const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const placeId = resolvedParams?.id;
+  const headerLang = reqHeaders.get("x-georgiatrips-locale");
+  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
 
   const places = await getCachedPlaces();
   const place = (places || []).find((p) => p.id === placeId) || null;
 
-  const titleKa = place ? asLocalizedText(place.title, "ka") || "ადგილი საქართველოში" : "ადგილი";
-  const descKa = place ? asLocalizedText(place.desc, "ka") || "" : "";
-  const regionKa = place ? formatRegionName(asLocalizedText(place.region, "ka"), "ka") : "საქართველო";
+  if (!place) {
+    notFound();
+  }
 
-  const jsonLd = place
-    ? {
-        "@context": "https://schema.org",
-        "@type": "TouristAttraction",
-        "name": titleKa,
-        "description": descKa,
-        "image": place.img || `${SITE_URL}/hero.webp`,
-        "address": {
-          "@type": "PostalAddress",
-          "addressRegion": regionKa,
-          "addressCountry": "GE",
-        },
-      }
-    : null;
+  const title = asLocalizedText(place.title, lang) || asLocalizedText(place.title, "ka") || "Attraction";
+  const desc = asLocalizedText(place.desc, lang) || asLocalizedText(place.desc, "ka") || "";
+  const rawRegion = asLocalizedText(place.region, lang) || asLocalizedText(place.region, "ka") || "";
+  const region = rawRegion ? formatRegionName(rawRegion, lang) : "Georgia";
+  const placeUrl = `${SITE_URL}/${lang}/places/${encodeURIComponent(placeId)}`;
+  const bLabels = BREADCRUMB_LABELS[lang] || BREADCRUMB_LABELS.ka;
+
+  const attractionSchema = {
+    "@type": "TouristAttraction",
+    "@id": `${placeUrl}#attraction`,
+    "name": title,
+    "description": desc,
+    "url": placeUrl,
+    "image": place.img || `${SITE_URL}/hero.webp`,
+    "inLanguage": lang,
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": region,
+      "addressCountry": "GE",
+    },
+  };
+
+  const breadcrumbsSchema = {
+    "@type": "BreadcrumbList",
+    "@id": `${placeUrl}#breadcrumbs`,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": bLabels.home,
+        "item": `${SITE_URL}/${lang}`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": bLabels.places,
+        "item": `${SITE_URL}/${lang}/places`,
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": placeUrl,
+      },
+    ],
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [attractionSchema, breadcrumbsSchema],
+  };
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Suspense fallback={<div style={{ padding: "4rem", textAlign: "center", color: "#0d233a" }}>...</div>}>
         <PlaceDetailClient initialPlace={place} initialAllPlaces={places} />
       </Suspense>

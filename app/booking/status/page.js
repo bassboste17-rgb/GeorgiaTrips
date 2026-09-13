@@ -6,7 +6,7 @@ import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { STATUS_CONFIG, getStatusLabel } from "../../lib/bookingModel";
-import { WA_LINK, WA_NUMBER, PHONE_DISPLAY } from "../../lib/shared";
+import { WA_LINK, WA_NUMBER, PHONE_NUMBER, PHONE_DISPLAY } from "../../lib/shared";
 import { useLanguage } from "../../lib/i18n/LanguageContext";
 
 export default function BookingStatusPage() {
@@ -282,7 +282,7 @@ export default function BookingStatusPage() {
                 {t("bookingStatus.waHelp") || "💬 WhatsApp დახმარება"}
               </a>
               <a
-                href={`tel:${WA_NUMBER}`}
+                href={`tel:${PHONE_NUMBER}`}
                 style={{
                   flex: 1,
                   textAlign: "center",

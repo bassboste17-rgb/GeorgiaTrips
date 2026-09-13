@@ -4,7 +4,7 @@ import React from "react";
 import { useLanguage } from "../../lib/i18n/LanguageContext";
 import { useCurrency } from "../../lib/currency/CurrencyContext";
 import { asLocalizedText } from "../../lib/toursFirestore";
-import { WA_LINK, WA_NUMBER } from "../../lib/shared";
+import { WA_LINK, WA_NUMBER, PHONE_NUMBER } from "../../lib/shared";
 import TourPrice from "../TourPrice";
 import DatePicker from "../DatePicker";
 
@@ -435,7 +435,7 @@ export default function TourBookingSidebar({
             >
               <span>💬 WhatsApp</span>
             </a>
-            <a href={`tel:${WA_NUMBER}`} className="contact-btn phone">
+            <a href={`tel:${PHONE_NUMBER}`} className="contact-btn phone">
               <span>{t("tourDetail.callNow")}</span>
             </a>
           </div>

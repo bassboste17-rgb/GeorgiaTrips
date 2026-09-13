@@ -4,11 +4,15 @@ import {
   checkRateLimit,
   isStaticAssetRequest,
 } from "./app/lib/security";
+import {
+  checkTourExists,
+  checkPlaceExists,
+} from "./app/lib/server/entityValidator";
 
 const SUPPORTED_LANGUAGES = ["ka", "en", "ru", "tr", "ar"];
 
 function detectLanguage(acceptLanguageHeader) {
-  if (!acceptLanguageHeader) return "ka";
+  if (!acceptLanguageHeader) return "en";
   const languages = acceptLanguageHeader
     .split(",")
     .map((item) => {
@@ -43,7 +47,7 @@ const API_LIMITS = {
   "/api/analytics/track": { max: 60, methods: ["GET", "POST"] },
 };
 
-export function proxy(request) {
+export async function proxy(request) {
   const { pathname, searchParams } = request.nextUrl;
 
   // ═══════════════════════════════════════════════════════════════
@@ -60,21 +64,24 @@ export function proxy(request) {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // 2. Rate Limiting ყველა მომხმარებლისთვის (მათ შორის ბოტებისთვის)
+  // 2. Rate Limiting მომხმარებლებისთვის (საძიებო სისტემის ბოტები გათავისუფლებულია გვერდის ლიმიტისგან)
   // ═══════════════════════════════════════════════════════════════
   // API routes-ზე ზოგად ლიმიტს არ ვუშვებთ - მათ ცალკე ლიმიტი აქვთ
   if (!isApiRequest(pathname) && !isStaticAssetRequest(request)) {
-    const { rateLimited, retryAfter } = checkRateLimit(request);
+    // Only apply human page rate limiting if not a verified search engine crawler
+    if (!botInfo?.isSearchCrawler) {
+      const { rateLimited, retryAfter } = checkRateLimit(request);
 
-    if (rateLimited) {
-      return new NextResponse("Too many requests", {
-        status: 429,
-        headers: {
-          "Retry-After": String(retryAfter || 60),
-          "X-RateLimit-Limit": "120",
-          "X-RateLimit-Remaining": "0",
-        },
-      });
+      if (rateLimited) {
+        return new NextResponse("Too many requests", {
+          status: 429,
+          headers: {
+            "Retry-After": String(retryAfter || 60),
+            "X-RateLimit-Limit": "120",
+            "X-RateLimit-Remaining": "0",
+          },
+        });
+      }
     }
   }
 
@@ -133,6 +140,18 @@ export function proxy(request) {
   const cookieLang = request.cookies.get("gt_language")?.value;
   const pathParts = pathname.split("/");
   const pathLang = pathParts[1];
+  const lowerPathLang = pathLang ? pathLang.toLowerCase() : "";
+  const isCaseMismatch = pathLang && pathLang !== lowerPathLang && SUPPORTED_LANGUAGES.includes(lowerPathLang);
+
+  // Normalize uppercase supported locale prefix with a 308 Permanent Redirect (e.g. /EN/tours -> /en/tours)
+  if (isCaseMismatch) {
+    const redirectUrl = request.nextUrl.clone();
+    const newParts = [...pathParts];
+    newParts[1] = lowerPathLang;
+    redirectUrl.pathname = newParts.join("/");
+    return NextResponse.redirect(redirectUrl, { status: 308 });
+  }
+
   const hasLocalePrefix = SUPPORTED_LANGUAGES.includes(pathLang);
   const detectedLang = detectLanguage(request.headers.get("accept-language"));
   const locale = hasLocalePrefix
@@ -149,7 +168,8 @@ export function proxy(request) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
     redirectUrl.searchParams.delete("lang");
-    const response = NextResponse.redirect(redirectUrl);
+    const isRootPermanent = pathname === "/" && !cookieLang && !urlLang;
+    const response = NextResponse.redirect(redirectUrl, { status: isRootPermanent ? 308 : 307 });
     response.cookies.set("gt_language", locale, {
       path: "/",
       maxAge: 31536000,
@@ -158,11 +178,34 @@ export function proxy(request) {
     return response;
   }
 
+  // Handle legacy /transport under locale prefix (e.g. /ka/transport -> /ka/transfers)
+  if (pathParts[2] === "transport") {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = `/${pathParts[1]}/transfers`;
+    return NextResponse.redirect(redirectUrl, { status: 308 });
+  }
+
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-georgiatrips-locale", locale);
   requestHeaders.set("x-georgiatrips-path", pathname);
+
+  let routePath = `/${pathParts.slice(2).join("/")}`.replace(/\/$/, "") || "/";
+
+  // Check validity for dynamic entities so nonexistent tours/places return true HTTP 404
+  if (pathParts[2] === "tours" && pathParts[3]) {
+    const tourExists = await checkTourExists(pathParts[3]);
+    if (!tourExists) {
+      routePath = "/_not-found";
+    }
+  } else if (pathParts[2] === "places" && pathParts[3]) {
+    const placeExists = await checkPlaceExists(pathParts[3]);
+    if (!placeExists) {
+      routePath = "/_not-found";
+    }
+  }
+
   const rewriteUrl = request.nextUrl.clone();
-  rewriteUrl.pathname = `/${pathParts.slice(2).join("/")}`.replace(/\/$/, "") || "/";
+  rewriteUrl.pathname = routePath;
   const response = NextResponse.rewrite(rewriteUrl, {
     request: { headers: requestHeaders },
   });
