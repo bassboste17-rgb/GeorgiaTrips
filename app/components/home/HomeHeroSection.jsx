@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import DatePicker from "../DatePicker";
 import HeroMosaicGrid from "../HeroMosaicGrid";
 import { useLanguage } from "../../lib/i18n/LanguageContext";
+import { getLocalizedHref } from "../../lib/siteConfig";
 import { GEORGIA_REGIONS, formatRegionName } from "../../lib/placesMeta";
 import { LocationIcon, CalendarIcon, UsersIcon, SearchIcon } from "../Icons";
 
@@ -48,7 +49,7 @@ export default function HomeHeroSection({ allAvailableDates = [] }) {
     if (heroFormat !== "all") params.set("format", heroFormat);
 
     const queryStr = params.toString();
-    router.push(queryStr ? `/tours?${queryStr}` : "/tours");
+    router.push(getLocalizedHref(queryStr ? `/tours?${queryStr}` : "/tours", lang));
   };
 
   return (

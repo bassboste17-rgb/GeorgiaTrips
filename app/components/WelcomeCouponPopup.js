@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/i18n/LanguageContext";
+import { getLocalizedHref } from "../lib/siteConfig";
 import { useCoupon } from "../lib/CouponContext";
 import { getCouponSettings, isIpClaimed, recordClaimedIp } from "../lib/couponSettings";
 import CouponTicket from "./CouponTicket";
@@ -12,7 +13,7 @@ const COUNTDOWN_DURATION_MS = 30 * 60 * 1000; // 30 minutes in ms
 
 export default function WelcomeCouponPopup() {
   const { user } = useAuth() ?? {};
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { claimWelcomeCoupon } = useCoupon();
   const router = useRouter();
   const pathname = usePathname();
@@ -168,7 +169,7 @@ export default function WelcomeCouponPopup() {
     if (clientIp) {
       recordClaimedIp(clientIp, "");
     }
-    router.push("/login?tab=signup");
+    router.push(getLocalizedHref("/login?tab=signup", lang));
   };
 
   if (!mounted || !isOpen || user) return null;

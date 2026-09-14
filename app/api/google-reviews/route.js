@@ -13,7 +13,7 @@ const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN || "";
 
 // Fallback: Places API key (AIza... format) — max 5 reviews
 const PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY || "";
-const PLACE_ID = process.env.GOOGLE_PLACE_ID || "Georgia Trips";
+const GOOGLE_PLACE_ID = process.env.GOOGLE_PLACE_ID || "";
 
 function formatRelativeTime(timestamp) {
   if (!timestamp) return "ახლახან";
@@ -133,20 +133,15 @@ async function fetchPlacesReviews() {
       return null;
     }
 
-    // Step 1: Find the place by text search to get the place_id
-    const searchUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(PLACE_ID)}&inputtype=textquery&fields=place_id,name,rating,user_ratings_total&key=${PLACES_API_KEY}`;
-    const searchRes = await fetch(searchUrl, { signal: AbortSignal.timeout(10000) });
-    const searchData = await searchRes.json();
-
-    if (searchData.status !== "OK" || !searchData.candidates?.length) {
-      console.warn("[Google Reviews API] Places search failed:", searchData.status, searchData.error_message);
+    // Fail safely if Place ID is not configured or is ambiguous
+    const placeId = GOOGLE_PLACE_ID.trim();
+    if (!placeId || !placeId.startsWith("ChIJ")) {
+      console.warn("[Google Reviews API] Valid GOOGLE_PLACE_ID (starting with 'ChIJ...') is required. Unreliable text search fallback disabled.");
       return null;
     }
 
-    const placeId = searchData.candidates[0].place_id;
-
-    // Step 2: Fetch place details including reviews
-    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,user_ratings_total,reviews&key=${PLACES_API_KEY}`;
+    // Fetch place details directly using the verified Place ID (avoids ambiguous name searching)
+    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=name,rating,user_ratings_total,reviews,url&key=${PLACES_API_KEY}`;
     const detailsRes = await fetch(detailsUrl, { signal: AbortSignal.timeout(10000) });
     const detailsData = await detailsRes.json();
 

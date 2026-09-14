@@ -121,9 +121,33 @@ export function detectBot(request) {
     if (userAgent.includes(bot)) return { blocked: true, name: bot };
   }
 
-  // შევამოწმოთ ძიებითი სისტემების ბოტები
+  // Cloudflare bot verification signals (თუ CDN-ის უკან ვართ)
+  const cfVerified = request.headers.get("cf-verified-bot");
+  const cfVerification = request.headers.get("cf-verification");
+  const cfConnectingIp = request.headers.get("cf-connecting-ip");
+  const isBehindCloudflare = Boolean(cfConnectingIp || cfVerified !== null);
+
+  // შევამოწმოთ ძიებითი სისტემების ოფიციალური საძიებო ბოტები
   for (const bot of SEARCH_CRAWLERS) {
-    if (userAgent.includes(bot)) return { blocked: false, isSearchCrawler: true, name: bot };
+    if (userAgent.includes(bot)) {
+      // თუ Cloudflare-ის უკან ვართ და Cloudflare-მა დააფიქსირა, რომ ბოტი ყალბია (spoofed)
+      if (isBehindCloudflare && (cfVerified === "false" || cfVerification === "blocked" || cfVerification === "failed")) {
+        return {
+          blocked: false,
+          isSearchCrawler: false,
+          spoofed: true,
+          suspicious: true,
+          name: bot,
+        };
+      }
+
+      return {
+        blocked: false,
+        isSearchCrawler: true,
+        verified: cfVerified === "true",
+        name: bot,
+      };
+    }
   }
 
   // შევამოწმოთ სოციალური ქსელების დაშვებული ბოტები

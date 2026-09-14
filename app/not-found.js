@@ -2,7 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { getLocalizedHref, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
+import { getLocalizedHref, getRequestLocale, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
 
 const NOT_FOUND_TEXTS = {
   ka: {
@@ -49,8 +49,7 @@ const NOT_FOUND_TEXTS = {
 
 export default async function NotFound() {
   const reqHeaders = await headers();
-  const headerLang = reqHeaders.get("x-georgiatrips-locale");
-  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const lang = getRequestLocale(reqHeaders);
   const t = NOT_FOUND_TEXTS[lang] || NOT_FOUND_TEXTS.ka;
 
   return (

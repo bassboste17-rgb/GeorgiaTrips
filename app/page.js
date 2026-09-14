@@ -3,7 +3,7 @@ import "./home.css";
 import { headers } from "next/headers";
 import { getCachedTours, getCachedPlaces, getCachedPosts, serializeForClient } from "./lib/server/cachedData";
 import { FAQS_BY_LANG, getFaqs } from "./lib/shared";
-import { SITE_URL, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
+import { SITE_URL, getRequestLocale, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
 import HomePageClient from "./components/home/HomePageClient";
 
 export default async function Home() {
@@ -14,8 +14,7 @@ export default async function Home() {
     headers(),
   ]);
 
-  const headerLang = reqHeaders.get("x-georgiatrips-locale");
-  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const lang = getRequestLocale(reqHeaders);
   const faqs = getFaqs(lang) || [];
 
   const initialTours = serializeForClient(rawTours) || [];

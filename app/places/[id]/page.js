@@ -4,23 +4,14 @@ import { getCachedPlaces } from "../../lib/server/cachedData";
 import { asLocalizedText } from "../../lib/toursFirestore";
 import { headers } from "next/headers";
 import { formatRegionName } from "../../lib/placesMeta";
-import { SITE_URL, getCanonicalUrl, getAlternateLanguages, LANGUAGE_LOCALES, SUPPORTED_LANGUAGES } from "../../lib/siteConfig";
+import { SITE_URL, getRequestLocale, buildLocalizedMetadata } from "../../lib/siteConfig";
 import PlaceDetailClient from "../../components/places/PlaceDetailClient";
 import "../places.css";
-
-const NOT_FOUND_PLACES = {
-  ka: "ადგილი ვერ მოიძებნა",
-  en: "Attraction Not Found",
-  ru: "Достопримечательность не найдена",
-  tr: "Gezilecek Yer Bulunamadı",
-  ar: "لم يتم العثور على المعلم",
-};
 
 export async function generateMetadata({ params }) {
   const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const placeId = resolvedParams?.id;
-  const headerLang = reqHeaders.get("x-georgiatrips-locale");
-  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const lang = getRequestLocale(reqHeaders);
 
   const places = await getCachedPlaces();
   const place = (places || []).find((p) => p.id === placeId);
@@ -34,41 +25,16 @@ export async function generateMetadata({ params }) {
   const rawRegion = asLocalizedText(place.region, lang) || asLocalizedText(place.region, "ka") || "";
   const region = rawRegion ? formatRegionName(rawRegion, lang) : "";
   const fullTitle = region ? `${title} (${region})` : title;
-  const imgUrl = place.img || `${SITE_URL}/hero.webp`;
-  const placeCanonical = getCanonicalUrl(`/places/${placeId}`, lang);
-  const alternateLanguages = getAlternateLanguages(`/places/${placeId}`);
-  const locale = LANGUAGE_LOCALES[lang] || "ka_GE";
+  const imgUrl = place.img || "/tbilisi.webp";
 
-  return {
+  return buildLocalizedMetadata({
+    path: `/places/${placeId}`,
+    lang,
     title: fullTitle,
     description: desc.slice(0, 160),
-    alternates: {
-      canonical: placeCanonical,
-      languages: alternateLanguages,
-    },
-    openGraph: {
-      title: `${fullTitle} — GeorgiaTrips`,
-      description: desc.slice(0, 200),
-      url: placeCanonical,
-      siteName: "GeorgiaTrips",
-      images: [
-        {
-          url: imgUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      locale,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${fullTitle} — GeorgiaTrips`,
-      description: desc.slice(0, 160),
-      images: [imgUrl],
-    },
-  };
+    image: imgUrl,
+    imageAlt: title,
+  });
 }
 
 const BREADCRUMB_LABELS = {
@@ -82,8 +48,7 @@ const BREADCRUMB_LABELS = {
 export default async function PlaceDetailPage({ params }) {
   const [resolvedParams, reqHeaders] = await Promise.all([params, headers()]);
   const placeId = resolvedParams?.id;
-  const headerLang = reqHeaders.get("x-georgiatrips-locale");
-  const lang = SUPPORTED_LANGUAGES.includes(headerLang) ? headerLang : "ka";
+  const lang = getRequestLocale(reqHeaders);
 
   const places = await getCachedPlaces();
   const place = (places || []).find((p) => p.id === placeId) || null;

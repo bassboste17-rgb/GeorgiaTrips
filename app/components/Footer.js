@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "../lib/i18n/LanguageContext";
 import { getLocalizedHref } from "../lib/siteConfig";
-import { BrandLogo, WA_LINK, PHONE_DISPLAY, TELEGRAM_LINK, INSTAGRAM_LINK, FACEBOOK_LINK, YOUTUBE_LINK, TIKTOK_LINK, LINKEDIN_LINK } from "../lib/shared";
+import { BrandLogo, WA_LINK, PHONE_DISPLAY, PHONE_NUMBER, TELEGRAM_LINK, INSTAGRAM_LINK, FACEBOOK_LINK, YOUTUBE_LINK, TIKTOK_LINK, LINKEDIN_LINK } from "../lib/shared";
 import { listFirestoreTours, asLocalizedText } from "../lib/toursFirestore";
 
 export default function Footer() {
@@ -113,15 +113,15 @@ export default function Footer() {
             <h4 className="footer-col-title">{t("footer.contactTitle")}</h4>
             <div className="footer-contact-item">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.94a16 16 0 0 0 6.06 6.06l1.05-1.06a2 2 0 0 1 2.11-.45c.9.362 1.84.617 2.81.7A2 2 0 0 1 21.9 16.1z" /></svg>
-              {PHONE_DISPLAY}
+              <a href={`tel:${PHONE_NUMBER}`} style={{ color: "inherit", textDecoration: "none" }}>{PHONE_DISPLAY}</a>
             </div>
             <div className="footer-contact-item">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-              {t("footer.email")}
+              <a href="mailto:info@georgiatrips.ge" style={{ color: "inherit", textDecoration: "none" }}>{t("footer.email")}</a>
             </div>
             <div className="footer-contact-item">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-              {t("footer.address")}
+              <a href="https://www.google.com/maps/place/?q=place_id:ChIJBXgJNomHZ0ARMFv54m7MSmk" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>{t("footer.address")}</a>
             </div>
           </div>
         </div>

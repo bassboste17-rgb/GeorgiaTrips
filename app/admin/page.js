@@ -24,6 +24,7 @@ import { listReviews } from "../lib/reviewsFirestore";
 import { useAuth } from "../lib/AuthContext";
 import { useCurrency } from "../lib/currency/CurrencyContext";
 import { useLanguage } from "../lib/i18n/LanguageContext";
+import { getLocalizedHref } from "../lib/siteConfig";
 import { adminFetch } from "../lib/apiClient";
 import {
   createTour,
@@ -61,6 +62,7 @@ async function uploadToCloudinary(file) {
 }
 
 export default function AdminPage() {
+  const { lang } = useLanguage();
   const { format } = useCurrency();
   const [title, setTitle] = useState(emptyLangObj());
   const [desc, setDesc] = useState(emptyLangObj());
@@ -654,7 +656,7 @@ export default function AdminPage() {
               <p>
                 ეს გვერდი ხელმისაწვდომია მხოლოდ ავტორიზებული მომხმარებლებისთვის. შესვლა შეგიძლიათ ქვემოთ.
               </p>
-              <Link href="/login" className="admin-btn-primary">
+              <Link href={getLocalizedHref("/login", lang)} className="admin-btn-primary">
                 შესვლა
               </Link>
             </div>
@@ -676,7 +678,7 @@ export default function AdminPage() {
               <p>
                 ადმინ პანელზე წვდომა დაშვებულია მხოლოდ ადმინისტრატორის ანგარიშისთვის.
               </p>
-              <Link href="/" className="admin-btn-primary" style={{ marginTop: "1rem" }}>
+              <Link href={getLocalizedHref("/", lang)} className="admin-btn-primary" style={{ marginTop: "1rem" }}>
                 მთავარ გვერდზე დაბრუნება
               </Link>
             </div>

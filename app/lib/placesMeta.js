@@ -2,6 +2,11 @@ export const GEORGIA_REGIONS = [
   "აჭარა", "გურია", "იმერეთი", "კახეთი", "მცხეთა-მთიანეთი", "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამეგრელო-ზემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "ქვემო ქართლი", "თბილისი",
 ];
 
+export const DESTINATIONS = [
+  { value: "all", label: "ყველა რეგიონი" },
+  ...GEORGIA_REGIONS.map((region) => ({ value: region, label: region })),
+];
+
 export const REGIONS_TRANSLATIONS = {
   "აჭარა": { ka: "აჭარა", en: "Adjara", ru: "Аджария", tr: "Acara", ar: "أدجارا" },
   "გურია": { ka: "გურია", en: "Guria", ru: "Гурия", tr: "Guria", ar: "غوريا" },

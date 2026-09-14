@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { BrandLogo } from "../lib/shared";
-import { getLocalizedHref } from "../lib/siteConfig";
+import { getLocalizedHref, HREFLANG_MAP } from "../lib/siteConfig";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/i18n/LanguageContext";
 import { useCurrency, CURRENCY_RATES } from "../lib/currency/CurrencyContext";
@@ -28,13 +28,15 @@ export default function Navbar({ active = "home" }) {
   const { lang, setLang, t, isGeorgian, isEnglish, isRussian } = useLanguage();
 
   const getLanguageSwitchUrl = (targetLang) => {
+    let currentPath = pathname;
     let search = "";
     let hash = "";
     if (typeof window !== "undefined") {
+      currentPath = window.location.pathname || pathname;
       search = window.location.search || "";
       hash = window.location.hash || "";
     }
-    const fullPath = `${pathname}${search}${hash}`;
+    const fullPath = `${currentPath}${search}${hash}`;
     return getLocalizedHref(fullPath, targetLang);
   };
 
@@ -138,6 +140,8 @@ export default function Navbar({ active = "home" }) {
                 <Link
                   key={l.code}
                   href={getLanguageSwitchUrl(l.code)}
+                  hrefLang={HREFLANG_MAP[l.code] || l.code}
+                  lang={l.code}
                   className={`nav-dropdown-item ${lang === l.code ? "active" : ""}`}
                   onClick={() => {
                     setLang(l.code);
@@ -295,6 +299,8 @@ export default function Navbar({ active = "home" }) {
                 <Link
                   key={l.code}
                   href={getLanguageSwitchUrl(l.code)}
+                  hrefLang={HREFLANG_MAP[l.code] || l.code}
+                  lang={l.code}
                   className={`nav-mobile-lang-card ${lang === l.code ? "active" : ""}`}
                   onClick={() => {
                     setLang(l.code);

@@ -206,17 +206,6 @@ export default function TourDetailClient({
         tourSectionLabel: rawTour.tourSectionLabel,
       };
 
-  // Dynamically update browser tab title when tour title or language changes
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (tour && tour.title) {
-      const tourTitle = asLocalizedText(tour.title, lang) || tour.title;
-      if (tourTitle) {
-        document.title = `${tourTitle} | GeorgiaTrips`;
-      }
-    }
-  }, [tour, lang]);
-
   const firestoreSchedule = rawTour
     ? groupDepartureDates(rawTour.departureDates || [], lang).map((m) => ({
         monthName: m.monthName,
@@ -515,7 +504,7 @@ export default function TourDetailClient({
 
       await createBooking(bookingData);
       setBookingSubmitted(true);
-      router.push(`/booking/success/${tour.id}`);
+      router.push(getLocalizedHref(`/booking/success/${tour.id}`, lang));
     } catch (err) {
       console.error("Booking error:", err);
       // Fallback to WhatsApp

@@ -244,7 +244,7 @@ export default function CouponsPage() {
                     isUsed={false}
                     showCopy={true}
                     showUseBtn={true}
-                    onUse={() => router.push("/tours")}
+                    onUse={() => router.push(getLocalizedHref("/tours", lang))}
                   />
 
                   {/* Description below ticket */}

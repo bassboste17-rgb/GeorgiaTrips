@@ -6,6 +6,11 @@ const STATIC_RELEASE_DATE = new Date("2026-09-01T00:00:00.000Z");
 const STATIC_ROUTES = [
   { path: "", priority: 1.0, changeFrequency: "daily" },
   { path: "/tours", priority: 0.95, changeFrequency: "daily" },
+  { path: "/tours-from-batumi", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/private-tours-batumi", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/things-to-do-in-batumi", priority: 0.85, changeFrequency: "weekly" },
+  { path: "/waterfalls-near-batumi", priority: 0.85, changeFrequency: "weekly" },
+  { path: "/batumi-airport-transfer", priority: 0.9, changeFrequency: "weekly" },
   { path: "/places", priority: 0.85, changeFrequency: "weekly" },
   { path: "/hotels", priority: 0.85, changeFrequency: "weekly" },
   { path: "/transfers", priority: 0.9, changeFrequency: "weekly" },

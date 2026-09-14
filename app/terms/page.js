@@ -1,11 +1,9 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useLanguage } from "../lib/i18n/LanguageContext";
-import { getLocalizedHref } from "../lib/siteConfig";
+import { getLocalizedHref, getRequestLocale, ROUTE_METADATA, buildLocalizedMetadata } from "../lib/siteConfig";
 
 const CONTENT = {
   ka: {
@@ -80,8 +78,23 @@ const CONTENT = {
   },
 };
 
-export default function TermsPage() {
-  const { lang } = useLanguage();
+export async function generateMetadata() {
+  const reqHeaders = await headers();
+  const lang = getRequestLocale(reqHeaders);
+  const meta = ROUTE_METADATA.terms[lang] || ROUTE_METADATA.terms.ka;
+
+  return buildLocalizedMetadata({
+    path: "/terms",
+    lang,
+    title: meta.title,
+    description: meta.description,
+    image: meta.image || "/hero.webp",
+  });
+}
+
+export default async function TermsPage() {
+  const reqHeaders = await headers();
+  const lang = getRequestLocale(reqHeaders);
   const t = CONTENT[lang] || CONTENT.ka;
 
   return (
@@ -113,3 +126,4 @@ export default function TermsPage() {
     </>
   );
 }
+

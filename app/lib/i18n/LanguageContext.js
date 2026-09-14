@@ -16,9 +16,12 @@ const STORAGE_KEY = "gt_language";
 
 function getLocaleFromPathname(pathname) {
   if (!pathname || typeof pathname !== "string") return null;
-  const segment = pathname.split("/").filter(Boolean)[0];
-  if (segment && SUPPORTED_LANGUAGES.includes(segment.toLowerCase())) {
-    return segment.toLowerCase();
+  const match = pathname.match(/^\/([a-zA-Z]{2})(?:\/|\?|#|$)/);
+  if (match) {
+    const code = match[1].toLowerCase();
+    if (SUPPORTED_LANGUAGES.includes(code)) {
+      return code;
+    }
   }
   return null;
 }
@@ -39,23 +42,48 @@ function getNestedValue(obj, path) {
 
 export function LanguageProvider({ children, initialLang = "ka" }) {
   const pathname = usePathname();
-  const urlLocale = getLocaleFromPathname(pathname);
+  
+  const getDetectedLocale = () => {
+    if (typeof window !== "undefined" && window.location && window.location.pathname) {
+      const fromWindow = getLocaleFromPathname(window.location.pathname);
+      if (fromWindow) return fromWindow;
+    }
+    const fromPath = getLocaleFromPathname(pathname);
+    if (fromPath) return fromPath;
+    return SUPPORTED_LANGUAGES.includes(initialLang) ? initialLang : "ka";
+  };
 
   // Authoritative language rule:
   // 1. Explicit valid locale in URL pathname ALWAYS wins
   // 2. Initial server language (from proxy request headers)
   // 3. Fallback "ka"
-  const activeLang = urlLocale || (SUPPORTED_LANGUAGES.includes(initialLang) ? initialLang : "ka");
+  const activeLang = getDetectedLocale();
 
   const [lang, setLangState] = useState(activeLang);
   const [hydrated, setHydrated] = useState(false);
 
-  // Keep state synchronized with the URL whenever pathname changes
+  // Keep state synchronized with the URL whenever pathname or window.location changes
   useEffect(() => {
-    if (urlLocale && urlLocale !== lang) {
-      setLangState(urlLocale);
+    const syncLocale = () => {
+      let currentPath = pathname;
+      if (typeof window !== "undefined" && window.location && window.location.pathname) {
+        currentPath = window.location.pathname;
+      }
+      const detected = getLocaleFromPathname(currentPath) || getLocaleFromPathname(pathname);
+      if (detected && detected !== lang) {
+        setLangState(detected);
+      }
+    };
+
+    syncLocale();
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("popstate", syncLocale);
+      return () => {
+        window.removeEventListener("popstate", syncLocale);
+      };
     }
-  }, [urlLocale, lang]);
+  }, [pathname, lang]);
 
   // Sync preference cookie & localStorage whenever the effective language changes
   useEffect(() => {

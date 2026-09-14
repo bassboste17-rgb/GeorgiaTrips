@@ -12,7 +12,6 @@ import { isRtlLanguage } from "./lib/i18n/locale";
 import CookieConsent from "./components/CookieConsent";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import WelcomeCouponPopup from "./components/WelcomeCouponPopup";
-import DocumentTitleManager from "./components/DocumentTitleManager";
 
 const notoGeorgian = Noto_Sans_Georgian({
   variable: "--font-noto-georgian",
@@ -51,7 +50,7 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 import { SOCIAL_PROFILES } from "./lib/shared";
-import { SITE_URL, getCanonicalUrl, getAlternateLanguages, SUPPORTED_LANGUAGES } from "./lib/siteConfig";
+import { SITE_URL, getCanonicalUrl, getAlternateLanguages, getRequestLocale, LANGUAGE_LOCALES, SUPPORTED_LANGUAGES, ROUTE_METADATA } from "./lib/siteConfig";
 
 export const viewport = {
   width: "device-width",
@@ -62,87 +61,20 @@ export const viewport = {
 
 export async function generateMetadata() {
   const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
-  const headerLang = requestHeaders.get("x-georgiatrips-locale");
   const currentPath = requestHeaders.get("x-georgiatrips-path") || "";
-  const pathParts = currentPath.split("/").filter(Boolean);
-  const pathLang = pathParts[0];
   const storedLang = cookieStore.get("gt_language")?.value;
 
-  // The URL locale is 100% authoritative:
-  // 1. Explicit locale from x-georgiatrips-locale (set by proxy from URL prefix)
-  // 2. Explicit locale in x-georgiatrips-path prefix
-  // 3. Cookie storedLang only when URL has no explicit locale
-  // 4. Default "ka"
-  const lang = SUPPORTED_LANGUAGES.includes(headerLang)
-    ? headerLang
-    : (pathLang && SUPPORTED_LANGUAGES.includes(pathLang))
-      ? pathLang
-      : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
-        ? storedLang
-        : "ka";
+  const requestLocale = getRequestLocale(requestHeaders);
+  const lang = (requestHeaders.get("x-georgiatrips-locale") || requestHeaders.get("x-georgiatrips-path"))
+    ? requestLocale
+    : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
+      ? storedLang
+      : requestLocale;
   const finalPath = currentPath || `/${lang}`;
   const canonicalUrl = getCanonicalUrl(finalPath, lang);
   const alternateLanguages = getAlternateLanguages(finalPath);
-
-  const metaByLang = {
-    ka: {
-      title: {
-        default: "GeorgiaTrips — პრემიუმ ტურები და ტრანსფერები საქართველოში",
-        template: "%s | GeorgiaTrips",
-      },
-      description:
-        "აღმოაჩინე საქართველო უმაღლესი კომფორტით. ერთდღიანი და მრავალდღიანი ტურები ბათუმში, თბილისში, ყაზბეგში, მარტვილში, კახეთსა და სვანეთში. VIP ტრანსპორტი, გამოცდილი გიდები და 24/7 მხარდაჭერა.",
-      locale: "ka_GE",
-      ogTitle: "GeorgiaTrips — პრემიუმ ტურები და ექსკურსიები საქართველოში",
-      ogDesc: "აღმოაჩინე კავკასიის სილამაზე კომფორტით. VIP მომსახურება, ინდივიდუალური და ჯგუფური ტურები.",
-    },
-    en: {
-      title: {
-        default: "GeorgiaTrips — Premium Tours, Excursions & Private Transfers in Georgia",
-        template: "%s | GeorgiaTrips",
-      },
-      description:
-        "Discover Georgia in comfort and luxury. Best day trips and multi-day tours from Batumi, Tbilisi, Kazbegi, Martvili Canyon, Kakheti wine region, and Svaneti. VIP transport, certified guides, 24/7 WhatsApp booking.",
-      locale: "en_US",
-      ogTitle: "GeorgiaTrips — Premium Tours & Guided Excursions in Georgia",
-      ogDesc: "Discover the beauty of the Caucasus with comfort and luxury. VIP service, private & group tours, airport transfers.",
-    },
-    ru: {
-      title: {
-        default: "GeorgiaTrips — Премиум экскурсии, туры и трансферы по Грузии",
-        template: "%s | GeorgiaTrips",
-      },
-      description:
-        "Откройте для себя Грузию с максимальным комфортом. Однодневные и многодневные экскурсии из Батуми и Тбилиси: Казбеги, Кахетия, каньон Мартвили, Сванетия. VIP транспорт, русскоязычные гиды, трансферы 24/7.",
-      locale: "ru_RU",
-      ogTitle: "GeorgiaTrips — Премиум туры и экскурсии по Грузии",
-      ogDesc: "Откройте для себя красоту Кавказа с комфортом. VIP сервис, индивидуальные и групповые туры, трансферы.",
-    },
-    tr: {
-      title: {
-        default: "GeorgiaTrips — Gürcistan'da Premium Turlar, Geziler ve Özel Transferler",
-        template: "%s | GeorgiaTrips",
-      },
-      description:
-        "Gürcistan'ı üstün konforla keşfedin. Batum çıkışlı günübirlik turlar, Tiflis, Kazbegi, Kaheti şarap turları ve Martvili kanyonu. Türkçe rehberler, VIP transferler ve 7/24 destek.",
-      locale: "tr_TR",
-      ogTitle: "GeorgiaTrips — Gürcistan'da Premium Turlar ve Geziler",
-      ogDesc: "Kafkasya'nın güzelliklerini konfor ve lüksle keşfedin. VIP hizmet, özel ve grup turları, havaalanı transferleri.",
-    },
-    ar: {
-      title: {
-        default: "GeorgiaTrips — جولات سياحية فاخرة وتوصيل خاص وسائق في جورجيا",
-        template: "%s | GeorgiaTrips",
-      },
-      description:
-        "اكتشف جمال وسحر جورجيا بأعلى درجات الراحة والفخامة. جولات يومية مميزة من باتومي وتبليسي: كازبيجي، قوداوري، برجومي، كاخيتي، ومارتفيلي. سيارات خاصة VIP، سائقون محترفون، فنادق ومطاعم حلال، ودعم 24/7.",
-      locale: "ar_SA",
-      ogTitle: "GeorgiaTrips — جولات سياحية فاخرة في جورجيا",
-      ogDesc: "اكتشف سحر القوقاز مع خدمات VIP وجولات سياحية خاصة وجماعية مصممة خصيصاً للعائلات مع سيارة وسائق خاص.",
-    },
-  };
-
-  const curr = metaByLang[lang] || metaByLang.ka;
+  const curr = ROUTE_METADATA.home[lang] || ROUTE_METADATA.home.ka;
+  const locale = LANGUAGE_LOCALES[lang] || "ka_GE";
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -151,7 +83,10 @@ export async function generateMetadata() {
       icon: "/favicon.ico",
       apple: "/apple-touch-icon.png",
     },
-    title: curr.title,
+    title: {
+      default: curr.title,
+      template: "%s | GeorgiaTrips",
+    },
     description: curr.description,
     authors: [{ name: "GeorgiaTrips", url: SITE_URL }],
     publisher: "GeorgiaTrips",
@@ -160,25 +95,25 @@ export async function generateMetadata() {
       languages: alternateLanguages,
     },
     openGraph: {
-      title: curr.ogTitle,
-      description: curr.ogDesc,
+      title: curr.title,
+      description: curr.description,
       url: canonicalUrl,
       siteName: "GeorgiaTrips",
-      locale: curr.locale,
+      locale,
       type: "website",
       images: [
         {
           url: "/hero.webp",
           width: 1200,
           height: 630,
-          alt: curr.ogTitle,
+          alt: curr.title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: curr.ogTitle,
-      description: curr.ogDesc,
+      title: curr.title,
+      description: curr.description,
       images: ["/hero.webp"],
     },
     verification: {
@@ -188,17 +123,30 @@ export async function generateMetadata() {
         "facebook-domain-verification": "ef9kax36lazdya98y738pn5e10ny2e",
       },
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
+    robots: (
+      process.env.VERCEL_ENV === "preview" ||
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ||
+      process.env.NEXT_PUBLIC_IS_PREVIEW === "true"
+    )
+      ? {
+          index: false,
+          follow: false,
+          googleBot: {
+            index: false,
+            follow: false,
+          },
+        }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
+        },
   };
 }
 
@@ -229,10 +177,13 @@ function buildStructuredData(htmlLang = "ka") {
         ],
         address: {
           "@type": "PostalAddress",
+          streetAddress: "27 Kutaisi St",
           addressLocality: "Batumi",
+          postalCode: "6010",
           addressRegion: "Adjara",
           addressCountry: "GE",
         },
+        hasMap: "https://www.google.com/maps/place/?q=place_id:ChIJBXgJNomHZ0ARMFv54m7MSmk",
         sameAs: SOCIAL_PROFILES,
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
@@ -262,24 +213,18 @@ function buildStructuredData(htmlLang = "ka") {
 
 export default async function RootLayout({ children }) {
   const [cookieStore, requestHeaders] = await Promise.all([cookies(), headers()]);
-  const headerLang = requestHeaders.get("x-georgiatrips-locale");
-  const currentPath = requestHeaders.get("x-georgiatrips-path") || "";
-  const pathParts = currentPath.split("/").filter(Boolean);
-  const pathLang = pathParts[0];
   const storedLang = cookieStore.get("gt_language")?.value;
 
   // The URL locale is 100% authoritative:
-  // 1. Explicit locale from x-georgiatrips-locale (set by proxy from URL prefix)
-  // 2. Explicit locale in x-georgiatrips-path prefix
-  // 3. Cookie storedLang only when URL has no explicit locale
-  // 4. Default "ka"
-  const htmlLang = SUPPORTED_LANGUAGES.includes(headerLang)
-    ? headerLang
-    : (pathLang && SUPPORTED_LANGUAGES.includes(pathLang))
-      ? pathLang
-      : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
-        ? storedLang
-        : "ka";
+  // 1. Explicit locale from x-georgiatrips-locale / x-georgiatrips-path
+  // 2. Cookie storedLang only when URL has no explicit locale
+  // 3. Default "ka"
+  const requestLocale = getRequestLocale(requestHeaders);
+  const htmlLang = (requestHeaders.get("x-georgiatrips-locale") || requestHeaders.get("x-georgiatrips-path"))
+    ? requestLocale
+    : (storedLang && SUPPORTED_LANGUAGES.includes(storedLang))
+      ? storedLang
+      : requestLocale;
   const htmlDir = isRtlLanguage(htmlLang) ? "rtl" : "ltr";
   const jsonLd = buildStructuredData(htmlLang);
 
@@ -343,9 +288,6 @@ export default async function RootLayout({ children }) {
             <AuthProvider>
               <CouponProvider>
                 {children}
-                <Suspense fallback={null}>
-                  <DocumentTitleManager />
-                </Suspense>
                 <Suspense fallback={null}>
                   <AnalyticsTracker />
                 </Suspense>

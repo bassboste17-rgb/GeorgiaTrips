@@ -1,11 +1,9 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useLanguage } from "../lib/i18n/LanguageContext";
-import { getLocalizedHref } from "../lib/siteConfig";
+import { getLocalizedHref, getRequestLocale, ROUTE_METADATA, buildLocalizedMetadata } from "../lib/siteConfig";
 
 const CONTENT = {
   ka: {
@@ -39,49 +37,64 @@ const CONTENT = {
   ru: {
     title: "Политика конфиденциальности",
     updated: "Последнее обновление: Август 2026",
-    intro: "GeorgiaTrips уважает вашу конфиденциальность и защищает ваши персональные данные. Настоящая политика описывает сбор и использование информации.",
+    intro: "GeorgiaTrips уважает вашу конфиденциальность и защищает ваши персональные данные. Настоящая политика объясняет порядок сбора, использования и защиты информации.",
     s1Title: "1. Сбор информации",
-    s1Desc: "Мы собираем только те данные, которые необходимы для оформления бронирования туров и трансферов (имя, номер телефона, email, детали рейса).",
+    s1Desc: "Мы собираем только ту информацию, которая необходима для бронирования туров и трансферов (имя, телефон, e-mail, детали рейса).",
     s2Title: "2. Использование данных",
-    s2Desc: "Данные используются исключительно для подтверждения заказа, связи с вами и качественного оказания туристических услуг.",
+    s2Desc: "Данные используются исключительно для подтверждения заказа, организации поездки и связи с вами (через WhatsApp или по почте).",
     s3Title: "3. Файлы Cookie",
-    s3Desc: "Мы используем файлы cookie для сохранения настроек языка и валюты, а также для стабильной работы сайта.",
-    s4Title: "4. Безопасность и третьи лица",
-    s4Desc: "Мы не передаем и не продаем ваши личные данные третьим лицам.",
+    s3Desc: "Мы используем файлы cookie для сохранения языковых и валютных настроек и корректной работы сайта.",
+    s4Title: "4. Третьи лица",
+    s4Desc: "Мы не передаем и не продаем ваши персональные данные третьим лицам, за исключением случаев, обязательных для проведения тура.",
     backHome: "← На главную",
   },
   tr: {
     title: "Gizlilik Politikası",
     updated: "Son Güncelleme: Ağustos 2026",
-    intro: "GeorgiaTrips gizliliğinize saygı duyar ve kişisel verilerinizi korumayı taahhüt eder.",
+    intro: "GeorgiaTrips gizliliğinize saygı duyar ve kişisel verilerinizi korur. Bu politika, bilgilerinizi nasıl topladığımızı ve koruduğumuzu açıklar.",
     s1Title: "1. Bilgi Toplama",
-    s1Desc: "Yalnızca tur veya transfer rezervasyonunuz için gerekli olan bilgileri topluyoruz (isim, telefon, e-posta).",
-    s2Title: "2. Bilgilerin Kullanımı",
-    s2Desc: "Verileriniz yalnızca rezervasyon onayları ve sizinle iletişim kurmak amacıyla kullanılır.",
-    s3Title: "3. Çerezler",
-    s3Desc: "Dil ve para birimi tercihlerinizi hatırlamak için çerezler kullanmaktayız.",
+    s1Desc: "Yalnızca tur ve transfer rezervasyonları için gerekli bilgileri (ad, telefon, e-posta, uçuş detayları) topluyoruz.",
+    s2Title: "2. Bilgi Kullanımı",
+    s2Desc: "Bilgileriniz yalnızca rezervasyon onayları ve tur organizasyonu için WhatsApp veya e-posta yoluyla iletişimde kullanılır.",
+    s3Title: "3. Çerezler (Cookies)",
+    s3Desc: "Dil ve para birimi tercihlerinizi hatırlamak ve site performansını optimize etmek için çerezler kullanmaktayız.",
     s4Title: "4. Üçüncü Taraflar",
-    s4Desc: "Kişisel verileriniz asla üçüncü taraflara satılmaz veya paylaşılmaz.",
+    s4Desc: "Kişisel verileriniz hiçbir koşulda üçüncü şahıslara satılmaz veya ticari amaçla paylaşılmaz.",
     backHome: "← Ana Sayfaya Dön",
   },
   ar: {
     title: "سياسة الخصوصية",
     updated: "آخر تحديث: أغسطس 2026",
-    intro: "تحترم GeorgiaTrips خصوصيتكم وتلتزم بحماية بياناتكم الشخصية بالكامل.",
-    s1Title: "1. المعلومات التي نجمعها",
-    s1Desc: "نقوم بجمع المعلومات اللازمة فقط لتأكيد حجوزاتكم للجولات والتوصيلات (الاسم، الهاتف، البريد الإلكتروني).",
-    s2Title: "2. كيفية استخدام المعلومات",
-    s2Desc: "تُستخدم معلوماتكم حصرياً لتأكيد الحجوزات والتواصل معكم عبر واتساب أو البريد الإلكتروني.",
+    intro: "تحترم GeorgiaTrips خصوصيتكم وتلتزم بحماية بياناتكم الشخصية. توضح هذه السياسة كيفية جمع المعلومات واستخدامها وحمايتها.",
+    s1Title: "1. جمع المعلومات",
+    s1Desc: "نقوم بجمع المعلومات اللازمة فقط لتأكيد حجوزات الجولات السياحية أو التوصيلات (الاسم، الهاتف، البريد الإلكتروني، تفاصيل الرحلة).",
+    s2Title: "2. استخدام المعلومات",
+    s2Desc: "تُستخدم بياناتكم حصرياً لتأكيد الحجوزات، تقديم الخدمات، والتواصل معكم عبر واتساب أو البريد الإلكتروني.",
     s3Title: "3. ملفات تعريف الارتباط (Cookies)",
-    s3Desc: "نستخدم ملفات تعريف الارتباط لحفظ خيارات اللغة والعملة وتسهيل التصفح.",
-    s4Title: "4. الأمان والأطراف الثالثة",
-    s4Desc: "نحن لا نشارك ولا نبيع بياناتكم الشخصية لأي طرف ثالث نهائياً.",
+    s3Desc: "نستخدم ملفات تعريف الارتباط لحفظ تفضيلاتكم الخاصة باللغة والعملة وضمان تجربة تصفح مثالية.",
+    s4Title: "4. الأطراف الثالثة",
+    s4Desc: "نحن لا نبيع ولا نشارك بياناتكم الشخصية مع أي طرف ثالث لأغراض تجارية إطلاقاً.",
     backHome: "← العودة للرئيسية",
   },
 };
 
-export default function PrivacyPolicyPage() {
-  const { lang } = useLanguage();
+export async function generateMetadata() {
+  const reqHeaders = await headers();
+  const lang = getRequestLocale(reqHeaders);
+  const meta = ROUTE_METADATA.privacy[lang] || ROUTE_METADATA.privacy.ka;
+
+  return buildLocalizedMetadata({
+    path: "/privacy-policy",
+    lang,
+    title: meta.title,
+    description: meta.description,
+    image: meta.image || "/hero.webp",
+  });
+}
+
+export default async function PrivacyPolicyPage() {
+  const reqHeaders = await headers();
+  const lang = getRequestLocale(reqHeaders);
   const t = CONTENT[lang] || CONTENT.ka;
 
   return (
@@ -113,3 +126,4 @@ export default function PrivacyPolicyPage() {
     </>
   );
 }
+
